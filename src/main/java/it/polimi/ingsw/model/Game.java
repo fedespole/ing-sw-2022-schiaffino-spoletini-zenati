@@ -8,4 +8,5 @@ public class Game {
     private Island[] islands;
     private Player currPlayer;
     private Character[] characters;
+    private ArrayList<Professor> professors;
 }
