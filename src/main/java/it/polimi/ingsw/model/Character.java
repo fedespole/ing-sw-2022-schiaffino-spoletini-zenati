@@ -4,5 +4,7 @@ public abstract class Character {
     private int cost;
     private String name;
 
-    public void useAbility(){};
+    public ConcreteExpertGame useAbility(){
+        return null;
+    }
 }
