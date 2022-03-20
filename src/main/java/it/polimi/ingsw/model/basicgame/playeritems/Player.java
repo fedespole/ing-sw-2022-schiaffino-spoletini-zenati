@@ -39,6 +39,26 @@ public class Player {
     public void setCoins(int coins) {
         this.coins = coins;
     }
+
+    public ArrayList<Cloud> getMyCloud() {
+        return myCloud;
+    }
+
+    public Deck getMyDeck() {
+        return myDeck;
+    }
+
+    public SchoolBoard getMySchoolBoard() {
+        return mySchoolBoard;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public TEAM getTeam() {
+        return team;
+    }
 }
 
 

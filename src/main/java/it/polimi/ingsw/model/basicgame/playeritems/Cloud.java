@@ -17,4 +17,7 @@ public class Cloud {
         return students.remove(index);
     }
 
+    public ArrayList<Student> getStudents() {
+        return students;
+    }
 }

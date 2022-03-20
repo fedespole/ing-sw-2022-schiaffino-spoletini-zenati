@@ -19,13 +19,13 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     }
 
     @Override
-    public void fillCloud() {
-        game.fillCloud();
+    public void fillCloud(Player player) {
+        game.fillCloud(player);
     }
 
     @Override
-    public AssistantCard chooseCard() {
-        return game.chooseCard();
+    public AssistantCard chooseCard(int index,Player player) {
+        return game.chooseCard(index,player);
     }
 
     @Override
@@ -39,13 +39,13 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     }
 
     @Override
-    public Cloud chooseCloud() {
-        return game.chooseCloud();
+    public Cloud chooseCloud(Player player,int cloud) {
+        return game.chooseCloud(player,cloud);
     }
 
     @Override
-    public void moveStudentsFromCloud(Cloud chosenCloud) {
-        game.moveStudentsFromCloud(chosenCloud);
+    public void moveStudentsFromCloud(Player player,Cloud chosenCloud) {
+        game.moveStudentsFromCloud(player,chosenCloud);
     }
 
     @Override

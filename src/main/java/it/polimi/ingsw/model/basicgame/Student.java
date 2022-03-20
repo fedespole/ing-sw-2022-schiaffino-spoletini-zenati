@@ -8,4 +8,5 @@ public class Student {
     public COLOR getColor() {
         return color;
     }
+
 }
