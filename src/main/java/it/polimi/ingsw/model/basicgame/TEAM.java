@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.basicgame;
 
 public enum TEAM {
     WHITE,
