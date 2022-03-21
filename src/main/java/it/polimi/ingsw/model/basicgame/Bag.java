@@ -18,4 +18,7 @@ public class Bag {
         int int_random = rand.nextInt(students.size());
         return students.remove(int_random);
     }
+    public void addStudent(Student student){
+        students.add(student);
+    }
 }

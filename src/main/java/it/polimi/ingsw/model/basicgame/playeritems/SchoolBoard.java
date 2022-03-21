@@ -1,4 +1,5 @@
 package it.polimi.ingsw.model.basicgame.playeritems;
+import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Professor;
 import it.polimi.ingsw.model.basicgame.Student;
 import it.polimi.ingsw.model.basicgame.Tower;
@@ -44,4 +45,7 @@ public class SchoolBoard {
     }
 
 
+    public Student removeStudentFromDiningRoom(COLOR color) {
+       return diningRoom[color.ordinal()].remove(diningRoom[color.ordinal()].size()-1);
+    }
 }
