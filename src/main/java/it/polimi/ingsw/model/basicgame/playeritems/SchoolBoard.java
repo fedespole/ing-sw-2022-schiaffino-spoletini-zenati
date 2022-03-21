@@ -39,5 +39,9 @@ public class SchoolBoard {
         return professors.remove(professors.indexOf(prof));
     }
 
+    public ArrayList<Student>[] getDiningRoom(){
+        return diningRoom;
+    }
+
 
 }

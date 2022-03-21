@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model.expertgame;
 
+import it.polimi.ingsw.model.basicgame.COLOR;
+import it.polimi.ingsw.model.basicgame.Island;
+import it.polimi.ingsw.model.basicgame.Student;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.model.basicgame.BasicGame;
 import it.polimi.ingsw.model.basicgame.playeritems.Cloud;
@@ -22,6 +25,22 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
         this.characters=expertGame.characters;
     }
 
+    public BasicGame getGame() {
+        return game;
+    }
+
+    public void setGame(BasicGame game) {
+        this.game = game;
+    }
+
+    public Character[] getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(Character[] characters) {
+        this.characters = characters;
+    }
+
     @Override
     public void fillCloud(Player player) {
         game.fillCloud(player);
@@ -33,13 +52,18 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     }
 
     @Override
-    public void movestudentsfromEntrance() {
-        game.movestudentsfromEntrance();
+    public void moveStudentFromEntranceToDining(Player player, Student student) {
+        game.moveStudentFromEntranceToDining(player, student);
     }
 
     @Override
-    public void moveMother(int steps) {
-        game.moveMother(steps);
+    public void moveStudentFromEntranceToIsland(Player player, Student student, Island chosenIsland){
+        game.moveStudentFromEntranceToIsland(player, student, chosenIsland);
+    }
+
+    @Override
+    public void moveMother(int steps, Player player) {
+        game.moveMother(steps, player);
     }
 
     @Override
@@ -56,4 +80,12 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     public void computeInfluence() {
         game.computeInfluence();
     }
+
+    @Override
+    public void assignProfessor(Player player, COLOR color){
+        game.assignProfessor(player, color);
+    }
+
+    @Override
+    public int getMotherNature(){ return game.getMotherNature(); }
 }

@@ -12,6 +12,7 @@ public class Player {
     private Deck myDeck;
     private SchoolBoard mySchoolBoard;
     private TEAM team;
+    private int maxSteps;
 
     public Player(String username, int num, TEAM team) {
         this.username = username;

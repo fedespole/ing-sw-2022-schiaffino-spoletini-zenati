@@ -50,13 +50,19 @@ public class BasicGame implements Game{
     }
 
     @Override
-    public void movestudentsfromEntrance() {
-//dobbiamo decidere come fare arrivare in input la destinazione e se far muovere tutti gli studenti con una sola chiamata a metodo o ogni studente con la propria
+    public void moveStudentFromEntranceToDining(Player player, Student student) {
+
     }
 
     @Override
-    public void moveMother(int steps) {
+    public void moveStudentFromEntranceToIsland(Player player, Student student, Island chosenIsland){
+
+    }
+
+    @Override
+    public void moveMother(int steps, Player player) {
         motherNature = (motherNature+steps) % this.islands.size();
+        // fare controllo su maxSteps
     }
 
     @Override//from the index of the cloud,returns the cloud chosen by the player
@@ -81,42 +87,82 @@ public class BasicGame implements Game{
 
     @Override
     public void computeInfluence() {
-        int p0=0,p1=0,p2=0;//if the players are 2,p3 remains 0
-        int max=0;
+        int[] p = {0, 0, 0}; //if the players are 2, p3 remains 0
+        int indexOfWinner = -1;
+        int currTowerOwner = -1;
         for(Island island:this.islands.get(motherNature)){
             for(Student student:island.getStudents()){//counts every student from one island
                 for(Professor professor:professors){
                     if(student.getColor()==professor.getColor() && professor.getOwner()!=null){
                         if(professor.getOwner().getUsername().equals(this.players.get(0).getUsername()))
-                            p0++;
+                            p[0]++;
                         else if(professor.getOwner().getUsername().equals(this.players.get(1).getUsername()))
-                            p1++;
+                            p[1]++;
                         else if(numPlayers==3)
-                            p2++;
+                            p[2]++;
                     }
                     break;
                 }
             }
             if(island.getTower()!=null){//counts tower from one island
-                if(island.getTower().getColor()==players.get(0).getTeam())
-                    p0++;
-                else if(island.getTower().getColor()==players.get(1).getTeam())
-                    p1++;
-                else if(numPlayers==3)
-                    p2++;
-            }
-        }//calculate int influence
-     /*   if(this.islands.get(motherNature).get(0).getTower()!=null){
-            for(int i=0;i<2;i++){
-                if(this.players.get(i).getTeam()==this.islands.get(motherNature).get(0).getTower().getColor()){
-                    if(i==0)
-                        max=p0;
-                    else if(i==1)
-                        max=p1;
-                    break;
+                if(island.getTower().getColor()==players.get(0).getTeam()) {
+                    p[0]++;
+                    currTowerOwner = 0;
+                }
+                else if(island.getTower().getColor()==players.get(1).getTeam()) {
+                    p[1]++;
+                    currTowerOwner = 1;
+                }
+                else if(numPlayers==3) {
+                    p[2]++;
+                    currTowerOwner = 2;
                 }
             }
-        }*///manca algoritmo per verifica influenza,ho gia calcolato p0,p1,p2
+        }//calculate int influence
+        int count = 0;
+        int max = Math.max(Math.max(p[0], p[1]), p[2]);
+        for(int i=0; i < 3; i++) {
+            if(p[i]==max){
+                indexOfWinner = i;
+                count++;
+            }
+        }
+        if (currTowerOwner == -1 && count < 2){
+            for(Island island:this.islands.get(motherNature)){
+                // Moves a tower from board to island
+                island.setTower(players.get(indexOfWinner).getMySchoolBoard().removeTower());
+            }
+        }
+        else if(currTowerOwner != indexOfWinner && count < 2){
+            for(Island island:this.islands.get(motherNature)){
+                // Moves a tower from island to board
+                players.get(currTowerOwner).getMySchoolBoard().addTower(island.getTower());
+                // Moves a tower from board to island
+                island.setTower(players.get(indexOfWinner).getMySchoolBoard().removeTower());
+            }
+        }
+    }
+
+    @Override
+    public void assignProfessor(Player player, COLOR color){
+
+        // Check if professor is not owned
+        if(professors.get(color.ordinal()).getOwner()==null){
+            professors.get(color.ordinal()).setOwner(player);           // assignProf
+        }
+        // Compare influence of this player and last owner, if higher, the owner changes
+        else{
+            int influenceContender = player.getMySchoolBoard().getDiningRoom()[color.ordinal()].size();
+            int influenceLastOwner = professors.get(color.ordinal()).getOwner().getMySchoolBoard().getDiningRoom()[color.ordinal()].size();
+            if(influenceContender>influenceLastOwner){
+                professors.get(color.ordinal()).setOwner(player);       // assignProf
+            }
+        }
+    }
+
+    @Override
+    public int getMotherNature() {
+        return motherNature;
     }
 
     public ArrayList<Player> getPlayers() {
