@@ -19,12 +19,12 @@ public class BasicGame implements Game{
         this.islands = new ArrayList<ArrayList<Island>>();
         for(int i=0; i<12; i++){
             islands.add(new ArrayList<Island>());
+            islands.get(i).add(new Island());
         }
         this.professors = new ArrayList<Professor>();
         for(COLOR color : COLOR.values()){
             professors.add(new Professor(color));
         }
-
     }
 
     @Override//finds the empty cloud and fills it
