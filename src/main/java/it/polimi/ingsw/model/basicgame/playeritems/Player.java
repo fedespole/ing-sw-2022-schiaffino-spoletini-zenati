@@ -60,6 +60,18 @@ public class Player {
     public TEAM getTeam() {
         return team;
     }
+
+    public int getCoins() {
+        return coins;
+    }
+
+    public int getMaxSteps() {
+        return maxSteps;
+    }
+
+    public void setMaxSteps(int maxSteps) {
+        this.maxSteps = maxSteps;
+    }
 }
 
 
