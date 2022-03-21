@@ -17,6 +17,10 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
         }
         //qui vengono scelti tre personaggi a caso
     }
+    public ConcreteExpertGame(ConcreteExpertGame expertGame){
+        this.game=expertGame.game;
+        this.characters=expertGame.characters;
+    }
 
     @Override
     public void fillCloud(Player player) {
