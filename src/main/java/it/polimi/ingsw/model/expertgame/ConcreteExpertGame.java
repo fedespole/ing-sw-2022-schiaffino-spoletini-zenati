@@ -9,6 +9,9 @@ import it.polimi.ingsw.model.basicgame.playeritems.Cloud;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.model.expertgame.characters.Character;
 
+import java.util.Collections;
+import java.util.Random;
+
 public class ConcreteExpertGame extends ExpertGameDecorator {
     private BasicGame game;
     private Character[] characters;
@@ -18,7 +21,6 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
         for(Player player : game.getPlayers()){
             player.setCoins(0);
         }
-        //qui vengono scelti tre personaggi a caso
     }
     public ConcreteExpertGame(ConcreteExpertGame expertGame){
         this.game=expertGame.game;
