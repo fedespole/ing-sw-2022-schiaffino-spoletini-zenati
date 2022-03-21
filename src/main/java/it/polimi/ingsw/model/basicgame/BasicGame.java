@@ -101,7 +101,6 @@ public class BasicGame implements Game{
                         else if(numPlayers==3)
                             p[2]++;
                     }
-                    break;
                 }
             }
             if(island.getTower()!=null){//counts tower from one island
