@@ -12,6 +12,8 @@ public class GameMode9 extends ConcreteExpertGame {
         super(concreteExpertGame);
         this.color=color;
     }
+
+    @Override
     public void computeInfluence() {
         int[] p = {0, 0, 0}; //if the players are 2, p3 remains 0
         int indexOfWinner = -1;

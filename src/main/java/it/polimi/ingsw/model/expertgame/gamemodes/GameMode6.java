@@ -9,6 +9,8 @@ public class GameMode6 extends ConcreteExpertGame {
     public GameMode6(ConcreteExpertGame concreteExpertGame) {
         super(concreteExpertGame);
     }
+
+    @Override
     public void computeInfluence() {
         int[] p = {0, 0, 0}; //if the players are 2, p3 remains 0
         int indexOfWinner = -1;

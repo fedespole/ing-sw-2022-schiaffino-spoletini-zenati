@@ -7,6 +7,10 @@ public class GameMode2 extends ConcreteExpertGame {
     public GameMode2(ConcreteExpertGame concreteExpertGame) {
         super(concreteExpertGame);
     }
+
+    // Check iniziale influenza professori
+
+    @Override
     public void assignProfessor(Player player, COLOR color){
 
         // Check if professor is not owned

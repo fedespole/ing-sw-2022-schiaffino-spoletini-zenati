@@ -6,7 +6,5 @@ public abstract class Character {
     private int cost;
     private int id;
 
-    public ConcreteExpertGame useAbility(ConcreteExpertGame currGame){
-        return null;
-    }
+    public void useAbility(ConcreteExpertGame currGame){}
 }

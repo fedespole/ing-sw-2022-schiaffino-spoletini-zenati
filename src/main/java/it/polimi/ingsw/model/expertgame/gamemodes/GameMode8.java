@@ -14,6 +14,7 @@ public class GameMode8 extends ConcreteExpertGame {
         this.player=player;
     }
 
+    @Override
     public void computeInfluence() {
         int[] p = {0, 0, 0}; //if the players are 2, p3 remains 0
         for(int i=0;i<this.getGame().getPlayers().size();i++){
