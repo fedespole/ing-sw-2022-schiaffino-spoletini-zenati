@@ -6,7 +6,8 @@ import it.polimi.ingsw.model.expertgame.gamemodes.GameMode2;
 public class Character2 extends Character{
 
     public Character2(){
-        // inizializzare cost e id
+        setCost(2);
+        setId(2);
     }
 
     @Override

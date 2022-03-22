@@ -12,10 +12,10 @@ public class Character1 extends Character {
 
     public Character1(ConcreteExpertGame currGame){
 
-        // Inizializzare cost e id
-
+        setCost(1);
+        setId(1);
         students = new ArrayList<Student>();
-        for(int i=0;i<4;i++) {
+        for(int i=0; i<4; i++) {
             addStudent(currGame.getGame().getBag().removeStudent());
         }
     }

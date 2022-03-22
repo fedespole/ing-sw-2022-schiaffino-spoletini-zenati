@@ -6,7 +6,11 @@ import it.polimi.ingsw.model.expertgame.gamemodes.GameMode8;
 
 public class Character8 extends Character{
 
-    public Character8(){    }
+    public Character8(){
+
+        setCost(2);
+        setId(8);
+    }
 
     public void useAbility(ConcreteExpertGame currGame, Player player) {
         currGame = new GameMode8(currGame, player);
