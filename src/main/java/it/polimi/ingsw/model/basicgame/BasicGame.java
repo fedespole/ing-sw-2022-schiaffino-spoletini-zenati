@@ -51,12 +51,14 @@ public class BasicGame implements Game{
 
     @Override
     public void moveStudentFromEntranceToDining(Player player, Student student) {
-
+        player.getMySchoolBoard().removeStudentFromEntrance(student);
+        player.getMySchoolBoard().addStudentToDining(student);
     }
 
     @Override
     public void moveStudentFromEntranceToIsland(Player player, Student student, Island chosenIsland){
-
+        player.getMySchoolBoard().removeStudentFromEntrance(student);
+        chosenIsland.addStudent(student);
     }
 
     @Override
