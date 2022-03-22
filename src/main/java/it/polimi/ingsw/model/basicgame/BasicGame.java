@@ -12,6 +12,7 @@ public class BasicGame implements Game{
     private ArrayList<ArrayList<Island>> islands;
     private ArrayList<Professor> professors;
     private int motherNature;
+    private Player currPlayer;
 
     public BasicGame(int numPlayers) {
         this.numPlayers = numPlayers;
@@ -208,5 +209,13 @@ public class BasicGame implements Game{
 
     public void setMotherNature(int motherNature) {
         this.motherNature = motherNature;
+    }
+
+    public Player getCurrPlayer() {
+        return currPlayer;
+    }
+
+    public void setCurrPlayer(Player currPlayer) {
+        this.currPlayer = currPlayer;
     }
 }
