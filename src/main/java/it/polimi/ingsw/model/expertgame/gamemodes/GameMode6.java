@@ -24,7 +24,6 @@ public class GameMode6 extends ConcreteExpertGame {
                         else if (this.getGame().getNumPlayers() == 3)
                             p[2]++;
                     }
-                    break;
                 }
             }
             if (island.getTower() != null) {//counts tower from one island
