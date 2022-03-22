@@ -1,4 +1,16 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
-public class Character6 {
+import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
+import it.polimi.ingsw.model.expertgame.gamemodes.GameMode6;
+
+public class Character6 extends Character{
+
+    public Character6(ConcreteExpertGame currGame){
+
+    }
+
+    @Override
+    public void useAbility(ConcreteExpertGame currGame) {
+        currGame = new GameMode6(currGame);
+    }
 }

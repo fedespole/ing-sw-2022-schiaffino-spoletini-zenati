@@ -5,7 +5,12 @@ import it.polimi.ingsw.model.expertgame.gamemodes.GameMode2;
 
 public class Character2 extends Character{
 
-    public Character2(ConcreteExpertGame currGame){
+    public Character2(){
+        // inizializzare cost e id
+    }
+
+    @Override
+    public void useAbility(ConcreteExpertGame currGame) {
         currGame = new GameMode2(currGame);
     }
 }

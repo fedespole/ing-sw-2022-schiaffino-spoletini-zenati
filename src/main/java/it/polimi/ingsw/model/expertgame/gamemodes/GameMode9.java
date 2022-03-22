@@ -8,7 +8,7 @@ import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 public class GameMode9 extends ConcreteExpertGame {
     COLOR color;
 
-    public GameMode9(ConcreteExpertGame concreteExpertGame,COLOR color) {
+    public GameMode9(ConcreteExpertGame concreteExpertGame, COLOR color) {
         super(concreteExpertGame);
         this.color=color;
     }
