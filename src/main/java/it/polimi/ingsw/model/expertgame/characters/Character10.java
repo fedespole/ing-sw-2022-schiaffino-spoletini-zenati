@@ -1,9 +1,8 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
-public class Character10 {
-
-
-    /*
+public class Character10 extends Character{
+//da decidere come dare l'input di useAbility
+/*
 public class GameMode10 extends ConcreteExpertGame{//array lungo 4,con studenti accoppiati due a due. students[0] si trova nell'entrance,students[1] si trova nella plancia
     public GameMode10(ConcreteExpertGame concreteExpertGame, Player player, Student[] students) {
         super(concreteExpertGame);
@@ -15,6 +14,9 @@ public class GameMode10 extends ConcreteExpertGame{//array lungo 4,con studenti 
         }
     }
 }*/
-
-
+    public Character10() {
+        setCost(1);
+        setId(10);
+        setHasBeenUsed(false);
+    }
 }

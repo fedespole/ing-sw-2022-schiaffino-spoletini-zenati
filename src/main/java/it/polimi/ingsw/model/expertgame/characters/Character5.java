@@ -13,19 +13,18 @@ public class Character5 extends Character{
     public Character5(){
         setCost(2);
         setId(5);
+        setHasBeenUsed(false);
         noEntries = 4;
         islandsWithNoEntries = new ArrayList<ArrayList<Island>>();
     }
 
     public void useAbility(ConcreteExpertGame currGame, ArrayList<Island> island) {
-
+        changeCost();
         islandsWithNoEntries.add(island);
         noEntries--;
-
     }
 
     public void restoreNoEntry(ConcreteExpertGame currGame, ArrayList<Island> island){
-
         islandsWithNoEntries.remove(island);
         noEntries++;
     }

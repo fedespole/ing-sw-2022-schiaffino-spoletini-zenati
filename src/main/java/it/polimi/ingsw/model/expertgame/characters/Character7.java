@@ -13,6 +13,7 @@ public class Character7 extends Character{
 
         setCost(1);
         setId(7);
+        setHasBeenUsed(false);
 
         students = new ArrayList<Student>();
 
@@ -22,15 +23,11 @@ public class Character7 extends Character{
     }
 
     public void useAbility(ConcreteExpertGame currGame, ArrayList<Student> students) {
-
+        changeCost();
         for(int i=0; i<students.size()/2; i++){
-
             removeStudent(students.get(2*i));
             // player.
-
         }
-
-
 
     }
 

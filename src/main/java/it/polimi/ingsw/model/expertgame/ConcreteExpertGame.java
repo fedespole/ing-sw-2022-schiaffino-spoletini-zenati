@@ -45,38 +45,38 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     }
 
     @Override
-    public void fillCloud(Player player) {
-        game.fillCloud(player);
+    public void fillCloud() {
+        game.fillCloud();
     }
 
     @Override
-    public AssistantCard chooseCard(int index,Player player) {
-        return game.chooseCard(index,player);
+    public AssistantCard chooseCard(int index) {
+        return game.chooseCard(index);
     }
 
     @Override
-    public void moveStudentFromEntranceToDining(Player player, Student student) {
-        game.moveStudentFromEntranceToDining(player, student);
+    public void moveStudentFromEntranceToDining(Student student) {
+        game.moveStudentFromEntranceToDining(student);
     }
 
     @Override
-    public void moveStudentFromEntranceToIsland(Player player, Student student, Island chosenIsland){
-        game.moveStudentFromEntranceToIsland(player, student, chosenIsland);
+    public void moveStudentFromEntranceToIsland(Student student, Island chosenIsland){
+        game.moveStudentFromEntranceToIsland(student, chosenIsland);
     }
 
     @Override
-    public void moveMother(int steps, Player player) {
-        game.moveMother(steps, player);
+    public void moveMother(int steps) {
+        game.moveMother(steps);
     }
 
     @Override
-    public Cloud chooseCloud(Player player,int cloud) {
-        return game.chooseCloud(player,cloud);
+    public Cloud chooseCloud(int cloud) {
+        return game.chooseCloud(cloud);
     }
 
     @Override
-    public void moveStudentsFromCloud(Player player,Cloud chosenCloud) {
-        game.moveStudentsFromCloud(player,chosenCloud);
+    public void moveStudentsFromCloud(Cloud chosenCloud) {
+        game.moveStudentsFromCloud(chosenCloud);
     }
 
     @Override
@@ -85,8 +85,8 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     }
 
     @Override
-    public void assignProfessor(Player player, COLOR color){
-        game.assignProfessor(player, color);
+    public void assignProfessor(COLOR color){
+        game.assignProfessor(color);
     }
 
     @Override

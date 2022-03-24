@@ -5,6 +5,9 @@ import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 public abstract class Character {
     private int cost;
     private int id;
+    private boolean hasBeenUsed;
+
+    public void useAbility(ConcreteExpertGame currGame){}
 
     public int getCost() {
         return cost;
@@ -22,5 +25,16 @@ public abstract class Character {
         this.id = id;
     }
 
-    public void useAbility(ConcreteExpertGame currGame){}
+    public void setHasBeenUsed(boolean hasBeenUsed) {
+        this.hasBeenUsed = hasBeenUsed;
+    }
+    public boolean isHasBeenUsed() {
+        return hasBeenUsed;
+    }
+    public void changeCost(){
+        if(!isHasBeenUsed()){
+            setHasBeenUsed(true);
+            setCost(getCost()+1);
+        }
+    }
 }

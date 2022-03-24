@@ -11,9 +11,9 @@ public class Character1 extends Character {
     private ArrayList<Student> students;
 
     public Character1(ConcreteExpertGame currGame){
-
         setCost(1);
         setId(1);
+        setHasBeenUsed(false);
         students = new ArrayList<Student>();
         for(int i=0; i<4; i++) {
             addStudent(currGame.getGame().getBag().removeStudent());
@@ -21,6 +21,7 @@ public class Character1 extends Character {
     }
 
     public void useAbility(ConcreteExpertGame currGame, Student student, Island island){
+        changeCost();
         removeStudent(student);
         island.addStudent(student);
         addStudent(currGame.getGame().getBag().removeStudent());

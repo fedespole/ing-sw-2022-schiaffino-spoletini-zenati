@@ -10,10 +10,11 @@ public class Character3 extends Character{
     public Character3(){
         setCost(3);
         setId(3);
+        setHasBeenUsed(false);
     }
 
     public void useAbility(ConcreteExpertGame currGame, int destination){
-
+        changeCost();
         int[] p = {0, 0, 0}; //if the players are 2, p3 remains 0
         int indexOfWinner = -1;
         int currTowerOwner = -1;
