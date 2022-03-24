@@ -16,9 +16,9 @@ public class SchoolBoard {
         entrance.add(student);
     }
 
-    public void removeStudentFromEntrance(Student student){
-        entrance.remove(student);
-    }
+    public void removeStudentFromEntrance(Student student) {
+            entrance.remove(student);
+        }
 
     public void addStudentToDining(Student student){
         diningRoom[student.getColor().ordinal()].add(student);
@@ -47,5 +47,12 @@ public class SchoolBoard {
 
     public Student removeStudentFromDiningRoom(COLOR color) {
        return diningRoom[color.ordinal()].remove(diningRoom[color.ordinal()].size()-1);
+    }
+    public Student removeStudentFromEntrance(COLOR color){
+        for (int i = 0, entranceSize = entrance.size(); i < entranceSize; i++) {
+            if(entrance.get(i).getColor().equals(color))
+                return entrance.get(i);
+        }
+        return null;
     }
 }

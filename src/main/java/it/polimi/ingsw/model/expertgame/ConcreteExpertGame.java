@@ -18,14 +18,15 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
 
     public ConcreteExpertGame(BasicGame game) {
         this.game = game;
-        for(Player player : game.getPlayers()){
+        for (Player player : game.getPlayers()) {
             player.setCoins(0);
         }
 
     }
-    public ConcreteExpertGame(ConcreteExpertGame expertGame){
-        this.game=expertGame.game;
-        this.characters=expertGame.characters;
+
+    public ConcreteExpertGame(ConcreteExpertGame expertGame) {
+        this.game = expertGame.game;
+        this.characters = expertGame.characters;
     }
 
     public BasicGame getGame() {
@@ -60,7 +61,7 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     }
 
     @Override
-    public void moveStudentFromEntranceToIsland(Student student, Island chosenIsland){
+    public void moveStudentFromEntranceToIsland(Student student, Island chosenIsland) {
         game.moveStudentFromEntranceToIsland(student, chosenIsland);
     }
 
@@ -85,10 +86,16 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     }
 
     @Override
-    public void assignProfessor(COLOR color){
+    public void assignProfessor(COLOR color) {
         game.assignProfessor(color);
     }
 
     @Override
-    public int getMotherNature(){ return game.getMotherNature(); }
+    public int getMotherNature() {
+        return game.getMotherNature();
+    }
+
+    public Player getCurrPlayer() {
+        return game.getCurrPlayer();
+    }
 }

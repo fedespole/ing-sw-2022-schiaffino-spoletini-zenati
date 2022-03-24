@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 
 public class Character12 extends Character{
 
-    public Character12(){
+    public Character12(ConcreteExpertGame currGame){
         setCost(3);
         setId(12);
         setHasBeenUsed(false);
