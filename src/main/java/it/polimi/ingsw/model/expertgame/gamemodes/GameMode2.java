@@ -11,18 +11,18 @@ public class GameMode2 extends ConcreteExpertGame {
     // Check iniziale influenza professori
 
     @Override
-    public void assignProfessor(Player player, COLOR color){
+    public void assignProfessor( COLOR color){
 
         // Check if professor is not owned
         if(this.getGame().getProfessors().get(color.ordinal()).getOwner()==null){
-            this.getGame().getProfessors().get(color.ordinal()).setOwner(player);           // assignProf
+            this.getGame().getProfessors().get(color.ordinal()).setOwner(getGame().getCurrPlayer());           // assignProf
         }
         // Compare influence of this player and last owner, if higher, the owner changes
         else{
-            int influenceContender = player.getMySchoolBoard().getDiningRoom()[color.ordinal()].size();
+            int influenceContender = getGame().getCurrPlayer().getMySchoolBoard().getDiningRoom()[color.ordinal()].size();
             int influenceLastOwner = this.getGame().getProfessors().get(color.ordinal()).getOwner().getMySchoolBoard().getDiningRoom()[color.ordinal()].size();
             if(influenceContender>=influenceLastOwner){
-                this.getGame().getProfessors().get(color.ordinal()).setOwner(player);       // assignProf
+                this.getGame().getProfessors().get(color.ordinal()).setOwner(getGame().getCurrPlayer());       // assignProf
             }
         }
     }
