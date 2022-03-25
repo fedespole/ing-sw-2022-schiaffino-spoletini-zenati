@@ -5,6 +5,10 @@ public class Island {
     private ArrayList<Student> students;
     private Tower tower;
 
+    public Island() {
+        students = new ArrayList<Student>();
+    }
+
     public ArrayList<Student> getStudents() {
         return students;
     }
