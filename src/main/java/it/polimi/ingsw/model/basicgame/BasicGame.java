@@ -51,15 +51,13 @@ public class BasicGame implements Game{
     }
 
     @Override
-    public void moveStudentFromEntranceToDining(Student student) {
-        currPlayer.getMySchoolBoard().removeStudentFromEntrance(student);
-        currPlayer.getMySchoolBoard().addStudentToDining(student);
+    public void moveStudentFromEntranceToDining(COLOR color) {
+        currPlayer.getMySchoolBoard().addStudentToDining(currPlayer.getMySchoolBoard().removeStudentFromEntrance(color));
     }
 
     @Override
-    public void moveStudentFromEntranceToIsland(Student student, Island chosenIsland){
-        currPlayer.getMySchoolBoard().removeStudentFromEntrance(student);
-        chosenIsland.addStudent(student);
+    public void moveStudentFromEntranceToIsland(COLOR color, Island chosenIsland){
+        chosenIsland.addStudent(currPlayer.getMySchoolBoard().removeStudentFromEntrance(color));
     }
 
     @Override

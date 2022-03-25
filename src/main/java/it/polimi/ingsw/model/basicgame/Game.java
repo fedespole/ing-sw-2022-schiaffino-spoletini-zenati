@@ -7,8 +7,8 @@ import it.polimi.ingsw.model.basicgame.playeritems.Player;
 public interface Game {
     void fillCloud();
     AssistantCard chooseCard(int index);
-    void moveStudentFromEntranceToDining(Student student);
-    void moveStudentFromEntranceToIsland(Student student, Island chosenIsland);
+    void moveStudentFromEntranceToDining(COLOR color);
+    void moveStudentFromEntranceToIsland(COLOR color, Island chosenIsland);
     void moveMother(int steps);
     Cloud chooseCloud(int cloud);
     void moveStudentsFromCloud(Cloud chosenCloud);

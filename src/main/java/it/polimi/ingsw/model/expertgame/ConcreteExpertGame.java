@@ -56,13 +56,13 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     }
 
     @Override
-    public void moveStudentFromEntranceToDining(Student student) {
-        game.moveStudentFromEntranceToDining(student);
+    public void moveStudentFromEntranceToDining(COLOR color) {
+        game.moveStudentFromEntranceToDining(color);
     }
 
     @Override
-    public void moveStudentFromEntranceToIsland(Student student, Island chosenIsland) {
-        game.moveStudentFromEntranceToIsland(student, chosenIsland);
+    public void moveStudentFromEntranceToIsland(COLOR color, Island chosenIsland) {
+        game.moveStudentFromEntranceToIsland(color, chosenIsland);
     }
 
     @Override
