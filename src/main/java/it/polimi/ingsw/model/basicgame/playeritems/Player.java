@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.basicgame.playeritems;
 
+import it.polimi.ingsw.model.basicgame.BasicGame;
+import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.TEAM;
 import it.polimi.ingsw.model.basicgame.Tower;
 
@@ -14,7 +16,7 @@ public class Player {
     private TEAM team;
     private int maxSteps;
 
-    public Player(String username, int num, TEAM team) {
+    public Player(String username, int num, TEAM team, BasicGame game) {
         this.username = username;
         this.team = team;
         this.myCloud = new ArrayList<Cloud>();
@@ -25,15 +27,19 @@ public class Player {
             case 2:
                 this.myCloud.add(new Cloud());
                 this.myCloud.add(new Cloud());
-                for(int i = 0; i< 8; i++){
+                for(int i = 0; i< 8; i++)
                     this.mySchoolBoard.addTower(new Tower(this.team));
-            }
+                for(Cloud cloud :this.myCloud){
+                    for(int i=0;i<3;i++){
+                        cloud.addStudent(game.getBag());
+                    }
+                }
             case 3:
                 this.myCloud.add(new Cloud());
-                for(int i = 0; i< 6; i++){
+                for(int i = 0; i< 6; i++)
                     this.mySchoolBoard.addTower(new Tower(this.team));
-
-                }
+                for(int i=0;i<4;i++)
+                    this.myCloud.get(0).addStudent(game.getBag());
         }
     }
 

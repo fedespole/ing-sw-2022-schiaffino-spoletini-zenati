@@ -6,7 +6,7 @@ public class Bag {
     private ArrayList<Student> students;
 
     public Bag() {
-        ArrayList<Student> students = new ArrayList<Student>();
+        students = new ArrayList<Student>();
         for(COLOR c : COLOR.values()){
             for(int i = 0; i < 26; i++){
                 students.add(new Student(c));
@@ -20,5 +20,9 @@ public class Bag {
     }
     public void addStudent(Student student){
         students.add(student);
+    }
+
+    public ArrayList<Student> getStudents() {
+        return students;
     }
 }

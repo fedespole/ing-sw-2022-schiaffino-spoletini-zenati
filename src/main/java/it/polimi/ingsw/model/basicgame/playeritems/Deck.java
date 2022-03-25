@@ -5,6 +5,7 @@ public class Deck {
     private ArrayList<AssistantCard> cards;
 
     public Deck() {
+        cards = new ArrayList<AssistantCard>();
         for(int i=1;i<11;i++){
             if(i%2==0){
                 cards.add(new AssistantCard(i,i/2));

@@ -18,6 +18,7 @@ public class BasicGame implements Game{
         this.numPlayers = numPlayers;
         this.bag = new Bag();
         this.islands = new ArrayList<ArrayList<Island>>();
+        this.players = new ArrayList<Player>();
         for(int i=0; i<12; i++){
             islands.add(new ArrayList<Island>());
             islands.get(i).add(new Island());

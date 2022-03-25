@@ -12,6 +12,16 @@ public class SchoolBoard {
     private ArrayList<Tower> towers;
     private ArrayList<Professor> professors;
 
+    public SchoolBoard() {
+        this.entrance = new ArrayList<Student>();
+        this.diningRoom = new ArrayList[5];
+        for(int i=0;i<5;i++){
+            this.diningRoom[i]= new ArrayList<Student>();
+        }
+        this.towers = new ArrayList<Tower>();
+        this.professors = new ArrayList<Professor>();
+    }
+
     public void addStudentToEntrance(Student student){
         entrance.add(student);
     }
@@ -54,11 +64,4 @@ public class SchoolBoard {
     public Student removeStudentFromDiningRoom(COLOR color) {
        return diningRoom[color.ordinal()].remove(diningRoom[color.ordinal()].size()-1);
     }
-  /*  public Student removeStudentFromEntrance(COLOR color){
-        for (int i = 0, entranceSize = entrance.size(); i < entranceSize; i++) {
-            if(entrance.get(i).getColor().equals(color))
-                return entrance.get(i);
-        }
-        return null; che senso ha questa
-    }*/
 }

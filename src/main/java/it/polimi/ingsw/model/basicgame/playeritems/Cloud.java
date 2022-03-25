@@ -7,7 +7,7 @@ public class Cloud {
     private ArrayList<Student> students;
 
     public Cloud() {
-        ArrayList<Student> students = new ArrayList<Student>();
+        students = new ArrayList<Student>();
     }
 
     public void addStudent(Bag bag){
