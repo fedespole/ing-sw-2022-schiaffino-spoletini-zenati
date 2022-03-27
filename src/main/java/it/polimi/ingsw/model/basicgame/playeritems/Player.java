@@ -16,32 +16,13 @@ public class Player {
     private TEAM team;
     private int maxSteps;
 
-    public Player(String username, int num, TEAM team, BasicGame game) {
+    public Player(String username) {
         this.username = username;
-        this.team = team;
         this.myCloud = new ArrayList<Cloud>();
         this.myDeck = new Deck();
         this.mySchoolBoard = new SchoolBoard();
         this.coins = -1;
-        switch(num) {
-            case 2:
-                this.myCloud.add(new Cloud());
-                this.myCloud.add(new Cloud());
-                for(int i = 0; i< 8; i++)
-                    this.mySchoolBoard.addTower(new Tower(this.team));
-                for(Cloud cloud :this.myCloud){
-                    for(int i=0;i<3;i++){
-                        cloud.addStudent(game.getBag());
-                    }
-                }
-            case 3:
-                this.myCloud.add(new Cloud());
-                for(int i = 0; i< 6; i++)
-                    this.mySchoolBoard.addTower(new Tower(this.team));
-                for(int i=0;i<4;i++)
-                    this.myCloud.get(0).addStudent(game.getBag());
         }
-    }
 
     public void setCoins(int coins) {
         this.coins = coins;
@@ -77,6 +58,10 @@ public class Player {
 
     public void setMaxSteps(int maxSteps) {
         this.maxSteps = maxSteps;
+    }
+
+    public void setTeam(TEAM team) {
+        this.team = team;
     }
 }
 

@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.basicgame.playeritems.Cloud;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class BasicGame implements Game{
     private ArrayList<Player> players;
@@ -14,8 +15,7 @@ public class BasicGame implements Game{
     private int motherNature;
     private Player currPlayer;
 
-    public BasicGame(int numPlayers) {
-        this.numPlayers = numPlayers;
+    public BasicGame() {
         this.bag = new Bag();
         this.islands = new ArrayList<ArrayList<Island>>();
         this.players = new ArrayList<Player>();
@@ -26,6 +26,51 @@ public class BasicGame implements Game{
         this.professors = new ArrayList<Professor>();
         for(COLOR color : COLOR.values()){
             professors.add(new Professor(color));
+        }
+    }
+    @Override
+    public void setUp(){
+        this.numPlayers=this.players.size();
+        this.currPlayer=this.players.get(0);
+        Random new_random= new Random();
+        this.motherNature = new_random.nextInt(11);
+        for(int i=0;i<12;i++){
+            if(i!=this.motherNature && i!=(this.motherNature+6)%12)
+                this.getIslands().get(i).get(0).addStudent(this.bag.removeStudent());
+        }
+        for(COLOR c : COLOR.values()) {//bisogna riempire il bag con tutti gli studenti solo dopo aver messo tutti gli studenti nelle isole
+            for (int i = 0; i < 24; i++) {
+                this.bag.getStudents().add(new Student(c));
+            }
+        }
+        for(int i=0;i<numPlayers;i++){
+            this.players.get(i).setTeam(TEAM.values()[i]);
+            switch(numPlayers) {
+                case 2:
+                    for(int j=0;j<7;j++){
+                        this.players.get(i).getMySchoolBoard().addStudentToEntrance(this.bag.removeStudent());
+                    }
+                    this.players.get(i).getMyCloud().add(new Cloud());
+                    this.players.get(i).getMyCloud().add(new Cloud());
+                    for (int j = 0; j < 8; j++)
+                        this.players.get(i).getMySchoolBoard().addTower(new Tower(TEAM.values()[i]));
+                    for (Cloud cloud : this.players.get(i).getMyCloud()) {//in realta si riempono nella fase di pianificazione del turno,da correggere
+                        for (int j = 0; j < 3; j++) {
+                            cloud.addStudent(this.bag);
+                        }
+                    }
+                    break;
+                case 3:
+                    for(int j=0;j<9;j++){
+                        this.players.get(i).getMySchoolBoard().addStudentToEntrance(this.bag.removeStudent());
+                    }
+                    this.players.get(i).getMyCloud().add(new Cloud());
+                    for (int j = 0; j < 6; j++)
+                        this.players.get(i).getMySchoolBoard().addTower(new Tower(TEAM.values()[i]));
+                    for (int j = 0; j < 4; j++)//in realta si riempono nella fase di pianificazione del turno,da correggere
+                        this.players.get(i).getMyCloud().get(0).addStudent(this.bag);
+                    break;
+            }
         }
     }
 
@@ -96,9 +141,9 @@ public class BasicGame implements Game{
             for(Student student:island.getStudents()){//counts every student from one island
                 for(Professor professor:professors){
                     if(student.getColor()==professor.getColor() && professor.getOwner()!=null){
-                        if(professor.getOwner().getUsername().equals(this.players.get(0).getUsername()))
+                        if(professor.getOwner()==this.players.get(0))
                             p[0]++;
-                        else if(professor.getOwner().getUsername().equals(this.players.get(1).getUsername()))
+                        else if(professor.getOwner()==this.players.get(1))
                             p[1]++;
                         else if(numPlayers==3)
                             p[2]++;

@@ -60,6 +60,9 @@ public class SchoolBoard {
         return diningRoom;
     }
 
+    public ArrayList<Tower> getTowers() {
+        return towers;
+    }
 
     public Student removeStudentFromDiningRoom(COLOR color) {
        return diningRoom[color.ordinal()].remove(diningRoom[color.ordinal()].size()-1);

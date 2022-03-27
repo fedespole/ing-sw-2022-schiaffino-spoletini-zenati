@@ -8,7 +8,7 @@ public class Bag {
     public Bag() {
         students = new ArrayList<Student>();
         for(COLOR c : COLOR.values()){
-            for(int i = 0; i < 26; i++){
+            for(int i = 0; i < 2; i++){
                 students.add(new Student(c));
             }
         }

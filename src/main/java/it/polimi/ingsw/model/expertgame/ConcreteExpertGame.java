@@ -46,6 +46,11 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     }
 
     @Override
+    public void setUp(){
+        game.setUp();
+    }
+
+    @Override
     public void fillCloud() {
         game.fillCloud();
     }

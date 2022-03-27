@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.basicgame.playeritems.Cloud;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 
 public interface Game {
+    void setUp();
     void fillCloud();
     AssistantCard chooseCard(int index);
     void moveStudentFromEntranceToDining(COLOR color);

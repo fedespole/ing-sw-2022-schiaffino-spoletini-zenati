@@ -16,10 +16,11 @@ public class BasicGameTest extends TestCase {
         Random rand = new Random(); //instance of random class
         //int int_random = rand.nextInt(1)+2;// is 2 or 3
         int int_random=2;
-        game =new BasicGame(int_random);
+        game =new BasicGame();
         for(int i=0;i<int_random;i++){
-            game.getPlayers().add(new Player("Test",int_random,TEAM.values()[i],game));
+            game.getPlayers().add(new Player("Test"));
         }
+        game.setUp();
     }
     @Test
     public void TestFillCloud(){
@@ -39,24 +40,37 @@ public class BasicGameTest extends TestCase {
     }
 
     @Test
-    public void TestComputeInfluence(){
+    public void TestComputeInfluence(){//works if num_random==2
+       //check without towers in the islands
+        assertEquals(TEAM.WHITE, game.getPlayers().get(0).getTeam());
+        assertEquals(TEAM.GREY,game.getPlayers().get(1).getTeam());
         game.setMotherNature(0);
         for(int i=0;i<4;i++) {
             game.getIslands().get(0).get(0).getStudents().add(new Student(COLOR.YELLOW));
         }
-        for(int i=0;i<3;i++){
+        for(int i=0;i<6;i++){
             game.getIslands().get(0).get(0).getStudents().add(new Student(COLOR.BLUE));
         }
         game.getPlayers().get(0).getMySchoolBoard().addProfessor(game.getProfessors().get(COLOR.YELLOW.ordinal()));
         game.getPlayers().get(1).getMySchoolBoard().addProfessor(game.getProfessors().get(COLOR.BLUE.ordinal()));
         game.getProfessors().get(COLOR.YELLOW.ordinal()).setOwner(game.getPlayers().get(0));
         game.getProfessors().get(COLOR.BLUE.ordinal()).setOwner(game.getPlayers().get(1));
-        assertEquals(game.getPlayers().get(0).getTeam(),game.getIslands().get(0).get(0).getTower().getColor());//non inserisce
+        game.computeInfluence();
+        assertEquals(game.getPlayers().get(1).getTeam(),game.getIslands().get(0).get(0).getTower().getColor());
+        //check with towers
+        for(int i=0;i<4;i++) {
+            game.getIslands().get(0).get(0).getStudents().add(new Student(COLOR.YELLOW));
+        }
+        assertEquals(8,game.getPlayers().get(0).getMySchoolBoard().getTowers().size());
+        assertEquals(7,game.getPlayers().get(1).getMySchoolBoard().getTowers().size());
+        game.computeInfluence();
+        assertEquals(game.getPlayers().get(0).getTeam(),game.getIslands().get(0).get(0).getTower().getColor());
+        assertEquals(7,game.getPlayers().get(0).getMySchoolBoard().getTowers().size());
+        assertEquals(8,game.getPlayers().get(1).getMySchoolBoard().getTowers().size());
     }
 
     @Test//works
     public void TestAssignProfessor(){
-        game.setCurrPlayer(game.getPlayers().get(0));//setta current player al primo
         for(int i=0;i<6;i++)
             game.getPlayers().get(0).getMySchoolBoard().addStudentToDining(new Student(COLOR.RED));//dining room del primo con 6 studenti rossi
         for(int i=0;i<4;i++)
