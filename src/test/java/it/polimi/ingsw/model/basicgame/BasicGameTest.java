@@ -83,4 +83,15 @@ public class BasicGameTest extends TestCase {
         game.assignProfessor(COLOR.RED);
         assertEquals( game.getProfessors().get(COLOR.RED.ordinal()).getOwner(),game.getPlayers().get(1));
     }
+
+    @Test
+    public void TestMergeIslands(){
+        game.setMotherNature(0);
+        game.getIslands().get(0).get(0).setTower(new Tower(TEAM.WHITE));
+        game.getIslands().get(1).get(0).setTower(new Tower(TEAM.WHITE));
+        assertEquals(12,game.getIslands().size());
+        game.mergeIslands();
+        assertEquals(11,game.getIslands().size());
+        assertEquals(2,game.getIslands().get(0).size());
+    }
 }

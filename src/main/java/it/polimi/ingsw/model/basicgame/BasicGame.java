@@ -187,6 +187,7 @@ public class BasicGame implements Game{
                 island.setTower(players.get(indexOfWinner).getMySchoolBoard().removeTower());
             }
         }
+        this.mergeIslands();
     }
 
     @Override
@@ -203,6 +204,33 @@ public class BasicGame implements Game{
             if(influenceContender>influenceLastOwner){
                 professors.get(color.ordinal()).setOwner(currPlayer);       // assignProf
             }
+        }
+    }
+
+    @Override
+    public void mergeIslands(){
+        if(this.islands.get(motherNature).get(0).getTower()==null)
+            return;
+        int prior,next;
+        if(motherNature==0)
+            prior=11;
+        else
+            prior=motherNature-1;
+        if(motherNature==11)
+            next=0;
+        else
+            next=motherNature+1;
+        if(this.islands.get(prior).get(0).getTower()!=null && this.islands.get(prior).get(0).getTower().getColor().equals(this.islands.get(motherNature).get(0).getTower().getColor())){
+            while(this.islands.get(prior).size()!=0){
+                this.islands.get(motherNature).add(this.islands.get(prior).remove(0));
+            }
+            this.islands.remove(prior);
+        }
+        if(this.islands.get(next).get(0).getTower()!=null && this.islands.get(next).get(0).getTower().getColor().equals(this.islands.get(motherNature).get(0).getTower().getColor())){
+            while(this.islands.get(next).size()!=0){
+                this.islands.get(motherNature).add(this.islands.get(next).remove(0));
+            }
+            this.islands.remove(next);
         }
     }
 

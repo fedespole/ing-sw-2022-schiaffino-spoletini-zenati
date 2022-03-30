@@ -96,6 +96,11 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     }
 
     @Override
+    public void mergeIslands(){
+        game.mergeIslands();
+    }
+
+    @Override
     public int getMotherNature() {
         return game.getMotherNature();
     }

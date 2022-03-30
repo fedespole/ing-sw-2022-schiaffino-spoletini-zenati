@@ -15,5 +15,6 @@ public interface Game {
     void moveStudentsFromCloud(Cloud chosenCloud);
     void computeInfluence();
     void assignProfessor(COLOR color);
+    void mergeIslands();
     int getMotherNature();
 }
