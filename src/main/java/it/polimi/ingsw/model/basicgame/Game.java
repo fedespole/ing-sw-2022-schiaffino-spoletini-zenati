@@ -4,6 +4,8 @@ import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.model.basicgame.playeritems.Cloud;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 
+import java.util.ArrayList;
+
 public interface Game {
     void setUp();
     void fillCloud();
@@ -17,4 +19,17 @@ public interface Game {
     void assignProfessor(COLOR color);
     void mergeIslands();
     int getMotherNature();
+    ArrayList<Player> getPlayers();
+    int getNumPlayers();
+    Bag getBag();
+    ArrayList<Professor> getProfessors();
+    ArrayList<ArrayList<Island>> getIslands();
+    void setPlayers(ArrayList<Player> players);
+    void setNumPlayers(int numPlayers);
+    void setBag(Bag bag);
+    void setIslands(ArrayList<ArrayList<Island>> islands);
+    void setProfessors(ArrayList<Professor> professors);
+    void setMotherNature(int motherNature);
+    Player getCurrPlayer();
+    void setCurrPlayer(Player currPlayer);
 }

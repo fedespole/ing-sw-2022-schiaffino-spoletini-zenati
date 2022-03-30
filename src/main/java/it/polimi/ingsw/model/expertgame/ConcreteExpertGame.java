@@ -1,14 +1,12 @@
 package it.polimi.ingsw.model.expertgame;
 
-import it.polimi.ingsw.model.basicgame.COLOR;
-import it.polimi.ingsw.model.basicgame.Island;
-import it.polimi.ingsw.model.basicgame.Student;
+import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
-import it.polimi.ingsw.model.basicgame.BasicGame;
 import it.polimi.ingsw.model.basicgame.playeritems.Cloud;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.model.expertgame.characters.Character;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
@@ -107,5 +105,65 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
 
     public Player getCurrPlayer() {
         return game.getCurrPlayer();
+    }
+
+    @Override
+    public ArrayList<Player> getPlayers() {
+        return game.getPlayers();
+    }
+
+    @Override
+    public int getNumPlayers() {
+        return game.getNumPlayers();
+    }
+
+    @Override
+    public Bag getBag() {
+        return game.getBag();
+    }
+
+    @Override
+    public ArrayList<Professor> getProfessors() {
+        return game.getProfessors();
+    }
+
+    @Override
+    public ArrayList<ArrayList<Island>> getIslands() {
+        return game.getIslands();
+    }
+
+    @Override
+    public void setPlayers(ArrayList<Player> players) {
+        game.setPlayers(players);
+    }
+
+    @Override
+    public void setNumPlayers(int numPlayers) {
+        game.setNumPlayers(numPlayers);
+    }
+
+    @Override
+    public void setBag(Bag bag) {
+        game.setBag(bag);
+    }
+
+    @Override
+    public void setIslands(ArrayList<ArrayList<Island>> islands) {
+        game.setIslands(islands);
+    }
+
+    @Override
+    public void setProfessors(ArrayList<Professor> professors) {
+        game.setProfessors(professors);
+    }
+
+    @Override
+    public void setMotherNature(int motherNature) {
+        game.setMotherNature(motherNature);
+    }
+
+    @Override
+    public void setCurrPlayer(Player currPlayer) {
+        game.setCurrPlayer(currPlayer);
     }
 }
