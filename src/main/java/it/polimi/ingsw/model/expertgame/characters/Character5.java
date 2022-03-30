@@ -20,13 +20,18 @@ public class Character5 extends Character{
 
     public void useAbility(ConcreteExpertGame currGame, ArrayList<Island> island) {
         changeCost();
-        islandsWithNoEntries.add(island);
-        noEntries--;
+        if(noEntries>0) {
+            islandsWithNoEntries.add(island);
+            noEntries--;
+        }
     }
 
-    public void restoreNoEntry(ConcreteExpertGame currGame, ArrayList<Island> island){
+    public void restoreNoEntry(ArrayList<Island> island){
         islandsWithNoEntries.remove(island);
         noEntries++;
     }
 
+    public ArrayList<ArrayList<Island>> getIslandsWithNoEntries() {
+        return islandsWithNoEntries;
+    }
 }

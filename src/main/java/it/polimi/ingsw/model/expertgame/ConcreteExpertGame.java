@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.model.basicgame.playeritems.Cloud;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.model.expertgame.characters.Character;
+import it.polimi.ingsw.model.expertgame.characters.Character5;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -85,7 +86,24 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
 
     @Override
     public void computeInfluence() {
-        game.computeInfluence();
+
+        int char5index=-1, i=0;
+
+        for(Character character : characters){
+            if(character instanceof Character5) char5index = i;
+            i++;
+        }
+
+        // if expertgame has character5, the influence is computed only if the island doesn't have a noEntry
+        if(char5index!=-1) {
+            // Checking if island has a noEntry status
+            if (!((Character5) characters[char5index]).getIslandsWithNoEntries().contains(game.getIslands().get(getMotherNature()))) {
+                game.computeInfluence();
+            } else {
+                ((Character5) characters[char5index]).restoreNoEntry(game.getIslands().get(getMotherNature()));
+            }
+        }
+        else game.computeInfluence();
     }
 
     @Override
