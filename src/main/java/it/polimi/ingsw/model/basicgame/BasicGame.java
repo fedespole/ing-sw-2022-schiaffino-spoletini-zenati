@@ -32,6 +32,7 @@ public class BasicGame implements Game{
         }
         this.players.add(host);
     }
+
     @Override
     public void setUp() throws invalidNumPlayerException {
 
@@ -103,11 +104,14 @@ public class BasicGame implements Game{
     }
 
     @Override
-    public AssistantCard chooseCard(int index) {
+    public AssistantCard chooseCard(int value) throws outOfBoundCardSelectionException{
+
+        if(value<1 || value>10) throw new outOfBoundCardSelectionException();
+
         for(AssistantCard ac:currPlayer.getMyDeck().getCards())
-            if(ac.getValue() == index)
+            if(ac.getValue() == value)
                 currPlayer.getMyDeck().draw(ac);
-        return null;
+        return null; //TODO salvare la carta direttamente
     }
 
     @Override
