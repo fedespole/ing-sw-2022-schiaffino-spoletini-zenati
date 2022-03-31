@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.expertgame.characters;
+/*package it.polimi.ingsw.model.expertgame.characters;
 
 import it.polimi.ingsw.model.basicgame.BasicGame;
 import it.polimi.ingsw.model.basicgame.Game;
@@ -29,4 +29,4 @@ public class CharactersTest extends TestCase {
 
     }
 
-}
+}*/

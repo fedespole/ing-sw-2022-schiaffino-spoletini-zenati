@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.basicgame;
 import java.util.ArrayList;
 
 public class Island {
-    private ArrayList<Student> students;
+    private final ArrayList<Student> students;
     private Tower tower;
 
     public Island() {

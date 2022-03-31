@@ -1,10 +1,10 @@
-package it.polimi.ingsw.model.basicgame.playeritems;
+package it.polimi.ingsw.model.basicgame;
 import it.polimi.ingsw.model.basicgame.Bag;
 import it.polimi.ingsw.model.basicgame.Student;
 import java.util.ArrayList;
 
 public class Cloud {
-    private ArrayList<Student> students;
+    private final ArrayList<Student> students;
 
     public Cloud() {
         students = new ArrayList<Student>();

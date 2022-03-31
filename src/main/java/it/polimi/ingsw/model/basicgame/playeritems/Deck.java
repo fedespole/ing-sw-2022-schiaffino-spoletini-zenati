@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.basicgame.playeritems;
 import java.util.ArrayList;
 
 public class Deck {
-    private ArrayList<AssistantCard> cards;
+    private final ArrayList<AssistantCard> cards;
 
     public Deck() {
         cards = new ArrayList<AssistantCard>();

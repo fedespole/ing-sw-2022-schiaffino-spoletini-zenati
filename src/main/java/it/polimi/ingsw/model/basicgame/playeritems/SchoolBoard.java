@@ -7,10 +7,10 @@ import it.polimi.ingsw.model.basicgame.Tower;
 import java.util.ArrayList;
 
 public class SchoolBoard {
-    private ArrayList<Student> entrance;
-    private ArrayList<Student>[] diningRoom;
-    private ArrayList<Tower> towers;
-    private ArrayList<Professor> professors;
+    private final ArrayList<Student> entrance;
+    private final ArrayList<Student>[] diningRoom;
+    private final ArrayList<Tower> towers;
+    private final ArrayList<Professor> professors;
 
     public SchoolBoard() {
         this.entrance = new ArrayList<Student>();

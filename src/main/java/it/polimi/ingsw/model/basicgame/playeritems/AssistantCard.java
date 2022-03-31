@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model.basicgame.playeritems;
 
 public class AssistantCard {
-    private int value;
-    private int steps;
+    private final int value;
+    private final int steps;
 
     public AssistantCard(int value, int steps) {
         this.value = value;

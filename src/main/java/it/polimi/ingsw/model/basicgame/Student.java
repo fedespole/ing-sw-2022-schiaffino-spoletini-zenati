@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.basicgame;
 
 public class Student {
-    private COLOR color;
+    private final COLOR color;
     public Student(COLOR color) {
         this.color = color;
     }

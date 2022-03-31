@@ -3,7 +3,7 @@ package it.polimi.ingsw.model.basicgame;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 
 public class Professor {
-    private COLOR color;
+    private final COLOR color;
     private Player owner;
 
     public Professor(COLOR color) {

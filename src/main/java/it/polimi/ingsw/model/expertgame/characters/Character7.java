@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Character7 extends Character{
 
-    private ArrayList<Student> students;
+    private final ArrayList<Student> students;
 
     public Character7(ConcreteExpertGame currGame){
 

@@ -2,14 +2,12 @@ package it.polimi.ingsw.model.expertgame;
 
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
-import it.polimi.ingsw.model.basicgame.playeritems.Cloud;
+import it.polimi.ingsw.model.basicgame.Cloud;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.model.expertgame.characters.Character;
 import it.polimi.ingsw.model.expertgame.characters.Character5;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
 
 public class ConcreteExpertGame extends ExpertGameDecorator {
     private BasicGame game;

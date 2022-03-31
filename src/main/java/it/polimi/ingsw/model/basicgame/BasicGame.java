@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.basicgame;
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
-import it.polimi.ingsw.model.basicgame.playeritems.Cloud;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 
 import java.util.ArrayList;
@@ -14,11 +14,14 @@ public class BasicGame implements Game{
     private ArrayList<Professor> professors;
     private int motherNature;
     private Player currPlayer;
+    private final ArrayList<Cloud> clouds;
 
-    public BasicGame() {
+
+    public BasicGame(Player host) {
         this.bag = new Bag();
         this.islands = new ArrayList<ArrayList<Island>>();
         this.players = new ArrayList<Player>();
+        this.clouds = new ArrayList<Cloud>();
         for(int i=0; i<12; i++){
             islands.add(new ArrayList<Island>());
             islands.get(i).add(new Island());
@@ -27,9 +30,13 @@ public class BasicGame implements Game{
         for(COLOR color : COLOR.values()){
             professors.add(new Professor(color));
         }
+        this.players.add(host);
     }
     @Override
-    public void setUp(){
+    public void setUp() throws invalidNumPlayerException {
+
+        if(this.players.size()>3 || this.players.size()<2) throw new invalidNumPlayerException();
+
         this.numPlayers=this.players.size();
         this.currPlayer=this.players.get(0);
         Random new_random= new Random();
@@ -50,25 +57,24 @@ public class BasicGame implements Game{
                     for(int j=0;j<7;j++){
                         this.players.get(i).getMySchoolBoard().addStudentToEntrance(this.bag.removeStudent());
                     }
-                    this.players.get(i).getMyCloud().add(new Cloud());
-                    this.players.get(i).getMyCloud().add(new Cloud());
+                    this.clouds.add(new Cloud());
+                    this.clouds.add(new Cloud());
+
                     for (int j = 0; j < 8; j++)
                         this.players.get(i).getMySchoolBoard().addTower(new Tower(TEAM.values()[i]));
-                    for (Cloud cloud : this.players.get(i).getMyCloud()) {//in realta si riempono nella fase di pianificazione del turno,da correggere
-                        for (int j = 0; j < 3; j++) {
-                            cloud.addStudent(this.bag);
-                        }
-                    }
+
                     break;
                 case 3:
                     for(int j=0;j<9;j++){
                         this.players.get(i).getMySchoolBoard().addStudentToEntrance(this.bag.removeStudent());
                     }
-                    this.players.get(i).getMyCloud().add(new Cloud());
+                    this.clouds.add(new Cloud());
+                    this.clouds.add(new Cloud());
+                    this.clouds.add(new Cloud());
+
                     for (int j = 0; j < 6; j++)
                         this.players.get(i).getMySchoolBoard().addTower(new Tower(TEAM.values()[i]));
-                    for (int j = 0; j < 4; j++)//in realta si riempono nella fase di pianificazione del turno,da correggere
-                        this.players.get(i).getMyCloud().get(0).addStudent(this.bag);
+
                     break;
             }
         }
@@ -76,14 +82,22 @@ public class BasicGame implements Game{
 
     @Override//finds the empty cloud and fills it
     public void fillCloud() {
-        for(Cloud c:currPlayer.getMyCloud()){
-            if(c.getStudents().size()==0){
-                for(int i=0;i<3;i++)
-                {
+
+        for(Cloud c: clouds){
+
+            switch (numPlayers){
+                case 2:
                     c.addStudent(this.bag);
-                }
-                if(numPlayers==3)//if there are three players,we add the fourth student
                     c.addStudent(this.bag);
+                    c.addStudent(this.bag);
+                    break;
+
+                case 3:
+                    c.addStudent(this.bag);
+                    c.addStudent(this.bag);
+                    c.addStudent(this.bag);
+                    c.addStudent(this.bag);
+                    break;
             }
         }
     }
@@ -114,7 +128,7 @@ public class BasicGame implements Game{
 
     @Override//from the index of the cloud,returns the cloud chosen by the player
     public Cloud chooseCloud(int cloud) {
-        return currPlayer.getMyCloud().get(cloud);
+        return this.clouds.get(cloud);
     }
 
     @Override//moves all the students from the chosen cloud to the entrance of the school board
@@ -212,6 +226,7 @@ public class BasicGame implements Game{
         if(this.islands.get(motherNature).get(0).getTower()==null)
             return;
         int prior,next;
+        ArrayList<Island> removePrior = null;
         if(motherNature==0)
             prior=11;
         else
@@ -224,7 +239,7 @@ public class BasicGame implements Game{
             while(this.islands.get(prior).size()!=0){
                 this.islands.get(motherNature).add(this.islands.get(prior).remove(0));
             }
-            this.islands.remove(prior);
+            removePrior = this.islands.get(prior);
         }
         if(this.islands.get(next).get(0).getTower()!=null && this.islands.get(next).get(0).getTower().getColor().equals(this.islands.get(motherNature).get(0).getTower().getColor())){
             while(this.islands.get(next).size()!=0){
@@ -232,6 +247,8 @@ public class BasicGame implements Game{
             }
             this.islands.remove(next);
         }
+
+        if(removePrior!=null) this.islands.remove(removePrior);
     }
 
     @Override

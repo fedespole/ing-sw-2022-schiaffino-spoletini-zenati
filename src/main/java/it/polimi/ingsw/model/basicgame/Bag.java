@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Bag {
-    private ArrayList<Student> students;
+    private final ArrayList<Student> students;
 
     public Bag() {
         students = new ArrayList<Student>();

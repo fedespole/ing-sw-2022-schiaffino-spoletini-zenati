@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.basicgame;
 
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
-import it.polimi.ingsw.model.basicgame.playeritems.Cloud;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 
 import java.util.ArrayList;

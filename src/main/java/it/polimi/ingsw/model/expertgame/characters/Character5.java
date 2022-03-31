@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Character5 extends Character{
 
     private int noEntries;
-    private ArrayList<ArrayList<Island>> islandsWithNoEntries;
+    private final ArrayList<ArrayList<Island>> islandsWithNoEntries;
 
     public Character5(){
         setCost(2);
