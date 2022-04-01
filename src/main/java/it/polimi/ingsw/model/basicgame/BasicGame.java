@@ -34,9 +34,9 @@ public class BasicGame implements Game{
     }
 
     @Override
-    public void setUp() throws invalidNumPlayerException {
+    public void setUp() throws InvalidNumPlayerException {
 
-        if(this.players.size()>3 || this.players.size()<2) throw new invalidNumPlayerException();
+        if(this.players.size()>3 || this.players.size()<2) throw new InvalidNumPlayerException();
 
         this.numPlayers=this.players.size();
         this.currPlayer=this.players.get(0);
@@ -104,16 +104,18 @@ public class BasicGame implements Game{
     }
 
     @Override
-    public void chooseCard(int value) throws outOfBoundCardSelectionException{
+    public void chooseCard(int value) throws OutOfBoundCardSelectionException {
 
         if(value<1 || value>10)
-            throw new outOfBoundCardSelectionException();
+            throw new OutOfBoundCardSelectionException();
 
         for(AssistantCard ac:currPlayer.getMyDeck().getCards())
-            if(ac.getValue() == value)
-               currPlayer.setChosenCard(currPlayer.getMyDeck().draw(ac));
+            if(ac.getValue() == value) {
+                currPlayer.setChosenCard(currPlayer.getMyDeck().draw(ac));
+                return;
+            }
 
-        throw new notAvailableCard();  //if the card has already been drawn
+        throw new NotAvailableCardException();  //if the card has already been drawn
     }
 
     @Override
@@ -128,12 +130,13 @@ public class BasicGame implements Game{
 
     @Override
     public void moveMother(int steps) {
+        if(steps < 0 || steps > currPlayer.getChosenCard().getSteps()) throw new InvalidStepsException();
         motherNature = (motherNature+steps) % this.islands.size();
-        // fare controllo su maxSteps
     }
 
     @Override//from the index of the cloud,returns the cloud chosen by the player
     public Cloud chooseCloud(int cloud) {
+        if(cloud < 0 || cloud > clouds.size()) throw new InvalidCloudIndexException();
         return this.clouds.get(cloud);
     }
 
@@ -234,10 +237,10 @@ public class BasicGame implements Game{
         int prior,next;
         ArrayList<Island> removePrior = null;
         if(motherNature==0)
-            prior=11;
+            prior=this.islands.size()-1;
         else
             prior=motherNature-1;
-        if(motherNature==11)
+        if(motherNature==this.islands.size()-1)
             next=0;
         else
             next=motherNature+1;

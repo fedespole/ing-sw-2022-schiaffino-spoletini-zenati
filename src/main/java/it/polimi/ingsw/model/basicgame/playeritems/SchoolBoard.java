@@ -1,4 +1,6 @@
 package it.polimi.ingsw.model.basicgame.playeritems;
+import it.polimi.ingsw.exceptions.NoMoreSpaceException;
+import it.polimi.ingsw.exceptions.StudentNotPresentException;
 import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Professor;
 import it.polimi.ingsw.model.basicgame.Student;
@@ -33,10 +35,13 @@ public class SchoolBoard {
                 return student;
             }
         }
-        return null;
+        throw new StudentNotPresentException();
     }
 
     public void addStudentToDining(Student student){
+        if(diningRoom[student.getColor().ordinal()].size() >= 10){
+            throw new NoMoreSpaceException();
+        }
         diningRoom[student.getColor().ordinal()].add(student);
     }
 
@@ -67,4 +72,5 @@ public class SchoolBoard {
     public Student removeStudentFromDiningRoom(COLOR color) {
        return diningRoom[color.ordinal()].remove(diningRoom[color.ordinal()].size()-1);
     }
+
 }
