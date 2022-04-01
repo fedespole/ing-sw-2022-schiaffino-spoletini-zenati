@@ -8,12 +8,20 @@ public class GameMode2 extends ConcreteExpertGame {
         super(concreteExpertGame);
 
         //When the card is selected, checks immediately if the player can steal professors from other players
+
         for(COLOR color : COLOR.values()) {
-            int influenceContender = getGame().getCurrPlayer().getMySchoolBoard().getDiningRoom()[color.ordinal()].size();
-            int influenceLastOwner = this.getGame().getProfessors().get(color.ordinal()).getOwner().getMySchoolBoard().getDiningRoom()[color.ordinal()].size();
-            if (influenceContender >= influenceLastOwner) {
-                this.getGame().getProfessors().get(color.ordinal()).setOwner(getGame().getCurrPlayer());       // assignProf
-                this.getGame().getCurrPlayer().getMySchoolBoard().addProfessor(this.getGame().getProfessors().get(color.ordinal()).getOwner().getMySchoolBoard().removeProfessor(this.getGame().getProfessors().get(color.ordinal())));
+            if(this.getGame().getProfessors().get(color.ordinal()).getOwner()==null && this.getGame().getCurrPlayer().getMySchoolBoard().getDiningRoom()[color.ordinal()].size() != 0) {
+                this.getGame().getProfessors().get(color.ordinal()).setOwner(getGame().getCurrPlayer());           // assignProf
+                this.getGame().getCurrPlayer().getMySchoolBoard().addProfessor(this.getGame().getProfessors().get(color.ordinal()));
+            }
+            // Compare influence of this player and last owner, if higher or equal, the owner changes
+            else if(this.getGame().getCurrPlayer().getMySchoolBoard().getDiningRoom()[color.ordinal()].size() != 0){
+                int influenceContender = getGame().getCurrPlayer().getMySchoolBoard().getDiningRoom()[color.ordinal()].size();
+                int influenceLastOwner = this.getGame().getProfessors().get(color.ordinal()).getOwner().getMySchoolBoard().getDiningRoom()[color.ordinal()].size();
+                if(influenceContender>=influenceLastOwner){
+                    this.getGame().getProfessors().get(color.ordinal()).setOwner(getGame().getCurrPlayer());       // assignProf
+                    this.getGame().getCurrPlayer().getMySchoolBoard().addProfessor( this.getGame().getProfessors().get(color.ordinal()).getOwner().getMySchoolBoard().removeProfessor( this.getGame().getProfessors().get(color.ordinal())));
+                }
             }
         }
     }

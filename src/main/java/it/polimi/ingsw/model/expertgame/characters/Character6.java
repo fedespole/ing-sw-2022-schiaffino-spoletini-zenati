@@ -6,15 +6,14 @@ import it.polimi.ingsw.model.expertgame.gamemodes.GameMode6;
 
 public class Character6 extends Character{
 
-    public Character6(ConcreteExpertGame currGame){
+    public Character6(){
         setCost(3);
         setId(6);
         setHasBeenUsed(false);
     }
 
-   // @Override
-    public void useAbility(Game currGame) {
+    public GameMode6 useAbility(Game currGame) {
         changeCost();
-        currGame = new GameMode6((ConcreteExpertGame) currGame);
+        return new GameMode6((ConcreteExpertGame) currGame);
     }
 }

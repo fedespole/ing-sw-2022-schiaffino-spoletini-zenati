@@ -82,5 +82,47 @@ public class CharactersTest extends TestCase {
         assertEquals(old_steps+2,game.getCurrPlayer().getChosenCard().getSteps());
     }
 
+    @Test
+    public void CharacterTest5(){
+         Character5 character5 = new Character5();
+        ((ConcreteExpertGame)game).getCharacters().add(character5);
+        game.setCurrPlayer(game.getPlayers().get(0));
+        for(int i=0;i<4;i++){
+            game.getIslands().get(0).get(0).addStudent(new Student(COLOR.RED));
+            game.getCurrPlayer().getMySchoolBoard().addStudentToDining(new Student(COLOR.RED));
+        }
+        game.assignProfessor(COLOR.RED);
+        character5.useAbility(game.getIslands().get(0));
+        assertEquals(1,character5.getIslandsWithNoEntries().size());
+        assertEquals(3,character5.getNoEntries());
+        game.setMotherNature(0);
+        game.computeInfluence();
+        assertEquals(null,game.getIslands().get(0).get(0).getTower());
+        assertEquals(4,character5.getNoEntries());
+    }
+
+    @Test
+    public void CharacterTest6(){
+        Character6 character6 = new Character6();
+        ((ConcreteExpertGame)game).getCharacters().add(character6);
+        game.setCurrPlayer(game.getPlayers().get(0));
+        game.setMotherNature(0);
+        for(int i=0;i<4;i++){
+            game.getIslands().get(0).get(0).addStudent(new Student(COLOR.RED));
+            game.getCurrPlayer().getMySchoolBoard().addStudentToDining(new Student(COLOR.RED));
+        }
+        game.assignProfessor(COLOR.RED);
+        game.computeInfluence();
+        assertEquals(game.getIslands().get(0).get(0).getTower().getColor(),game.getPlayers().get(0).getTeam());
+        game.setCurrPlayer(game.getPlayers().get(1));
+        for(int i=0;i<7;i++){
+            game.getIslands().get(0).get(0).addStudent(new Student(COLOR.YELLOW));
+            game.getPlayers().get(1).getMySchoolBoard().addStudentToDining(new Student(COLOR.YELLOW));
+        }
+        game.assignProfessor(COLOR.YELLOW);
+        game = character6.useAbility(game);
+        game.computeInfluence();
+        assertEquals(game.getIslands().get(0).get(0).getTower().getColor(),game.getPlayers().get(1).getTeam());
+    }
 }
 

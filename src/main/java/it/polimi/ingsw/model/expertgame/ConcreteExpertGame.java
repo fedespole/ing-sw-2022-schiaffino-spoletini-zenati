@@ -82,20 +82,19 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     @Override
     public void computeInfluence() {
 
-        int char5index = -1, i = 0;
-
-        for (Character character : characters) {
-            if (character instanceof Character5) char5index = i;
-            i++;
+        Character5 character5 = null;
+        for (int i = 0; i < characters.size(); i++) {
+            if (characters.get(i) instanceof Character5) {
+                character5 = (Character5) characters.get(i);
+                break;
+            }
         }
-
-        // if expertgame has character5, the influence is computed only if the island doesn't have a noEntry
-        if (char5index != -1) {
+        if (character5 != null) {
             // Checking if island has a noEntry status
-            if (!((Character5) characters.get(char5index)).getIslandsWithNoEntries().contains(game.getIslands().get(getMotherNature()))) {
+            if (!character5.getIslandsWithNoEntries().contains(game.getIslands().get(getMotherNature()))) {
                 game.computeInfluence();
             } else {
-                ((Character5) characters.get(char5index)).restoreNoEntry(game.getIslands().get(getMotherNature()));
+                character5.restoreNoEntry(game.getIslands().get(getMotherNature()));
             }
         } else game.computeInfluence();
     }
