@@ -104,14 +104,16 @@ public class BasicGame implements Game{
     }
 
     @Override
-    public AssistantCard chooseCard(int value) throws outOfBoundCardSelectionException{
+    public void chooseCard(int value) throws outOfBoundCardSelectionException{
 
-        if(value<1 || value>10) throw new outOfBoundCardSelectionException();
+        if(value<1 || value>10)
+            throw new outOfBoundCardSelectionException();
 
         for(AssistantCard ac:currPlayer.getMyDeck().getCards())
             if(ac.getValue() == value)
-                currPlayer.getMyDeck().draw(ac);
-        return null; //TODO salvare la carta direttamente
+               currPlayer.setChosenCard(currPlayer.getMyDeck().draw(ac));
+
+        throw new notAvailableCard();  //if the card has already been drawn
     }
 
     @Override
@@ -310,5 +312,9 @@ public class BasicGame implements Game{
 
     public void setCurrPlayer(Player currPlayer) {
         this.currPlayer = currPlayer;
+    }
+
+    public ArrayList<Cloud> getClouds() {
+        return clouds;
     }
 }

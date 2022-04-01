@@ -20,7 +20,8 @@ public class Deck {
         return new ArrayList<AssistantCard>(cards);
     }
 
-    public void draw(AssistantCard assistantCard){
+    public AssistantCard draw(AssistantCard assistantCard){
         cards.remove(assistantCard);
+        return assistantCard;
     }
 }

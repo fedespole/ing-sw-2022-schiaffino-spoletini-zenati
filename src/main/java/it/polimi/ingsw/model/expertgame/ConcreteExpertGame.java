@@ -53,8 +53,8 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     }
 
     @Override
-    public AssistantCard chooseCard(int index) {
-        return game.chooseCard(index);
+    public void chooseCard(int index) {
+        game.chooseCard(index);
     }
 
     @Override

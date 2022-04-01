@@ -10,7 +10,7 @@ public class Player {
     private final Deck myDeck;
     private final SchoolBoard mySchoolBoard;
     private TEAM team;
-    private int maxSteps;
+    private AssistantCard chosenCard;
 
     public Player(String username) {
         this.username = username;
@@ -43,16 +43,16 @@ public class Player {
         return coins;
     }
 
-    public int getMaxSteps() {
-        return maxSteps;
-    }
-
-    public void setMaxSteps(int maxSteps) {
-        this.maxSteps = maxSteps;
-    }
-
     public void setTeam(TEAM team) {
         this.team = team;
+    }
+
+    public AssistantCard getChosenCard() {
+        return chosenCard;
+    }
+
+    public void setChosenCard(AssistantCard chosenCard) {
+        this.chosenCard = chosenCard;
     }
 }
 

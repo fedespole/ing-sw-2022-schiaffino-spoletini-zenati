@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public interface Game {
     void setUp();
     void fillCloud();
-    AssistantCard chooseCard(int index);
+    void chooseCard(int index);
     void moveStudentFromEntranceToDining(COLOR color);
     void moveStudentFromEntranceToIsland(COLOR color, Island chosenIsland);
     void moveMother(int steps);
