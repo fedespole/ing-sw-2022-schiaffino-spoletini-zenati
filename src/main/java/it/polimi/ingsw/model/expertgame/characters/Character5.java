@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
+import it.polimi.ingsw.exceptions.AbilityAlreadyUsedException;
 import it.polimi.ingsw.model.basicgame.Island;
-import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 
 import java.util.ArrayList;
 
@@ -18,17 +18,23 @@ public class Character5 extends Character{
         islandsWithNoEntries = new ArrayList<ArrayList<Island>>();
     }
 
-    public void useAbility(ConcreteExpertGame currGame, ArrayList<Island> island) {
+    public void useAbility(ArrayList<Island> island) {
+
+        if(noEntries==0) throw new AbilityAlreadyUsedException();
+
         changeCost();
-        if(noEntries>0) {
-            islandsWithNoEntries.add(island);
-            noEntries--;
-        }
+        islandsWithNoEntries.add(island);
+        noEntries--;
     }
 
     public void restoreNoEntry(ArrayList<Island> island){
+
         islandsWithNoEntries.remove(island);
         noEntries++;
+    }
+
+    public int getNoEntries() {
+        return noEntries;
     }
 
     public ArrayList<ArrayList<Island>> getIslandsWithNoEntries() {

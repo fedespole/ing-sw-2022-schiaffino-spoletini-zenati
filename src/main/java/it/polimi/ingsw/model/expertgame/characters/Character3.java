@@ -17,10 +17,11 @@ public class Character3 extends Character{
 
     public void useAbility(Game game, int destination) {
 
-        changeCost();
         ConcreteExpertGame currGame = (ConcreteExpertGame) game;
 
         if(destination < 0 || destination > currGame.getIslands().size()) throw new InvalidIslandIndexException();
+
+        changeCost();
 
         int[] p = {0, 0, 0}; //if the players are 2, p3 remains 0
         int indexOfWinner = -1;
