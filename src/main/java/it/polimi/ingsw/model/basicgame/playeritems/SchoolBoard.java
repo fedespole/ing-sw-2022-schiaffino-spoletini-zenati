@@ -74,4 +74,7 @@ public class SchoolBoard {
         return diningRoom[color.ordinal()].remove(diningRoom[color.ordinal()].size()-1);
     }
 
+    public ArrayList<Professor> getProfessors() {
+        return professors;
+    }
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
+import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 
 public abstract class Character {
@@ -7,7 +8,7 @@ public abstract class Character {
     private int id;
     private boolean hasBeenUsed;
 
-    public void useAbility(ConcreteExpertGame currGame){}
+   // public void useAbility(Game currGame){}
 
     public int getCost() {
         return cost;

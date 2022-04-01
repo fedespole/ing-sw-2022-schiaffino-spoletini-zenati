@@ -1,7 +1,9 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
 import it.polimi.ingsw.model.basicgame.BasicGame;
+import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Game;
+import it.polimi.ingsw.model.basicgame.Student;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 import junit.framework.TestCase;
@@ -35,5 +37,22 @@ public class CharactersTest extends TestCase {
         int sizeIsland= game.getIslands().get(0).get(0).getStudents().size();
         ((Character1)((ConcreteExpertGame)game).getCharacters().get(0)).useAbility(game,0,game.getIslands().get(0));
         assertEquals(sizeIsland+1,game.getIslands().get(0).get(0).getStudents().size());
+    }
+
+    @Test
+    public void CharacterTest2(){
+        ((ConcreteExpertGame)game).getCharacters().add(new Character2());
+        game.setCurrPlayer(game.getPlayers().get(0));
+        for(int i=0;i<3;i++)
+            game.getPlayers().get(0).getMySchoolBoard().addStudentToDining(new Student(COLOR.RED));
+        game.assignProfessor(COLOR.RED);
+        assertEquals(game.getProfessors().get(COLOR.RED.ordinal()).getOwner(),game.getPlayers().get(0));
+        assertEquals(game.getCurrPlayer().getMySchoolBoard().getProfessors().get(0),game.getProfessors().get(COLOR.RED.ordinal()));
+        for(int i=0;i<3;i++)
+            game.getPlayers().get(1).getMySchoolBoard().addStudentToDining(new Student(COLOR.RED));
+        game = ((Character2)((ConcreteExpertGame)game).getCharacters().get(0)).useAbility(game);
+        game.assignProfessor(COLOR.RED);
+        game.setCurrPlayer(game.getPlayers().get(1));
+        assertEquals(game.getProfessors().get(COLOR.RED.ordinal()).getOwner(),game.getPlayers().get(0));
     }
 }

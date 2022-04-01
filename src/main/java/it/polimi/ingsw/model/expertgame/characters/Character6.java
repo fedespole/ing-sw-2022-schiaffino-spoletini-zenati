@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
+import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 import it.polimi.ingsw.model.expertgame.gamemodes.GameMode6;
 
@@ -11,9 +12,9 @@ public class Character6 extends Character{
         setHasBeenUsed(false);
     }
 
-    @Override
-    public void useAbility(ConcreteExpertGame currGame) {
+   // @Override
+    public void useAbility(Game currGame) {
         changeCost();
-        currGame = new GameMode6(currGame);
+        currGame = new GameMode6((ConcreteExpertGame) currGame);
     }
 }

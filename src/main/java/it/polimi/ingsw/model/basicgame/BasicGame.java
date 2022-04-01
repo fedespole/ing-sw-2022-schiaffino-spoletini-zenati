@@ -219,6 +219,7 @@ public class BasicGame implements Game{
         // Check if professor is not owned
         if(professors.get(color.ordinal()).getOwner()==null){
             professors.get(color.ordinal()).setOwner(currPlayer);           // assignProf
+            currPlayer.getMySchoolBoard().addProfessor(professors.get(color.ordinal()));
         }
         // Compare influence of this player and last owner, if higher, the owner changes
         else{
@@ -226,6 +227,7 @@ public class BasicGame implements Game{
             int influenceLastOwner = professors.get(color.ordinal()).getOwner().getMySchoolBoard().getDiningRoom()[color.ordinal()].size();
             if(influenceContender>influenceLastOwner){
                 professors.get(color.ordinal()).setOwner(currPlayer);       // assignProf
+                currPlayer.getMySchoolBoard().addProfessor(professors.get(color.ordinal()).getOwner().getMySchoolBoard().removeProfessor( professors.get(color.ordinal())));   // assignProf
             }
         }
     }
