@@ -121,6 +121,7 @@ public class BasicGame implements Game{
     @Override
     public void moveStudentFromEntranceToDining(COLOR color) {
         currPlayer.getMySchoolBoard().addStudentToDining(currPlayer.getMySchoolBoard().removeStudentFromEntrance(color));
+        assignProfessor(color);
     }
 
     @Override
