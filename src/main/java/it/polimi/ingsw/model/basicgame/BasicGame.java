@@ -104,7 +104,7 @@ public class BasicGame implements Game{
     }
 
     @Override
-    public void chooseCard(int value) throws OutOfBoundCardSelectionException {
+    public void chooseCard(int value){
 
         if(value<1 || value>10)
             throw new OutOfBoundCardSelectionException();

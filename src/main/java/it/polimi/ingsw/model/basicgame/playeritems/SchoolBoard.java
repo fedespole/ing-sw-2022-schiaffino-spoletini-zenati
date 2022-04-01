@@ -70,7 +70,8 @@ public class SchoolBoard {
     }
 
     public Student removeStudentFromDiningRoom(COLOR color) {
-       return diningRoom[color.ordinal()].remove(diningRoom[color.ordinal()].size()-1);
+        if(diningRoom[color.ordinal()].size() == 0) throw new StudentNotPresentException();
+        return diningRoom[color.ordinal()].remove(diningRoom[color.ordinal()].size()-1);
     }
 
 }
