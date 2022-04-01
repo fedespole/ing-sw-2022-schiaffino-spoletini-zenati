@@ -13,7 +13,7 @@ public class Character4 extends Character{
 
     public void useAbility(ConcreteExpertGame currGame, Player player){
         changeCost();
-        player.setMaxSteps(player.getMaxSteps()+2);
+        player.getChosenCard().setSteps(2+player.getChosenCard().getSteps());
     }
 
 }

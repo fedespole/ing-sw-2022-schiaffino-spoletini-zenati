@@ -1,4 +1,4 @@
-/*package it.polimi.ingsw.model.basicgame;
+package it.polimi.ingsw.model.basicgame;
 
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import junit.framework.TestCase;
@@ -8,14 +8,13 @@ import org.junit.jupiter.api.Test;
 import java.util.Random;
 
 public class BasicGameTest extends TestCase {
-    BasicGame game;
+    Game game;
 
     @BeforeEach
     public void setUp(){
         Random rand = new Random(); //instance of random class
-        //int int_random = rand.nextInt(1)+2;// is 2 or 3
-        int int_random=2;
-        game =new BasicGame();
+        int int_random = rand.nextInt(1)+1;// is 1 or 2
+        game =new BasicGame(new Player("Host"));
         for(int i=0;i<int_random;i++){
             game.getPlayers().add(new Player("Test"));
         }
@@ -23,18 +22,16 @@ public class BasicGameTest extends TestCase {
     }
     @Test
      public void TestFillCloud(){
-        game.setCurrPlayer(game.getPlayers().get(0));
-        Student student;
-        for(int i=0,size=game.getCurrPlayer().getMyCloud().get(0).getStudents().size();i<size;i++){
-            student = game.getCurrPlayer().getMyCloud().get(0).getStudents().remove(0);
-        }
-        assertEquals(0,game.getCurrPlayer().getMyCloud().get(0).getStudents().size());
+        int size= game.getClouds().size();
+        assertEquals(0,game.getClouds().get(0).getStudents().size());
         game.fillCloud();
-        for(Cloud cloud:game.getPlayers().get(0).getMyCloud()){
-            if(game.getNumPlayers()==2)
-                assertEquals(3,cloud.getStudents().size());
-            else
-                assertEquals(4,cloud.getStudents().size());
+        switch(size){
+            case 2:
+                assertEquals(3,game.getClouds().get(0).getStudents().size());
+                break;
+            case 3:
+                assertEquals(4,game.getClouds().get(0).getStudents().size());
+                break;
         }
     }
 
@@ -93,4 +90,4 @@ public class BasicGameTest extends TestCase {
         assertEquals(11,game.getIslands().size());
         assertEquals(2,game.getIslands().get(0).size());
     }
-}*/
+}

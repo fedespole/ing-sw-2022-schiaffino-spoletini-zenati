@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.basicgame.playeritems;
 
 public class AssistantCard {
     private final int value;
-    private final int steps;
+    private int steps;
 
     public AssistantCard(int value, int steps) {
         this.value = value;
@@ -15,5 +15,9 @@ public class AssistantCard {
 
     public int getSteps() {
         return steps;
+    }
+
+    public void setSteps(int steps){
+        this.steps= steps;
     }
 }

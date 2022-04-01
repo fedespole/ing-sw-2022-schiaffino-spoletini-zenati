@@ -54,6 +54,8 @@ public class Player {
     public void setChosenCard(AssistantCard chosenCard) {
         this.chosenCard = chosenCard;
     }
+
+
 }
 
 
