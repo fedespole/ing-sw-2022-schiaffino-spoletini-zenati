@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.expertgame;
 
 import it.polimi.ingsw.model.basicgame.*;
-import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.model.basicgame.Cloud;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.model.expertgame.characters.Character;
@@ -10,13 +9,14 @@ import it.polimi.ingsw.model.expertgame.characters.Character5;
 import java.util.ArrayList;
 
 public class ConcreteExpertGame extends ExpertGameDecorator {
-    private BasicGame game;
-    private Character[] characters;
+    private Game game;
+    private ArrayList<Character> characters;
 
-    public ConcreteExpertGame(BasicGame game) {
+    public ConcreteExpertGame(Game game) {
         this.game = game;
         for (Player player : game.getPlayers()) {
             player.setCoins(0);
+        characters= new ArrayList<Character>();
         }
 
     }
@@ -26,7 +26,7 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
         this.characters = expertGame.characters;
     }
 
-    public BasicGame getGame() {
+    public Game getGame() {
         return game;
     }
 
@@ -34,13 +34,10 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
         this.game = game;
     }
 
-    public Character[] getCharacters() {
+    public ArrayList<Character> getCharacters() {
         return characters;
     }
 
-    public void setCharacters(Character[] characters) {
-        this.characters = characters;
-    }
 
     @Override
     public void setUp() {
@@ -95,10 +92,10 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
         // if expertgame has character5, the influence is computed only if the island doesn't have a noEntry
         if (char5index != -1) {
             // Checking if island has a noEntry status
-            if (!((Character5) characters[char5index]).getIslandsWithNoEntries().contains(game.getIslands().get(getMotherNature()))) {
+            if (!((Character5) characters.get(char5index)).getIslandsWithNoEntries().contains(game.getIslands().get(getMotherNature()))) {
                 game.computeInfluence();
             } else {
-                ((Character5) characters[char5index]).restoreNoEntry(game.getIslands().get(getMotherNature()));
+                ((Character5) characters.get(char5index)).restoreNoEntry(game.getIslands().get(getMotherNature()));
             }
         } else game.computeInfluence();
     }
@@ -186,4 +183,5 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     public ArrayList<Cloud> getClouds() {
         return game.getClouds();
     }
+
 }

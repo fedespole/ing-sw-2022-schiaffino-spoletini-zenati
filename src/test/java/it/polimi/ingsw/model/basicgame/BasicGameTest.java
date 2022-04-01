@@ -36,11 +36,13 @@ public class BasicGameTest extends TestCase {
     }
 
     @Test
-    public void TestComputeInfluence(){//works if num_random==2
-       //check without towers in the islands
+    public void TestComputeInfluence(){
+        //check without towers in the islands
         assertEquals(TEAM.WHITE, game.getPlayers().get(0).getTeam());
         assertEquals(TEAM.GREY,game.getPlayers().get(1).getTeam());
         game.setMotherNature(0);
+        if(game.getNumPlayers()==3)
+            assertEquals(TEAM.BLACK,game.getPlayers().get(2).getTeam());
         for(int i=0;i<4;i++) {
             game.getIslands().get(0).get(0).getStudents().add(new Student(COLOR.YELLOW));
         }
@@ -53,16 +55,15 @@ public class BasicGameTest extends TestCase {
         game.getProfessors().get(COLOR.BLUE.ordinal()).setOwner(game.getPlayers().get(1));
         game.computeInfluence();
         assertEquals(game.getPlayers().get(1).getTeam(),game.getIslands().get(0).get(0).getTower().getColor());
+        int towers_0 = game.getPlayers().get(0).getMySchoolBoard().getTowers().size();
+        int towers_1 = game.getPlayers().get(1).getMySchoolBoard().getTowers().size();
         //check with towers
-        for(int i=0;i<4;i++) {
+        for(int i=0;i<6;i++) {
             game.getIslands().get(0).get(0).getStudents().add(new Student(COLOR.YELLOW));
         }
-        assertEquals(8,game.getPlayers().get(0).getMySchoolBoard().getTowers().size());
-        assertEquals(7,game.getPlayers().get(1).getMySchoolBoard().getTowers().size());
         game.computeInfluence();
-        assertEquals(game.getPlayers().get(0).getTeam(),game.getIslands().get(0).get(0).getTower().getColor());
-        assertEquals(7,game.getPlayers().get(0).getMySchoolBoard().getTowers().size());
-        assertEquals(8,game.getPlayers().get(1).getMySchoolBoard().getTowers().size());
+        assertEquals(towers_0-1, game.getPlayers().get(0).getMySchoolBoard().getTowers().size());
+        assertEquals(towers_1+1, game.getPlayers().get(1).getMySchoolBoard().getTowers().size());
     }
 
     @Test//works
@@ -89,5 +90,9 @@ public class BasicGameTest extends TestCase {
         game.mergeIslands();
         assertEquals(11,game.getIslands().size());
         assertEquals(2,game.getIslands().get(0).size());
+        game.getIslands().get(game.getIslands().size()-1).get(0).setTower(new Tower(TEAM.WHITE));
+        game.mergeIslands();
+        assertEquals(10,game.getIslands().size());
+        assertEquals(3,game.getIslands().get(0).size());
     }
 }
