@@ -43,7 +43,7 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     }
 
     @Override
-    public void setUp(){
+    public void setUp() {
         game.setUp();
     }
 
@@ -85,23 +85,22 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     @Override
     public void computeInfluence() {
 
-        int char5index=-1, i=0;
+        int char5index = -1, i = 0;
 
-        for(Character character : characters){
-            if(character instanceof Character5) char5index = i;
+        for (Character character : characters) {
+            if (character instanceof Character5) char5index = i;
             i++;
         }
 
         // if expertgame has character5, the influence is computed only if the island doesn't have a noEntry
-        if(char5index!=-1) {
+        if (char5index != -1) {
             // Checking if island has a noEntry status
             if (!((Character5) characters[char5index]).getIslandsWithNoEntries().contains(game.getIslands().get(getMotherNature()))) {
                 game.computeInfluence();
             } else {
                 ((Character5) characters[char5index]).restoreNoEntry(game.getIslands().get(getMotherNature()));
             }
-        }
-        else game.computeInfluence();
+        } else game.computeInfluence();
     }
 
     @Override
@@ -110,7 +109,7 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     }
 
     @Override
-    public void mergeIslands(){
+    public void mergeIslands() {
         game.mergeIslands();
     }
 
@@ -181,5 +180,10 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     @Override
     public void setCurrPlayer(Player currPlayer) {
         game.setCurrPlayer(currPlayer);
+    }
+
+    @Override
+    public ArrayList<Cloud> getClouds() {
+        return game.getClouds();
     }
 }
