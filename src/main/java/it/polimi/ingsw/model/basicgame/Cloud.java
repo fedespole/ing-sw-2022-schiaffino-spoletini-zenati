@@ -13,8 +13,9 @@ public class Cloud {
     public void addStudent(Bag bag){
         students.add(bag.removeStudent());
     }
-    public Student removeStudent(int index){
-        return students.remove(index);
+
+    public void removeStudent(int index){
+        students.remove(index);
     }
 
     public ArrayList<Student> getStudents() {
