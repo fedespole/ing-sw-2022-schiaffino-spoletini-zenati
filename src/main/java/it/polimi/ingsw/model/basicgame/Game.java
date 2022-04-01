@@ -31,4 +31,5 @@ public interface Game {
     void setMotherNature(int motherNature);
     Player getCurrPlayer();
     void setCurrPlayer(Player currPlayer);
+    ArrayList<Cloud> getClouds();
 }

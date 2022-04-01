@@ -46,7 +46,7 @@ public class BasicGame implements Game{
             if(i!=this.motherNature && i!=(this.motherNature+6)%12)
                 this.getIslands().get(i).get(0).addStudent(this.bag.removeStudent());
         }
-        for(COLOR c : COLOR.values()) {//bisogna riempire il bag con tutti gli studenti solo dopo aver messo tutti gli studenti nelle isole
+        for(COLOR c : COLOR.values()) {
             for (int i = 0; i < 24; i++) {
                 this.bag.getStudents().add(new Student(c));
             }
