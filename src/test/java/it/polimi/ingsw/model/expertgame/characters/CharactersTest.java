@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.basicgame.BasicGame;
 import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Student;
+import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 import junit.framework.TestCase;
@@ -67,5 +68,19 @@ public class CharactersTest extends TestCase {
         ((Character3)((ConcreteExpertGame)game).getCharacters().get(0)).useAbility(game,0);
         assertEquals(game.getIslands().get(0).get(0).getTower().getColor(),game.getPlayers().get(0).getTeam());
     }
+
+    @Test
+    public void CharacterTest4(){
+        ((ConcreteExpertGame)game).getCharacters().add(new Character4());
+        game.setCurrPlayer(game.getPlayers().get(0));
+        Random rand = new Random(); //instance of random class
+        int int_random = rand.nextInt(9);// from 0 to 9
+        AssistantCard chosenCard = game.getCurrPlayer().getMyDeck().draw(game.getCurrPlayer().getMyDeck().getCards().get(int_random));
+        game.getCurrPlayer().setChosenCard(chosenCard);
+        int old_steps= chosenCard.getSteps();
+        ((Character4)((ConcreteExpertGame)game).getCharacters().get(0)).useAbility(game.getCurrPlayer());
+        assertEquals(old_steps+2,game.getCurrPlayer().getChosenCard().getSteps());
+    }
+
 }
 

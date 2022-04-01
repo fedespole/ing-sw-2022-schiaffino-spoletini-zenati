@@ -17,7 +17,7 @@ public class Deck {
     }
 
     public ArrayList<AssistantCard> getCards() {
-        return new ArrayList<AssistantCard>(cards);
+        return cards;
     }
 
     public AssistantCard draw(AssistantCard assistantCard){
