@@ -55,4 +55,6 @@ public class CharactersTest extends TestCase {
         game.setCurrPlayer(game.getPlayers().get(1));
         assertEquals(game.getProfessors().get(COLOR.RED.ordinal()).getOwner(),game.getPlayers().get(0));
     }
+
+
 }

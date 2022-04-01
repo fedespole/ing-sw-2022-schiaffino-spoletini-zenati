@@ -8,8 +8,6 @@ public abstract class Character {
     private int id;
     private boolean hasBeenUsed;
 
-   // public void useAbility(Game currGame){}
-
     public int getCost() {
         return cost;
     }
