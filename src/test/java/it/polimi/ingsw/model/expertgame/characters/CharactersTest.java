@@ -33,7 +33,7 @@ public class CharactersTest extends TestCase {
     }
 
     @Test
-    public void CharacterTest1(){
+    public void Character1Test(){
         ((ConcreteExpertGame)game).getCharacters().add(new Character1(game));
         assertEquals(4,((Character1)((ConcreteExpertGame)game).getCharacters().get(0)).getStudents().size());
         int sizeIsland= game.getIslands().get(0).get(0).getStudents().size();
@@ -42,7 +42,7 @@ public class CharactersTest extends TestCase {
     }
 
     @Test
-    public void CharacterTest2(){
+    public void Character2Test(){
         ((ConcreteExpertGame)game).getCharacters().add(new Character2());
         game.setCurrPlayer(game.getPlayers().get(0));
         for(int i=0;i<3;i++)
@@ -59,7 +59,7 @@ public class CharactersTest extends TestCase {
     }
 
     @Test
-    public void CharacterTest3(){
+    public void Character3Test(){
         ((ConcreteExpertGame)game).getCharacters().add(new Character3());
         for(int i=0;i<4;i++) {
             game.getIslands().get(0).get(0).addStudent(new Student(COLOR.RED));
@@ -71,7 +71,7 @@ public class CharactersTest extends TestCase {
     }
 
     @Test
-    public void CharacterTest4(){
+    public void Character4Test(){
         ((ConcreteExpertGame)game).getCharacters().add(new Character4());
         game.setCurrPlayer(game.getPlayers().get(0));
         Random rand = new Random(); //instance of random class
@@ -84,7 +84,7 @@ public class CharactersTest extends TestCase {
     }
 
     @Test
-    public void CharacterTest5(){
+    public void Character5Test(){
          Character5 character5 = new Character5();
         ((ConcreteExpertGame)game).getCharacters().add(character5);
         game.setCurrPlayer(game.getPlayers().get(0));
@@ -103,7 +103,7 @@ public class CharactersTest extends TestCase {
     }
 
     @Test
-    public void CharacterTest6(){
+    public void Character6Test(){
         Character6 character6 = new Character6();
         ((ConcreteExpertGame)game).getCharacters().add(character6);
         game.setCurrPlayer(game.getPlayers().get(0));
@@ -133,7 +133,7 @@ public class CharactersTest extends TestCase {
     }*/
 
     @Test
-    public void CharacterTest8(){
+    public void Character8Test(){
         Character8 character8 = new Character8();
         ((ConcreteExpertGame)game).getCharacters().add(character8);
         game.setMotherNature(0);
