@@ -1,14 +1,11 @@
 package it.polimi.ingsw.model.expertgame.gamemodes;
-import it.polimi.ingsw.model.basicgame.COLOR;
-import it.polimi.ingsw.model.basicgame.Island;
-import it.polimi.ingsw.model.basicgame.Professor;
-import it.polimi.ingsw.model.basicgame.Student;
+import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 
 public class GameMode9 extends ConcreteExpertGame {
     COLOR color;
 
-    public GameMode9(ConcreteExpertGame concreteExpertGame, COLOR color) {
+    public GameMode9(Game concreteExpertGame, COLOR color) {
         super(concreteExpertGame);
         this.color=color;
     }
@@ -18,55 +15,53 @@ public class GameMode9 extends ConcreteExpertGame {
         int[] p = {0, 0, 0}; //if the players are 2, p3 remains 0
         int indexOfWinner = -1;
         int currTowerOwner = -1;
-        for(Island island:this.getGame().getIslands().get(this.getGame().getMotherNature())) {
+        for (Island island : this.getIslands().get(getMotherNature())) {
             for (Student student : island.getStudents()) {//counts every student from one island
-                for (Professor professor : this.getGame().getProfessors()) {
-                    if (student.getColor() == professor.getColor() && professor.getOwner() != null && professor.getColor()!=color) {
-                        if (professor.getOwner().getUsername().equals(this.getGame().getPlayers().get(0).getUsername()))
+                for (Professor professor : this.getProfessors()) {
+                    if (student.getColor() == professor.getColor() && professor.getOwner() != null &&  professor.getColor()!=color) {
+                        if (professor.getOwner() == this.getPlayers().get(0))
                             p[0]++;
-                        else if (professor.getOwner().getUsername().equals(this.getGame().getPlayers().get(1).getUsername()))
+                        else if (professor.getOwner() == this.getPlayers().get(1))
                             p[1]++;
-                        else if (this.getGame().getNumPlayers() == 3)
+                        else if (this.getNumPlayers() == 3)
                             p[2]++;
                     }
                 }
             }
-            if(island.getTower()!=null){//counts tower from one island
-                if(island.getTower().getColor()==this.getGame().getPlayers().get(0).getTeam()) {
+            if (island.getTower() != null) {//save currTowerOwner
+                if (island.getTower().getColor() == this.getPlayers().get(0).getTeam()) {
                     p[0]++;
                     currTowerOwner = 0;
-                }
-                else if(island.getTower().getColor()==this.getGame().getPlayers().get(1).getTeam()) {
+                } else if (island.getTower().getColor() == this.getPlayers().get(1).getTeam()) {
                     p[1]++;
                     currTowerOwner = 1;
-                }
-                else if(this.getGame().getNumPlayers()==3) {
+                } else if (this.getNumPlayers() == 3) {
                     p[2]++;
                     currTowerOwner = 2;
                 }
-            }//calculate int influence
-        }
+            }
+        }//calculate int influence
         int count = 0;
         int max = Math.max(Math.max(p[0], p[1]), p[2]);
-        for(int i=0; i < 3; i++) {
-            if(p[i]==max){
+        for (int i = 0; i < 3; i++) {
+            if (p[i] == max) {
                 indexOfWinner = i;
                 count++;
             }
         }
-        if (currTowerOwner == -1 && count < 2){
-            for(Island island:this.getGame().getIslands().get(this.getGame().getMotherNature())){
+        if (currTowerOwner == -1 && count < 2) {
+            for (Island island : this.getIslands().get(this.getMotherNature())) {
                 // Moves a tower from board to island
-                island.setTower(this.getGame().getPlayers().get(indexOfWinner).getMySchoolBoard().removeTower());
+                island.setTower(this.getPlayers().get(indexOfWinner).getMySchoolBoard().removeTower());
             }
-        }
-        else if(currTowerOwner != indexOfWinner && count < 2){
-            for(Island island:this.getGame().getIslands().get(this.getGame().getMotherNature())){
+        } else if (currTowerOwner != indexOfWinner && count < 2) {
+            for (Island island : this.getIslands().get(getMotherNature())) {
                 // Moves a tower from island to board
-                this.getGame().getPlayers().get(currTowerOwner).getMySchoolBoard().addTower(island.getTower());
+                this.getPlayers().get(currTowerOwner).getMySchoolBoard().addTower(island.getTower());
                 // Moves a tower from board to island
-                island.setTower(this.getGame().getPlayers().get(indexOfWinner).getMySchoolBoard().removeTower());
+                island.setTower(this.getPlayers().get(indexOfWinner).getMySchoolBoard().removeTower());
             }
         }
+        this.mergeIslands();
     }
 }

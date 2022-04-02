@@ -124,5 +124,58 @@ public class CharactersTest extends TestCase {
         game.computeInfluence();
         assertEquals(game.getIslands().get(0).get(0).getTower().getColor(),game.getPlayers().get(1).getTeam());
     }
+
+   /* @Test
+    public void CharacterTest7(){
+        Character7 character7 = new Character7(game);
+
+    }*/
+
+    @Test
+    public void CharacterTest8(){
+        Character8 character8 = new Character8();
+        ((ConcreteExpertGame)game).getCharacters().add(character8);
+        game.setMotherNature(0);
+        game.setCurrPlayer(game.getPlayers().get(0));
+        for(int i=0;i<4;i++){
+            game.getCurrPlayer().getMySchoolBoard().addStudentToDining(new Student(COLOR.RED));
+            game.getIslands().get(0).get(0).addStudent(new Student(COLOR.RED));
+        }
+        game.assignProfessor(COLOR.RED);
+        game.setCurrPlayer(game.getPlayers().get(1));
+        for(int i=0;i<3;i++){
+            game.getCurrPlayer().getMySchoolBoard().addStudentToDining(new Student(COLOR.BLUE));
+            game.getIslands().get(0).get(0).addStudent(new Student(COLOR.BLUE));
+        }
+        game.assignProfessor(COLOR.BLUE);
+        game = character8.useAbility(game);
+        assertEquals(null,game.getIslands().get(0).get(0).getTower());
+        game.computeInfluence();
+        assertEquals(game.getCurrPlayer().getTeam(),game.getIslands().get(0).get(0).getTower().getColor());
+    }
+
+    @Test
+    public void Character9Test(){
+        Character9 character9 = new Character9();
+        ((ConcreteExpertGame)game).getCharacters().add(character9);
+        game.setMotherNature(0);
+        game.setCurrPlayer(game.getPlayers().get(0));
+        for(int i=0;i<4;i++){
+            game.getCurrPlayer().getMySchoolBoard().addStudentToDining(new Student(COLOR.RED));
+            game.getIslands().get(0).get(0).addStudent(new Student(COLOR.RED));
+        }
+        game.assignProfessor(COLOR.RED);
+        game.computeInfluence();
+        assertEquals(game.getIslands().get(0).get(0).getTower().getColor(),game.getCurrPlayer().getTeam());
+        game.setCurrPlayer(game.getPlayers().get(1));
+        game = character9.useAbility(game,COLOR.RED);
+        for(int i=0;i<2;i++) {
+            game.getCurrPlayer().getMySchoolBoard().addStudentToDining(new Student(COLOR.BLUE));
+            game.getIslands().get(0).get(0).addStudent(new Student(COLOR.BLUE));
+        }
+        game.assignProfessor(COLOR.BLUE);
+        game.computeInfluence();
+        assertEquals(game.getIslands().get(0).get(0).getTower().getColor(),game.getCurrPlayer().getTeam());
+    }
 }
 

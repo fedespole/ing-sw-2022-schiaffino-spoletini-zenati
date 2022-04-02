@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
+import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 import it.polimi.ingsw.model.expertgame.gamemodes.GameMode8;
@@ -12,8 +13,8 @@ public class Character8 extends Character{
         setHasBeenUsed(false);
     }
 
-    public void useAbility(ConcreteExpertGame currGame, Player player) {
+    public GameMode8 useAbility(Game currGame) {
         changeCost();
-        currGame = new GameMode8(currGame, player);
+        return new GameMode8(currGame);
     }
 }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
 import it.polimi.ingsw.model.basicgame.COLOR;
+import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 import it.polimi.ingsw.model.expertgame.gamemodes.GameMode9;
 
@@ -12,8 +13,8 @@ public class Character9 extends Character{
         setHasBeenUsed(false);
     }
 
-    public void useAbility(ConcreteExpertGame currGame, COLOR color) {
+    public GameMode9 useAbility(Game currGame, COLOR color) {
         changeCost();
-        currGame = new GameMode9(currGame, color);
+        return new GameMode9(currGame, color);
     }
 }
