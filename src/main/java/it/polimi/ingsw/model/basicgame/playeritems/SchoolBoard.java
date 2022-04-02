@@ -77,4 +77,8 @@ public class SchoolBoard {
     public ArrayList<Professor> getProfessors() {
         return professors;
     }
+
+    public ArrayList<Student> getEntrance() {
+        return entrance;
+    }
 }

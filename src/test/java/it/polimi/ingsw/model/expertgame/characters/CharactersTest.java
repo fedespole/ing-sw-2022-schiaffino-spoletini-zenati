@@ -11,6 +11,7 @@ import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import static javax.swing.UIManager.get;
@@ -176,6 +177,31 @@ public class CharactersTest extends TestCase {
         game.assignProfessor(COLOR.BLUE);
         game.computeInfluence();
         assertEquals(game.getIslands().get(0).get(0).getTower().getColor(),game.getCurrPlayer().getTeam());
+    }
+
+    @Test
+    public void Character10Test(){
+        Character10 character10 = new Character10();
+        ((ConcreteExpertGame)game).getCharacters().add(character10);
+        game.setCurrPlayer(game.getPlayers().get(0));
+        Student student_1 = new Student(COLOR.RED);
+        Student student_2 = new Student(COLOR.YELLOW);
+        Student student_3 = new Student(COLOR.GREEN);
+        Student student_4 = new Student(COLOR.PINK);
+        game.getCurrPlayer().getMySchoolBoard().addStudentToDining(student_1);
+        game.getCurrPlayer().getMySchoolBoard().addStudentToEntrance(student_2);
+        game.getCurrPlayer().getMySchoolBoard().addStudentToDining(student_3);
+        game.getCurrPlayer().getMySchoolBoard().addStudentToEntrance(student_4);
+        ArrayList<COLOR> students = new ArrayList<>();
+        students.add(student_1.getColor());
+        students.add(student_2.getColor());
+        students.add(student_3.getColor());
+        students.add(student_4.getColor());
+        character10.useAbility(game,students);
+        assertEquals(true,game.getCurrPlayer().getMySchoolBoard().getEntrance().contains(student_1));
+        assertEquals(true,game.getCurrPlayer().getMySchoolBoard().getEntrance().contains(student_3));
+        assertEquals(true, game.getCurrPlayer().getMySchoolBoard().getDiningRoom()[COLOR.YELLOW.ordinal()].contains(student_2));
+        assertEquals(true, game.getCurrPlayer().getMySchoolBoard().getDiningRoom()[COLOR.PINK.ordinal()].contains(student_4));
     }
 }
 
