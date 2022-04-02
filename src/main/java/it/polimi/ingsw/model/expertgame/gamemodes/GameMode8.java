@@ -18,7 +18,12 @@ public class GameMode8 extends ConcreteExpertGame {
         int[] p = {0, 0, 0}; //if the players are 2, p3 remains 0
         int indexOfWinner = -1;
         int currTowerOwner = -1;
-        p[this.getPlayers().indexOf(this.getCurrPlayer())]+=2;
+        for(int i=0;i<this.getNumPlayers();i++){
+            if(this.getCurrPlayer()==this.getPlayers().get(i)){
+                p[i]+=2;
+                break;
+            }
+        }
         for (Island island : this.getIslands().get(getMotherNature())) {
             for (Student student : island.getStudents()) {//counts every student from one island
                 for (Professor professor : this.getProfessors()) {

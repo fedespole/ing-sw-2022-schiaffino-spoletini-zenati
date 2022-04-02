@@ -159,47 +159,41 @@ public class CharactersTest extends TestCase {
                 cont_yellow_post++;
             }
         }
-        if(color1 == COLOR.PINK || color2==COLOR.PINK && color1 != color2){
-            assertEquals(cont_pink_prior,cont_pink_post);
+        if(color1==COLOR.PINK){
+            cont_pink_post-=1;
         }
-        else if(color1 == COLOR.PINK && color2==COLOR.PINK){
-            assertEquals(cont_pink_prior+1,cont_pink_post);
+        else if (color1==COLOR.YELLOW){
+            cont_yellow_post-=1;
         }
-        else{
-            assertEquals(cont_pink_prior-1,cont_pink_post);
+        if(color2==COLOR.PINK){
+            cont_pink_post-=1;
         }
-        if(color1 == COLOR.YELLOW || color2==COLOR.YELLOW && color1 != color2){
-            assertEquals(cont_yellow_prior,cont_yellow_post);
+        else if (color2==COLOR.YELLOW){
+            cont_yellow_post-=1;
         }
-        else if(color1 == COLOR.PINK && color2==COLOR.PINK){
-            assertEquals(cont_yellow_prior+1,cont_yellow_post);
-        }
-        else{
-            assertEquals(cont_yellow_prior-1,cont_yellow_post);
-        }
-
+        assertEquals(cont_pink_prior-1,cont_pink_post);
+        assertEquals(cont_yellow_prior-1,cont_yellow_post);
     }
     @Test
     public void Character8Test(){
         Character8 character8 = new Character8();
         ((ConcreteExpertGame)game).getCharacters().add(character8);
-        game.setMotherNature(0);
         game.setCurrPlayer(game.getPlayers().get(0));
         for(int i=0;i<4;i++){
             game.getCurrPlayer().getMySchoolBoard().addStudentToDining(new Student(COLOR.RED));
-            game.getIslands().get(0).get(0).addStudent(new Student(COLOR.RED));
+            game.getIslands().get(game.getMotherNature()).get(0).addStudent(new Student(COLOR.RED));
         }
         game.assignProfessor(COLOR.RED);
         game.setCurrPlayer(game.getPlayers().get(1));
         for(int i=0;i<3;i++){
             game.getCurrPlayer().getMySchoolBoard().addStudentToDining(new Student(COLOR.BLUE));
-            game.getIslands().get(0).get(0).addStudent(new Student(COLOR.BLUE));
+            game.getIslands().get(game.getMotherNature()).get(0).addStudent(new Student(COLOR.BLUE));
         }
         game.assignProfessor(COLOR.BLUE);
         game = character8.useAbility(game);
-        assertEquals(null,game.getIslands().get(0).get(0).getTower());
+        assertEquals(null,game.getIslands().get(game.getMotherNature()).get(0).getTower());
         game.computeInfluence();
-        assertEquals(game.getCurrPlayer().getTeam(),game.getIslands().get(0).get(0).getTower().getColor());
+        assertEquals(game.getCurrPlayer().getTeam(),game.getIslands().get(game.getMotherNature()).get(0).getTower().getColor());
     }
 
     @Test
