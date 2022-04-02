@@ -197,11 +197,14 @@ public class CharactersTest extends TestCase {
         students.add(student_2.getColor());
         students.add(student_3.getColor());
         students.add(student_4.getColor());
+        assertEquals(0, game.getCurrPlayer().getMySchoolBoard().getDiningRoom()[COLOR.YELLOW.ordinal()].size());
+        assertEquals(0, game.getCurrPlayer().getMySchoolBoard().getDiningRoom()[COLOR.PINK.ordinal()].size());
         character10.useAbility(game,students);
         assertEquals(true,game.getCurrPlayer().getMySchoolBoard().getEntrance().contains(student_1));
         assertEquals(true,game.getCurrPlayer().getMySchoolBoard().getEntrance().contains(student_3));
-        assertEquals(true, game.getCurrPlayer().getMySchoolBoard().getDiningRoom()[COLOR.YELLOW.ordinal()].contains(student_2));
-        assertEquals(true, game.getCurrPlayer().getMySchoolBoard().getDiningRoom()[COLOR.PINK.ordinal()].contains(student_4));
+        assertEquals(1, game.getCurrPlayer().getMySchoolBoard().getDiningRoom()[COLOR.YELLOW.ordinal()].size());
+        assertEquals(1, game.getCurrPlayer().getMySchoolBoard().getDiningRoom()[COLOR.PINK.ordinal()].size());
     }
+
 }
 
