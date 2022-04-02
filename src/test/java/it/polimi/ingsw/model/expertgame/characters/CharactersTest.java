@@ -206,5 +206,48 @@ public class CharactersTest extends TestCase {
         assertEquals(1, game.getCurrPlayer().getMySchoolBoard().getDiningRoom()[COLOR.PINK.ordinal()].size());
     }
 
+    @Test
+    public void Character11Test(){
+        Character11 character11 = new Character11(game);
+        ((ConcreteExpertGame)game).getCharacters().add(character11);
+        Student student = character11.getStudents().get(new Random().nextInt(3));
+        character11.useAbility(game,student);
+        for(COLOR color:COLOR.values()){
+            if(color == student.getColor()){
+                assertEquals(1,game.getCurrPlayer().getMySchoolBoard().getDiningRoom()[color.ordinal()].size());
+            }
+            else{
+                assertEquals(0,game.getCurrPlayer().getMySchoolBoard().getDiningRoom()[color.ordinal()].size());
+            }
+        }
+        assertEquals(4,character11.getStudents().size());
+    }
+
+
+    @Test
+    public void Character12Test(){
+        Character12 character12 = new Character12();
+        ((ConcreteExpertGame)game).getCharacters().add(character12);
+        for(int i=0;i<5;i++){
+            game.getPlayers().get(0).getMySchoolBoard().addStudentToDining(new Student(COLOR.PINK));
+        }
+        for(int i=0;i<2;i++){
+            game.getPlayers().get(1).getMySchoolBoard().addStudentToDining(new Student(COLOR.PINK));
+        }
+        for(int i=0;i<4 && game.getNumPlayers()==3;i++){
+            game.getPlayers().get(2).getMySchoolBoard().addStudentToDining(new Student(COLOR.PINK));
+        }
+        assertEquals(5,game.getPlayers().get(0).getMySchoolBoard().getDiningRoom()[COLOR.PINK.ordinal()].size());
+        assertEquals(2,game.getPlayers().get(1).getMySchoolBoard().getDiningRoom()[COLOR.PINK.ordinal()].size());
+        if(game.getNumPlayers()==3){
+            assertEquals(4,game.getPlayers().get(2).getMySchoolBoard().getDiningRoom()[COLOR.PINK.ordinal()].size());
+        }
+        character12.useAbility(game,COLOR.PINK);
+        assertEquals(2,game.getPlayers().get(0).getMySchoolBoard().getDiningRoom()[COLOR.PINK.ordinal()].size());
+        assertEquals(0,game.getPlayers().get(1).getMySchoolBoard().getDiningRoom()[COLOR.PINK.ordinal()].size());
+        if(game.getNumPlayers()==3){
+            assertEquals(1,game.getPlayers().get(2).getMySchoolBoard().getDiningRoom()[COLOR.PINK.ordinal()].size());
+        }
+    }
 }
 
