@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
+import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Student;
 import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
@@ -20,17 +21,33 @@ public class Character7 extends Character{
         }
     }
 
-    public void useAbility(ArrayList<Student> students) {
+    public void useAbility(Game currGame,ArrayList<COLOR> colors) {//even are from the entrance,odd are from the card
         changeCost();
-        for(int i=0; i<students.size()/2; i++){
-            removeStudent(students.get(2*i));
-            // player.
+        Student support;
+        for(int i=0; i<colors.size(); i++){
+            if(i%2==0){
+                support = currGame.getCurrPlayer().getMySchoolBoard().removeStudentFromEntrance(colors.get(i));
+                addStudent(support);
+            }
+            else{
+                support = this.removeStudent(colors.get(i));
+                currGame.getCurrPlayer().getMySchoolBoard().addStudentToEntrance(support);
+            }
         }
 
     }
 
     public ArrayList<Student> getStudents() {
         return students;
+    }
+
+    public Student removeStudent(COLOR color){
+        for(int i=0;i<this.students.size();i++){
+            if(this.students.get(i).getColor()==color){
+                return students.remove(i);
+            }
+        }
+        return null;//exception non ce colore
     }
 
     public void removeStudent(Student student){

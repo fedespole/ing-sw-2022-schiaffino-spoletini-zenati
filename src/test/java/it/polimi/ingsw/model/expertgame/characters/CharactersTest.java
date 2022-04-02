@@ -126,12 +126,59 @@ public class CharactersTest extends TestCase {
         assertEquals(game.getIslands().get(0).get(0).getTower().getColor(),game.getPlayers().get(1).getTeam());
     }
 
-   /* @Test
-    public void CharacterTest7(){
+    @Test
+    public void CharacterTest7() {
         Character7 character7 = new Character7(game);
+        ((ConcreteExpertGame) game).getCharacters().add(character7);
+        int cont_pink_prior = 0, cont_yellow_prior = 0;
+         ArrayList<COLOR> colors = new ArrayList<>();
+        COLOR color1,color2;
+        game.getCurrPlayer().getMySchoolBoard().getEntrance().remove(0);
+        game.getCurrPlayer().getMySchoolBoard().getEntrance().remove(1);
+        game.getCurrPlayer().getMySchoolBoard().addStudentToEntrance(new Student(COLOR.PINK));
+        game.getCurrPlayer().getMySchoolBoard().addStudentToEntrance(new Student(COLOR.YELLOW));
+        for (Student student : game.getCurrPlayer().getMySchoolBoard().getEntrance()) {
+            if (student.getColor() == COLOR.PINK) {
+                cont_pink_prior++;
+            } else if (student.getColor() == COLOR.YELLOW) {
+                cont_yellow_prior++;
+            }
+        }
+        color1=character7.getStudents().get(0).getColor();
+        color2=character7.getStudents().get(1).getColor();
+        colors.add(COLOR.PINK);
+        colors.add(color1);
+        colors.add(COLOR.YELLOW);
+        colors.add(color2);
+        character7.useAbility(game,colors);
+        int cont_pink_post=0,cont_yellow_post=0;
+        for (Student student : game.getCurrPlayer().getMySchoolBoard().getEntrance()) {
+            if (student.getColor() == COLOR.PINK) {
+                cont_pink_post++;
+            } else if (student.getColor() == COLOR.YELLOW) {
+                cont_yellow_post++;
+            }
+        }
+        if(color1 == COLOR.PINK || color2==COLOR.PINK && color1 != color2){
+            assertEquals(cont_pink_prior,cont_pink_post);
+        }
+        else if(color1 == COLOR.PINK && color2==COLOR.PINK){
+            assertEquals(cont_pink_prior+1,cont_pink_post);
+        }
+        else{
+            assertEquals(cont_pink_prior-1,cont_pink_post);
+        }
+        if(color1 == COLOR.YELLOW || color2==COLOR.YELLOW && color1 != color2){
+            assertEquals(cont_yellow_prior,cont_yellow_post);
+        }
+        else if(color1 == COLOR.PINK && color2==COLOR.PINK){
+            assertEquals(cont_yellow_prior+1,cont_yellow_post);
+        }
+        else{
+            assertEquals(cont_yellow_prior-1,cont_yellow_post);
+        }
 
-    }*/
-
+    }
     @Test
     public void Character8Test(){
         Character8 character8 = new Character8();
@@ -249,5 +296,6 @@ public class CharactersTest extends TestCase {
             assertEquals(1,game.getPlayers().get(2).getMySchoolBoard().getDiningRoom()[COLOR.PINK.ordinal()].size());
         }
     }
+
 }
 
