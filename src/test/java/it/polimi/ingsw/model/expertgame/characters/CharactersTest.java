@@ -22,7 +22,7 @@ public class CharactersTest extends TestCase {
     @BeforeEach
     public void setUp(){
         Random rand = new Random(); //instance of random class
-        int int_random = rand.nextInt(1)+1;// is 1 or 2
+        int int_random = rand.nextInt(2)+1;// is 1 or 2
         game =new BasicGame(new Player("Host"));
         for(int i=0;i<int_random;i++){
             game.getPlayers().add(new Player("Test"));
