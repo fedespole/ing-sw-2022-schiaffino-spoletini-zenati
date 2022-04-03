@@ -102,6 +102,6 @@ public class CharactersExceptionsTest extends TestCase{
         Student student = character11.getStudents().get(new Random().nextInt(3));
         assertDoesNotThrow(()->character11.useAbility(game,student));
         Student testStudent = new Student(COLOR.YELLOW);
-        assertThrows(StudentNotPresentException.class, ()-> character11.useAbility(game,student));
+        assertThrows(StudentNotPresentException.class, ()-> character11.useAbility(game,testStudent));
     }
 }
