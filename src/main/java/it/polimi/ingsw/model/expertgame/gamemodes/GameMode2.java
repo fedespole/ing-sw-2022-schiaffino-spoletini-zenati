@@ -40,8 +40,8 @@ public class GameMode2 extends ConcreteExpertGame {
             int influenceContender = getGame().getCurrPlayer().getMySchoolBoard().getDiningRoom()[color.ordinal()].size();
             int influenceLastOwner = this.getGame().getProfessors().get(color.ordinal()).getOwner().getMySchoolBoard().getDiningRoom()[color.ordinal()].size();
             if(influenceContender>=influenceLastOwner){
-                this.getGame().getProfessors().get(color.ordinal()).setOwner(getGame().getCurrPlayer());       // assignProf
                 this.getGame().getCurrPlayer().getMySchoolBoard().addProfessor( this.getGame().getProfessors().get(color.ordinal()).getOwner().getMySchoolBoard().removeProfessor( this.getGame().getProfessors().get(color.ordinal())));
+                this.getGame().getProfessors().get(color.ordinal()).setOwner(getGame().getCurrPlayer());       // assignProf
             }
         }
     }
