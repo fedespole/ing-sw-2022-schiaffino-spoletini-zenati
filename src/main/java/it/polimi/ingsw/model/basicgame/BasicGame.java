@@ -227,8 +227,8 @@ public class BasicGame implements Game{
             int influenceContender = currPlayer.getMySchoolBoard().getDiningRoom()[color.ordinal()].size();
             int influenceLastOwner = professors.get(color.ordinal()).getOwner().getMySchoolBoard().getDiningRoom()[color.ordinal()].size();
             if(influenceContender>influenceLastOwner){
-                professors.get(color.ordinal()).setOwner(currPlayer);       // assignProf
                 currPlayer.getMySchoolBoard().addProfessor(professors.get(color.ordinal()).getOwner().getMySchoolBoard().removeProfessor( professors.get(color.ordinal())));   // assignProf
+                professors.get(color.ordinal()).setOwner(currPlayer);       // assignProf
             }
         }
     }
