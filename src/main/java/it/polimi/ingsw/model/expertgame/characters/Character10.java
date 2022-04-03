@@ -1,13 +1,13 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
+import it.polimi.ingsw.exceptions.InvalidNumStudentsException;
 import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Student;
-import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 
 import java.util.ArrayList;
 
-public class Character10 extends Character{
+public class Character10 extends Character {
 
     public Character10() {
         setCost(1);
@@ -15,24 +15,33 @@ public class Character10 extends Character{
         setHasBeenUsed(false);
     }
 
-    public void useAbility(Game currGame, ArrayList<COLOR> colors){  //colors è un array di color lungo 2 o 4, con colore_studente_sala1, colore_studente_ingresso1 ed eventuali 2 e 2
-        //metto prima in un buffer quelli scelti, per evitare casini con la dim_max degli array destinazione
-        ArrayList<Student> bufferWasInDining = new ArrayList<>();
-        ArrayList<Student> bufferWasInEntrance = new ArrayList<>();
-            for(int i= 0; i < colors.size(); i++){
-                if(i%2==0){
+    public void useAbility(Game currGame, ArrayList<COLOR> colors) {
+
+
+        if (colors.size() == 2 || colors.size() == 4) {
+
+            // Colors is an array composed by one or two pairs of students, otherwise an exception is raised:
+            // (student_color_room1 and student_color_entrance1 + eventually 2 and 2)
+            // Using auxiliary buffers to preserve the length of the target arrays.
+
+            ArrayList<Student> bufferWasInDining = new ArrayList<>();
+            ArrayList<Student> bufferWasInEntrance = new ArrayList<>();
+            for (int i = 0; i < colors.size(); i++) {
+                if (i % 2 == 0) {
                     bufferWasInDining.add(currGame.getCurrPlayer().getMySchoolBoard().removeStudentFromDiningRoom(colors.get(i)));
-                }
-                else{
+                } else {
                     bufferWasInEntrance.add(currGame.getCurrPlayer().getMySchoolBoard().removeStudentFromEntrance(colors.get(i)));
                 }
             }
-            for(Student student : bufferWasInDining){
+            for (Student student : bufferWasInDining) {
                 currGame.getCurrPlayer().getMySchoolBoard().addStudentToEntrance(student);
             }
-            for(Student student : bufferWasInEntrance){
+            for (Student student : bufferWasInEntrance) {
                 currGame.getCurrPlayer().getMySchoolBoard().addStudentToDining(student);
             }
+        }
+        else throw new InvalidNumStudentsException();
+
     }
 
 }

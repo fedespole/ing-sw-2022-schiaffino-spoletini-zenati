@@ -83,9 +83,9 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     public void computeInfluence() {
 
         Character5 character5 = null;
-        for (int i = 0; i < characters.size(); i++) {
-            if (characters.get(i) instanceof Character5) {
-                character5 = (Character5) characters.get(i);
+        for (Character character : characters) {
+            if (character instanceof Character5) {
+                character5 = (Character5) character;
                 break;
             }
         }

@@ -1,9 +1,9 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
+import it.polimi.ingsw.exceptions.StudentNotPresentException;
 import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Student;
-import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 
 import java.util.ArrayList;
 
@@ -47,7 +47,8 @@ public class Character7 extends Character{
                 return students.remove(i);
             }
         }
-        return null;//exception non ce colore
+        // else, color not present in list and exception is raised
+        throw new StudentNotPresentException();
     }
 
     public void removeStudent(Student student){

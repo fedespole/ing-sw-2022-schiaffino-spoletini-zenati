@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
+import it.polimi.ingsw.exceptions.StudentNotPresentException;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Student;
-import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 
 import java.util.ArrayList;
 
@@ -21,10 +21,14 @@ public class Character11 extends Character{
     }
 
     public void useAbility(Game currGame, Student student) {
-        changeCost();
-        removeStudent(student);
-        currGame.getCurrPlayer().getMySchoolBoard().addStudentToDining(student);
-        addStudent(currGame.getBag().removeStudent());
+
+        if(!students.contains(student)) throw new StudentNotPresentException();
+        else {
+            changeCost();
+            removeStudent(student);
+            currGame.getCurrPlayer().getMySchoolBoard().addStudentToDining(student);
+            addStudent(currGame.getBag().removeStudent());
+        }
     }
 
     public void removeStudent(Student student){
