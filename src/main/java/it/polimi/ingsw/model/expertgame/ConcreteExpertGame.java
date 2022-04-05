@@ -30,10 +30,6 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
         return game;
     }
 
-    public void setGame(BasicGame game) {
-        this.game = game;
-    }
-
     public ArrayList<Character> getCharacters() {
         return characters;
     }
