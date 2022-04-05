@@ -144,31 +144,6 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     }
 
     @Override
-    public void setPlayers(ArrayList<Player> players) {
-        game.setPlayers(players);
-    }
-
-    @Override
-    public void setNumPlayers(int numPlayers) {
-        game.setNumPlayers(numPlayers);
-    }
-
-    @Override
-    public void setBag(Bag bag) {
-        game.setBag(bag);
-    }
-
-    @Override
-    public void setIslands(ArrayList<ArrayList<Island>> islands) {
-        game.setIslands(islands);
-    }
-
-    @Override
-    public void setProfessors(ArrayList<Professor> professors) {
-        game.setProfessors(professors);
-    }
-
-    @Override
     public void setMotherNature(int motherNature) {
         game.setMotherNature(motherNature);
     }

@@ -288,26 +288,6 @@ public class BasicGame implements Game{
         return islands;
     }
 
-    public void setPlayers(ArrayList<Player> players) {
-        this.players = players;
-    }
-
-    public void setNumPlayers(int numPlayers) {
-        this.numPlayers = numPlayers;
-    }
-
-    public void setBag(Bag bag) {
-        this.bag = bag;
-    }
-
-    public void setIslands(ArrayList<ArrayList<Island>> islands) {
-        this.islands = islands;
-    }
-
-    public void setProfessors(ArrayList<Professor> professors) {
-        this.professors = professors;
-    }
-
     public void setMotherNature(int motherNature) {
         this.motherNature = motherNature;
     }

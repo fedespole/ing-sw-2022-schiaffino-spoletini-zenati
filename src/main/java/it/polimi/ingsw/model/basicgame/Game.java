@@ -41,16 +41,6 @@ public interface Game {
 
     ArrayList<ArrayList<Island>> getIslands();
 
-    void setPlayers(ArrayList<Player> players);
-
-    void setNumPlayers(int numPlayers);
-
-    void setBag(Bag bag);
-
-    void setIslands(ArrayList<ArrayList<Island>> islands);
-
-    void setProfessors(ArrayList<Professor> professors);
-
     void setMotherNature(int motherNature);
 
     Player getCurrPlayer();
