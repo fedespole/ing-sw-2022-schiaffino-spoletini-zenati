@@ -68,6 +68,9 @@ public class CharactersTest extends TestCase {
         game.assignProfessor(COLOR.RED);
         ((Character3)((ConcreteExpertGame)game).getCharacters().get(0)).useAbility(game,0);
         assertEquals(game.getIslands().get(0).get(0).getTower().getColor(),game.getPlayers().get(0).getTeam());
+        game.getIslands().get(0).get(0).setTower(game.getPlayers().get(1).getMySchoolBoard().removeTower());
+        ((Character3)((ConcreteExpertGame)game).getCharacters().get(0)).useAbility(game,0);
+        assertEquals(game.getIslands().get(0).get(0).getTower().getColor(),game.getPlayers().get(0).getTeam());
     }
 
     @Test

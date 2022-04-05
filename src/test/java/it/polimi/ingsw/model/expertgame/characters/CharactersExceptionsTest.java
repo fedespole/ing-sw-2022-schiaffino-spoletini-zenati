@@ -72,6 +72,20 @@ public class CharactersExceptionsTest extends TestCase{
     }
 
     @Test
+    public void Character7AbilityStudentNotPresent(){
+        Character7 character7 = new Character7(game);
+        ((ConcreteExpertGame) game).getCharacters().add(character7);
+        for(int i=0;i<character7.getStudents().size();i++){
+            if(character7.getStudents().get(i).getColor()==COLOR.PINK){
+                character7.getStudents().remove(i);
+                character7.getStudents().add(new Student(COLOR.YELLOW));
+                i--;
+            }
+        }
+        assertThrows(StudentNotPresentException.class, () -> character7.removeStudent(COLOR.PINK));
+    }
+
+    @Test
     public void Character10InvalidNumStudentsException(){
         Character10 character10 = new Character10();
         ((ConcreteExpertGame)game).getCharacters().add(character10);

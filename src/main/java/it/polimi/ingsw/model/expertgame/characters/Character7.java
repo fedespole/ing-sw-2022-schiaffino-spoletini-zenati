@@ -51,10 +51,6 @@ public class Character7 extends Character{
         throw new StudentNotPresentException();
     }
 
-    public void removeStudent(Student student){
-        students.remove(student);
-    }
-
     public void addStudent(Student student){
         students.add(student);
     }
