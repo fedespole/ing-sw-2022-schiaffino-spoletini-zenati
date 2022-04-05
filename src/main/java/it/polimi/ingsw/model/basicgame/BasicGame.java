@@ -137,7 +137,7 @@ public class BasicGame implements Game{
 
     @Override//from the index of the cloud,returns the cloud chosen by the player
     public Cloud chooseCloud(int cloud) {
-        if(cloud < 0 || cloud > clouds.size()) throw new InvalidCloudIndexException();
+        if(cloud < 0 || cloud >= clouds.size()) throw new InvalidCloudIndexException();
         return this.clouds.get(cloud);
     }
 

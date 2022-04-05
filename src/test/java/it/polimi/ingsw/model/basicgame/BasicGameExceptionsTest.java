@@ -54,5 +54,32 @@ public class BasicGameExceptionsTest extends TestCase{
         assertDoesNotThrow( ()->game.chooseCard(int_random));
         assertThrows(NotAvailableCardException.class,()->game.chooseCard(int_random));
     }
-    //TODO Invalid Indexes?
+
+    @Test
+    public void TestInvalidCloudIndexException(){
+        int sizeClouds = game.getClouds().size();
+        assertDoesNotThrow(()-> game.chooseCloud(sizeClouds-1));
+        assertThrows(InvalidCloudIndexException.class, ()->game.chooseCloud(sizeClouds));
+        assertThrows(InvalidCloudIndexException.class, ()->game.chooseCloud(-1));
+    }
+
+    @Test
+    public void TestInvalidStepsException(){
+        game.chooseCard(1);
+        int steps = game.getCurrPlayer().getChosenCard().getSteps();
+        assertDoesNotThrow(()-> game.moveMother(steps));
+        assertThrows(InvalidStepsException.class, ()->game.moveMother(steps+1));
+        assertThrows(InvalidStepsException.class, ()->game.moveMother(-1));
+    }
+
+    @Test
+    public void TestNoMoreSpaceException(){
+
+        for(int i=0; i<10; i++){
+            assertDoesNotThrow(()->game.getCurrPlayer().getMySchoolBoard().addStudentToDining(new Student(COLOR.PINK)));
+        }
+        assertThrows(NoMoreSpaceException.class, ()->game.getCurrPlayer().getMySchoolBoard().addStudentToDining(new Student(COLOR.PINK)));
+    }
+
+
 }
