@@ -98,11 +98,11 @@ public class CharactersTest extends TestCase {
         }
         game.assignProfessor(COLOR.RED);
         character5.useAbility(game.getIslands().get(0));
-        assertEquals(1,character5.getIslandsWithNoEntries().size());
+        assertEquals(true,game.getIslands().get(0).get(0).isNoEntry());
         assertEquals(3,character5.getNoEntries());
         game.setMotherNature(0);
         game.computeInfluence();
-        assertEquals(null,game.getIslands().get(0).get(0).getTower());
+        assertEquals(false,game.getIslands().get(0).get(0).isNoEntry());
         assertEquals(4,character5.getNoEntries());
     }
 

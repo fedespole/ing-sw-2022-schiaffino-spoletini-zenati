@@ -86,14 +86,16 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
             }
         }
         if (character5 != null) {
-            // Checking if island has a noEntry status
-            if (!character5.getIslandsWithNoEntries().contains(game.getIslands().get(getMotherNature()))) {
-                game.computeInfluence();
+            if (this.getIslands().get(this.getMotherNature()).get(0).isNoEntry() == false) {
+                this.computeInfluence();
             } else {
-                character5.restoreNoEntry(game.getIslands().get(getMotherNature()));
+                character5.restoreNoEntry(this.getIslands().get(this.getMotherNature()));
             }
-        } else game.computeInfluence();
+        } else this.computeInfluence();
     }
+
+
+
 
     @Override
     public void assignProfessor(COLOR color) {
