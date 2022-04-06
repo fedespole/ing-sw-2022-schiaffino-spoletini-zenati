@@ -87,11 +87,11 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
         }
         if (character5 != null) {
             if (this.getIslands().get(this.getMotherNature()).get(0).isNoEntry() == false) {
-                this.computeInfluence();
+                game.computeInfluence();
             } else {
                 character5.restoreNoEntry(this.getIslands().get(this.getMotherNature()));
             }
-        } else this.computeInfluence();
+        } else game.computeInfluence();
     }
 
 
