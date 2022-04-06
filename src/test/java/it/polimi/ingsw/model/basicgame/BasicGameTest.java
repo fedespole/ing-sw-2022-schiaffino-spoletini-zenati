@@ -5,6 +5,7 @@ import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class BasicGameTest extends TestCase {
@@ -95,5 +96,16 @@ public class BasicGameTest extends TestCase {
         game.mergeIslands();
         assertEquals(10,game.getIslands().size());
         assertEquals(3,game.getIslands().get(0).size());
+    }
+
+    @Test
+    public void TestMoveStudentsFromCloud(){
+        game.fillCloud();
+        ArrayList<Student> students_cloud = new ArrayList<>();
+        for(Student student:game.getClouds().get(0).getStudents()){
+            students_cloud.add(student);
+        }
+        game.moveStudentsFromCloud(game.getClouds().get(0));
+        assertEquals(true,game.getCurrPlayer().getMySchoolBoard().getEntrance().containsAll(students_cloud));
     }
 }

@@ -145,14 +145,14 @@ public class BasicGame implements Game{
     public void moveStudentsFromCloud(Cloud chosenCloud) {
         if(numPlayers==2){//3 students in chosenCloud
             for(int i=0;i<3;i++) {
-                currPlayer.getMySchoolBoard().addStudentToEntrance(chosenCloud.getStudents().get(i));
-                chosenCloud.removeStudent(i);
+                currPlayer.getMySchoolBoard().addStudentToEntrance(chosenCloud.getStudents().get(0));
+                chosenCloud.removeStudent(0);
             }
         }
         else//4 students in chosenCloud
             for(int i=0;i<4;i++) {
-                currPlayer.getMySchoolBoard().addStudentToEntrance(chosenCloud.getStudents().get(i));
-                chosenCloud.removeStudent(i);
+                currPlayer.getMySchoolBoard().addStudentToEntrance(chosenCloud.getStudents().get(0));
+                chosenCloud.removeStudent(0);
             }
     }
 
