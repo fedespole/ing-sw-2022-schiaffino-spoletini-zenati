@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
-import it.polimi.ingsw.exceptions.InvalidNumStudentsException;
+import it.polimi.ingsw.common.exceptions.InvalidNumStudentsException;
 import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Student;

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
-import it.polimi.ingsw.exceptions.StudentNotPresentException;
+import it.polimi.ingsw.common.exceptions.StudentNotPresentException;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Student;
 

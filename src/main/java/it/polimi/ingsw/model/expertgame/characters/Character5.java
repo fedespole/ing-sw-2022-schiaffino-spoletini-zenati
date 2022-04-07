@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
-import it.polimi.ingsw.exceptions.AbilityAlreadyUsedException;
+import it.polimi.ingsw.common.exceptions.AbilityAlreadyUsedException;
 import it.polimi.ingsw.model.basicgame.Island;
 
 import java.util.ArrayList;

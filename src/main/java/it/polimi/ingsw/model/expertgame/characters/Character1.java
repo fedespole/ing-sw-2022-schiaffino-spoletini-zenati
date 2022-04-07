@@ -1,9 +1,9 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
+import it.polimi.ingsw.common.exceptions.InvalidPlayerIndexException;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Island;
 import it.polimi.ingsw.model.basicgame.Student;
-import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 import it.polimi.ingsw.exceptions.*;
 
 import java.util.ArrayList;

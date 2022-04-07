@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.basicgame;
 
+import it.polimi.ingsw.common.exceptions.*;
 import it.polimi.ingsw.exceptions.*;
 
 

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.exceptions;
+package it.polimi.ingsw.common.exceptions;
 
 public class NoMoreSpaceException extends RuntimeException{
 }

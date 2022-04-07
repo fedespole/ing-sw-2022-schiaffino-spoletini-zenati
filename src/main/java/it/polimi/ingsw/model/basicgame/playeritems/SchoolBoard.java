@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.basicgame.playeritems;
-import it.polimi.ingsw.exceptions.NoMoreSpaceException;
-import it.polimi.ingsw.exceptions.StudentNotPresentException;
+import it.polimi.ingsw.common.exceptions.NoMoreSpaceException;
+import it.polimi.ingsw.common.exceptions.StudentNotPresentException;
 import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Professor;
 import it.polimi.ingsw.model.basicgame.Student;

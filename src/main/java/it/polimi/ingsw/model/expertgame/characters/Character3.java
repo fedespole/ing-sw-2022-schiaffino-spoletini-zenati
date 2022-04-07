@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
-import it.polimi.ingsw.exceptions.InvalidIslandIndexException;
+import it.polimi.ingsw.common.exceptions.InvalidIslandIndexException;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Island;
 import it.polimi.ingsw.model.basicgame.Professor;

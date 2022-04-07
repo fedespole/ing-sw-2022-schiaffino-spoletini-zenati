@@ -1,14 +1,13 @@
 package it.polimi.ingsw.model.expertgame;
 
 
+import it.polimi.ingsw.common.exceptions.*;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.basicgame.BasicGame;
 import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Student;
-import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
-import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 import it.polimi.ingsw.model.expertgame.characters.*;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;

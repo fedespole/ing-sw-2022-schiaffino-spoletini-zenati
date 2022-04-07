@@ -1,4 +1,4 @@
-package it.polimi.ingsw.exceptions;
+package it.polimi.ingsw.common.exceptions;
 
 public class InvalidPlayerIndexException extends RuntimeException{
 }
