@@ -175,19 +175,25 @@ public class BasicGame implements Game{
         //      otherwise the clouds are filled for a new round
         if(statusGame.getOrder().get(statusGame.getOrder().size()-1)==currPlayer){
             if(lastRound) checkWinner();
-            else fillClouds();
-        }
-        // If not last player, action phase continues in order
-        else{
-            currPlayer = this.statusGame.getOrder().get(this.statusGame.getOrder().indexOf(currPlayer) + 1);
         }
 
     }
 
     @Override//from the index of the cloud,returns the cloud chosen by the player
-    public Cloud chooseCloud(int cloud) {
+    public void chooseCloud(int cloud) {
         if(cloud < 0 || cloud >= clouds.size()) throw new InvalidCloudIndexException();
-        return this.clouds.get(cloud);
+
+        moveStudentsFromCloud(this.clouds.get(cloud));
+
+        // After the last player of the round moves motherNature,
+        //      the clouds are filled for a new round
+        if(statusGame.getOrder().get(statusGame.getOrder().size()-1)==currPlayer){
+            fillClouds();
+        }
+        // If not last player, action phase continues in order
+        else{
+            currPlayer = this.statusGame.getOrder().get(this.statusGame.getOrder().indexOf(currPlayer) + 1);
+        }
     }
 
     @Override//moves all the students from the chosen cloud to the entrance of the school board
@@ -319,7 +325,7 @@ public class BasicGame implements Game{
     public void checkWinner(){
 
         int minTowers=9; // in 3 player maxTower is 8, so 9 is a ceiling for the minSort
-        Player winner=null;
+        Player winner = null;
 
         for(Player player : this.players){
 
@@ -331,7 +337,7 @@ public class BasicGame implements Game{
             // if two players have the same number of towers placed, checks number of owned professors
             else if(minTowers == player.getMySchoolBoard().getTowers().size()){
                 assert winner != null;
-                // if current pla
+                // if player has more professors, wins.
                 if(winner.getMySchoolBoard().getProfessors().size()<player.getMySchoolBoard().getProfessors().size())
                     winner = player;
                 //TODO manca il pareggio (quando hanno sia torri che prof uguali)

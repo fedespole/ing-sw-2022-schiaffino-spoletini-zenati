@@ -117,8 +117,8 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     }
 
     @Override
-    public Cloud chooseCloud(int cloud) {
-        return game.chooseCloud(cloud);
+    public void chooseCloud(int cloud) {
+        game.chooseCloud(cloud);
     }
 
     @Override

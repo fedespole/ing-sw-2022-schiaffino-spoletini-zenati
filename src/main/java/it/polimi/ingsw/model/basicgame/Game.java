@@ -19,7 +19,7 @@ public interface Game {
 
     void moveMother(int steps);
 
-    Cloud chooseCloud(int cloud);
+    void chooseCloud(int cloud);
 
     void moveStudentsFromCloud(Cloud chosenCloud);
 
