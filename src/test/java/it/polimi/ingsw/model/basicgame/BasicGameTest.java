@@ -108,4 +108,42 @@ public class BasicGameTest extends TestCase {
         game.moveStudentsFromCloud(game.getClouds().get(0));
         assertEquals(true,game.getCurrPlayer().getMySchoolBoard().getEntrance().containsAll(studentsCloud));
     }
+
+    @Test
+    public void TestPhaseFlow() {//to check if the automized action of the game work
+        if (game.getNumPlayers() == 3) {
+            assertEquals(3,game.getClouds().size());
+            assertEquals(STATUS.PLANNING, game.getStatusGame().getStatus());
+            for (Cloud cloud : game.getClouds()) {
+                assertNotSame(0, cloud.getStudents().size());
+            }
+            assertEquals(0, game.getStatusGame().getOrder().size());
+            game.setCurrPlayer(game.getPlayers().get(0));
+            game.chooseCard(6);
+            assertEquals(1, game.getPlayers().indexOf(game.getCurrPlayer()));
+            assertEquals(1, game.getStatusGame().getOrder().size());
+            game.chooseCard(5);
+            assertEquals(2, game.getStatusGame().getOrder().size());
+            assertEquals(2, game.getPlayers().indexOf(game.getCurrPlayer()));
+            game.chooseCard(4);
+            assertEquals(3, game.getStatusGame().getOrder().size());
+            assertEquals(STATUS.ACTION, game.getStatusGame().getStatus());
+            assertEquals(2, game.getPlayers().indexOf(game.getCurrPlayer()));
+            game.moveMother(1);
+            game.chooseCloud(2);
+            assertEquals(0, game.getClouds().get(2).getStudents().size());
+            assertEquals(1, game.getPlayers().indexOf(game.getCurrPlayer()));
+            game.moveMother(2);
+            game.chooseCloud(1);
+            assertEquals(0, game.getClouds().get(1).getStudents().size());
+            assertEquals(0, game.getPlayers().indexOf(game.getCurrPlayer()));
+            game.moveMother(2);
+            game.chooseCloud(0);
+            for(Cloud cloud: game.getClouds()){
+                assertEquals(4,cloud.getStudents().size());
+            }
+            assertEquals(STATUS.PLANNING, game.getStatusGame().getStatus());
+            assertEquals(game.getCurrPlayer(),game.getPlayers().get(2));
+        }
+    }
 }

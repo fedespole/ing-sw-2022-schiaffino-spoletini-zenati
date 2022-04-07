@@ -67,29 +67,32 @@ public class BasicGame implements Game{
                     for(int j=0;j<7;j++){
                         this.players.get(i).getMySchoolBoard().addStudentToEntrance(this.bag.removeStudent());
                     }
-                    this.clouds.add(new Cloud());
-                    this.clouds.add(new Cloud());
-
                     for (int j = 0; j < 8; j++)
                         this.players.get(i).getMySchoolBoard().addTower(new Tower(TEAM.values()[i]));
-
                     break;
                 case 3:
                     for(int j=0;j<9;j++){
                         this.players.get(i).getMySchoolBoard().addStudentToEntrance(this.bag.removeStudent());
                     }
-                    this.clouds.add(new Cloud());
-                    this.clouds.add(new Cloud());
-                    this.clouds.add(new Cloud());
-
                     for (int j = 0; j < 6; j++)
                         this.players.get(i).getMySchoolBoard().addTower(new Tower(TEAM.values()[i]));
-
                     break;
             }
         }
-        fillClouds();
+        switch(numPlayers) {
+            case 2:
+                this.clouds.add(new Cloud());
+                this.clouds.add(new Cloud());
+                break;
+            case 3:
+                this.clouds.add(new Cloud());
+                this.clouds.add(new Cloud());
+                this.clouds.add(new Cloud());
+                break;
+        }
+            fillClouds();
     }
+
 
     @Override// fills all the clouds
     public void fillClouds() {

@@ -9,8 +9,8 @@ public class StatusGame {
 
 
     public StatusGame() {
-        status = STATUS.SETUP;
-        order = new ArrayList<>();
+        this.status = STATUS.SETUP;
+        this.order = new ArrayList<>();
     }
 
     public STATUS getStatus() {
@@ -22,7 +22,7 @@ public class StatusGame {
     }
 
     public void setStatus(STATUS status) {
-        status = status;
+        this.status = status;
     }
 
     public void setOrder(ArrayList<Player> order) {
@@ -35,8 +35,10 @@ public class StatusGame {
             // If currPlayer has chosen a lower value card, the order is sorted
             if (order.get(i).getChosenCard().getValue() > currPlayer.getChosenCard().getValue()){
                 order.add(i, currPlayer);
+                return;
             }
         }
+        order.add(currPlayer);
     }
 
 }
