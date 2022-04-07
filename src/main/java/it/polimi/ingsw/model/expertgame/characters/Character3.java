@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
+import it.polimi.ingsw.common.events.VictoryEvent;
 import it.polimi.ingsw.common.exceptions.InvalidIslandIndexException;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Island;
@@ -74,6 +75,10 @@ public class Character3 extends Character{
             }
         }
         currGame.mergeIslands();
+
+        if(currGame.getIslands().size()==3) currGame.checkWinner();
+
+        if(currGame.getCurrPlayer().getMySchoolBoard().getTowers().size()==0) new VictoryEvent(this, currGame.getCurrPlayer());
     }
 }
 

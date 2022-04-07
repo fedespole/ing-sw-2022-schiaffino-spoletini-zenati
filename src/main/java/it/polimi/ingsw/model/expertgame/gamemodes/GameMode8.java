@@ -1,4 +1,5 @@
 package it.polimi.ingsw.model.expertgame.gamemodes;
+import it.polimi.ingsw.common.events.VictoryEvent;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Island;
 import it.polimi.ingsw.model.basicgame.Professor;
@@ -72,5 +73,9 @@ public class GameMode8 extends ConcreteExpertGame {
             }
         }
         this.mergeIslands();
+
+        if(this.getIslands().size()==3) checkWinner();
+
+        if(getCurrPlayer().getMySchoolBoard().getTowers().size()==0) new VictoryEvent(this, getCurrPlayer());
     }
 }

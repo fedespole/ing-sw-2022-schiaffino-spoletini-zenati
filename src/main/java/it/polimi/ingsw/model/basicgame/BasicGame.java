@@ -88,6 +88,7 @@ public class BasicGame implements Game{
                     break;
             }
         }
+        fillClouds();
     }
 
     @Override// fills all the clouds
@@ -115,10 +116,11 @@ public class BasicGame implements Game{
                 }
             }
         }
-
-        // Last method of action phase, this player will be the first to draw the card in the next round
-        this.currPlayer = this.statusGame.getOrder().get(0);
-        this.statusGame.getOrder().clear();
+        if(this.statusGame.getStatus()==STATUS.ACTION) {
+            // Last method of action phase, this player will be the first to draw the card in the next round
+            this.currPlayer = this.statusGame.getOrder().get(0);
+            this.statusGame.getOrder().clear();
+        }
         this.statusGame.setStatus(STATUS.PLANNING);
     }
 
@@ -314,7 +316,7 @@ public class BasicGame implements Game{
         if(removePrior!=null) this.islands.remove(removePrior);
     }
 
-    private void checkWinner(){
+    public void checkWinner(){
 
         int minTowers=9;
         Player winner=null;

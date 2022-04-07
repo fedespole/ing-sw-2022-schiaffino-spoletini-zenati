@@ -137,16 +137,13 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
             }
         }
         if (character5 != null) {
-            if (this.getIslands().get(this.getMotherNature()).get(0).isNoEntry() == false) {
+            if (!this.getIslands().get(this.getMotherNature()).get(0).isNoEntry()) {
                 game.computeInfluence();
             } else {
                 character5.restoreNoEntry(this.getIslands().get(this.getMotherNature()));
             }
         } else game.computeInfluence();
     }
-
-
-
 
     @Override
     public void assignProfessor(COLOR color) {
@@ -156,6 +153,11 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     @Override
     public void mergeIslands() {
         game.mergeIslands();
+    }
+
+    @Override
+    public void checkWinner(){
+        game.checkWinner();
     }
 
     @Override

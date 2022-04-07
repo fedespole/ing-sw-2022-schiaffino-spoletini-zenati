@@ -29,6 +29,8 @@ public interface Game {
 
     void mergeIslands();
 
+    void checkWinner();
+
     int getMotherNature();
 
     ArrayList<Player> getPlayers();
