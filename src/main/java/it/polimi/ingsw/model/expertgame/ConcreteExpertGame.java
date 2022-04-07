@@ -3,10 +3,12 @@ package it.polimi.ingsw.model.expertgame;
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.Cloud;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
+import it.polimi.ingsw.model.expertgame.characters.*;
 import it.polimi.ingsw.model.expertgame.characters.Character;
-import it.polimi.ingsw.model.expertgame.characters.Character5;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
 public class ConcreteExpertGame extends ExpertGameDecorator {
     private Game game;
@@ -37,12 +39,58 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
 
     @Override
     public void setUp() {
+        ArrayList<Integer> randomNumbers= new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12));
         game.setUp();
+        for(Player player : this.getPlayers()){
+            player.setCoins(1);
+        }
+        for(int i=0;i<3;i++){
+            int rand= randomNumbers.remove(new Random().nextInt(12-i));
+            switch(rand){
+                case 1:
+                    this.characters.add(new Character1(this));
+                    break;
+                case 2:
+                    this.characters.add(new Character2());
+                    break;
+                case 3:
+                    this.characters.add(new Character3());
+                    break;
+                case 4:
+                    this.characters.add(new Character4());
+                    break;
+                case 5:
+                    this.characters.add(new Character5());
+                    break;
+                case 6:
+                    this.characters.add(new Character6());
+                    break;
+                case 7:
+                    this.characters.add(new Character7(this));
+                    break;
+                case 8:
+                    this.characters.add(new Character8());
+                    break;
+                case 9:
+                    this.characters.add(new Character9());
+                    break;
+                case 10:
+                    this.characters.add(new Character10());
+                    break;
+                case 11:
+                    this.characters.add(new Character11(this));
+                    break;
+                case 12:
+                    this.characters.add(new Character12());
+                    break;
+
+            }
+        }
     }
 
     @Override
-    public void fillCloud() {
-        game.fillCloud();
+    public void fillClouds() {
+        game.fillClouds();
     }
 
     @Override
@@ -53,6 +101,9 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     @Override
     public void moveStudentFromEntranceToDining(COLOR color) {
         game.moveStudentFromEntranceToDining(color);
+        if(this.getCurrPlayer().getMySchoolBoard().getDiningRoom()[color.ordinal()].size()%3==0) {
+            this.getCurrPlayer().setCoins(this.getCurrPlayer().getCoins() + 1);
+        }
     }
 
     @Override

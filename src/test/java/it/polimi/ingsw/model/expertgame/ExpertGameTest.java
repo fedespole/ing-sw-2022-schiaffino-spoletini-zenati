@@ -27,7 +27,7 @@ public class ExpertGameTest extends TestCase {
         public void TestFillCloud(){
             int size= game.getClouds().size();
             assertEquals(0,game.getClouds().get(0).getStudents().size());
-            game.fillCloud();
+            game.fillClouds();
             switch(size){
                 case 2:
                     assertEquals(3,game.getClouds().get(0).getStudents().size());

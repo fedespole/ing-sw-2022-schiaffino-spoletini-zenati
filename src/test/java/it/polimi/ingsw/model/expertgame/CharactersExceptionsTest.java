@@ -2,7 +2,6 @@ package it.polimi.ingsw.model.expertgame;
 
 
 import it.polimi.ingsw.common.exceptions.*;
-import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.basicgame.BasicGame;
 import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Game;
@@ -67,8 +66,8 @@ public class CharactersExceptionsTest extends TestCase{
             game.getCurrPlayer().getMySchoolBoard().addStudentToDining(new Student(COLOR.RED));
         }
         for(int i= 0; i<4; i++)
-            assertDoesNotThrow(() ->character5.useAbility(game.getIslands().get(0)));
-        assertThrows(AbilityAlreadyUsedException.class, () -> character5.useAbility(game.getIslands().get(0)));
+            assertDoesNotThrow(() ->character5.useAbility(game, game.getIslands().get(0)));
+        assertThrows(AbilityAlreadyUsedException.class, () -> character5.useAbility(game, game.getIslands().get(0)));
     }
 
     @Test

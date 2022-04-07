@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.basicgame;
+import it.polimi.ingsw.common.events.*;
 import it.polimi.ingsw.common.exceptions.*;
-import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 
@@ -17,6 +17,7 @@ public class BasicGame implements Game{
     private Player currPlayer;
     private final ArrayList<Cloud> clouds;
     private final StatusGame statusGame;
+    private boolean lastRound;
 
     public BasicGame(Player host) {
         this.bag = new Bag();
@@ -33,6 +34,7 @@ public class BasicGame implements Game{
         }
         this.players.add(host);
         statusGame=new StatusGame();
+        lastRound=false;
     }
 
     @Override
@@ -41,7 +43,12 @@ public class BasicGame implements Game{
         if(this.players.size()>3 || this.players.size()<2) throw new InvalidNumPlayerException();
 
         this.numPlayers=this.players.size();
-        this.currPlayer=this.players.get(0);
+        if(this.numPlayers==2){
+            this.currPlayer=this.players.get(new Random().nextInt(2));
+        }
+        else {
+            this.currPlayer = this.players.get(new Random().nextInt(3));
+        }
         Random new_random= new Random();
         this.motherNature = new_random.nextInt(11);
         for(int i=0;i<12;i++){
@@ -84,26 +91,32 @@ public class BasicGame implements Game{
         statusGame.setOrder(players);
     }
 
-    @Override//finds the empty cloud and fills it
-    public void fillCloud() {
+    @Override// fills all the clouds
+    public void fillClouds() {
 
-        for(Cloud c: clouds){
 
-            switch (numPlayers){
-                case 2:
-                    c.addStudent(this.bag);
-                    c.addStudent(this.bag);
-                    c.addStudent(this.bag);
-                    break;
+        if (numPlayers==2 && (this.getBag().getStudents().size() < 6)) lastRound = true;
+        else if (numPlayers==3 && (this.getBag().getStudents().size() < 12)) lastRound = true;
+        else {
+            for(Cloud c: clouds){
 
-                case 3:
-                    c.addStudent(this.bag);
-                    c.addStudent(this.bag);
-                    c.addStudent(this.bag);
-                    c.addStudent(this.bag);
-                    break;
+                switch (numPlayers){
+                    case 2:
+                        c.addStudent(this.bag);
+                        c.addStudent(this.bag);
+                        c.addStudent(this.bag);
+                        break;
+
+                    case 3:
+                        c.addStudent(this.bag);
+                        c.addStudent(this.bag);
+                        c.addStudent(this.bag);
+                        c.addStudent(this.bag);
+                        break;
+                }
             }
         }
+
     }
 
     @Override
@@ -136,6 +149,17 @@ public class BasicGame implements Game{
     public void moveMother(int steps) {
         if(steps < 0 || steps > currPlayer.getChosenCard().getSteps()) throw new InvalidStepsException();
         motherNature = (motherNature+steps) % this.islands.size();
+
+        // Every time motherNature stops on an island, this method checks the influence
+        computeInfluence();
+
+        // After the last player of the round moves motherNature,
+        // the winner is checked if is last round,
+        // otherwise the clouds are filled for a new round
+        if(statusGame.getOrder().get(statusGame.getOrder().size()-1)==currPlayer){
+            if(lastRound) checkWinner();
+            else fillClouds();
+        }
     }
 
     @Override//from the index of the cloud,returns the cloud chosen by the player
@@ -215,6 +239,10 @@ public class BasicGame implements Game{
             }
         }
         this.mergeIslands();
+
+        if(this.getIslands().size()==3) checkWinner();
+
+        if(currPlayer.getMySchoolBoard().getTowers().size()==0) new VictoryEvent(this, getCurrPlayer());
     }
 
     @Override
@@ -264,6 +292,29 @@ public class BasicGame implements Game{
         }
 
         if(removePrior!=null) this.islands.remove(removePrior);
+    }
+
+    private void checkWinner(){
+
+        int minTowers=9;
+        Player winner=null;
+
+        for(Player player : this.players){
+
+            if(minTowers > player.getMySchoolBoard().getTowers().size()){
+                winner = player;
+                minTowers = player.getMySchoolBoard().getTowers().size();
+            }
+            else if(minTowers == player.getMySchoolBoard().getTowers().size()){
+                assert winner != null;
+                if(winner.getMySchoolBoard().getProfessors().size()<player.getMySchoolBoard().getProfessors().size())
+                    winner = player;
+                //TODO manca il pareggio (quando hanno sia torri che prof uguali)
+            }
+
+        }
+
+        new VictoryEvent(this, winner);
     }
 
     @Override

@@ -24,6 +24,9 @@ public class Character10 extends Character {
             // (student_color_room1 and student_color_entrance1 + eventually 2 and 2)
             // Using auxiliary buffers to preserve the length of the target arrays.
 
+            playerPayment(currGame.getCurrPlayer());
+            changeCost();
+
             ArrayList<Student> bufferWasInDining = new ArrayList<>();
             ArrayList<Student> bufferWasInEntrance = new ArrayList<>();
             for (int i = 0; i < colors.size(); i++) {

@@ -13,6 +13,7 @@ public class Character4 extends Character{
     }
 
     public void useAbility(Player player){
+        playerPayment(player);
         changeCost();
         player.getChosenCard().setSteps(2+player.getChosenCard().getSteps());
     }

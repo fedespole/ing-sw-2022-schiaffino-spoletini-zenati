@@ -97,7 +97,7 @@ public class CharactersTest extends TestCase {
             game.getCurrPlayer().getMySchoolBoard().addStudentToDining(new Student(COLOR.RED));
         }
         game.assignProfessor(COLOR.RED);
-        character5.useAbility(game.getIslands().get(0));
+        character5.useAbility(game, game.getIslands().get(0));
         assertEquals(true,game.getIslands().get(0).get(0).isNoEntry());
         assertEquals(3,character5.getNoEntries());
         game.setMotherNature(0);

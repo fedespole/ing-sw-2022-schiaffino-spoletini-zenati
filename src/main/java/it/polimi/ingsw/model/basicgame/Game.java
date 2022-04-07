@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public interface Game {
     void setUp();
 
-    void fillCloud();
+    void fillClouds();
 
     void chooseCard(int index);
 

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
 import it.polimi.ingsw.model.basicgame.Game;
+import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 
 public abstract class Character {
@@ -35,5 +36,8 @@ public abstract class Character {
             setHasBeenUsed(true);
             setCost(getCost()+1);
         }
+    }
+    public void playerPayment(Player player){
+        player.setCoins(player.getCoins()-this.cost);
     }
 }

@@ -14,6 +14,8 @@ public class Character12 extends Character{
     }
 
     public void useAbility(Game currGame, COLOR color) {
+
+        playerPayment(currGame.getCurrPlayer());
         changeCost();
         for(Player player : currGame.getPlayers()){
             for(int i=0;i<3 && player.getMySchoolBoard().getDiningRoom()[color.ordinal()].size()!=0;i++){

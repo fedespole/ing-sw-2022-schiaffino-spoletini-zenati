@@ -26,7 +26,7 @@ public class BasicGameTest extends TestCase {
      public void TestFillCloud(){
         int size= game.getClouds().size();
         assertEquals(0,game.getClouds().get(0).getStudents().size());
-        game.fillCloud();
+        game.fillClouds();
         switch(size){
             case 2:
                 assertEquals(3,game.getClouds().get(0).getStudents().size());
@@ -100,12 +100,12 @@ public class BasicGameTest extends TestCase {
 
     @Test
     public void TestMoveStudentsFromCloud(){
-        game.fillCloud();
-        ArrayList<Student> students_cloud = new ArrayList<>();
+        game.fillClouds();
+        ArrayList<Student> studentsCloud = new ArrayList<>();
         for(Student student:game.getClouds().get(0).getStudents()){
-            students_cloud.add(student);
+            studentsCloud.add(student);
         }
         game.moveStudentsFromCloud(game.getClouds().get(0));
-        assertEquals(true,game.getCurrPlayer().getMySchoolBoard().getEntrance().containsAll(students_cloud));
+        assertEquals(true,game.getCurrPlayer().getMySchoolBoard().getEntrance().containsAll(studentsCloud));
     }
 }

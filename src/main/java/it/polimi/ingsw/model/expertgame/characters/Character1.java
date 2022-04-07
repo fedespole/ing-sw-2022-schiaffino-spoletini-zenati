@@ -4,8 +4,6 @@ import it.polimi.ingsw.common.exceptions.InvalidPlayerIndexException;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Island;
 import it.polimi.ingsw.model.basicgame.Student;
-import it.polimi.ingsw.exceptions.*;
-
 import java.util.ArrayList;
 
 public class Character1 extends Character {
@@ -25,7 +23,7 @@ public class Character1 extends Character {
     public void useAbility(Game currGame, int index, ArrayList<Island> island){
 
         if(index < 0 || index > 3) throw new InvalidPlayerIndexException();
-
+        playerPayment(currGame.getCurrPlayer());
         changeCost();
         removeStudent(students.get(index));
         island.get(0).addStudent(students.get(index));

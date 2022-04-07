@@ -14,6 +14,8 @@ public class Character8 extends Character{
     }
 
     public GameMode8 useAbility(Game currGame) {
+
+        playerPayment(currGame.getCurrPlayer());
         changeCost();
         return new GameMode8(currGame);
     }

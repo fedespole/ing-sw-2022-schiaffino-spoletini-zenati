@@ -13,6 +13,7 @@ public class Character2 extends Character{
     }
 
     public GameMode2 useAbility(Game currGame) {
+        playerPayment(currGame.getCurrPlayer());
         changeCost();
         return new GameMode2((ConcreteExpertGame) currGame);
     }

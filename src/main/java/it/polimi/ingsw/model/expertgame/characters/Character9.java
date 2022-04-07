@@ -14,6 +14,8 @@ public class Character9 extends Character{
     }
 
     public GameMode9 useAbility(Game currGame, COLOR color) {
+
+        playerPayment(currGame.getCurrPlayer());
         changeCost();
         return new GameMode9(currGame, color);
     }

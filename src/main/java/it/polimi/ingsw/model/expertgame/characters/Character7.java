@@ -22,6 +22,8 @@ public class Character7 extends Character{
     }
 
     public void useAbility(Game currGame,ArrayList<COLOR> colors) {//even are from the entrance,odd are from the card
+
+        playerPayment(currGame.getCurrPlayer());
         changeCost();
         Student support;
         for(int i=0; i<colors.size(); i++){

@@ -24,6 +24,7 @@ public class Character11 extends Character{
 
         if(!students.contains(student)) throw new StudentNotPresentException();
         else {
+            playerPayment(currGame.getCurrPlayer());
             changeCost();
             removeStudent(student);
             currGame.getCurrPlayer().getMySchoolBoard().addStudentToDining(student);
