@@ -1,8 +1,6 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
-import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
-import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 
 public abstract class Character {
     private int cost;

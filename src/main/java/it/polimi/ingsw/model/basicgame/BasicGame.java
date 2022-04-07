@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class BasicGame implements Game{
-    private ArrayList<Player> players;
+    private final ArrayList<Player> players;
     private int numPlayers;
-    private Bag bag;
-    private ArrayList<ArrayList<Island>> islands;
-    private ArrayList<Professor> professors;
+    private final Bag bag;
+    private final ArrayList<ArrayList<Island>> islands;
+    private final ArrayList<Professor> professors;
     private int motherNature;
     private Player currPlayer;
     private final ArrayList<Cloud> clouds;
@@ -88,7 +88,6 @@ public class BasicGame implements Game{
                     break;
             }
         }
-        statusGame.setOrder(players);
     }
 
     @Override// fills all the clouds
@@ -117,6 +116,10 @@ public class BasicGame implements Game{
             }
         }
 
+        // Last method of action phase, this player will be the first to draw the card in the next round
+        this.currPlayer = this.statusGame.getOrder().get(0);
+        this.statusGame.getOrder().clear();
+        this.statusGame.setStatus(STATUS.PLANNING);
     }
 
     @Override
@@ -125,12 +128,24 @@ public class BasicGame implements Game{
         if(value<1 || value>10)
             throw new OutOfBoundCardSelectionException();
 
-        for(AssistantCard ac:currPlayer.getMyDeck().getCards())
-            if(ac.getValue() == value) {
+        for(AssistantCard ac:currPlayer.getMyDeck().getCards()) {
+            if (ac.getValue() == value) {
                 currPlayer.setChosenCard(currPlayer.getMyDeck().draw(ac));
+
+                // Set the order in action phase
+                this.statusGame.addSort(currPlayer);
+
+                if (this.statusGame.getOrder().size() == numPlayers) {
+                    this.statusGame.setStatus(STATUS.ACTION);
+                    currPlayer = this.statusGame.getOrder().get(0);
+                } else {
+                    // This is the last method of the planning phase of one player
+                    currPlayer = this.players.get((this.players.indexOf(currPlayer) + 1) % this.players.size());
+                }
+
                 return;
             }
-
+        }
         throw new NotAvailableCardException();  //if the card has already been drawn
     }
 
@@ -154,12 +169,17 @@ public class BasicGame implements Game{
         computeInfluence();
 
         // After the last player of the round moves motherNature,
-        // the winner is checked if is last round,
-        // otherwise the clouds are filled for a new round
+        //      the winner is checked if is last round,
+        //      otherwise the clouds are filled for a new round
         if(statusGame.getOrder().get(statusGame.getOrder().size()-1)==currPlayer){
             if(lastRound) checkWinner();
             else fillClouds();
         }
+        // If not last player, action phase continues in order
+        else{
+            currPlayer = this.statusGame.getOrder().get(this.statusGame.getOrder().indexOf(currPlayer) + 1);
+        }
+
     }
 
     @Override//from the index of the cloud,returns the cloud chosen by the player
