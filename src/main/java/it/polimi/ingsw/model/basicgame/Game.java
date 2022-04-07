@@ -48,4 +48,6 @@ public interface Game {
     void setCurrPlayer(Player currPlayer);
 
     ArrayList<Cloud> getClouds();
+
+    StatusGame getStatusGame();
 }

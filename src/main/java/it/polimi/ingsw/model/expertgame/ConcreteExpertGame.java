@@ -156,4 +156,8 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
         return game.getClouds();
     }
 
+    @Override
+    public StatusGame getStatusGame() {
+        return game.getStatusGame();
+    }
 }

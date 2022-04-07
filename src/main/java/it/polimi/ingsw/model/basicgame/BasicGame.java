@@ -15,7 +15,7 @@ public class BasicGame implements Game{
     private int motherNature;
     private Player currPlayer;
     private final ArrayList<Cloud> clouds;
-
+    private final StatusGame statusGame;
 
     public BasicGame(Player host) {
         this.bag = new Bag();
@@ -31,6 +31,7 @@ public class BasicGame implements Game{
             professors.add(new Professor(color));
         }
         this.players.add(host);
+        statusGame=new StatusGame();
     }
 
     @Override
@@ -79,6 +80,7 @@ public class BasicGame implements Game{
                     break;
             }
         }
+        statusGame.setOrder(players);
     }
 
     @Override//finds the empty cloud and fills it
@@ -302,5 +304,10 @@ public class BasicGame implements Game{
 
     public ArrayList<Cloud> getClouds() {
         return clouds;
+    }
+
+    @Override
+    public StatusGame getStatusGame() {
+        return null;
     }
 }
