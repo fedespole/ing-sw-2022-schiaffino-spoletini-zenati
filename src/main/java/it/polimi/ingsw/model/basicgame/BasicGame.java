@@ -318,17 +318,20 @@ public class BasicGame implements Game{
 
     public void checkWinner(){
 
-        int minTowers=9;
+        int minTowers=9; // in 3 player maxTower is 8, so 9 is a ceiling for the minSort
         Player winner=null;
 
         for(Player player : this.players){
 
+            // Updates player with less towers in board, so more towers placed on islands
             if(minTowers > player.getMySchoolBoard().getTowers().size()){
                 winner = player;
                 minTowers = player.getMySchoolBoard().getTowers().size();
             }
+            // if two players have the same number of towers placed, checks number of owned professors
             else if(minTowers == player.getMySchoolBoard().getTowers().size()){
                 assert winner != null;
+                // if current pla
                 if(winner.getMySchoolBoard().getProfessors().size()<player.getMySchoolBoard().getProfessors().size())
                     winner = player;
                 //TODO manca il pareggio (quando hanno sia torri che prof uguali)
@@ -382,6 +385,6 @@ public class BasicGame implements Game{
 
     @Override
     public StatusGame getStatusGame() {
-        return null;
+        return statusGame;
     }
 }
