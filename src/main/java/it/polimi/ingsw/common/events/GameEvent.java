@@ -7,6 +7,4 @@ abstract public class GameEvent extends EventObject {
         super(source);
     }
 
-
-
 }
