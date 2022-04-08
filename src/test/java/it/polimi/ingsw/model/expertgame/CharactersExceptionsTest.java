@@ -108,13 +108,4 @@ public class CharactersExceptionsTest extends TestCase{
         students.remove(students.size()-1);
         assertThrows(InvalidNumStudentsException.class, ()->character10.useAbility(game,students));
     }
-    @Test
-    public void Character11StudentNotPresentException(){
-        Character11 character11 = new Character11(game);
-        ((ConcreteExpertGame)game).getCharacters().add(character11);
-        Student student = character11.getStudents().get(new Random().nextInt(3));
-        assertDoesNotThrow(()->character11.useAbility(game,student));
-        Student testStudent = new Student(COLOR.YELLOW);
-        assertThrows(StudentNotPresentException.class, ()-> character11.useAbility(game,testStudent));
-    }
 }

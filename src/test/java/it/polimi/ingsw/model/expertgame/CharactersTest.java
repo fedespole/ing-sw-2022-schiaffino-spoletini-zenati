@@ -64,14 +64,14 @@ public class CharactersTest extends TestCase {
         ((ConcreteExpertGame)game).getCharacters().add(new Character3());
         for(int i=0;i<4;i++) {
             game.getIslands().get(0).get(0).addStudent(new Student(COLOR.RED));
-            game.getPlayers().get(0).getMySchoolBoard().addStudentToDining(new Student(COLOR.RED));
+            game.getCurrPlayer().getMySchoolBoard().addStudentToDining(new Student(COLOR.RED));
         }
         game.assignProfessor(COLOR.RED);
         ((Character3)((ConcreteExpertGame)game).getCharacters().get(0)).useAbility(game,0);
-        assertEquals(game.getIslands().get(0).get(0).getTower().getColor(),game.getPlayers().get(0).getTeam());
+        assertEquals(game.getIslands().get(0).get(0).getTower().getColor(),game.getCurrPlayer().getTeam());
         game.getIslands().get(0).get(0).setTower(game.getPlayers().get(1).getMySchoolBoard().removeTower());
         ((Character3)((ConcreteExpertGame)game).getCharacters().get(0)).useAbility(game,0);
-        assertEquals(game.getIslands().get(0).get(0).getTower().getColor(),game.getPlayers().get(0).getTeam());
+        assertEquals(game.getIslands().get(0).get(0).getTower().getColor(),game.getCurrPlayer().getTeam());
     }
 
     @Test
