@@ -255,8 +255,9 @@ public class CharactersTest extends TestCase {
     public void Character11Test(){
         Character11 character11 = new Character11(game);
         ((ConcreteExpertGame)game).getCharacters().add(character11);
-        Student student = character11.getStudents().get(new Random().nextInt(3));
-        character11.useAbility(game,student);
+        int rnd= new Random().nextInt(3);
+        Student student = character11.getStudents().get(rnd);
+        character11.useAbility(game,rnd);
         for(COLOR color:COLOR.values()){
             if(color == student.getColor()){
                 assertEquals(1,game.getCurrPlayer().getMySchoolBoard().getDiningRoom()[color.ordinal()].size());

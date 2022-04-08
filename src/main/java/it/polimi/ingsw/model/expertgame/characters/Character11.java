@@ -20,16 +20,13 @@ public class Character11 extends Character{
         }
     }
 
-    public void useAbility(Game currGame, Student student) {
-
-        if(!students.contains(student)) throw new StudentNotPresentException();
-        else {
-            playerPayment(currGame.getCurrPlayer());
-            changeCost();
-            removeStudent(student);
-            currGame.getCurrPlayer().getMySchoolBoard().addStudentToDining(student);
-            addStudent(currGame.getBag().removeStudent());
-        }
+    public void useAbility(Game currGame, int indexStudent) {
+        playerPayment(currGame.getCurrPlayer());
+        changeCost();
+        Student student = this.getStudents().get(indexStudent);
+        removeStudent(student);
+        currGame.getCurrPlayer().getMySchoolBoard().addStudentToDining(student);
+        addStudent(currGame.getBag().removeStudent());
     }
 
     public void removeStudent(Student student){
