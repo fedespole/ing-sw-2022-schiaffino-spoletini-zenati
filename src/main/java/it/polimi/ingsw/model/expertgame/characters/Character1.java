@@ -22,7 +22,6 @@ public class Character1 extends Character {
 
     public void useAbility(Game currGame, int index, ArrayList<Island> island){
 
-        if(index < 0 || index > 3) throw new InvalidPlayerIndexException();
         playerPayment(currGame.getCurrPlayer());
         changeCost();
         removeStudent(students.get(index));
