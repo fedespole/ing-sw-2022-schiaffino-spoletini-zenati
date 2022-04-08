@@ -28,7 +28,7 @@ public class SchoolBoard {
         entrance.add(student);
     }
 
-    public Student removeStudentFromEntrance(COLOR color) {
+    public Student removeStudentFromEntrance(COLOR color) throws StudentNotPresentException {
         for(Student student : entrance){
             if(student.getColor().equals(color)){
                 entrance.remove(student);
