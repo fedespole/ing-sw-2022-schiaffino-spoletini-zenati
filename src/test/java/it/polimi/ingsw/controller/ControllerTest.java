@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.common.events.DrawAssistantCardEvent;
+import it.polimi.ingsw.common.events.MoveStudentToDiningEvent;
 import it.polimi.ingsw.common.events.PlayerAccessEvent;
 import it.polimi.ingsw.common.events.StartGameEvent;
 import it.polimi.ingsw.model.basicgame.BasicGame;
@@ -61,5 +62,14 @@ public class ControllerTest {
         event = new DrawAssistantCardEvent(this,5);
         controller.update(event);
         assertEquals(5,second_player.getChosenCard().getValue());
+        Player third_player = controller.getGame().getCurrPlayer();
+        event = new DrawAssistantCardEvent(this,8);
+        controller.update(event);
+        assertEquals(8,third_player.getChosenCard().getValue());
     }
+
+   /* @Test
+    public void MoveStudentToDiningEventTest(){
+
+    }*/
 }
