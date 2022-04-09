@@ -39,9 +39,6 @@ public class SchoolBoard {
     }
 
     public void addStudentToDining(Student student){
-        if(diningRoom[student.getColor().ordinal()].size() >= 10){
-            throw new NoMoreSpaceException();
-        }
         diningRoom[student.getColor().ordinal()].add(student);
     }
 

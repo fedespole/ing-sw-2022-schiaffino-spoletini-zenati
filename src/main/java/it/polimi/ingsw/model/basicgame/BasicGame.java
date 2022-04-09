@@ -130,9 +130,6 @@ public class BasicGame implements Game{
     @Override
     public void chooseCard(int value){
 
-        if(value<1 || value>10)
-            throw new OutOfBoundCardSelectionException();
-
         for(AssistantCard ac:currPlayer.getMyDeck().getCards()) {
             if (ac.getValue() == value) {
                 currPlayer.setChosenCard(currPlayer.getMyDeck().draw(ac));
@@ -167,7 +164,6 @@ public class BasicGame implements Game{
 
     @Override
     public void moveMother(int steps) {
-        if(steps < 0 || steps > currPlayer.getChosenCard().getSteps()) throw new InvalidStepsException();
         motherNature = (motherNature+steps) % this.islands.size();
 
         // Every time motherNature stops on an island, this method checks the influence
@@ -184,8 +180,6 @@ public class BasicGame implements Game{
 
     @Override//from the index of the cloud,returns the cloud chosen by the player
     public void chooseCloud(int cloud) {
-        if(cloud < 0 || cloud >= clouds.size()) throw new InvalidCloudIndexException();
-
         moveStudentsFromCloud(this.clouds.get(cloud));
 
         // After the last player of the round moves motherNature,
@@ -352,7 +346,7 @@ public class BasicGame implements Game{
                 }
             }
         }
-
+        //TODO gestirli nell'handler, non solo crearli
         if(tiePlayers.size()==0)
             new VictoryEvent(this, winner);
         else
