@@ -24,8 +24,10 @@ public class Character1 extends Character {
 
         playerPayment(currGame.getCurrPlayer());
         changeCost();
-        removeStudent(students.get(index));
-        island.get(0).addStudent(students.get(index));
+        Student student = students.get(index);
+        students.remove(index);
+       // removeStudent(student);
+        island.get(0).addStudent(student);
         addStudent(currGame.getBag().removeStudent());
     }
 

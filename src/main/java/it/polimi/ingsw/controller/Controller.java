@@ -63,7 +63,7 @@ public class Controller implements EventListener {
         checkPlanningPhase();
         Deck deck = game.getCurrPlayer().getMyDeck();
         for (Player p : game.getStatusGame().getOrder()) {
-            if (p.getChosenCard().getSteps() == deck.getCards().get(event.getIndex()).getSteps())
+            if (p.getChosenCard().getSteps() == deck.getCards().get(event.getIndex()).getSteps() && !p.equals(game.getCurrPlayer()))
                 if (deck.getCards().size() > 1) {
                     throw new AlreadyUsedCard();
                 }
@@ -128,8 +128,7 @@ public class Controller implements EventListener {
 
     //TODO CharacterAbilityException dentro i character?
     public void update(UseCharacter1Event event) {
-        ConcreteExpertGame currGame = (ConcreteExpertGame) game;
-        for (Character character : currGame.getCharacters()) {
+        for (Character character : ((ConcreteExpertGame)game).getCharacters()) {
             if (character instanceof Character1) {
                 checkAbility(character);
                 ((Character1) character).useAbility(game, event.getIndexStudent(), game.getIslands().get(event.getIndexIsland()));

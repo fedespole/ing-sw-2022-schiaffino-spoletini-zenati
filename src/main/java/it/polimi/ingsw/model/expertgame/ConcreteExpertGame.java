@@ -16,12 +16,9 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
 
     public ConcreteExpertGame(Game game) {
         this.game = game;
-        for (Player player : game.getPlayers()) {
-            player.setCoins(0);
         characters= new ArrayList<Character>();
         }
 
-    }
 
     public ConcreteExpertGame(ConcreteExpertGame expertGame) {
         this.game = expertGame.game;
