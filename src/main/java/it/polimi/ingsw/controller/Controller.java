@@ -23,6 +23,11 @@ public class Controller implements EventListener {
     private Game game;
     private boolean hasCardBeenUsed;
 
+    public Controller(Game game) {
+        this.game = game;
+        this.hasCardBeenUsed = false;
+    }
+
     public Game getGame() {
         return game;
     }
