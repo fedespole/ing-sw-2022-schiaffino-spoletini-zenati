@@ -1,11 +1,7 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.common.events.DrawAssistantCardEvent;
-import it.polimi.ingsw.common.events.MoveStudentToDiningEvent;
-import it.polimi.ingsw.common.events.PlayerAccessEvent;
-import it.polimi.ingsw.common.events.StartGameEvent;
-import it.polimi.ingsw.model.basicgame.BasicGame;
-import it.polimi.ingsw.model.basicgame.Game;
+import it.polimi.ingsw.common.events.*;
+import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,56 +16,112 @@ public class ControllerTest {
     private Controller controller;
 
     @BeforeEach
-    public void setUp(){
-        Game game =new BasicGame(new Player("Host"));
+    public void setUp() {
+        Game game = new BasicGame(new Player("Host"));
         this.controller = new Controller(game);
     }
 
     @Test
     public void PlayerAccessEventTest() {
-        PlayerAccessEvent event = new PlayerAccessEvent(this,"Test1");
+        PlayerAccessEvent event = new PlayerAccessEvent(this, "Test1");
         controller.update(event);
-        assertEquals("Test1",controller.getGame().getPlayers().get(1).getUsername());
-        event = new PlayerAccessEvent(this,"Test2");
+        assertEquals("Test1", controller.getGame().getPlayers().get(1).getUsername());
+        event = new PlayerAccessEvent(this, "Test2");
         controller.update(event);
-        assertEquals("Test2",controller.getGame().getPlayers().get(2).getUsername());
+        assertEquals("Test2", controller.getGame().getPlayers().get(2).getUsername());
 
     }
 
     @Test
-    public void StartBasicGameEventTest(){
+    public void StartBasicGameEventTest() {
         this.PlayerAccessEventTest();
-        StartGameEvent event= new StartGameEvent(this,false);
+        StartGameEvent event = new StartGameEvent(this, false);
         controller.update(event);
         assertTrue(controller.getGame() instanceof BasicGame);
     }
 
     @Test
-    public void StartExpertGameEventTest(){
+    public void StartExpertGameEventTest() {
         this.PlayerAccessEventTest();
-        StartGameEvent event= new StartGameEvent(this,true);
+        StartGameEvent event = new StartGameEvent(this, true);
         controller.update(event);
         assertTrue(controller.getGame() instanceof ConcreteExpertGame);
     }
+
     @Test
-    public void DrawAssistantCardEventTest(){
+    public void DrawAssistantCardEventTest() {
         this.StartBasicGameEventTest();
-        DrawAssistantCardEvent event = new DrawAssistantCardEvent(this,3);
+        DrawAssistantCardEvent event = new DrawAssistantCardEvent(this, 3);
         Player firstPlayer = controller.getGame().getCurrPlayer();
         controller.update(event);
-        assertEquals(3,firstPlayer.getChosenCard().getValue());
+        assertEquals(3, firstPlayer.getChosenCard().getValue());
         Player second_player = controller.getGame().getCurrPlayer();
-        event = new DrawAssistantCardEvent(this,5);
+        event = new DrawAssistantCardEvent(this, 5);
         controller.update(event);
-        assertEquals(5,second_player.getChosenCard().getValue());
+        assertEquals(5, second_player.getChosenCard().getValue());
         Player third_player = controller.getGame().getCurrPlayer();
-        event = new DrawAssistantCardEvent(this,8);
+        event = new DrawAssistantCardEvent(this, 8);
         controller.update(event);
-        assertEquals(8,third_player.getChosenCard().getValue());
+        assertEquals(8, third_player.getChosenCard().getValue());
+        assertEquals(STATUS.ACTION, controller.getGame().getStatusGame().getStatus());
     }
 
-   /* @Test
-    public void MoveStudentToDiningEventTest(){
+    @Test
+    public void MoveStudentToDiningEventTest() {//test for one player only
+        this.DrawAssistantCardEventTest();
+        Player currPlayer = controller.getGame().getCurrPlayer();
+        COLOR color;
+        MoveStudentToDiningEvent event;
+        int size ;
+        for (int j = 0; j < 2; j++) {
+            color = controller.getGame().getCurrPlayer().getMySchoolBoard().getEntrance().get(0).getColor();
+            event = new MoveStudentToDiningEvent(currPlayer, color.ordinal());
+            size = controller.getGame().getCurrPlayer().getMySchoolBoard().getDiningRoom()[color.ordinal()].size();
+            controller.update(event);
+            assertEquals(size +1, currPlayer.getMySchoolBoard().getDiningRoom()[color.ordinal()].size());
+        }
+    assertEquals(STATUS.ACTION,controller.getGame().getStatusGame().getStatus());
+    assertEquals(7,currPlayer.getMySchoolBoard().getEntrance().size());
+    }
 
-    }*/
+    @Test
+    public  void MoveStudentToIslandEventTest(){
+        this.MoveStudentToDiningEventTest();
+        Player currPlayer = controller.getGame().getCurrPlayer();
+        Student student;
+        MoveStudentToIslandEvent event;
+        for(int i=0;i<2;i++) {
+            student = controller.getGame().getCurrPlayer().getMySchoolBoard().getEntrance().get(0);
+            event = new MoveStudentToIslandEvent(currPlayer, student.getColor().ordinal(), 3);
+            controller.update(event);
+            assertTrue(controller.getGame().getIslands().get(3).get(0).getStudents().contains(student));
+        }
+        assertEquals(5,currPlayer.getMySchoolBoard().getEntrance().size());
+    }
+
+    @Test
+    public void MoveMotherEventTest(){
+        this.MoveStudentToIslandEventTest();
+        Player currPlayer = controller.getGame().getCurrPlayer();
+        int oldIsland=controller.getGame().getMotherNature();
+        MoveMotherEvent event= new MoveMotherEvent(currPlayer,1);
+        controller.update(event);
+        assertEquals(controller.getGame().getMotherNature(),oldIsland+1);
+    }
+    @Test
+    public void ChooseCloudEventTest(){
+        this.MoveMotherEventTest();
+        Player currPlayer = controller.getGame().getCurrPlayer();
+        int cloud=0;
+        for(int i=0;i<3;i++){
+            if(controller.getGame().getClouds().get(i).getStudents().size()!=0){
+                cloud = i;
+                break;
+            }
+        }
+        ChooseCloudEvent event = new ChooseCloudEvent(currPlayer,cloud);
+        controller.update(event);
+        assertEquals(9,currPlayer.getMySchoolBoard().getEntrance().size());
+        assertNotEquals(currPlayer,controller.getGame().getCurrPlayer());
+    }
 }
