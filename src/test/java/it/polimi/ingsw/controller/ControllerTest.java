@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.common.events.PlayerAccessEvent;
 import it.polimi.ingsw.model.basicgame.BasicGame;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
@@ -18,10 +19,17 @@ public class ControllerTest {
     @BeforeEach
     public void setUp(){
         game =new BasicGame(new Player("Host"));
-        Controller controller = new Controller(game);
+        this.controller = new Controller(game);
     }
 
     @Test
     public void PlayerAccessEventTest() {
+        PlayerAccessEvent event = new PlayerAccessEvent(this,"Test1");
+        controller.update(event);
+        assertEquals("Test1",game.getPlayers().get(1).getUsername());
+        event = new PlayerAccessEvent(this,"Test2");
+        controller.update(event);
+        assertEquals("Test2",game.getPlayers().get(2).getUsername());
+
     }
 }

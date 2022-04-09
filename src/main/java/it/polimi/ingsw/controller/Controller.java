@@ -290,17 +290,17 @@ public class Controller implements EventListener {
     }
 
     private void checkSetUpPhase() {
-        if (game.getStatusGame().getStatus().equals(STATUS.SETUP))
+        if (!game.getStatusGame().getStatus().equals(STATUS.SETUP))
             throw new InvalidPhaseException();
     }
 
     private void checkPlanningPhase() {
-        if (game.getStatusGame().getStatus().equals(STATUS.PLANNING))
+        if (!game.getStatusGame().getStatus().equals(STATUS.PLANNING))
             throw new InvalidPhaseException();
     }
 
     private void checkActionPhase() {
-        if (game.getStatusGame().getStatus().equals(STATUS.ACTION))
+        if (!game.getStatusGame().getStatus().equals(STATUS.ACTION))
             throw new InvalidPhaseException();
     }
 
