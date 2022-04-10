@@ -1,15 +1,18 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.common.events.*;
-import it.polimi.ingsw.common.events.charactersEvents.UseCharacter1Event;
+import it.polimi.ingsw.common.events.charactersEvents.*;
 import it.polimi.ingsw.common.exceptions.TooPoorException;
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
-import it.polimi.ingsw.model.expertgame.characters.Character1;
+import it.polimi.ingsw.model.expertgame.characters.*;
+import it.polimi.ingsw.model.expertgame.gamemodes.GameMode2;
+import it.polimi.ingsw.model.expertgame.gamemodes.GameMode6;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import static org.junit.Assert.*;
@@ -131,7 +134,7 @@ public class ControllerTest {
     }
 
     @Test
-    public void UseCharacter1Event() {
+    public void UseCharacter1EventTest() {
         this.DrawAssistantCardEventTest();
         Character1 character1 = new Character1(controller.getGame());
         ((ConcreteExpertGame) controller.getGame()).getCharacters().add(character1);
@@ -148,4 +151,91 @@ public class ControllerTest {
                 new_size++;
         assertEquals(old_size+1,new_size);
     }
+
+    @Test
+    public void UseCharacter2EventTest(){
+        this.DrawAssistantCardEventTest();
+        Character2 character2 = new Character2();
+        controller.getGame().getCurrPlayer().setCoins(6);
+        ((ConcreteExpertGame) controller.getGame()).getCharacters().add(character2);
+        UseCharacter2Event event = new UseCharacter2Event(controller.getGame().getCurrPlayer());
+        controller.update(event);
+        assertTrue(controller.getGame() instanceof GameMode2);
+        ChooseCloudEvent event1 = new ChooseCloudEvent(controller.getGame().getCurrPlayer(), 0);
+        controller.update(event1);
+        assertFalse(controller.getGame() instanceof GameMode2);
+    }
+
+    @Test
+    public void UseCharacter3EventTest(){
+        this.DrawAssistantCardEventTest();
+        Character3 character3 = new Character3();
+        controller.getGame().getCurrPlayer().setCoins(6);
+        ((ConcreteExpertGame) controller.getGame()).getCharacters().add(character3);
+        for(int i=0;i<4;i++) {
+            controller.getGame().getIslands().get(0).get(0).addStudent(new Student(COLOR.RED));
+            controller.getGame().getCurrPlayer().getMySchoolBoard().addStudentToDining(new Student(COLOR.RED));
+        }
+        controller.getGame().assignProfessor(COLOR.RED);
+        UseCharacter3Event event = new UseCharacter3Event(controller.getGame().getCurrPlayer(),0);
+        controller.update(event);
+        assertEquals(controller.getGame().getIslands().get(0).get(0).getTower().getColor(),controller.getGame().getCurrPlayer().getTeam());
+    }
+
+    @Test
+    public void UseCharacter4EventTest(){
+        this.DrawAssistantCardEventTest();
+        Character4 character4 = new Character4();
+        controller.getGame().getCurrPlayer().setCoins(6);
+        ((ConcreteExpertGame) controller.getGame()).getCharacters().add(character4);
+        int index = controller.getGame().getPlayers().indexOf(controller.getGame().getCurrPlayer());
+        int old_steps = controller.getGame().getCurrPlayer().getChosenCard().getSteps();
+        UseCharacter4Event event = new UseCharacter4Event(controller.getGame().getCurrPlayer(),index);
+        controller.update(event);
+        int new_steps = controller.getGame().getCurrPlayer().getChosenCard().getSteps();
+        assertEquals(old_steps+2,new_steps);
+    }
+
+    @Test
+    public void UseCharacter5EventTest(){
+        this.DrawAssistantCardEventTest();
+        Character5 character5 = new Character5();
+        controller.getGame().getCurrPlayer().setCoins(6);
+        ((ConcreteExpertGame) controller.getGame()).getCharacters().add(character5);
+        assertFalse(controller.getGame().getIslands().get(0).get(0).isNoEntry());
+        UseCharacter5Event event = new UseCharacter5Event(controller.getGame().getCurrPlayer(),0);
+        controller.update(event);
+        assertTrue(controller.getGame().getIslands().get(0).get(0).isNoEntry());
+    }
+
+    @Test
+    public void UseCharacter6EventTest(){
+        this.DrawAssistantCardEventTest();
+        Character6 character6 = new Character6();
+        controller.getGame().getCurrPlayer().setCoins(6);
+        ((ConcreteExpertGame) controller.getGame()).getCharacters().add(character6);
+        UseCharacter6Event event = new UseCharacter6Event(controller.getGame().getCurrPlayer());
+        controller.update(event);
+        assertTrue(controller.getGame() instanceof GameMode6);
+        ChooseCloudEvent event1 = new ChooseCloudEvent(controller.getGame().getCurrPlayer(), 0);
+        controller.update(event1);
+        assertFalse(controller.getGame() instanceof GameMode6);
+    }
+
+  /*  @Test
+    public void UseCharacter7EventTest(){
+        this.DrawAssistantCardEventTest();
+        Character7 character7 = new Character7(controller.getGame());
+        controller.getGame().getCurrPlayer().setCoins(6);
+        ((ConcreteExpertGame) controller.getGame()).getCharacters().add(character7);
+        ArrayList<Integer> colors = new ArrayList<>();
+        Student studentCard = character7.getStudents().get(0);
+        colors.add(studentCard.getColor().ordinal());
+        Student studentEntrance = controller.getGame().getCurrPlayer().getMySchoolBoard().getEntrance().get(0);
+        colors.add(studentEntrance.getColor().ordinal());
+        UseCharacter7Event event = new UseCharacter7Event(controller.getGame().getCurrPlayer(),colors);
+        controller.update(event);
+        assertTrue(controller.getGame().getCurrPlayer().getMySchoolBoard().getEntrance().contains(studentEntrance));
+        assertTrue(character7.getStudents().contains(studentCard));
+    }*/
 }
