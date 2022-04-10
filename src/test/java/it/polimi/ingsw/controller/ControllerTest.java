@@ -9,6 +9,8 @@ import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 import it.polimi.ingsw.model.expertgame.characters.*;
 import it.polimi.ingsw.model.expertgame.gamemodes.GameMode2;
 import it.polimi.ingsw.model.expertgame.gamemodes.GameMode6;
+import it.polimi.ingsw.model.expertgame.gamemodes.GameMode8;
+import it.polimi.ingsw.model.expertgame.gamemodes.GameMode9;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -133,6 +135,7 @@ public class ControllerTest {
         assertNotEquals(currPlayer, controller.getGame().getCurrPlayer());
     }
 
+    //TODO Correggere algoritmo,il 20% delle volte non sposta lo studente
     @Test
     public void UseCharacter1EventTest() {
         this.DrawAssistantCardEventTest();
@@ -222,20 +225,109 @@ public class ControllerTest {
         assertFalse(controller.getGame() instanceof GameMode6);
     }
 
-  /*  @Test
+//TODO Correggere algoritmo,il 20% delle volte non sposta lo studente
+    @Test
     public void UseCharacter7EventTest(){
         this.DrawAssistantCardEventTest();
         Character7 character7 = new Character7(controller.getGame());
         controller.getGame().getCurrPlayer().setCoins(6);
         ((ConcreteExpertGame) controller.getGame()).getCharacters().add(character7);
         ArrayList<Integer> colors = new ArrayList<>();
-        Student studentCard = character7.getStudents().get(0);
-        colors.add(studentCard.getColor().ordinal());
         Student studentEntrance = controller.getGame().getCurrPlayer().getMySchoolBoard().getEntrance().get(0);
         colors.add(studentEntrance.getColor().ordinal());
+        Student studentCard = character7.getStudents().get(0);
+        colors.add(studentCard.getColor().ordinal());
+        assertFalse(controller.getGame().getCurrPlayer().getMySchoolBoard().getEntrance().contains(studentCard));
+        assertFalse(character7.getStudents().contains(studentEntrance));
         UseCharacter7Event event = new UseCharacter7Event(controller.getGame().getCurrPlayer(),colors);
         controller.update(event);
-        assertTrue(controller.getGame().getCurrPlayer().getMySchoolBoard().getEntrance().contains(studentEntrance));
-        assertTrue(character7.getStudents().contains(studentCard));
-    }*/
+        assertTrue(controller.getGame().getCurrPlayer().getMySchoolBoard().getEntrance().contains(studentCard));
+        assertTrue(character7.getStudents().contains(studentEntrance));
+    }
+
+    @Test
+    public void UseCharacter8EventTest(){
+        this.DrawAssistantCardEventTest();
+        Character8 character8 = new Character8();
+        controller.getGame().getCurrPlayer().setCoins(6);
+        ((ConcreteExpertGame) controller.getGame()).getCharacters().add(character8);
+        UseCharacter8Event event = new UseCharacter8Event(controller.getGame().getCurrPlayer());
+        controller.update(event);
+        assertTrue(controller.getGame() instanceof GameMode8);
+        ChooseCloudEvent event1 = new ChooseCloudEvent(controller.getGame().getCurrPlayer(), 0);
+        controller.update(event1);
+        assertFalse(controller.getGame() instanceof GameMode8);
+    }
+
+    @Test
+    public void UseCharacter9EventTest(){
+        this.DrawAssistantCardEventTest();
+        Character9 character9 = new Character9();
+        controller.getGame().getCurrPlayer().setCoins(6);
+        ((ConcreteExpertGame) controller.getGame()).getCharacters().add(character9);
+        UseCharacter9Event event = new UseCharacter9Event(controller.getGame().getCurrPlayer(),0);
+        controller.update(event);
+        assertTrue(controller.getGame() instanceof GameMode9);
+        ChooseCloudEvent event1 = new ChooseCloudEvent(controller.getGame().getCurrPlayer(), 0);
+        controller.update(event1);
+        assertFalse(controller.getGame() instanceof GameMode9);
+    }
+
+    @Test
+    public void UseCharacter10EventTest(){
+        this.DrawAssistantCardEventTest();
+        Character10 character10 = new Character10();
+        controller.getGame().getCurrPlayer().setCoins(6);
+        ((ConcreteExpertGame) controller.getGame()).getCharacters().add(character10);
+        Student student_1 = new Student(COLOR.RED);
+        Student student_2 = new Student(COLOR.YELLOW);
+        controller.getGame().getCurrPlayer().getMySchoolBoard().addStudentToDining(student_1);
+        controller.getGame().getCurrPlayer().getMySchoolBoard().addStudentToEntrance(student_2);
+        ArrayList<Integer> students = new ArrayList<>();
+        students.add(student_1.getColor().ordinal());
+        students.add(student_2.getColor().ordinal());
+        assertEquals(0, controller.getGame().getCurrPlayer().getMySchoolBoard().getDiningRoom()[COLOR.YELLOW.ordinal()].size());
+        UseCharacter10Event event = new UseCharacter10Event(controller.getGame().getCurrPlayer(),students);
+        controller.update(event);
+        assertTrue(this.controller.getGame().getCurrPlayer().getMySchoolBoard().getEntrance().contains(student_1));
+        assertEquals(1, controller.getGame().getCurrPlayer().getMySchoolBoard().getDiningRoom()[COLOR.YELLOW.ordinal()].size());
+    }
+
+    @Test
+    public void UseCharacter11EventTest(){
+        this.DrawAssistantCardEventTest();
+        Character11 character11 = new Character11(controller.getGame());
+        controller.getGame().getCurrPlayer().setCoins(6);
+        ((ConcreteExpertGame) controller.getGame()).getCharacters().add(character11);
+        int rnd= new Random().nextInt(3);
+        Student student = character11.getStudents().get(rnd);
+        UseCharacter11Event event = new UseCharacter11Event(controller.getGame().getCurrPlayer(),rnd);
+        controller.update(event);
+        for(COLOR color:COLOR.values()){
+            if(color == student.getColor()){
+                assertEquals(1,controller.getGame().getCurrPlayer().getMySchoolBoard().getDiningRoom()[color.ordinal()].size());
+            }
+            else{
+                assertEquals(0,controller.getGame().getCurrPlayer().getMySchoolBoard().getDiningRoom()[color.ordinal()].size());
+            }
+        }
+        assertEquals(4,character11.getStudents().size());
+    }
+
+    @Test
+    public void UseCharacter12EventTest(){
+        int old_size=0,new_size=0;
+        this.DrawAssistantCardEventTest();
+        Character12 character12 = new Character12();
+        controller.getGame().getCurrPlayer().setCoins(6);
+        ((ConcreteExpertGame) controller.getGame()).getCharacters().add(character12);
+        for(int i=0;i<3;i++){
+            controller.getGame().getCurrPlayer().getMySchoolBoard().getDiningRoom()[COLOR.PINK.ordinal()].add(new Student(COLOR.PINK));
+        }
+        old_size=controller.getGame().getCurrPlayer().getMySchoolBoard().getDiningRoom()[COLOR.PINK.ordinal()].size();
+        UseCharacter12Event event = new UseCharacter12Event(controller.getGame().getCurrPlayer(),COLOR.PINK.ordinal());
+        controller.update(event);
+        new_size=controller.getGame().getCurrPlayer().getMySchoolBoard().getDiningRoom()[COLOR.PINK.ordinal()].size();
+        assertEquals(old_size-3,new_size);
+    }
 }
