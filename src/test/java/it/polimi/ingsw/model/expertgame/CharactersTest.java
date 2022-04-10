@@ -26,12 +26,12 @@ public class CharactersTest extends TestCase {
     public void setUp(){
         Random rand = new Random(); //instance of random class
         int int_random = rand.nextInt(2)+1;// is 1 or 2
-        game = new BasicGame(new Player("Host"));
+        game =new BasicGame(new Player("Host"));
         for(int i=0;i<int_random;i++){
             game.getPlayers().add(new Player("Test"));
         }
         game.setUp();
-        this.game = new ConcreteExpertGame(game);
+        this.game =new ConcreteExpertGame(game);
 
     }
 
@@ -40,10 +40,17 @@ public class CharactersTest extends TestCase {
         ((ConcreteExpertGame)game).getCharacters().add(new Character1(game));
         assertEquals(4,((Character1)((ConcreteExpertGame)game).getCharacters().get(0)).getStudents().size());
         Character1 aux = ((Character1)((ConcreteExpertGame)game).getCharacters().get(0));
-        assertTrue(aux.getStudents().contains(aux.getStudents().get(3)));
+        COLOR color = aux.getStudents().get(3).getColor();
+        int old_size = 0;
+        for (Student student : game.getIslands().get(0).get(0).getStudents())
+            if (student.getColor() == color)
+                old_size++;
         aux.useAbility(game,3,game.getIslands().get(0));
-        assertTrue(!aux.getStudents().contains(aux.getStudents().get(3)));
-        assertTrue(game.getIslands().get(0).contains(aux.getStudents().get(3)));
+        int new_size = 0;
+        for (Student student : game.getIslands().get(0).get(0).getStudents())
+            if (student.getColor() == color)
+                new_size++;
+        assertEquals(old_size+1,new_size);      // Works fine
     }
 
     @Test
