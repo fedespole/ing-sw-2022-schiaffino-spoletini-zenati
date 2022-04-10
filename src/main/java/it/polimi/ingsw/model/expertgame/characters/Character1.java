@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
-import it.polimi.ingsw.common.exceptions.InvalidPlayerIndexException;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Island;
 import it.polimi.ingsw.model.basicgame.Student;
@@ -16,7 +15,7 @@ public class Character1 extends Character {
         setHasBeenUsed(false);
         students = new ArrayList<Student>();
         for(int i=0; i<4; i++) {
-            addStudent(currGame.getBag().removeStudent());
+            students.add(currGame.getBag().removeStudent());
         }
     }
 
@@ -26,20 +25,11 @@ public class Character1 extends Character {
         changeCost();
         Student student = students.get(index);
         students.remove(index);
-       // removeStudent(student);
         island.get(0).addStudent(student);
-        addStudent(currGame.getBag().removeStudent());
+        students.add(currGame.getBag().removeStudent());
     }
 
     public ArrayList<Student> getStudents() {
         return students;
-    }
-
-    public void removeStudent(Student student){
-        students.remove(student);
-    }
-
-    public void addStudent(Student student){
-        students.add(student);
     }
 }

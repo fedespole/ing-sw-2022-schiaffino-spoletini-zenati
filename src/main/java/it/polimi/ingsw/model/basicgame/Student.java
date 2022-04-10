@@ -17,4 +17,8 @@ public class Student {
         else return false;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(color);
+    }
 }

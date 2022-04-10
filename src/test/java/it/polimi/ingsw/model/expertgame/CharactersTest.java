@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.expertgame;
 
+import it.polimi.ingsw.common.events.charactersEvents.UseCharacter1Event;
 import it.polimi.ingsw.model.basicgame.BasicGame;
 import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Game;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static javax.swing.UIManager.get;
+import static org.junit.Assert.assertEquals;
 
 public class CharactersTest extends TestCase {
     Game game;
@@ -24,12 +26,12 @@ public class CharactersTest extends TestCase {
     public void setUp(){
         Random rand = new Random(); //instance of random class
         int int_random = rand.nextInt(2)+1;// is 1 or 2
-        game =new BasicGame(new Player("Host"));
+        game = new BasicGame(new Player("Host"));
         for(int i=0;i<int_random;i++){
             game.getPlayers().add(new Player("Test"));
         }
         game.setUp();
-        this.game =new ConcreteExpertGame(game);
+        this.game = new ConcreteExpertGame(game);
 
     }
 
@@ -37,9 +39,11 @@ public class CharactersTest extends TestCase {
     public void Character1Test(){
         ((ConcreteExpertGame)game).getCharacters().add(new Character1(game));
         assertEquals(4,((Character1)((ConcreteExpertGame)game).getCharacters().get(0)).getStudents().size());
-        int sizeIsland= game.getIslands().get(0).get(0).getStudents().size();
-        ((Character1)((ConcreteExpertGame)game).getCharacters().get(0)).useAbility(game,0,game.getIslands().get(0));
-        assertEquals(sizeIsland+1,game.getIslands().get(0).get(0).getStudents().size());
+        Character1 aux = ((Character1)((ConcreteExpertGame)game).getCharacters().get(0));
+        assertTrue(aux.getStudents().contains(aux.getStudents().get(3)));
+        aux.useAbility(game,3,game.getIslands().get(0));
+        assertTrue(!aux.getStudents().contains(aux.getStudents().get(3)));
+        assertTrue(game.getIslands().get(0).contains(aux.getStudents().get(3)));
     }
 
     @Test

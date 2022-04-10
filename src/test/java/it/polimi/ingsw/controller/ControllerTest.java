@@ -141,12 +141,12 @@ public class ControllerTest {
         this.DrawAssistantCardEventTest();
         Character1 character1 = new Character1(controller.getGame());
         ((ConcreteExpertGame) controller.getGame()).getCharacters().add(character1);
-        COLOR color = character1.getStudents().get(2).getColor();
+        COLOR color = character1.getStudents().get(0).getColor();
         int old_size = 0;
         for (Student student : controller.getGame().getIslands().get(3).get(0).getStudents())
             if (student.getColor() == color)
                 old_size++;
-        UseCharacter1Event event = new UseCharacter1Event(controller.getGame().getCurrPlayer(), 2, 3);
+        UseCharacter1Event event = new UseCharacter1Event(controller.getGame().getCurrPlayer(), 0, 3);
         controller.update(event);
         int new_size = 0;
         for (Student student : controller.getGame().getIslands().get(3).get(0).getStudents())
