@@ -2,14 +2,14 @@ package it.polimi.ingsw.common.events;
 
 public class DrawAssistantCardEvent extends GameEvent{
 
-    private final int index; // View selects index of card from deck
+    private final int value; // View selects value of card from deck
 
-    public DrawAssistantCardEvent(Object source, int index) {
+    public DrawAssistantCardEvent(Object source, int value) {
         super(source);
-        this.index = index;
+        this.value = value;
     }
 
-    public int getIndex() {
-        return index;
+    public int getValue() {
+        return value;
     }
 }

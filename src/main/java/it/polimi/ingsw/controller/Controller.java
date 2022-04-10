@@ -6,6 +6,7 @@ import it.polimi.ingsw.common.exceptions.*;
 import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.STATUS;
+import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.model.basicgame.playeritems.Deck;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
@@ -58,19 +59,31 @@ public class Controller implements EventListener {
     }
 
     public void update(DrawAssistantCardEvent event) {
-        if (event.getIndex() < 1 || event.getIndex() > 10)
+        int chosenValue = event.getValue();
+
+        if (chosenValue < 1 || chosenValue > 10)
             throw new OutOfBoundCardSelectionException();
+
         checkPlanningPhase();
-        Deck deck = game.getCurrPlayer().getMyDeck();
-        for (Player p : game.getStatusGame().getOrder()) {
-            if (p.getChosenCard().getSteps() == deck.getCards().get(event.getIndex()).getSteps() && !p.equals(game.getCurrPlayer()))
-                if (deck.getCards().size() > 1) {
-                    throw new AlreadyUsedCard();
-                }
+
+        boolean alreadyUsedCard = false;
+        Deck deck = getGame().getCurrPlayer().getMyDeck();
+        ArrayList<AssistantCard> cards = new ArrayList<AssistantCard>();
+        for(Player p: getGame().getStatusGame().getOrder()){
+            //save in "cards" all played cards
+            cards.add(p.getChosenCard());
+            if(p.getChosenCard().getValue()==chosenValue && !p.equals(game.getCurrPlayer()))
+                //put alreadUsedCard true if someone has already played a card with same chosenValue
+                alreadyUsedCard = true;
         }
+        boolean allowedToPutIt = deck.getCards().containsAll(cards) && cards.size() == deck.getCards().size(); //my deck has only cards that were played
+        if(!allowedToPutIt && alreadyUsedCard)
+            throw new AlreadyUsedCardException();
+
         try {
-            game.chooseCard(event.getIndex());
+            game.chooseCard(chosenValue);
         } catch (NotAvailableCardException e) {
+            throw new NotAvailableCardException();
         }
     }
 
@@ -87,6 +100,7 @@ public class Controller implements EventListener {
         try {
             game.moveStudentFromEntranceToDining(COLOR.values()[event.getColorIndex()]);
         } catch (StudentNotPresentException e) {
+            throw new StudentNotPresentException();
         }
     }
 
@@ -102,6 +116,7 @@ public class Controller implements EventListener {
         try {
             game.moveStudentFromEntranceToIsland(COLOR.values()[event.getColorIndex()], game.getIslands().get(event.getIslandIndex()).get(0));
         } catch (StudentNotPresentException e) {
+            throw new StudentNotPresentException();
         }
     }
 
