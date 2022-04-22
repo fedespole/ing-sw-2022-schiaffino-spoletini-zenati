@@ -27,7 +27,7 @@ public class Controller implements EventListener {
     public Controller(Game game) {
         this.game = game;
         this.hasCardBeenUsed = false;
-        GameHandler.addEventListener(this);
+       // GameHandler.addEventListener(this);
     }
 
     public Game getGame() {
@@ -93,7 +93,7 @@ public class Controller implements EventListener {
         checkActionPhase();
         if (!event.getSource().equals(game.getCurrPlayer()))
             throw new InvalidPlayerException();
-        if (event.getColorIndex() < 0 || event.getColorIndex() > COLOR.values().length)
+        if (event.getColorIndex() < 0)
             throw new InvalidColorException();
         if (game.getCurrPlayer().getMySchoolBoard().getDiningRoom()[event.getColorIndex()].size() >= 10) {
             throw new NoMoreSpaceException();

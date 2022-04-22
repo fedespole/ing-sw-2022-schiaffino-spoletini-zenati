@@ -1,14 +1,8 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.common.events.DrawAssistantCardEvent;
-import it.polimi.ingsw.common.events.MoveStudentToDiningEvent;
-import it.polimi.ingsw.common.events.PlayerAccessEvent;
-import it.polimi.ingsw.common.events.StartGameEvent;
+import it.polimi.ingsw.common.events.*;
 import it.polimi.ingsw.common.exceptions.*;
-import it.polimi.ingsw.model.basicgame.BasicGame;
-import it.polimi.ingsw.model.basicgame.COLOR;
-import it.polimi.ingsw.model.basicgame.Game;
-import it.polimi.ingsw.model.basicgame.STATUS;
+import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import junit.framework.TestCase;
@@ -29,6 +23,8 @@ public class ControllerExceptionsTest extends TestCase {
         this.controller = new Controller(game);
     }
 
+
+    //TODO InvalidNumPLayersTest
     @Test
     public void PlayerAccessEventExceptionTest() {
         PlayerAccessEvent event = new PlayerAccessEvent(this,"Test1");
@@ -96,18 +92,54 @@ public class ControllerExceptionsTest extends TestCase {
         controller.update(new DrawAssistantCardEvent(this,1 ));
         controller.update(new DrawAssistantCardEvent(this,2 ));
         controller.update(new DrawAssistantCardEvent(this,3 ));
-
+        //Just accessory variables
         Player currPlayer = controller.getGame().getCurrPlayer();
         COLOR color;
         MoveStudentToDiningEvent event;
         color = controller.getGame().getCurrPlayer().getMySchoolBoard().getEntrance().get(0).getColor();
         COLOR finalColor = color;
-
+        //tests InvalidPlayer
         assertThrows(InvalidPlayerException.class, () ->controller.update(new MoveStudentToDiningEvent(new Player("WrongPlayer"), finalColor.ordinal())));
-
+        //TODO Phase, InvalidColor?, StudentNotPresent
+        currPlayer.getMySchoolBoard().getEntrance().remove(0);
+        currPlayer.getMySchoolBoard().getEntrance().add(new Student(COLOR.PINK));
+        //tests InvalidColor and ArrayIndexOutOfBound
+        assertThrows(InvalidColorException.class, () -> controller.update(new MoveStudentToDiningEvent(currPlayer, -1)));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> controller.update(new MoveStudentToDiningEvent(currPlayer, 5)));
+        //tests NoMoreSpace
+        for(int i=0;currPlayer.getMySchoolBoard().getDiningRoom()[3].size() < 10; i++){
+            assertDoesNotThrow(()-> controller.getGame().getCurrPlayer().getMySchoolBoard().addStudentToDining(new Student(COLOR.PINK)));
+        }
+        assertThrows(NoMoreSpaceException.class, ()-> controller.update(new MoveStudentToDiningEvent(currPlayer, 3)));
+        //tests StudentNotPresent
+        currPlayer.getMySchoolBoard().getEntrance().removeAll(currPlayer.getMySchoolBoard().getEntrance());
+        controller.getGame().getCurrPlayer().getMySchoolBoard().removeStudentFromDiningRoom(COLOR.PINK);
+        assertThrows(StudentNotPresentException.class, () -> controller.update(new MoveStudentToDiningEvent(currPlayer, 3)));
     }
 
+    @Test
+    public void MoveStudentToIslandEventTest(){
+        //adding 3 players and starting the game
+        controller.update(new PlayerAccessEvent(this, "Test1"));
+        controller.update(new PlayerAccessEvent(this, "Test2"));
+        controller.update(new StartGameEvent(this, false));
+        controller.update(new DrawAssistantCardEvent(this,1 ));
+        controller.update(new DrawAssistantCardEvent(this,2 ));
+        controller.update(new DrawAssistantCardEvent(this,3 ));
+        Player currPlayer = controller.getGame().getCurrPlayer();
+        //tests InvalidIsland
+        currPlayer.getMySchoolBoard().getEntrance().remove(0);
+        currPlayer.getMySchoolBoard().getEntrance().add(new Student(COLOR.GREEN));
+        assertThrows(InvalidIslandIndexException.class,() -> controller.update(new MoveStudentToIslandEvent(currPlayer,0, -1 )));
+        assertThrows(InvalidIslandIndexException.class,() -> controller.update(new MoveStudentToIslandEvent(currPlayer,0, controller.getGame().getIslands().size()+1 )));
+        //tests InvalidColor
+        assertThrows(InvalidColorException.class, () -> controller.update(new MoveStudentToIslandEvent(currPlayer, -1, 0)));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> controller.update(new MoveStudentToIslandEvent(currPlayer, 5, 0)));
+        //tests StudentNotPresent
+        currPlayer.getMySchoolBoard().getEntrance().removeAll(currPlayer.getMySchoolBoard().getEntrance());
+        assertThrows(StudentNotPresentException.class, () -> controller.update(new MoveStudentToIslandEvent(currPlayer, 0,0)));
 
+    }
 
     @Test
     public void MoveMotherEventTest(){
