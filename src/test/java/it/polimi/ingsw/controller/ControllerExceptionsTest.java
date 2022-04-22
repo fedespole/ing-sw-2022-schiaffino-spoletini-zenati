@@ -100,7 +100,6 @@ public class ControllerExceptionsTest extends TestCase {
         COLOR finalColor = color;
         //tests InvalidPlayer
         assertThrows(InvalidPlayerException.class, () ->controller.update(new MoveStudentToDiningEvent(new Player("WrongPlayer"), finalColor.ordinal())));
-        //TODO Phase, InvalidColor?, StudentNotPresent
         currPlayer.getMySchoolBoard().getEntrance().remove(0);
         currPlayer.getMySchoolBoard().getEntrance().add(new Student(COLOR.PINK));
         //tests InvalidColor and ArrayIndexOutOfBound
@@ -150,6 +149,6 @@ public class ControllerExceptionsTest extends TestCase {
         controller.update(new DrawAssistantCardEvent(this,1 ));
         controller.update(new DrawAssistantCardEvent(this,2 ));
         controller.update(new DrawAssistantCardEvent(this,3 ));
-        //
+        //TODO togliere test da basicGameExc e metterli qui
     }
 }
