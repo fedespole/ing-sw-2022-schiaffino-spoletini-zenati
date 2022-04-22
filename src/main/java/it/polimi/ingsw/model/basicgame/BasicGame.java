@@ -38,9 +38,7 @@ public class BasicGame implements Game{
     }
 
     @Override
-    public void setUp() throws InvalidNumPlayerException {
-
-        if(this.players.size()>3 || this.players.size()<2) throw new InvalidNumPlayerException();
+    public void setUp() {
 
         this.numPlayers=this.players.size();
         if(this.numPlayers==2){
