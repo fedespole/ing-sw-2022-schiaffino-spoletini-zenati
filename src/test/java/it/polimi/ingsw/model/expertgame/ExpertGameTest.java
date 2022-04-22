@@ -26,8 +26,6 @@ public class ExpertGameTest extends TestCase {
         @Test
         public void TestFillCloud(){
             int size= game.getClouds().size();
-            assertEquals(0,game.getClouds().get(0).getStudents().size());
-            game.fillClouds();
             switch(size){
                 case 2:
                     assertEquals(3,game.getClouds().get(0).getStudents().size());
@@ -71,8 +69,9 @@ public class ExpertGameTest extends TestCase {
 
         @Test//works
         public void TestAssignProfessor(){
+            game.setCurrPlayer(game.getPlayers().get(0));
             for(int i=0;i<6;i++)
-                game.getPlayers().get(0).getMySchoolBoard().addStudentToDining(new Student(COLOR.RED));//dining room del primo con 6 studenti rossi
+                game.getCurrPlayer().getMySchoolBoard().addStudentToDining(new Student(COLOR.RED));//dining room del currPlayer con 6 studenti rossi
             for(int i=0;i<4;i++)
                 game.getPlayers().get(1).getMySchoolBoard().addStudentToDining(new Student(COLOR.RED));//dining room del 2 con 4 studenti rossi
             game.assignProfessor(COLOR.RED);
