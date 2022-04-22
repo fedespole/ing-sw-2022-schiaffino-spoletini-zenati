@@ -27,6 +27,7 @@ public class Controller implements EventListener {
     public Controller(Game game) {
         this.game = game;
         this.hasCardBeenUsed = false;
+        GameHandler.addEventListener(this);
     }
 
     public Game getGame() {
