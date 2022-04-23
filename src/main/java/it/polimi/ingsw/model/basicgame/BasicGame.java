@@ -19,7 +19,7 @@ public class BasicGame implements Game{
     private final StatusGame statusGame;
     private boolean lastRound;
 
-    public BasicGame(Player host) {
+    public BasicGame() {
         this.bag = new Bag();
         this.islands = new ArrayList<ArrayList<Island>>();
         this.players = new ArrayList<Player>();
@@ -32,7 +32,6 @@ public class BasicGame implements Game{
         for(COLOR color : COLOR.values()){
             professors.add(new Professor(color));
         }
-        this.players.add(host);
         statusGame=new StatusGame();
         lastRound=false;
     }
@@ -94,8 +93,6 @@ public class BasicGame implements Game{
 
     @Override// fills all the clouds
     public void fillClouds() {
-
-
         if (numPlayers==2 && (this.getBag().getStudents().size() < 6)) lastRound = true;
         else if (numPlayers==3 && (this.getBag().getStudents().size() < 12)) lastRound = true;
         else {

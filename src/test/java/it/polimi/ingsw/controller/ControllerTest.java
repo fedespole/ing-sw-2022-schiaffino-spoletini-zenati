@@ -27,7 +27,8 @@ public class ControllerTest {
 
     @BeforeEach
     public void setUp() {
-        Game game = new BasicGame(new Player("Host"));
+        Game game = new BasicGame();
+        game.getPlayers().add(new Player("Host"));
         this.controller = new Controller(game);
     }
 

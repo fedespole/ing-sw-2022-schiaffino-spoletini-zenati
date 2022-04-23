@@ -25,10 +25,10 @@ public class CharactersTest extends TestCase {
     @BeforeEach
     public void setUp(){
         Random rand = new Random(); //instance of random class
-        int int_random = rand.nextInt(2)+1;// is 1 or 2
-        game =new BasicGame(new Player("Host"));
+        int int_random = rand.nextInt(2)+2;// is 2 or 3
+        game =new BasicGame();
         for(int i=0;i<int_random;i++){
-            game.getPlayers().add(new Player("Test"));
+            game.getPlayers().add(new Player("Test"+i));
         }
         game.setUp();
         this.game =new ConcreteExpertGame(game);

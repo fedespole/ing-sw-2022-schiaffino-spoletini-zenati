@@ -29,8 +29,8 @@ public  class GameHandler {
     }
 
     public static void calls(GameEvent event) {
-        if (event.getSource() instanceof Controller) {
-            for (View listener : listeners.getListeners(View.class)) {
+        if (event.getSource() instanceof View) {
+            for (Controller listener : listeners.getListeners(Controller.class)) {
                 for (Method method : listener.getClass().getMethods()) {//we have used reflection to call the right update method
                     try {
                         if (method.getName().equals("update") && method.getParameterTypes()[0] == event.getClass()) {//the event is always the first and only parameter
@@ -41,7 +41,7 @@ public  class GameHandler {
                 }
             }
         } else {
-            for (Controller listener : listeners.getListeners(Controller.class)) {
+            for (View listener : listeners.getListeners(View.class)) {
                 for (Method method : listener.getClass().getMethods()) {//we have used reflection to call the right update method
                     try {
                         if (method.getName().equals("update") && method.getParameterTypes()[0] == event.getClass()) {//the event is always the first and only parameter
