@@ -41,7 +41,6 @@ public class ControllerExceptionsTest extends TestCase {
         assertThrows(InvalidPhaseException.class, () -> controller.update(finalEvent1));
         //add another Test2 to launch InvalidUsername
         controller.getGame().getStatusGame().setStatus(STATUS.SETUP);
-        event = new PlayerAccessEvent(this,"Test2");
         assertThrows(InvalidUserNameException.class, ()-> controller.update(finalEvent1));
         //add another player to launch TooManyPlayers
         assertThrows(TooManyPlayersException.class, ()-> controller.update(new PlayerAccessEvent(this, "Test3")));
@@ -150,6 +149,25 @@ public class ControllerExceptionsTest extends TestCase {
         controller.update(new DrawAssistantCardEvent(this,1 ));
         controller.update(new DrawAssistantCardEvent(this,2 ));
         controller.update(new DrawAssistantCardEvent(this,3 ));
-        //TODO togliere test da basicGameExc e metterli qui
+        Player currPlayer = controller.getGame().getCurrPlayer();
+        //tests InvalidSteps
+        assertThrows(InvalidStepsException.class,()-> controller.update(new MoveMotherEvent(currPlayer, -1)));
+        assertThrows(InvalidStepsException.class, ()-> controller.update(new MoveMotherEvent(currPlayer, currPlayer.getChosenCard().getSteps()+1)));
     }
+
+        @Test
+        public void ChooseCloudTest(){
+            //adding 3 players and starting the game
+            controller.update(new PlayerAccessEvent(this, "Test1"));
+            controller.update(new PlayerAccessEvent(this, "Test2"));
+            controller.update(new StartGameEvent(this, false));
+            controller.update(new DrawAssistantCardEvent(this,1 ));
+            controller.update(new DrawAssistantCardEvent(this,2 ));
+            controller.update(new DrawAssistantCardEvent(this,3 ));
+            Player currPlayer = controller.getGame().getCurrPlayer();
+            controller.update(new MoveMotherEvent(currPlayer, 1));
+            //tests InvalidCloudIndex
+            assertThrows(InvalidCloudIndexException.class, () -> controller.update(new ChooseCloudEvent(currPlayer, -1)));
+            assertThrows(InvalidCloudIndexException.class, () -> controller.update(new ChooseCloudEvent(currPlayer, controller.getGame().getClouds().size())));
+        }
 }
