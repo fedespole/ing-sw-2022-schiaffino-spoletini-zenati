@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.common.events.GameEvent;
+import it.polimi.ingsw.common.events.GameHandler;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.network.SocketReader;
 import it.polimi.ingsw.network.SocketWriter;
@@ -9,7 +10,7 @@ import jdk.jpackage.internal.Executor;
 import java.net.Socket;
 import java.util.concurrent.*;
 
-public class RemoteView extends View{
+public class RemoteView extends View implements Runnable{
     private final LinkedBlockingQueue<GameEvent> clientEvs;
     private final LinkedBlockingQueue<GameEvent> serverEvs;
     private ExecutorService executor = Executors.newFixedThreadPool(128);
@@ -21,7 +22,19 @@ public class RemoteView extends View{
         clientEvs = new LinkedBlockingQueue<>();
         serverEvs = new LinkedBlockingQueue<>();
 
-        executor.execute(new SocketWriter<>());
-        executor.execute(new SocketReader<>());
+        executor.execute(new SocketWriter<>(clientSocket,serverEvs));
+        executor.execute(new SocketReader<>(clientSocket,clientEvs,GameEvent.class));
+    }
+
+    @Override
+    public void run(){
+        while(!Thread.currentThread().isInterrupted()){
+            try {
+                GameEvent currEvent = clientEvs.take();
+                GameHandler.calls(currEvent);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
     }
 }
