@@ -7,6 +7,7 @@ import it.polimi.ingsw.common.exceptions.InvalidUserNameException;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.basicgame.BasicGame;
 import it.polimi.ingsw.model.basicgame.Game;
+import it.polimi.ingsw.model.basicgame.STATUS;
 import it.polimi.ingsw.view.RemoteView;
 
 import java.io.IOException;
@@ -20,26 +21,20 @@ public class Server implements Runnable {
     private static final int PORT = 12345;
     private ServerSocket serverSocket;
     private ExecutorService executor = Executors.newFixedThreadPool(128);
-    //  private Map<String, RemoteView> waitingConnection = new HashMap<>();
     private ArrayList<RemoteView> playingConnection = new ArrayList<>();
 
-    private Game game;
     private Controller controller;
 
     public void Server() throws IOException {
         serverSocket = new ServerSocket(PORT);
-        game = new BasicGame();
+         Game game = new BasicGame();
         controller = new Controller(game);
     }
 
     public void run() {
-        int connections = 0;
-        while (true) {
+        while (controller.getGame().getStatusGame().getOrder().equals(STATUS.SETUP)) {
             try {
-                Socket newSocket = serverSocket.accept();
-                connections++;
-                SocketClientConnection connection = new SocketClientConnection(this,newSocket);
-
+                this.newClientConnection();
             } catch (IOException e) {
                 System.out.println("Connection Error!");
             }
@@ -47,4 +42,10 @@ public class Server implements Runnable {
 
     }
 
+    public void newClientConnection() throws IOException{
+        Socket newSocket = serverSocket.accept();
+        RemoteView remoteView = new RemoteView(newSocket);
+        playingConnection.add(remoteView);
+        executor.execute(remoteView);
+    }
 }

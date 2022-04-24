@@ -7,6 +7,7 @@ import it.polimi.ingsw.network.SocketReader;
 import it.polimi.ingsw.network.SocketWriter;
 import jdk.jpackage.internal.Executor;
 
+import java.io.IOException;
 import java.net.Socket;
 import java.util.concurrent.*;
 
@@ -16,7 +17,7 @@ public class RemoteView extends View implements Runnable{
     private ExecutorService executor = Executors.newFixedThreadPool(128);
     private Socket clientSocket;
 
-    public RemoteView(Socket clientSocket) {
+    public RemoteView(Socket clientSocket) throws IOException {
         super();
         this.clientSocket = clientSocket;
         clientEvs = new LinkedBlockingQueue<>();
