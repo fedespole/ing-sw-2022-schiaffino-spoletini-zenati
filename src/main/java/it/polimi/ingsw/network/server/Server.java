@@ -38,6 +38,8 @@ public class Server implements Runnable {
             try {
                 Socket newSocket = serverSocket.accept();
                 connections++;
+                SocketClientConnection connection = new SocketClientConnection(this,newSocket);
+
             } catch (IOException e) {
                 System.out.println("Connection Error!");
             }
