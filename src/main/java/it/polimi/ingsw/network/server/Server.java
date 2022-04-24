@@ -25,9 +25,9 @@ public class Server implements Runnable {
 
     private Controller controller;
 
-    public void Server() throws IOException {
+    public Server() throws IOException {
         serverSocket = new ServerSocket(PORT);
-         Game game = new BasicGame();
+        Game game = new BasicGame();
         controller = new Controller(game);
     }
 
@@ -39,7 +39,6 @@ public class Server implements Runnable {
                 System.out.println("Connection Error!");
             }
         }
-
     }
 
     public void newClientConnection() throws IOException{
@@ -47,5 +46,12 @@ public class Server implements Runnable {
         RemoteView remoteView = new RemoteView(newSocket);
         playingConnection.add(remoteView);
         executor.execute(remoteView);
+    }
+    public int getPort(){
+        return Server.PORT;
+    }
+
+    public ArrayList<RemoteView> getPlayingConnection() {
+        return playingConnection;
     }
 }
