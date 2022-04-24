@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import java.io.Serializable;
 
 public class ViewData implements Serializable {
-    Player owner;
+    private Player owner;
 
     public Player getOwner() {
         return owner;

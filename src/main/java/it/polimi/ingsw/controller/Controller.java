@@ -34,7 +34,6 @@ public class Controller implements EventListener {
         return game;
     }
 
-    //TODO inizializzare il booleano a false nel controller
 
     public void update(PlayerAccessEvent event) {
         checkSetUpPhase();
@@ -45,7 +44,9 @@ public class Controller implements EventListener {
         if (game.getPlayers().size() > 2) {
             throw new TooManyPlayersException();
         }
-        game.getPlayers().add(new Player(event.getUsername()));
+        Player newPlayer = new Player(event.getUsername());
+        game.getPlayers().add(newPlayer);
+        GameHandler.calls(new NewPlayerCreatedEvent(this,newPlayer));
     }
 
     public void update(StartGameEvent event) {

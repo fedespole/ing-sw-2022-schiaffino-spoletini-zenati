@@ -54,4 +54,8 @@ public class Server implements Runnable {
     public ArrayList<RemoteView> getPlayingConnection() {
         return playingConnection;
     }
+
+    public Controller getController() {
+        return controller;
+    }
 }
