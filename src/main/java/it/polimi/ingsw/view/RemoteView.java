@@ -1,9 +1,27 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.common.events.GameEvent;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
+import it.polimi.ingsw.network.SocketReader;
+import it.polimi.ingsw.network.SocketWriter;
+import jdk.jpackage.internal.Executor;
+
+import java.net.Socket;
+import java.util.concurrent.*;
 
 public class RemoteView extends View{
-    public RemoteView() {
+    private final LinkedBlockingQueue<GameEvent> clientEvs;
+    private final LinkedBlockingQueue<GameEvent> serverEvs;
+    private ExecutorService executor = Executors.newFixedThreadPool(128);
+    private Socket clientSocket;
+
+    public RemoteView(Socket clientSocket) {
         super();
+        this.clientSocket = clientSocket;
+        clientEvs = new LinkedBlockingQueue<>();
+        serverEvs = new LinkedBlockingQueue<>();
+
+        executor.execute(new SocketWriter<>());
+        executor.execute(new SocketReader<>());
     }
 }

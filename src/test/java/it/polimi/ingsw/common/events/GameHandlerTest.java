@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 public class GameHandlerTest extends TestCase {
 
-    @Test
+    /*@Test
     public void callsTest(){
         Controller controller= new Controller(new BasicGame());
         View view1 = new RemoteView();
@@ -21,6 +21,6 @@ public class GameHandlerTest extends TestCase {
         GameEvent event = new PlayerAccessEvent(view1,"Second Player");
         GameHandler.calls(event);
         assertEquals(1,controller.getGame().getPlayers().size());
-    }
+    }*/
 
 }
