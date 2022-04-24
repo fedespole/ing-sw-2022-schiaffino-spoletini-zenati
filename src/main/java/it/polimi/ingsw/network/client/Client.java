@@ -21,12 +21,16 @@ public class Client {
         clientEvs = new LinkedBlockingQueue<>();
         serverEvs = new LinkedBlockingQueue<>();
 
-        executor.execute(new SocketWriter<>(socket,serverEvs));
-        executor.execute(new SocketReader<>(socket,clientEvs,GameEvent.class));
+        executor.execute(new SocketWriter<>(socket,clientEvs));
+        executor.execute(new SocketReader<>(socket,serverEvs,GameEvent.class));
     }
 
     public LinkedBlockingQueue<GameEvent> getServerEvs() {
         return serverEvs;
+    }
+
+    public LinkedBlockingQueue<GameEvent> getClientEvs() {
+        return clientEvs;
     }
 }
 

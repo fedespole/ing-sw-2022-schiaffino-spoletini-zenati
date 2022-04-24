@@ -19,7 +19,7 @@ public class ServerTest extends TestCase {
         Client client = new Client("localhost",server.getPort());
         assertEquals(0,server.getPlayingConnection().size());
         assertEquals(0,server.getController().getGame().getPlayers().size());
-        client.getServerEvs().add(new PlayerAccessEvent(client,"Ciao"));
+        client.getClientEvs().add(new PlayerAccessEvent(client,"Ciao"));
         assertEquals(1,server.getController().getGame().getPlayers().size());
         assertEquals("Ciao",server.getController().getGame().getPlayers().get(0));
         assertNotNull(server.getPlayingConnection().get(0).getData().getOwner());
