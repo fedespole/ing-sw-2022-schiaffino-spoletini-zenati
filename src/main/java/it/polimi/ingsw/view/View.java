@@ -24,7 +24,7 @@ public abstract class View implements EventListener {
 
     //TODO: CREATE EVENTS FOR VIEW
     public void update(NewPlayerCreatedEvent event){
-        if(data.getOwner()!=null)
+        if(data.getOwner()==null)
             data.setOwner(event.getPlayer());
     }
 }
