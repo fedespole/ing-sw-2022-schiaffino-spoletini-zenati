@@ -2,16 +2,10 @@ package it.polimi.ingsw.common.events;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.basicgame.BasicGame;
-import it.polimi.ingsw.model.basicgame.playeritems.Player;
-import it.polimi.ingsw.view.RemoteView;
+import it.polimi.ingsw.network.server.RemoteView;
 import it.polimi.ingsw.view.View;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-import java.net.Socket;
-
-import static org.junit.Assert.*;
 
 public class GameHandlerTest extends TestCase {
 

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view;
+package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.common.events.GameEvent;
 import it.polimi.ingsw.common.events.GameHandler;
@@ -6,6 +6,7 @@ import it.polimi.ingsw.common.events.NewPlayerCreatedEvent;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.network.SocketReader;
 import it.polimi.ingsw.network.SocketWriter;
+import it.polimi.ingsw.view.View;
 
 import java.io.IOException;
 import java.net.Socket;

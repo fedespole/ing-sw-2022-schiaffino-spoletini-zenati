@@ -6,11 +6,9 @@ import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 
 public class SocketReader<T> implements Runnable {
-    Socket socket;
+    private final Socket socket;
     private final ObjectInputStream in;
-
     private final BlockingQueue<T> retrievedObjects;
-
     private final Class<T> objClass;
 
     public SocketReader(Socket socket, BlockingQueue<T> retrievedObjects, Class<T> objClass) throws IOException {

@@ -13,7 +13,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Client {
     private final LinkedBlockingQueue<GameEvent> clientEvs;
     private final LinkedBlockingQueue<GameEvent> serverEvs;
-    private ExecutorService executor = Executors.newFixedThreadPool(2);
+    private ExecutorService executor;
     private Socket socket;
 
     public Client(String ip,int port) throws IOException {

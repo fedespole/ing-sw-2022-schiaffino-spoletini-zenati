@@ -7,9 +7,7 @@ import java.util.concurrent.BlockingQueue;
 
 public class SocketWriter<T> implements Runnable {
     private final Socket socket;
-
     private final ObjectOutputStream out;
-
     private final BlockingQueue<T> objectsToBeWritten;
 
     public SocketWriter(Socket socket, BlockingQueue<T> objectsToBeWritten) throws IOException {
