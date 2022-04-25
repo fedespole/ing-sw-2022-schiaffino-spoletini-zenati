@@ -13,14 +13,14 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Client {
     private final LinkedBlockingQueue<GameEvent> clientEvs;
     private final LinkedBlockingQueue<GameEvent> serverEvs;
-    private ExecutorService executor = Executors.newFixedThreadPool(128);
+    private ExecutorService executor = Executors.newFixedThreadPool(2);
     private Socket socket;
 
     public Client(String ip,int port) throws IOException {
         socket = new Socket(ip,port);
         clientEvs = new LinkedBlockingQueue<>();
         serverEvs = new LinkedBlockingQueue<>();
-
+        executor = Executors.newFixedThreadPool(2);
         executor.execute(new SocketWriter<>(socket,clientEvs));
         executor.execute(new SocketReader<>(socket,serverEvs,GameEvent.class));
     }

@@ -14,7 +14,7 @@ import java.util.concurrent.*;
 public class RemoteView extends View implements Runnable{
     private final LinkedBlockingQueue<GameEvent> clientEvs;
     private final LinkedBlockingQueue<GameEvent> serverEvs;
-    private ExecutorService executor = Executors.newFixedThreadPool(128);
+    private ExecutorService executor;
     private Socket clientSocket;
 
     public RemoteView(Socket clientSocket) throws IOException {
@@ -22,9 +22,15 @@ public class RemoteView extends View implements Runnable{
         this.clientSocket = clientSocket;
         clientEvs = new LinkedBlockingQueue<>();
         serverEvs = new LinkedBlockingQueue<>();
-
+        executor = Executors.newFixedThreadPool(128);
         executor.execute(new SocketWriter<>(clientSocket,serverEvs));
         executor.execute(new SocketReader<>(clientSocket,clientEvs,GameEvent.class));
+    }
+
+    public RemoteView() {//only for tests
+        super();
+        clientEvs = new LinkedBlockingQueue<>();
+        serverEvs = new LinkedBlockingQueue<>();
     }
 
     @Override
@@ -43,5 +49,13 @@ public class RemoteView extends View implements Runnable{
     public void update(NewPlayerCreatedEvent event){
         super.update(event);
         serverEvs.add(event);
+    }
+
+    public LinkedBlockingQueue<GameEvent> getClientEvs() {
+        return clientEvs;
+    }
+
+    public LinkedBlockingQueue<GameEvent> getServerEvs() {
+        return serverEvs;
     }
 }

@@ -32,7 +32,7 @@ public class Server implements Runnable {
     }
 
     public void run() {
-        while (controller.getGame().getStatusGame().getOrder().equals(STATUS.SETUP)) {
+        while (!Thread.currentThread().isInterrupted()) {
             try {
                 this.newClientConnection();
             } catch (IOException e) {
@@ -58,4 +58,16 @@ public class Server implements Runnable {
     public Controller getController() {
         return controller;
     }
+
+    public ExecutorService getExecutor() {
+        return executor;
+    }
+
+    public ServerSocket getServerSocket() {
+        return serverSocket;
+    }
+    public void kills(){
+        executor.shutdown();
+    }
+
 }

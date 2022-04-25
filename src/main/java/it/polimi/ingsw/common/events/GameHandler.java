@@ -20,36 +20,20 @@ public  class GameHandler {
         return instance;
     }
 
-    public static void addEventListener(Controller listener) {
-        listeners.add(Controller.class, listener);
+    public static void addEventListener(EventListener listener) {
+        listeners.add(EventListener.class, listener);
     }
 
-    public static void addEventListener(View listener) {
-        listeners.add(View.class, listener);
-    }
 
     public static void calls(GameEvent event) {
-        if (event.getSource() instanceof View) {
-            for (Controller listener : listeners.getListeners(Controller.class)) {
-                for (Method method : listener.getClass().getMethods()) {//we have used reflection to call the right update method
-                    try {
-                        if (method.getName().equals("update") && method.getParameterTypes()[0] == event.getClass()) {//the event is always the first and only parameter
-                            method.invoke(listener, event);
-                            break;
-                        }
-                    } catch (IllegalAccessException | InvocationTargetException ex) {}
-                }
-            }
-        } else {
-            for (View listener : listeners.getListeners(View.class)) {
-                for (Method method : listener.getClass().getMethods()) {//we have used reflection to call the right update method
-                    try {
-                        if (method.getName().equals("update") && method.getParameterTypes()[0] == event.getClass()) {//the event is always the first and only parameter
-                            method.invoke(listener, event);
-                            break;
-                        }
-                    } catch (IllegalAccessException | InvocationTargetException ex) {}
-                }
+        for (EventListener listener : listeners.getListeners(EventListener.class)) {
+            for (Method method : listener.getClass().getMethods()) {//we have used reflection to call the right update method
+                try {
+                    if (method.getName().equals("update") && method.getParameterTypes()[0] == event.getClass()) {//the event is always the first and only parameter
+                        method.invoke(listener, event);
+                        break;
+                    }
+                } catch (IllegalAccessException | InvocationTargetException ex) {}
             }
         }
     }
