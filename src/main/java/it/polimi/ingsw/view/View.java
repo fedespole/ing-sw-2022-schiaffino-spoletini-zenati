@@ -1,8 +1,6 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.common.events.GameEvent;
-import it.polimi.ingsw.common.events.GameHandler;
-import it.polimi.ingsw.common.events.NewPlayerCreatedEvent;
+import it.polimi.ingsw.common.events.*;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.network.client.Client;
 
@@ -26,5 +24,13 @@ public abstract class View implements EventListener {
     public void update(NewPlayerCreatedEvent event){
         if(data.getOwner()==null)
             data.setOwner(event.getPlayer());
+    }
+
+    public void update(VictoryEvent event){
+        //event.getWinningPlayer()
+    }
+
+    public void update(TieEvent event){
+        //event.getTiePlayers()
     }
 }
