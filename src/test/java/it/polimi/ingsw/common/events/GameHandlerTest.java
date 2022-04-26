@@ -14,7 +14,7 @@ public class GameHandlerTest extends TestCase {
         Controller controller= new Controller(new BasicGame());
         View view1 = new RemoteView();
         assertEquals(0,controller.getGame().getPlayers().size());
-        GameEvent event = new PlayerAccessEvent(view1,"Second Player");
+        GameEvent event = new PlayerAccessEvent(view1,"First Player");
         GameHandler.calls(event);
         assertEquals(1,controller.getGame().getPlayers().size());
     }
