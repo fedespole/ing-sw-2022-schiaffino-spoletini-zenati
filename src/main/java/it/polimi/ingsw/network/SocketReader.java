@@ -5,7 +5,7 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 
-public class SocketReader<T> implements Runnable {
+public class SocketReader<T> implements Runnable{
     private final Socket socket;
     private final ObjectInputStream in;
     private final BlockingQueue<T> objectsToBeRead;

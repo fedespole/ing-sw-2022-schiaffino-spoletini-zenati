@@ -25,7 +25,6 @@ public class ControllerExceptionsTest extends TestCase {
     }
 
 
-    //TODO InvalidNumPLayersTest
     @Test
     public void PlayerAccessEventExceptionTest() {
         PlayerAccessEvent event = new PlayerAccessEvent(this,"Test1");
