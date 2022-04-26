@@ -30,10 +30,16 @@ public  class GameHandler {
             for (Method method : listener.getClass().getMethods()) {//we have used reflection to call the right update method
                 try {
                     if (method.getName().equals("update") && method.getParameterTypes()[0] == event.getClass()) {//the event is always the first and only parameter
-                        method.invoke(listener, event);
-                        break;
+                       try {
+                           method.invoke(listener, event);
+                           break;
+                       // TODO completare dopo la GameView
+                       // Handles exceptions raised by controller: notifies client that will repeat action
+                       }catch(RuntimeException e){
+                           GameHandler.calls(new NotifyExceptionEvent(instance, e));
+                       }
                     }
-                } catch (IllegalAccessException | InvocationTargetException ex) {}
+                } catch (IllegalAccessException | InvocationTargetException e) {}
             }
         }
     }

@@ -143,7 +143,6 @@ public class Controller implements EventListener {
         }
     }
 
-    //TODO CharacterAbilityException dentro i character?
     public void update(UseCharacter1Event event) {
         for (Character character : ((ConcreteExpertGame)game).getCharacters()) {
             if (character instanceof Character1) {
