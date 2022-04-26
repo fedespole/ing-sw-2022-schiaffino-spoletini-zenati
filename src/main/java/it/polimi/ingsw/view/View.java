@@ -20,6 +20,10 @@ public abstract class View implements EventListener {
         return data;
     }
 
+    public void setData(ViewData data) {
+        this.data = data;
+    }
+
     //TODO: CREATE EVENTS FOR VIEW
     public void update(NewPlayerCreatedEvent event){
         if(data.getOwner()==null)
@@ -32,5 +36,8 @@ public abstract class View implements EventListener {
 
     public void update(TieEvent event){
         //event.getTiePlayers()
+    }
+    public void update(UpdatedDataEvent event){
+        data = event.getViewData();
     }
 }
