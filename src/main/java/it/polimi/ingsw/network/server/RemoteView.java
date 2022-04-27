@@ -1,9 +1,6 @@
 package it.polimi.ingsw.network.server;
 
-import it.polimi.ingsw.common.events.GameEvent;
-import it.polimi.ingsw.common.events.GameHandler;
-import it.polimi.ingsw.common.events.NewPlayerCreatedEvent;
-import it.polimi.ingsw.common.events.NotifyExceptionEvent;
+import it.polimi.ingsw.common.events.*;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.network.SocketReader;
 import it.polimi.ingsw.network.SocketWriter;
@@ -51,6 +48,11 @@ public class RemoteView extends View implements Runnable{
     public void update(NewPlayerCreatedEvent event){
         super.update(event);
      //   serverEvs.add(event);
+    }
+
+    public void update(UpdatedDataEvent event) {
+        super.update(event);
+        serverEvs.add(event);
     }
 
     public void update(NotifyExceptionEvent event){
