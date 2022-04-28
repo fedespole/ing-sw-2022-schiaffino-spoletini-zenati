@@ -39,4 +39,8 @@ public abstract class View implements EventListener {
     public void update(TieEvent event){
         data.setTiePlayers(event.getTiePlayers());
     }
+    public void update(RequestNumPlayersEvent event){
+        if(data.getOwner()==null)
+            data.setOwner(event.getPlayer());
+    }
 }

@@ -52,4 +52,6 @@ public interface Game {
     ArrayList<Cloud> getClouds();
 
     StatusGame getStatusGame();
+
+    void setNumPlayers(int numPlayers);
 }

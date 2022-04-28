@@ -37,27 +37,31 @@ public class Controller implements EventListener {
 
     public void update(PlayerAccessEvent event) {
         checkSetUpPhase();
+
         for (Player player : game.getPlayers()) {
             if (player.getUsername().equals(event.getUsername()))
                 throw new InvalidUserNameException();
         }
-        if (game.getPlayers().size() > 2) {
-            throw new TooManyPlayersException();
-        }
         Player newPlayer = new Player(event.getUsername());
         game.getPlayers().add(newPlayer);
-        GameHandler.calls(new NewPlayerCreatedEvent(this,newPlayer));
+        if(getGame().getPlayers().size()!=0)
+            GameHandler.calls(new NewPlayerCreatedEvent(this, newPlayer));
+        else
+            GameHandler.calls(new RequestNumPlayersEvent(this,newPlayer));
+        if(getGame().getPlayers().size() == getGame().getNumPlayers())
+            game.setUp();
     }
 
-    public void update(StartGameEvent event) {
+    public void update(SelectedGameSetUpEvent event){
         checkSetUpPhase();
-        if (game.getPlayers().size() < 2) {
-            throw new TooLittlePlayersException();
+
+        if(event.getNumPlayers()<2 || event.getNumPlayers()>3){
+            throw new InvalidNumPlayersException();
         }
+        getGame().setNumPlayers(event.getNumPlayers());
         if (event.isExpert()) {
             game = new ConcreteExpertGame(game);
         }
-        game.setUp();
     }
 
     public void update(DrawAssistantCardEvent event) {

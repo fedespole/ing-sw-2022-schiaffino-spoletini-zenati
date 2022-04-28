@@ -393,4 +393,8 @@ public class BasicGame implements Game{
     public StatusGame getStatusGame() {
         return statusGame;
     }
+
+    public void setNumPlayers(int numPlayers) {
+        this.numPlayers = numPlayers;
+    }
 }

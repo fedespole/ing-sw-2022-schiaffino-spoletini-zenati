@@ -47,7 +47,7 @@ public class RemoteView extends View implements Runnable{
 
     public void update(NewPlayerCreatedEvent event){
         super.update(event);
-     //   serverEvs.add(event);
+        serverEvs.add(event);
     }
 
     public void update(UpdatedDataEvent event) {
@@ -68,7 +68,10 @@ public class RemoteView extends View implements Runnable{
         super.update(event);
         serverEvs.add(event);
     }
-
+    public void update(RequestNumPlayersEvent event){
+        super.update(event);
+        serverEvs.add(event);
+    }
     public LinkedBlockingQueue<GameEvent> getClientEvs() {
         return clientEvs;
     }

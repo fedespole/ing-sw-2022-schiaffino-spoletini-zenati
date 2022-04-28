@@ -41,15 +41,10 @@ public class ControllerExceptionsTest extends TestCase {
         //add another Test2 to launch InvalidUsername
         controller.getGame().getStatusGame().setStatus(STATUS.SETUP);
         assertThrows(InvalidUserNameException.class, ()-> controller.update(finalEvent1));
-        //add another player to launch TooManyPlayers
-        assertThrows(TooManyPlayersException.class, ()-> controller.update(new PlayerAccessEvent(this, "Test3")));
     }
 
     @Test
     public void StartGameEventExceptionTest(){
-        //launch TooLittlePlayers
-        StartGameEvent event = new StartGameEvent(this,false);
-        assertThrows(TooLittlePlayersException.class, ()->controller.update(event));
         //add 1 player and change phase to launch InvalidPhase
         controller.update( new PlayerAccessEvent(this,"Test1"));
         controller.getGame().getStatusGame().setStatus(STATUS.ACTION);
