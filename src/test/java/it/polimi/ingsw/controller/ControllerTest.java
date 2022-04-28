@@ -35,6 +35,7 @@ public class ControllerTest {
         PlayerAccessEvent event = new PlayerAccessEvent(this, "Host");
         controller.update(event);
         SelectedGameSetUpEvent event1= new SelectedGameSetUpEvent(this,3,false);
+        controller.update(event1);
         assertTrue(controller.getGame() instanceof BasicGame);
         assertEquals(3,controller.getGame().getNumPlayers());
     }
@@ -43,6 +44,7 @@ public class ControllerTest {
         PlayerAccessEvent event = new PlayerAccessEvent(this, "Host");
         controller.update(event);
         SelectedGameSetUpEvent event1= new SelectedGameSetUpEvent(this,3,true);
+        controller.update(event1);
         assertTrue(controller.getGame() instanceof ConcreteExpertGame);
         assertEquals(3,controller.getGame().getNumPlayers());
     }
