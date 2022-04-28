@@ -28,12 +28,27 @@ public class ControllerTest {
     @BeforeEach
     public void setUp() {
         Game game = new BasicGame();
-        game.getPlayers().add(new Player("Host"));
         this.controller = new Controller(game);
     }
-
+    @Test
+    public void FirstPlayerAccessEventTest(){
+        PlayerAccessEvent event = new PlayerAccessEvent(this, "Host");
+        controller.update(event);
+        SelectedGameSetUpEvent event1= new SelectedGameSetUpEvent(this,3,false);
+        assertTrue(controller.getGame() instanceof BasicGame);
+        assertEquals(3,controller.getGame().getNumPlayers());
+    }
+    @Test
+    public void ExpertGameFirstPlayerAccessEventTest(){
+        PlayerAccessEvent event = new PlayerAccessEvent(this, "Host");
+        controller.update(event);
+        SelectedGameSetUpEvent event1= new SelectedGameSetUpEvent(this,3,true);
+        assertTrue(controller.getGame() instanceof ConcreteExpertGame);
+        assertEquals(3,controller.getGame().getNumPlayers());
+    }
     @Test
     public void PlayerAccessEventTest() {
+        this.ExpertGameFirstPlayerAccessEventTest();
         PlayerAccessEvent event = new PlayerAccessEvent(this, "Test1");
         controller.update(event);
         assertEquals("Test1", controller.getGame().getPlayers().get(1).getUsername());
@@ -44,24 +59,8 @@ public class ControllerTest {
     }
 
     @Test
-    public void StartBasicGameEventTest() {
-        this.PlayerAccessEventTest();
-        StartGameEvent event = new StartGameEvent(this, false);
-        controller.update(event);
-        assertTrue(controller.getGame() instanceof BasicGame);
-    }
-
-    @Test
-    public void StartExpertGameEventTest() {
-        this.PlayerAccessEventTest();
-        StartGameEvent event = new StartGameEvent(this, true);
-        controller.update(event);
-        assertTrue(controller.getGame() instanceof ConcreteExpertGame);
-    }
-
-    @Test
     public void DrawAssistantCardEventTest() {
-        this.StartExpertGameEventTest();
+        this.PlayerAccessEventTest();
         DrawAssistantCardEvent event = new DrawAssistantCardEvent(this, 3);
         Player firstPlayer = controller.getGame().getCurrPlayer();
         controller.update(event);
