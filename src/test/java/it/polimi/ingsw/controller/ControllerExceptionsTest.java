@@ -44,20 +44,12 @@ public class ControllerExceptionsTest extends TestCase {
     }
 
     @Test
-    public void StartGameEventExceptionTest(){
-        //add 1 player and change phase to launch InvalidPhase
-        controller.update( new PlayerAccessEvent(this,"Test1"));
-        controller.getGame().getStatusGame().setStatus(STATUS.ACTION);
-        assertThrows(InvalidPhaseException.class, () -> controller.update(event));
-    }
-
-    @Test
     public void DrawAssistantCardEventExceptionTest(){
         //TODO come fare controllo currPlayer
         //adding 3 players and starting the game
+        controller.getGame().setNumPlayers(3);
         controller.update(new PlayerAccessEvent(this, "Test1"));
         controller.update(new PlayerAccessEvent(this, "Test2"));
-        controller.update(new StartGameEvent(this, false));
         //Launching OutOfBoundCardSelection with 0 and
         DrawAssistantCardEvent event3 = new DrawAssistantCardEvent(this, 0);
         assertThrows(OutOfBoundCardSelectionException.class, ()-> controller.update(event3));
@@ -80,9 +72,10 @@ public class ControllerExceptionsTest extends TestCase {
     @Test
     public void MoveStudentToDiningEventExceptionTest(){
         //adding 3 players and starting the game
+        controller.getGame().setNumPlayers(3);
         controller.update(new PlayerAccessEvent(this, "Test1"));
         controller.update(new PlayerAccessEvent(this, "Test2"));
-        controller.update(new StartGameEvent(this, false));
+
         controller.update(new DrawAssistantCardEvent(this,1 ));
         controller.update(new DrawAssistantCardEvent(this,2 ));
         controller.update(new DrawAssistantCardEvent(this,3 ));
@@ -113,9 +106,10 @@ public class ControllerExceptionsTest extends TestCase {
     @Test
     public void MoveStudentToIslandEventTest(){
         //adding 3 players and starting the game
+        controller.getGame().setNumPlayers(3);
         controller.update(new PlayerAccessEvent(this, "Test1"));
         controller.update(new PlayerAccessEvent(this, "Test2"));
-        controller.update(new StartGameEvent(this, false));
+
         controller.update(new DrawAssistantCardEvent(this,1 ));
         controller.update(new DrawAssistantCardEvent(this,2 ));
         controller.update(new DrawAssistantCardEvent(this,3 ));
@@ -137,9 +131,10 @@ public class ControllerExceptionsTest extends TestCase {
     @Test
     public void MoveMotherEventTest(){
         //adding 3 players and starting the game
+        controller.getGame().setNumPlayers(3);
         controller.update(new PlayerAccessEvent(this, "Test1"));
         controller.update(new PlayerAccessEvent(this, "Test2"));
-        controller.update(new StartGameEvent(this, false));
+
         controller.update(new DrawAssistantCardEvent(this,1 ));
         controller.update(new DrawAssistantCardEvent(this,2 ));
         controller.update(new DrawAssistantCardEvent(this,3 ));
@@ -152,9 +147,10 @@ public class ControllerExceptionsTest extends TestCase {
         @Test
         public void ChooseCloudTest(){
             //adding 3 players and starting the game
+            controller.getGame().setNumPlayers(3);
             controller.update(new PlayerAccessEvent(this, "Test1"));
             controller.update(new PlayerAccessEvent(this, "Test2"));
-            controller.update(new StartGameEvent(this, false));
+
             controller.update(new DrawAssistantCardEvent(this,1 ));
             controller.update(new DrawAssistantCardEvent(this,2 ));
             controller.update(new DrawAssistantCardEvent(this,3 ));

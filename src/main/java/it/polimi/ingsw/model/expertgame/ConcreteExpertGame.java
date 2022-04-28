@@ -210,4 +210,9 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     public StatusGame getStatusGame() {
         return game.getStatusGame();
     }
+
+    @Override
+    public void setNumPlayers(int numPlayers) {
+
+    }
 }
