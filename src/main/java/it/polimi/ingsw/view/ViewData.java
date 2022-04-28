@@ -16,6 +16,8 @@ public class ViewData implements Serializable {
     private Player currPlayer;
     private  ArrayList<Cloud> clouds;
     private  StatusGame statusGame;
+    private Player winner;
+    private ArrayList<Player> tiePlayers;
 
     public ViewData(){}
 
@@ -37,5 +39,21 @@ public class ViewData implements Serializable {
 
     public void setOwner(Player owner) {
         this.owner = owner;
+    }
+
+    public Player getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
+    }
+
+    public ArrayList<Player> getTiePlayers() {
+        return tiePlayers;
+    }
+
+    public void setTiePlayers(ArrayList<Player> tiePlayers) {
+        this.tiePlayers = tiePlayers;
     }
 }

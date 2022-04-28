@@ -33,10 +33,10 @@ public abstract class View implements EventListener {
         data = event.getViewData();
     }
     public void update(VictoryEvent event){
-        //event.getWinningPlayer()
+        data.setWinner(event.getWinningPlayer());
     }
 
     public void update(TieEvent event){
-        //event.getTiePlayers()
+        data.setTiePlayers(event.getTiePlayers());
     }
 }

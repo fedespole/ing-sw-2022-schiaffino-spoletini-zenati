@@ -59,6 +59,16 @@ public class RemoteView extends View implements Runnable{
          serverEvs.add(event);
     }
 
+    public void update(VictoryEvent event){
+        super.update(event);
+        serverEvs.add(event);
+    }
+
+    public void update(TieEvent event){
+        super.update(event);
+        serverEvs.add(event);
+    }
+
     public LinkedBlockingQueue<GameEvent> getClientEvs() {
         return clientEvs;
     }
