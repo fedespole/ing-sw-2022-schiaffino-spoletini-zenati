@@ -344,7 +344,6 @@ public class BasicGame implements Game{
                 }
             }
         }
-        //TODO gestirli nell'handler, non solo crearli
         if(tiePlayers.size()==0)
             GameHandler.calls(new VictoryEvent(this, winner));
         else

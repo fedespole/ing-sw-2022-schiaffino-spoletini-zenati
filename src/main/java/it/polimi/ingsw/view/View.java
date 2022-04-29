@@ -31,11 +31,13 @@ public abstract class View implements EventListener {
         if(data.getOwner()==null)
             data.setOwner(event.getPlayer());
     }
+
     public void update(UpdatedDataEvent event){
         Player owner = data.getOwner();
         data = event.getViewData();
         data.setOwner(owner);//viewData has owner== null
     }
+
     public void update(VictoryEvent event){
         data.setWinner(event.getWinningPlayer());
     }

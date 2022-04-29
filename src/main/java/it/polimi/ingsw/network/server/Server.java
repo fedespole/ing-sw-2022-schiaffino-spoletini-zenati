@@ -1,10 +1,12 @@
 package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.common.events.GameEvent;
+import it.polimi.ingsw.common.events.NotifyExceptionEvent;
 import it.polimi.ingsw.common.events.fromClientEvents.PlayerAccessEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.NewMidGamePlayerEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.NewPlayerCreatedEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
+import it.polimi.ingsw.common.exceptions.InvalidUserNameException;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.basicgame.BasicGame;
 import it.polimi.ingsw.model.basicgame.Game;
@@ -23,12 +25,13 @@ public class Server implements Runnable {
     private ServerSocket serverSocket;
     private ExecutorService executor = Executors.newFixedThreadPool(128);
     private ArrayList<RemoteView> playingConnection = new ArrayList<>();
+    Game game;
 
     private Controller controller;
 
     public Server() throws IOException {
         serverSocket = new ServerSocket(PORT);
-        Game game = new BasicGame();
+        game = new BasicGame();
         controller = new Controller(game);
     }
 
@@ -57,30 +60,34 @@ public class Server implements Runnable {
     private void newMidGameClientConnection(RemoteView remoteView) throws InterruptedException, IOException {//resilience
         remoteView.update(new NewMidGamePlayerEvent(this));
         GameEvent gameEvent;
+
         while (true) {
             gameEvent = remoteView.getClientEvs().take();
             if (gameEvent instanceof PlayerAccessEvent)
                 break;
         }
+
         for (RemoteView remoteView1 : playingConnection) {
+            // Checks if username given in PlayerAccessEvent matches with one of the usernames in the game
             if (((PlayerAccessEvent) gameEvent).getUsername().equals(remoteView1.getData().getOwner().getUsername())) {
-                //seconda condizione verifica che la vecchia remoteView sia disconessa,DA CHIEDERE
+
+                // Checks if player with this username is actually disconnected
                 if (remoteView1.getClientSocket().getInputStream().read() == -1) {
                     remoteView.update(new NewPlayerCreatedEvent(this,remoteView1.getData().getOwner()));
-                    remoteView.update(new UpdatedDataEvent(this,remoteView1.getData()));
+                    remoteView.update(new UpdatedDataEvent(this, game.getData()));
                     playingConnection.remove(remoteView1);
                     playingConnection.add(remoteView);
                     executor.execute(remoteView);
-                    break;
                 } else {
-                    //TODO username non corretto,dovrebbe alzare eccezione
+                    remoteView.update(new NotifyExceptionEvent(this, new InvalidUserNameException()));
                 }
-            }
-            else{
-                //TODO username non corretto,dovrebbe alzare eccezione
+                return;
             }
         }
+        // If username is not matched
+        remoteView.update(new NotifyExceptionEvent(this, new InvalidUserNameException()));
     }
+
     public int getPort(){
         return Server.PORT;
     }
@@ -100,6 +107,7 @@ public class Server implements Runnable {
     public ServerSocket getServerSocket() {
         return serverSocket;
     }
+
     public void kills(){
         executor.shutdown();
     }
