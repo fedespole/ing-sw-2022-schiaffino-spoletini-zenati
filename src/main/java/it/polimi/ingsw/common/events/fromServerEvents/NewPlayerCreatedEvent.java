@@ -1,5 +1,6 @@
-package it.polimi.ingsw.common.events;
+package it.polimi.ingsw.common.events.fromServerEvents;
 
+import it.polimi.ingsw.common.events.GameEvent;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 
 public class NewPlayerCreatedEvent extends GameEvent {

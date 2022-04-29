@@ -1,8 +1,10 @@
-package it.polimi.ingsw.common.events;
+package it.polimi.ingsw.common.events.fromClientEvents;
+
+import it.polimi.ingsw.common.events.GameEvent;
 
 import java.util.Objects;
 
-public class SelectedGameSetUpEvent extends GameEvent{
+public class SelectedGameSetUpEvent extends GameEvent {
     private final int numPlayers;
     private final boolean isExpert;
     public SelectedGameSetUpEvent(Object source, int numPlayers, boolean isExpert){

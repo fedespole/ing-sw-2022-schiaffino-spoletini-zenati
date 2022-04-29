@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.expertgame.gamemodes;
 
-import it.polimi.ingsw.common.events.VictoryEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.VictoryEvent;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Island;
 import it.polimi.ingsw.model.basicgame.Professor;

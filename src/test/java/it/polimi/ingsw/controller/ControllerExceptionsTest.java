@@ -1,6 +1,6 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.common.events.*;
+import it.polimi.ingsw.common.events.fromClientEvents.*;
 import it.polimi.ingsw.common.exceptions.*;
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;

@@ -1,6 +1,8 @@
-package it.polimi.ingsw.common.events;
+package it.polimi.ingsw.common.events.fromClientEvents;
 
-public class MoveMotherEvent extends GameEvent{
+import it.polimi.ingsw.common.events.GameEvent;
+
+public class MoveMotherEvent extends GameEvent {
 
     private final int index;
 

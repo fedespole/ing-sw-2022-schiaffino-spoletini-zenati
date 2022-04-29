@@ -1,6 +1,8 @@
-package it.polimi.ingsw.common.events;
+package it.polimi.ingsw.common.events.fromClientEvents;
 
-public class ChooseCloudEvent extends GameEvent{
+import it.polimi.ingsw.common.events.GameEvent;
+
+public class ChooseCloudEvent extends GameEvent {
 
     private final int index;
 

@@ -19,10 +19,11 @@ public class ViewData implements Serializable {
     private Player winner;
     private ArrayList<Player> tiePlayers;
 
+    private ArrayList<Character> characters;
+
     public ViewData(){}
 
-    public ViewData(Player owner, ArrayList<Player> players, int numPlayers, ArrayList<ArrayList<Island>> islands, ArrayList<Professor> professors, int motherNature, Player currPlayer, ArrayList<Cloud> clouds, StatusGame statusGame) {
-        this.owner = owner;
+    public ViewData( ArrayList<Player> players, int numPlayers, ArrayList<ArrayList<Island>> islands, ArrayList<Professor> professors, int motherNature, Player currPlayer, ArrayList<Cloud> clouds, StatusGame statusGame) {
         this.players = players;
         this.numPlayers = numPlayers;
         this.islands = islands;
@@ -31,6 +32,7 @@ public class ViewData implements Serializable {
         this.currPlayer = currPlayer;
         this.clouds = clouds;
         this.statusGame = statusGame;
+        //owner == null when we send a viewData to View
     }
 
     public Player getOwner() {
@@ -55,5 +57,9 @@ public class ViewData implements Serializable {
 
     public void setTiePlayers(ArrayList<Player> tiePlayers) {
         this.tiePlayers = tiePlayers;
+    }
+
+    public void setCharacters(ArrayList<Character> characters) {
+        this.characters = characters;
     }
 }

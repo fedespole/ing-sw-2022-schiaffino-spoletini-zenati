@@ -1,5 +1,5 @@
 package it.polimi.ingsw.model.expertgame.gamemodes;
-import it.polimi.ingsw.common.events.VictoryEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.VictoryEvent;
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 

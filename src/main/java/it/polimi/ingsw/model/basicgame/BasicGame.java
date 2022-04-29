@@ -1,8 +1,11 @@
 package it.polimi.ingsw.model.basicgame;
 import it.polimi.ingsw.common.events.*;
+import it.polimi.ingsw.common.events.fromServerEvents.TieEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.VictoryEvent;
 import it.polimi.ingsw.common.exceptions.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
+import it.polimi.ingsw.view.ViewData;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -346,6 +349,11 @@ public class BasicGame implements Game{
             GameHandler.calls(new VictoryEvent(this, winner));
         else
             GameHandler.calls(new TieEvent(this, tiePlayers));
+    }
+
+    @Override
+    public ViewData getData(){
+        return new ViewData(players,numPlayers,islands,professors,motherNature,currPlayer,clouds,statusGame);
     }
 
     @Override

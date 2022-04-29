@@ -1,6 +1,11 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.common.events.*;
+import it.polimi.ingsw.common.events.fromClientEvents.RequestNumPlayersEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.NewPlayerCreatedEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.TieEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.VictoryEvent;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.network.client.Client;
 
@@ -30,7 +35,9 @@ public abstract class View implements EventListener {
             data.setOwner(event.getPlayer());
     }
     public void update(UpdatedDataEvent event){
+        Player owner = data.getOwner();
         data = event.getViewData();
+        data.setOwner(owner);//viewData has owner== null
     }
     public void update(VictoryEvent event){
         data.setWinner(event.getWinningPlayer());

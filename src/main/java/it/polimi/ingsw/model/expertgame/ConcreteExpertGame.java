@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.basicgame.Cloud;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.model.expertgame.characters.*;
 import it.polimi.ingsw.model.expertgame.characters.Character;
+import it.polimi.ingsw.view.ViewData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -155,6 +156,13 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     @Override
     public void checkWinner(){
         game.checkWinner();
+    }
+
+    @Override
+    public ViewData getData(){//returns a ViewData with a list of characters
+        ViewData viewData = game.getData();
+        viewData.setCharacters((ArrayList<java.lang.Character>) characters.clone());
+        return viewData;
     }
 
     @Override

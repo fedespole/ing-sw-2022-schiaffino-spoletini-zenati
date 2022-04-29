@@ -1,10 +1,5 @@
 package it.polimi.ingsw.network;
 
-import it.polimi.ingsw.common.events.GameHandler;
-import it.polimi.ingsw.common.events.PlayerAccessEvent;
-import it.polimi.ingsw.common.events.VictoryEvent;
-import it.polimi.ingsw.network.client.Client;
-import it.polimi.ingsw.network.server.Server;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
 

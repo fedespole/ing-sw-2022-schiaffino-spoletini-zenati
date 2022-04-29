@@ -1,8 +1,9 @@
-package it.polimi.ingsw.common.events;
+package it.polimi.ingsw.common.events.fromClientEvents;
 
+import it.polimi.ingsw.common.events.GameEvent;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 
-public class RequestNumPlayersEvent extends GameEvent{
+public class RequestNumPlayersEvent extends GameEvent {
     private final Player player;
 
     public RequestNumPlayersEvent(Object source, Player player) {

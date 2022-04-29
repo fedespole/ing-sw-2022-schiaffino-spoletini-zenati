@@ -1,5 +1,6 @@
 package it.polimi.ingsw.common.events;
 
+import it.polimi.ingsw.common.events.fromClientEvents.PlayerAccessEvent;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.basicgame.BasicGame;
 import it.polimi.ingsw.network.server.RemoteView;

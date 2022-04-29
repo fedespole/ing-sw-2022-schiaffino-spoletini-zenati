@@ -1,10 +1,11 @@
-package it.polimi.ingsw.common.events;
+package it.polimi.ingsw.common.events.fromServerEvents;
 
+import it.polimi.ingsw.common.events.GameEvent;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 
 import java.util.ArrayList;
 
-public class TieEvent extends GameEvent{
+public class TieEvent extends GameEvent {
 
     private final ArrayList<Player> tiePlayers;
 

@@ -1,6 +1,8 @@
-package it.polimi.ingsw.common.events;
+package it.polimi.ingsw.common.events.fromClientEvents;
 
-public class PlayerAccessEvent extends GameEvent{
+import it.polimi.ingsw.common.events.GameEvent;
+
+public class PlayerAccessEvent extends GameEvent {
 
     private final String username;
 

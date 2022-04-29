@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.basicgame;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.model.expertgame.characters.Character;
+import it.polimi.ingsw.view.ViewData;
 
 import java.util.ArrayList;
 
@@ -54,4 +55,6 @@ public interface Game {
     StatusGame getStatusGame();
 
     void setNumPlayers(int numPlayers);
+
+    ViewData getData();
 }

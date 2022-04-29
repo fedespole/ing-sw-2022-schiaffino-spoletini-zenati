@@ -1,6 +1,8 @@
-package it.polimi.ingsw.common.events;
+package it.polimi.ingsw.common.events.fromClientEvents;
 
-public class MoveStudentToIslandEvent extends GameEvent{
+import it.polimi.ingsw.common.events.GameEvent;
+
+public class MoveStudentToIslandEvent extends GameEvent {
 
     private final int colorIndex;
     private final int islandIndex;

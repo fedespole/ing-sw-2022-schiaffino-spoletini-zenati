@@ -1,6 +1,8 @@
-package it.polimi.ingsw.common.events;
+package it.polimi.ingsw.common.events.fromClientEvents;
 
-public class DrawAssistantCardEvent extends GameEvent{
+import it.polimi.ingsw.common.events.GameEvent;
+
+public class DrawAssistantCardEvent extends GameEvent {
 
     private final int value; // View selects value of card from deck
 
