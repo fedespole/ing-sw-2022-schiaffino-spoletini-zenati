@@ -2,10 +2,7 @@ package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.common.events.*;
 import it.polimi.ingsw.common.events.fromClientEvents.RequestNumPlayersEvent;
-import it.polimi.ingsw.common.events.fromServerEvents.NewPlayerCreatedEvent;
-import it.polimi.ingsw.common.events.fromServerEvents.TieEvent;
-import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
-import it.polimi.ingsw.common.events.fromServerEvents.VictoryEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.*;
 import it.polimi.ingsw.network.SocketReader;
 import it.polimi.ingsw.network.SocketWriter;
 import it.polimi.ingsw.view.View;
@@ -77,12 +74,19 @@ public class RemoteView extends View implements Runnable{
         serverEvs.add(event);
     }
 
+    public void update(NewMidGamePlayerEvent event){
+        serverEvs.add(event);
+    }
     public LinkedBlockingQueue<GameEvent> getClientEvs() {
         return clientEvs;
     }
 
     public LinkedBlockingQueue<GameEvent> getServerEvs() {
         return serverEvs;
+    }
+
+    public Socket getClientSocket() {
+        return clientSocket;
     }
 
 }

@@ -1,8 +1,15 @@
 package it.polimi.ingsw.network.server;
 
+import it.polimi.ingsw.common.events.GameEvent;
+import it.polimi.ingsw.common.events.fromClientEvents.PlayerAccessEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.NewMidGamePlayerEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.NewPlayerCreatedEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.basicgame.BasicGame;
 import it.polimi.ingsw.model.basicgame.Game;
+import it.polimi.ingsw.model.basicgame.STATUS;
+import it.polimi.ingsw.model.basicgame.playeritems.Player;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -28,18 +35,51 @@ public class Server implements Runnable {
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                this.newClientConnection();
-            } catch (IOException e) {
+                    this.newClientConnection();
+            } catch (IOException | InterruptedException e) {
                 System.out.println("Connection Error!");
             }
         }
     }
 
-    public void newClientConnection() throws IOException{
+    public void newClientConnection() throws IOException, InterruptedException {
         Socket newSocket = serverSocket.accept();
         RemoteView remoteView = new RemoteView(newSocket);
-        playingConnection.add(remoteView);
-        executor.execute(remoteView);
+        if(controller.getGame().getStatusGame().getStatus() != STATUS.SETUP) {
+            newMidGameClientConnection(remoteView);
+        }
+        else {
+            playingConnection.add(remoteView);
+            executor.execute(remoteView);
+        }
+    }
+
+    private void newMidGameClientConnection(RemoteView remoteView) throws InterruptedException, IOException {//resilience
+        remoteView.update(new NewMidGamePlayerEvent(this));
+        GameEvent gameEvent;
+        while (true) {
+            gameEvent = remoteView.getClientEvs().take();
+            if (gameEvent instanceof PlayerAccessEvent)
+                break;
+        }
+        for (RemoteView remoteView1 : playingConnection) {
+            if (((PlayerAccessEvent) gameEvent).getUsername().equals(remoteView1.getData().getOwner().getUsername())) {
+                //seconda condizione verifica che la vecchia remoteView sia disconessa,DA CHIEDERE
+                if (remoteView1.getClientSocket().getInputStream().read() == -1) {
+                    remoteView.update(new NewPlayerCreatedEvent(this,remoteView1.getData().getOwner()));
+                    remoteView.update(new UpdatedDataEvent(this,remoteView1.getData()));
+                    playingConnection.remove(remoteView1);
+                    playingConnection.add(remoteView);
+                    executor.execute(remoteView);
+                    break;
+                } else {
+                    //TODO username non corretto,dovrebbe alzare eccezione
+                }
+            }
+            else{
+                //TODO username non corretto,dovrebbe alzare eccezione
+            }
+        }
     }
     public int getPort(){
         return Server.PORT;

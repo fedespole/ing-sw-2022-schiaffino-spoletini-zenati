@@ -32,5 +32,9 @@ public class Client {
     public LinkedBlockingQueue<GameEvent> getClientEvs() {
         return clientEvs;
     }
+
+    public Socket getSocket() {
+        return socket;
+    }
 }
 
