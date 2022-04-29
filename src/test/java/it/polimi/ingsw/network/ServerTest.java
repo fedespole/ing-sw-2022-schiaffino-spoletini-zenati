@@ -58,10 +58,13 @@ public class ServerTest extends TestCase {
         client4.getClientEvs().add(new PlayerAccessEvent(client1,"Host"));
         Thread.sleep(100);
         assertEquals(3,server.getPlayingConnection().size());
+        System.out.println("Remote View non attiva:" +client1Socket.getLocalPort());
         for(RemoteView remoteView:server.getPlayingConnection()){
-            assertNotSame(remoteView.getClientSocket().getLocalPort(),client1Socket.getPort());
+            System.out.println("Remote View attiva: " +remoteView.getClientSocket().getPort());
+            assertNotSame(remoteView.getClientSocket().getPort(),client1Socket.getLocalPort());
             if(remoteView.getData().getOwner().getUsername().equals("Host")){
-                assertEquals(remoteView.getClientSocket().getLocalPort(),client4.getSocket().getPort());
+                assertEquals(remoteView.getClientSocket().getPort(),client4.getSocket().getLocalPort());
+                System.out.println("Nuova Remote View "+remoteView.getClientSocket().getPort());
             }
         }
 
