@@ -25,13 +25,18 @@ public class Server implements Runnable {
     private ExecutorService executor = Executors.newFixedThreadPool(128);
     private ArrayList<RemoteView> playingConnection = new ArrayList<>();
     Game game;
-
     private Controller controller;
 
     public Server() throws IOException {
         serverSocket = new ServerSocket(PORT);
         game = new BasicGame();
         controller = new Controller(game);
+    }
+
+    public static void main(String[] args) throws IOException {
+        Server server = new Server();
+        Thread serverThread = new Thread(server);
+        serverThread.start();
     }
 
     public void run() {
