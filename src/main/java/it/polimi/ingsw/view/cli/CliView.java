@@ -7,12 +7,7 @@ import java.util.Scanner;
 
 public class CliView extends View {
 
-
-    public CliView(String serverIP, int serverPort) throws IOException {
+    public CliView() {
         super();
-
-        // data = new ViewData(); // dovremmo mettere data protected e non private in view
-
     }
-
 }

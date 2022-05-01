@@ -3,7 +3,9 @@ package it.polimi.ingsw.network.client;
 import it.polimi.ingsw.common.events.GameEvent;
 import it.polimi.ingsw.network.SocketReader;
 import it.polimi.ingsw.network.SocketWriter;
+import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.cli.CliView;
+import it.polimi.ingsw.view.gui.GuiView;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -17,13 +19,15 @@ public class Client {
     private final LinkedBlockingQueue<GameEvent> serverEvs;
     private ExecutorService executor;
     private Socket socket;
+    View view;
 
     public Client(String ip, int port, int chosenView) throws IOException {
         socket = new Socket(ip, port);
-        if(chosenView==0)
-            CliView CLI = new CliView();
-        else
-            GuiView GUI = new GuiView();
+
+        switch(chosenView) {
+            case 0 : view = new CliView();
+            case 1 : view = new GuiView();
+        }
         clientEvs = new LinkedBlockingQueue<>();
         serverEvs = new LinkedBlockingQueue<>();
         executor = Executors.newFixedThreadPool(2);
@@ -44,6 +48,7 @@ public class Client {
     }
 
     public static void main(String[] args) throws IOException {
+
         Scanner in = new Scanner(System.in);
         System.out.println("> Insert the server IP address");
         System.out.print("> ");
@@ -52,6 +57,7 @@ public class Client {
         System.out.print("> ");
         int port = in.nextInt();
         System.out.println("> Choose an Interface");
+
         while(true){
             System.out.println(" Type CLI or GUI:");
             System.out.print(" > ");
@@ -67,7 +73,7 @@ public class Client {
                     break;
                 }
                 default : {
-                    System.out.println(">Please type a valid interface");
+                    System.out.println("> Please type a valid interface");
                 }
             }
         }
