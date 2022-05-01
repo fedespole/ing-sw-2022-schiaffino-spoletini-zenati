@@ -24,15 +24,16 @@ public class Client {
     public Client(String ip, int port, int chosenView) throws IOException {
         socket = new Socket(ip, port);
 
-        switch(chosenView) {
-            case 0 : view = new CliView();
-            case 1 : view = new GuiView();
-        }
         clientEvs = new LinkedBlockingQueue<>();
         serverEvs = new LinkedBlockingQueue<>();
         executor = Executors.newFixedThreadPool(2);
         executor.execute(new SocketWriter<>(socket,clientEvs));
         executor.execute(new SocketReader<>(socket,serverEvs,GameEvent.class));
+
+        switch(chosenView) {
+            case 0 : view = new CliView(this);
+            case 1 : view = new GuiView();
+        }
     }
 
     public LinkedBlockingQueue<GameEvent> getServerEvs() {
@@ -58,22 +59,25 @@ public class Client {
         int port = in.nextInt();
         System.out.println("> Choose an Interface");
 
+        System.out.println(" Type CLI or GUI:");
+        System.out.print("> ");
+
+        Scanner scanner = new Scanner(System.in);
         while(true){
-            System.out.println(" Type CLI or GUI:");
-            System.out.print(" > ");
-            String choice = in.nextLine();
+            String choice = scanner.nextLine();
             choice.toLowerCase();
             switch (choice) {
-                case ("cli"): {
+                case "cli" : {
                     Client client = new Client(ip, port, 0);
                     break;
                 }
-                case ("gui"): {
+                case "gui" : {
                     Client client = new Client(ip, port, 1);
                     break;
                 }
                 default : {
-                    System.out.println("> Please type a valid interface");
+                    System.err.println("> Please type a valid interface");
+                    System.err.print("> ");
                 }
             }
         }

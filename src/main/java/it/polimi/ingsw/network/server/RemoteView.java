@@ -5,6 +5,7 @@ import it.polimi.ingsw.common.events.fromClientEvents.RequestNumPlayersEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.*;
 import it.polimi.ingsw.network.SocketReader;
 import it.polimi.ingsw.network.SocketWriter;
+import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.view.View;
 
 import java.io.IOException;

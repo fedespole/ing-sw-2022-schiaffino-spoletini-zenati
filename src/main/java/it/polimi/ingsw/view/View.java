@@ -10,10 +10,9 @@ import it.polimi.ingsw.network.client.Client;
 import java.util.EventListener;
 
 public abstract class View implements EventListener {
-    private Client client;
     private ViewData data;
 
-    public View() {
+    public View(){
         GameHandler.addEventListener(this);
         data = new ViewData();
     }

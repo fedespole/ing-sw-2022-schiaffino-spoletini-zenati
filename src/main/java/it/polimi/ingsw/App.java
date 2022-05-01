@@ -16,7 +16,7 @@ public class App {
 
         System.out.println( "Eryantis" );
         System.out.println( "> Type server or client: " );
-        System.out.println( "> ");
+        System.out.print( "> " );
 
         Scanner scanner = new Scanner(System.in);
         while(true) {
