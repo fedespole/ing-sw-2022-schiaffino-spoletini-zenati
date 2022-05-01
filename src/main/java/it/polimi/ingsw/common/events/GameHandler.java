@@ -6,23 +6,22 @@ import javax.swing.event.EventListenerList;
 import java.util.EventListener;
 import java.lang.reflect.*;
 
-public  class GameHandler {
+public class GameHandler {
     private static GameHandler instance;
     private static final EventListenerList listeners = new EventListenerList();
 
-
-    public static GameHandler getInstance() {
+    // Singleton
+    public static synchronized GameHandler getInstance() {
         if (instance == null)
             instance = new GameHandler();
         return instance;
     }
 
-    public static void addEventListener(EventListener listener) {
+    public static synchronized void addEventListener(EventListener listener) {
         listeners.add(EventListener.class, listener);
     }
 
-
-    public static void calls(GameEvent event) {
+    public static synchronized void calls(GameEvent event) {
         for (EventListener listener : listeners.getListeners(EventListener.class)) {
             for (Method method : listener.getClass().getMethods()) {//we have used reflection to call the right update method
                 try {
@@ -30,10 +29,9 @@ public  class GameHandler {
                        try {
                            method.invoke(listener, event);
                            break;
-                       // TODO completare dopo la GameView
                        // Handles exceptions raised by controller: notifies client that will repeat action
                        }catch(RuntimeException e){
-                           GameHandler.calls(new NotifyExceptionEvent(instance, e));
+                           GameHandler.calls(new NotifyExceptionEvent(getInstance(), e));
                        }
                     }
                 } catch (IllegalAccessException | InvocationTargetException e) {}
