@@ -45,38 +45,46 @@ public class RemoteView extends View implements Runnable{
         }
     }
 
-
+    @Override
     public void update(NewPlayerCreatedEvent event){
         super.update(event);
         serverEvs.add(event);
     }
 
+    @Override
     public void update(UpdatedDataEvent event) {
         super.update(event);
         serverEvs.add(event);
     }
 
+    @Override
     public void update(NotifyExceptionEvent event){
          serverEvs.add(event);
     }
 
+    @Override
     public void update(VictoryEvent event){
         super.update(event);
         serverEvs.add(event);
     }
 
+    @Override
     public void update(TieEvent event){
         super.update(event);
         serverEvs.add(event);
     }
+
+    @Override
     public void update(RequestNumPlayersEvent event){
         super.update(event);
         serverEvs.add(event);
     }
 
+    @Override
     public void update(NewMidGamePlayerEvent event){
         serverEvs.add(event);
     }
+
     public LinkedBlockingQueue<GameEvent> getClientEvs() {
         return clientEvs;
     }

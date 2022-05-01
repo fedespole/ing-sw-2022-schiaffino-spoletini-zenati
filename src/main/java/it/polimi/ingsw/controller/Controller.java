@@ -1,8 +1,8 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.common.events.*;
-import it.polimi.ingsw.common.events.charactersEvents.*;
 import it.polimi.ingsw.common.events.fromClientEvents.*;
+import it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.*;
 import it.polimi.ingsw.common.events.fromServerEvents.NewPlayerCreatedEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
 import it.polimi.ingsw.common.exceptions.*;

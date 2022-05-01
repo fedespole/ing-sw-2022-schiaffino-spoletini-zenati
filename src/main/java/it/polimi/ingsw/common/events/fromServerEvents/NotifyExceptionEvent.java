@@ -1,6 +1,8 @@
-package it.polimi.ingsw.common.events;
+package it.polimi.ingsw.common.events.fromServerEvents;
 
-public class NotifyExceptionEvent extends GameEvent{
+import it.polimi.ingsw.common.events.GameEvent;
+
+public class NotifyExceptionEvent extends GameEvent {
 
     private final RuntimeException exception;
 

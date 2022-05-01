@@ -1,12 +1,9 @@
 package it.polimi.ingsw.common.events;
 
-import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.view.View;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventException;
+import it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent;
+
 import javax.swing.event.EventListenerList;
 import java.util.EventListener;
-import java.util.EventObject;
 import java.lang.reflect.*;
 
 public  class GameHandler {

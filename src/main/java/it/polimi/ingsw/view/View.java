@@ -26,7 +26,6 @@ public abstract class View implements EventListener {
         this.data = data;
     }
 
-    //TODO: CREATE EVENTS FOR VIEW
     public void update(NewPlayerCreatedEvent event){
         if(data.getOwner()==null)
             data.setOwner(event.getPlayer());
@@ -45,12 +44,13 @@ public abstract class View implements EventListener {
     public void update(TieEvent event){
         data.setTiePlayers(event.getTiePlayers());
     }
+
     public void update(RequestNumPlayersEvent event){
         if(data.getOwner()==null)
             data.setOwner(event.getPlayer());
     }
 
-    public void update(NewMidGamePlayerEvent event){
+    public void update(NewMidGamePlayerEvent event){}
 
-    }
+    public void update(NotifyExceptionEvent event){}
 }

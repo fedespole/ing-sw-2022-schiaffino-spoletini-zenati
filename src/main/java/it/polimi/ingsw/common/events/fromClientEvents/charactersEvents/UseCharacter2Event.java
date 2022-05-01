@@ -1,4 +1,4 @@
-package it.polimi.ingsw.common.events.charactersEvents;
+package it.polimi.ingsw.common.events.fromClientEvents.charactersEvents;
 
 import it.polimi.ingsw.common.events.GameEvent;
 
