@@ -1,8 +1,10 @@
 package it.polimi.ingsw.network.client;
 
 import it.polimi.ingsw.common.events.GameEvent;
+import it.polimi.ingsw.common.events.GameHandler;
 import it.polimi.ingsw.network.SocketReader;
 import it.polimi.ingsw.network.SocketWriter;
+import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.cli.CliView;
 import it.polimi.ingsw.view.gui.GuiView;
@@ -14,7 +16,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class Client {
+public class Client implements Runnable{
     private final LinkedBlockingQueue<GameEvent> clientEvs;
     private final LinkedBlockingQueue<GameEvent> serverEvs;
     private ExecutorService executor;
@@ -35,6 +37,16 @@ public class Client {
             case 1 : view = new GuiView();
         }
     }
+    public void run() {
+        while (!Thread.currentThread().isInterrupted()) {
+            try {
+                GameEvent currEvent = clientEvs.take();
+                GameHandler.calls(currEvent);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
 
     public LinkedBlockingQueue<GameEvent> getServerEvs() {
         return serverEvs;
@@ -49,7 +61,6 @@ public class Client {
     }
 
     public static void main(String[] args) throws IOException {
-
         Scanner in = new Scanner(System.in);
         System.out.println("> Insert the server IP address");
         System.out.print("> ");
@@ -69,10 +80,12 @@ public class Client {
             switch (choice) {
                 case "cli" : {
                     Client client = new Client(ip, port, 0);
+                    client.run();
                     break;
                 }
                 case "gui" : {
                     Client client = new Client(ip, port, 1);
+                    client.run();
                     break;
                 }
                 default : {
