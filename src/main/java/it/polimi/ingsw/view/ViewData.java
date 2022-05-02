@@ -39,6 +39,10 @@ public class ViewData implements Serializable {
         return owner;
     }
 
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
     public void setOwner(Player owner) {
         this.owner = owner;
     }
@@ -61,5 +65,13 @@ public class ViewData implements Serializable {
 
     public void setCharacters(ArrayList<Character> characters) {
         this.characters = characters;
+    }
+
+    public StatusGame getStatusGame() {
+        return statusGame;
+    }
+
+    public Player getCurrPlayer() {
+        return currPlayer;
     }
 }
