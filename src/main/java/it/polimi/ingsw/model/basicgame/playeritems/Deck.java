@@ -1,7 +1,8 @@
 package it.polimi.ingsw.model.basicgame.playeritems;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Deck {
+public class Deck implements Serializable {
     private final ArrayList<AssistantCard> cards;
 
     public Deck() {

@@ -26,6 +26,7 @@ public class SocketReader<T> implements Runnable{
                     objectsToBeRead.put(objClass.cast(receivedObj));
                 }
             } catch (IOException | ClassNotFoundException | InterruptedException e) {
+                e.printStackTrace();
             }
             ;
         }

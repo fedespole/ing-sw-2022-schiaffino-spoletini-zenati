@@ -6,9 +6,10 @@ import it.polimi.ingsw.model.basicgame.Professor;
 import it.polimi.ingsw.model.basicgame.Student;
 import it.polimi.ingsw.model.basicgame.Tower;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SchoolBoard {
+public class SchoolBoard implements Serializable {
     private final ArrayList<Student> entrance;
     private final ArrayList<Student>[] diningRoom;
     private final ArrayList<Tower> towers;

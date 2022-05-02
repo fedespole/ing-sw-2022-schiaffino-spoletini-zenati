@@ -66,19 +66,17 @@ public class CliView extends View {
             int numPlayers = in.nextInt();
             in.reset();
             System.out.println("Choose game mode: BasicGame or ExpertGame");
-            while (true) {
-                String gameMode = in.nextLine().toLowerCase();
-                if (gameMode.equals("basicgame")) {
-                    this.client.getClientEvs().add(new SelectedGameSetUpEvent(this, numPlayers, false));
-                    break;
-                } else if (gameMode.equals("expertgame")) {
-                    this.client.getClientEvs().add(new SelectedGameSetUpEvent(this, numPlayers, true));
-                    break;
-                } else {
+
+            String gameMode = in.nextLine().toLowerCase();
+            if (gameMode.equals("basicgame")) {
+                this.client.getClientEvs().add(new SelectedGameSetUpEvent(this, numPlayers, false));
+            } else if (gameMode.equals("expertgame")) {
+                this.client.getClientEvs().add(new SelectedGameSetUpEvent(this, numPlayers, true));
+            }
+                /*else {     per ora rompeva, nun me va ora di pensarci
                     in.reset();
                     System.out.println("Invalid game mode");
-                }
-            }
+                } */
         }
     }
 

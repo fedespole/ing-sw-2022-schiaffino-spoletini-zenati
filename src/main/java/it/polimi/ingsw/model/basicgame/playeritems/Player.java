@@ -2,9 +2,10 @@ package it.polimi.ingsw.model.basicgame.playeritems;
 
 import it.polimi.ingsw.model.basicgame.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Player {
+public class Player implements Serializable {
     private final String username;
     private int coins;
     private final Deck myDeck;

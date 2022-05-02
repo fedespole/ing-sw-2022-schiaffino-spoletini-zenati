@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.basicgame.playeritems;
 
-public class AssistantCard {
+import java.io.Serializable;
+
+public class AssistantCard implements Serializable {
     private final int value;
     private int steps;
 

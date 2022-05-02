@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.client;
 
-import it.polimi.ingsw.common.events.GameEvent;
+import it.polimi.ingsw.common.events.*;
 import it.polimi.ingsw.common.events.GameHandler;
 import it.polimi.ingsw.network.SocketReader;
 import it.polimi.ingsw.network.SocketWriter;

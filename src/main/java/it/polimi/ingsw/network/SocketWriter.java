@@ -20,10 +20,11 @@ public class SocketWriter<T> implements Runnable {
         while (true) {
             try {
                 T obj = objectsToBeWritten.take();
-                out.writeObject(obj);
                 System.out.println(obj);
+                out.writeObject(obj);
                 out.flush();
             } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
             }
             ;
         }

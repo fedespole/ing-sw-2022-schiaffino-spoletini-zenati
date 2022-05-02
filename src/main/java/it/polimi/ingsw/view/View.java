@@ -45,8 +45,9 @@ public abstract class View implements EventListener {
     }
 
     public void update(RequestNumPlayersEvent event){
-        if(data.getOwner()==null)
+        if(data.getOwner()==null) {
             data.setOwner(event.getPlayer());
+        }
     }
 
     public void update(NewMidGamePlayerEvent event){}

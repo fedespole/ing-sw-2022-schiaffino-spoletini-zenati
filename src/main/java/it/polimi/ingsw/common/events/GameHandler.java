@@ -34,7 +34,9 @@ public class GameHandler {
                            GameHandler.calls(new NotifyExceptionEvent(getInstance(), e));
                        }
                     }
-                } catch (IllegalAccessException | InvocationTargetException e) {}
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
