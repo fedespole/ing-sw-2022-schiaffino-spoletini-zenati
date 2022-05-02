@@ -25,6 +25,7 @@ public class CliView extends View {
         in = new Scanner(System.in);
         out = new PrintStream(System.out);
         activeGame = true;
+        setup();
     }
 
     public void setup() {

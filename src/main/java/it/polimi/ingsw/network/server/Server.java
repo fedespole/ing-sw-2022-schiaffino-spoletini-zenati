@@ -43,6 +43,8 @@ public class Server implements Runnable {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                     this.newClientConnection();
+                    System.out.println("Connection ok!");
+
             } catch (IOException | InterruptedException e) {
                 System.out.println("Connection Error!");
             }
