@@ -25,12 +25,14 @@ import java.util.EventListener;
 
 public class Controller implements EventListener {
     private Game game;
-    private boolean hasCardBeenUsed;
+    private boolean hasCardBeenUsed;   //true if a CharacterCard has been used in this turn
+    private int numOfMoveStudent;      //counts how many student the currPlayer has moved
 
     public Controller(Game game) {
         this.game = game;
         this.hasCardBeenUsed = false;
         GameHandler.addEventListener(this);
+        this.numOfMoveStudent = 0;
     }
 
     public Game getGame() {
@@ -99,7 +101,7 @@ public class Controller implements EventListener {
 
 
     public void update(MoveStudentToDiningEvent event) {
-        checkActionPhase();
+        checkActionMoveStudentPhase();
         if (!event.getSource().equals(game.getCurrPlayer()))
             throw new InvalidPlayerException();
         if (event.getColorIndex() < 0)
@@ -113,11 +115,16 @@ public class Controller implements EventListener {
         } catch (StudentNotPresentException e) {
             throw new StudentNotPresentException();
         }
+        numOfMoveStudent++;
+        if(((numOfMoveStudent==3) && getGame().getNumPlayers()==2) || ((numOfMoveStudent==4) && getGame().getNumPlayers()==3)){
+            this.getGame().getStatusGame().setStatus(STATUS.ACTION_MOVEMN);
+            this.numOfMoveStudent = 0;  //resets the counter
+        }
     }
 
 
     public void update(MoveStudentToIslandEvent event) {
-        checkActionPhase();
+        checkActionMoveStudentPhase();
         if (!event.getSource().equals(game.getCurrPlayer()))
             throw new InvalidPlayerException();
         if (event.getIslandIndex() < 0 || event.getIslandIndex() > game.getIslands().size())
@@ -130,10 +137,15 @@ public class Controller implements EventListener {
         } catch (StudentNotPresentException e) {
             throw new StudentNotPresentException();
         }
+        numOfMoveStudent++;
+        if(((numOfMoveStudent==3) && getGame().getNumPlayers()==2) || ((numOfMoveStudent==4) && getGame().getNumPlayers()==3)){
+            this.getGame().getStatusGame().setStatus(STATUS.ACTION_MOVEMN);
+            this.numOfMoveStudent = 0;  //resets the counter
+        }
     }
 
     public void update(MoveMotherEvent event) {
-        checkActionPhase();
+        checkActionMoveMotherPhase();
         if (!event.getSource().equals(game.getCurrPlayer()))
             throw new InvalidPlayerException();
         if (event.getIndex() < 0 || event.getIndex() > game.getCurrPlayer().getChosenCard().getSteps())
@@ -143,7 +155,7 @@ public class Controller implements EventListener {
     }
 
     public void update(ChooseCloudEvent event) {
-        checkActionPhase();
+        checkActionChooseCloudPhase();
         if (!event.getSource().equals(game.getCurrPlayer()))
             throw new InvalidPlayerException();
         if (event.getIndex() < 0 || event.getIndex() >= game.getClouds().size())
@@ -335,10 +347,20 @@ public class Controller implements EventListener {
             throw new InvalidPhaseException();
     }
 
-    private void checkActionPhase() {
-        if (!game.getStatusGame().getStatus().equals(STATUS.ACTION))
+    private void checkActionMoveStudentPhase() {
+        if (!game.getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD))
             throw new InvalidPhaseException();
     }
+    private void checkActionMoveMotherPhase() {
+        if (!game.getStatusGame().getStatus().equals(STATUS.ACTION_MOVEMN))
+            throw new InvalidPhaseException();
+    }
+    private void checkActionChooseCloudPhase(){
+        if (!game.getStatusGame().getStatus().equals(STATUS.ACTION_CHOOSECLOUD))
+            throw new InvalidPhaseException();
+    }
+
+
 
 }
 

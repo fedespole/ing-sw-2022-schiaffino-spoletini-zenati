@@ -75,7 +75,7 @@ public class ControllerTest {
         event = new DrawAssistantCardEvent(this, 8);
         controller.update(event);
         assertEquals(8, third_player.getChosenCard().getValue());
-        assertEquals(STATUS.ACTION, controller.getGame().getStatusGame().getStatus());
+        assertEquals(STATUS.ACTION_MOVESTUD, controller.getGame().getStatusGame().getStatus());
     }
 
     @Test
@@ -92,7 +92,7 @@ public class ControllerTest {
             controller.update(event);
             assertEquals(size + 1, currPlayer.getMySchoolBoard().getDiningRoom()[color.ordinal()].size());
         }
-        assertEquals(STATUS.ACTION, controller.getGame().getStatusGame().getStatus());
+
         assertEquals(7, currPlayer.getMySchoolBoard().getEntrance().size());
     }
 
@@ -109,6 +109,7 @@ public class ControllerTest {
             assertTrue(controller.getGame().getIslands().get(3).get(0).getStudents().contains(student));
         }
         assertEquals(5, currPlayer.getMySchoolBoard().getEntrance().size());
+        assertEquals(STATUS.ACTION_MOVEMN, controller.getGame().getStatusGame().getStatus());
     }
 
     @Test
@@ -173,6 +174,7 @@ public class ControllerTest {
                 controller.update(event);
                 assertTrue(controller.getGame() instanceof GameMode2);
                 ChooseCloudEvent event1 = new ChooseCloudEvent(controller.getGame().getCurrPlayer(), 0);
+                controller.getGame().getStatusGame().setStatus(STATUS.ACTION_CHOOSECLOUD);
                 controller.update(event1);
                 assertFalse(controller.getGame() instanceof GameMode2);
             }
@@ -242,6 +244,7 @@ public class ControllerTest {
                 controller.update(event);
                 assertTrue(controller.getGame() instanceof GameMode6);
                 ChooseCloudEvent event1 = new ChooseCloudEvent(controller.getGame().getCurrPlayer(), 0);
+                controller.getGame().getStatusGame().setStatus(STATUS.ACTION_CHOOSECLOUD);
                 controller.update(event1);
                 assertFalse(controller.getGame() instanceof GameMode6);
             }
@@ -282,6 +285,7 @@ public class ControllerTest {
                 controller.update(event);
                 assertTrue(controller.getGame() instanceof GameMode8);
                 ChooseCloudEvent event1 = new ChooseCloudEvent(controller.getGame().getCurrPlayer(), 0);
+                controller.getGame().getStatusGame().setStatus(STATUS.ACTION_CHOOSECLOUD);
                 controller.update(event1);
                 assertFalse(controller.getGame() instanceof GameMode8);
             }
@@ -299,6 +303,7 @@ public class ControllerTest {
                 controller.update(event);
                 assertTrue(controller.getGame() instanceof GameMode9);
                 ChooseCloudEvent event1 = new ChooseCloudEvent(controller.getGame().getCurrPlayer(), 0);
+                controller.getGame().getStatusGame().setStatus(STATUS.ACTION_CHOOSECLOUD);
                 controller.update(event1);
                 assertFalse(controller.getGame() instanceof GameMode9);
             }

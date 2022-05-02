@@ -36,7 +36,7 @@ public class ControllerExceptionsTest extends TestCase {
         assertDoesNotThrow(()-> controller.update(finalEvent1));
         assertEquals("Test2",controller.getGame().getPlayers().get(2).getUsername());
         //change phase to launch InvalidPhase
-        controller.getGame().getStatusGame().setStatus(STATUS.ACTION);
+        controller.getGame().getStatusGame().setStatus(STATUS.PLANNING);
         assertThrows(InvalidPhaseException.class, () -> controller.update(finalEvent1));
         //add another Test2 to launch InvalidUsername
         controller.getGame().getStatusGame().setStatus(STATUS.SETUP);
@@ -140,6 +140,7 @@ public class ControllerExceptionsTest extends TestCase {
         controller.update(new DrawAssistantCardEvent(this,3 ));
         Player currPlayer = controller.getGame().getCurrPlayer();
         //tests InvalidSteps
+        controller.getGame().getStatusGame().setStatus(STATUS.ACTION_MOVEMN);
         assertThrows(InvalidStepsException.class,()-> controller.update(new MoveMotherEvent(currPlayer, -1)));
         assertThrows(InvalidStepsException.class, ()-> controller.update(new MoveMotherEvent(currPlayer, currPlayer.getChosenCard().getSteps()+1)));
     }
@@ -155,6 +156,7 @@ public class ControllerExceptionsTest extends TestCase {
             controller.update(new DrawAssistantCardEvent(this,2 ));
             controller.update(new DrawAssistantCardEvent(this,3 ));
             Player currPlayer = controller.getGame().getCurrPlayer();
+            controller.getGame().getStatusGame().setStatus(STATUS.ACTION_MOVEMN);
             controller.update(new MoveMotherEvent(currPlayer, 1));
             //tests InvalidCloudIndex
             assertThrows(InvalidCloudIndexException.class, () -> controller.update(new ChooseCloudEvent(currPlayer, -1)));

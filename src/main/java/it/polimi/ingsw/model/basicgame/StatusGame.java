@@ -4,7 +4,7 @@ import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import java.util.ArrayList;
 
 public class StatusGame {
-    private STATUS status;
+    private STATUS status;    //Saves the next correct move to be made by currPlayer
     private ArrayList<Player> order;        // action phase order
 
 

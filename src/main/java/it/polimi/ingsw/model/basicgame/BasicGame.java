@@ -117,7 +117,7 @@ public class BasicGame implements Game{
                 }
             }
         }
-        if(this.statusGame.getStatus()==STATUS.ACTION) {
+        if((this.statusGame.getStatus()).equals(STATUS.ACTION_CHOOSECLOUD)) {
             // Last method of action phase, this player will be the first to draw the card in the next round
             this.currPlayer = this.statusGame.getOrder().get(0);
             this.statusGame.getOrder().clear();
@@ -136,7 +136,7 @@ public class BasicGame implements Game{
                 this.statusGame.addSort(currPlayer);
 
                 if (this.statusGame.getOrder().size() == numPlayers) {
-                    this.statusGame.setStatus(STATUS.ACTION);
+                    this.statusGame.setStatus(STATUS.ACTION_MOVESTUD);
                     currPlayer = this.statusGame.getOrder().get(0);
                 } else {
                     // This is the last method of the planning phase of one player
@@ -166,14 +166,13 @@ public class BasicGame implements Game{
 
         // Every time motherNature stops on an island, this method checks the influence
         computeInfluence();
-
         // After the last player of the round moves motherNature,
         //      the winner is checked if is last round,
         //      otherwise the clouds are filled for a new round
         if(statusGame.getOrder().get(statusGame.getOrder().size()-1)==currPlayer){
             if(lastRound) checkWinner();
         }
-
+        this.getStatusGame().setStatus(STATUS.ACTION_CHOOSECLOUD);
     }
 
     @Override//from the index of the cloud,returns the cloud chosen by the player
@@ -182,7 +181,7 @@ public class BasicGame implements Game{
 
         // After the last player of the round moves motherNature,
         //      the clouds are filled for a new round
-        if(statusGame.getOrder().get(statusGame.getOrder().size()-1)==currPlayer){
+        if(statusGame.getOrder().get(statusGame.getOrder().size()-1).equals(currPlayer)){
             fillClouds();
         }
         // If not last player, action phase continues in order

@@ -117,17 +117,19 @@ public class BasicGameTest extends TestCase {
             }
             assertEquals(0, game.getStatusGame().getOrder().size());
             game.setCurrPlayer(game.getPlayers().get(0));
-            game.chooseCard(6);
+            game.chooseCard(6);    //first player chooses card 6
             assertEquals(1, game.getPlayers().indexOf(game.getCurrPlayer()));
             assertEquals(1, game.getStatusGame().getOrder().size());
-            game.chooseCard(5);
+            game.chooseCard(5);    //second player chooses card 5
             assertEquals(2, game.getStatusGame().getOrder().size());
             assertEquals(2, game.getPlayers().indexOf(game.getCurrPlayer()));
-            game.chooseCard(4);
+            game.chooseCard(4);    //third player chooses card 4
             assertEquals(3, game.getStatusGame().getOrder().size());
-            assertEquals(STATUS.ACTION, game.getStatusGame().getStatus());
+            assertEquals(STATUS.ACTION_MOVESTUD, game.getStatusGame().getStatus());
             assertEquals(2, game.getPlayers().indexOf(game.getCurrPlayer()));
+            game.getStatusGame().setStatus(STATUS.ACTION_MOVEMN);
             game.moveMother(1);
+
             game.chooseCloud(2);
             assertEquals(0, game.getClouds().get(2).getStudents().size());
             assertEquals(1, game.getPlayers().indexOf(game.getCurrPlayer()));
