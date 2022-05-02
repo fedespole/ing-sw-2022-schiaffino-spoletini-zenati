@@ -33,7 +33,6 @@ public class CliView extends View {
         System.out.println("> Insert your nickname: ");
         System.out.print("> ");
         username = in.nextLine();
-
         this.client.getClientEvs().add(new PlayerAccessEvent(this, username));
     }
 

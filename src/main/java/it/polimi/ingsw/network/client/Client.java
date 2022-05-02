@@ -40,7 +40,8 @@ public class Client implements Runnable{
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                GameEvent currEvent = clientEvs.take();
+                GameEvent currEvent = serverEvs.take();
+                System.out.println("arriva evento" + currEvent);
                 GameHandler.calls(currEvent);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();

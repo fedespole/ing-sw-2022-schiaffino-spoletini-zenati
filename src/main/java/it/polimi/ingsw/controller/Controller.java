@@ -43,17 +43,16 @@ public class Controller implements EventListener {
 
     public void update(PlayerAccessEvent event) {
         checkSetUpPhase();
-
         for (Player player : game.getPlayers()) {
             if (player.getUsername().equals(event.getUsername()))
                 throw new InvalidUserNameException();
         }
         Player newPlayer = new Player(event.getUsername());
-        game.getPlayers().add(newPlayer);
         if(getGame().getPlayers().size()!=0)
             GameHandler.calls(new NewPlayerCreatedEvent(this, newPlayer));
         else
             GameHandler.calls(new RequestNumPlayersEvent(this,newPlayer));
+        game.getPlayers().add(newPlayer);
         if(getGame().getPlayers().size() == getGame().getNumPlayers())
             game.setUp();
     }

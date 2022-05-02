@@ -21,6 +21,7 @@ public class SocketWriter<T> implements Runnable {
             try {
                 T obj = objectsToBeWritten.take();
                 out.writeObject(obj);
+                System.out.println(obj);
                 out.flush();
             } catch (InterruptedException | IOException e) {
             }
