@@ -77,4 +77,20 @@ public class ViewData implements Serializable {
     public Player getCurrPlayer() {
         return currPlayer;
     }
+
+    public ArrayList<ArrayList<Island>> getIslands() {
+        return islands;
+    }
+
+    public int getMotherNature() {
+        return motherNature;
+    }
+
+    public ArrayList<Professor> getProfessors() {
+        return professors;
+    }
+
+    public ArrayList<Cloud> getClouds() {
+        return clouds;
+    }
 }

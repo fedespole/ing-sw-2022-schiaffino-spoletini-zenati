@@ -186,6 +186,7 @@ public class BasicGame implements Game{
         }
         // If not last player, action phase continues in order
         else{
+            statusGame.setStatus(STATUS.ACTION_MOVESTUD);
             currPlayer = this.statusGame.getOrder().get(this.statusGame.getOrder().indexOf(currPlayer) + 1);
         }
     }

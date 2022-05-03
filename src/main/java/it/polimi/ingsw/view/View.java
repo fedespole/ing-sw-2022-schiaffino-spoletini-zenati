@@ -33,7 +33,10 @@ public abstract class View implements EventListener {
     public void update(UpdatedDataEvent event){
         Player owner = data.getOwner();
         data = event.getViewData();
-        data.setOwner(owner);//viewData has owner== null
+        for(Player player:data.getPlayers()){
+            if(player.equals(owner))
+                data.setOwner(player);//viewData has owner== null
+        }
     }
 
     public void update(VictoryEvent event){

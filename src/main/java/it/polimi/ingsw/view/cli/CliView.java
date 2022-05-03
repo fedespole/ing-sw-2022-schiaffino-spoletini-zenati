@@ -5,12 +5,14 @@ import it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.NewPlayerCreatedEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
-import it.polimi.ingsw.model.basicgame.COLOR;
-import it.polimi.ingsw.model.basicgame.STATUS;
+import it.polimi.ingsw.model.basicgame.*;
+import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.view.View;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class CliView extends View {
@@ -85,21 +87,24 @@ public class CliView extends View {
     @Override//TODO CHECK ALL THE INPUTS
     public void update(UpdatedDataEvent event) {
         super.update(event);
+        printTable();
         //stampare una board aggiornata in qualche modo
         if (getData().getOwner().equals(getData().getCurrPlayer())) {
+            printOwnBoard();
+            String input;
             if (getData().getStatusGame().getStatus().equals(STATUS.PLANNING)) {
-                in.reset();
                 System.out.println("Draw assistant card from available ");
                 //stampare assistant cards available
-                String input = in.nextLine();
+                in.reset();
+                input = in.nextLine();
                 int assistantCard = Integer.parseInt(input);
                 this.client.getClientEvs().add(new DrawAssistantCardEvent(this.getData().getOwner(), assistantCard));
             } else if (getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)){
-                in.reset();
                 System.out.println("Choose color to move from entrance");
-                String color=in.nextLine().toLowerCase();
+                in.reset();
+                input=in.nextLine().toLowerCase();
                 int colorIndex=-1;
-                switch (color){
+                switch (input){
                     case "green":
                         colorIndex = COLOR.GREEN.ordinal();
                         break;
@@ -116,14 +121,15 @@ public class CliView extends View {
                         colorIndex = COLOR.BLUE.ordinal();
                         break;
                 }
-                in.reset();
                 System.out.println("Choose destination: Island or DiningRoom");
-                String destination = in.nextLine().toLowerCase();
-                switch (destination){
+                in.reset();
+                input = in.nextLine().toLowerCase();
+                switch (input){
                     case "island":
-                        in.reset();
                         System.out.println("Choose island ");
-                        int island = in.nextInt();
+                        in.reset();
+                        input=in.nextLine();
+                        int island= Integer.parseInt(input);
                         this.client.getClientEvs().add(new MoveStudentToIslandEvent(this.getData().getOwner(), colorIndex,island));
                         break;
                     case "diningroom":
@@ -134,15 +140,63 @@ public class CliView extends View {
             else if(getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVEMN)){
                 in.reset();
                 System.out.println("Choose number of jumps of mother nature");
-                int motherNature = in.nextInt();
+                input = in.nextLine();
+                int motherNature= Integer.parseInt(input);
                 this.client.getClientEvs().add(new MoveMotherEvent(this.getData().getOwner(),motherNature));
             }
             else if(getData().getStatusGame().getStatus().equals(STATUS.ACTION_CHOOSECLOUD)){
                 in.reset();
                 System.out.println("Choose cloud");
-                int cloud= in.nextInt();
-                this.client.getClientEvs().add(new MoveMotherEvent(this.getData().getOwner(),cloud));
+                input= in.nextLine();
+                int cloud = Integer.parseInt(input);
+                this.client.getClientEvs().add(new ChooseCloudEvent(this.getData().getOwner(),cloud));
             }
         }
+    }
+    private void printOwnBoard(){
+        System.out.println(getData().getOwner().getUsername()+" TEAM "+getData().getOwner().getTeam());
+        System.out.println("ASSISTANT CARDS");
+        for(AssistantCard assistantCard:getData().getOwner().getMyDeck().getCards()){
+            System.out.print(assistantCard.getValue()+"---");
+        }
+        System.out.print("\nSTUDENTS IN ENTRANCE\n");
+        for(Student student:getData().getOwner().getMySchoolBoard().getEntrance()){
+            System.out.print(student.getColor()+"---");
+        }
+        System.out.print("\nSTUDENTS IN DINING ROOM\n");
+        for(int i=0;i<5;i++){
+            System.out.println(Arrays.stream(COLOR.values()).toArray()[i]+" "+getData().getOwner().getMySchoolBoard().getDiningRoom()[i].size());
+            for(Professor professor:getData().getOwner().getMySchoolBoard().getProfessors()){
+                if(professor.getColor().equals(Arrays.stream(COLOR.values()).toArray()[i]))
+                    System.out.println(professor.getColor()+" PROFESSOR PRESENT");
+            }
+        }
+        System.out.println("TOWERS\n"+getData().getOwner().getMySchoolBoard().getTowers().size());
+
+    }
+
+    private  void printTable(){
+        System.out.println("--------------------------");
+        System.out.println("ISLANDS");
+        for(int i=0;i<getData().getIslands().size();i++){
+            System.out.println("ISLAND NUMBER "+i);
+            for(Island island: getData().getIslands().get(i)){
+                for(Student student:island.getStudents())
+                    System.out.print(student.getColor()+"---");
+                System.out.print("\n");
+                if(island.getTower()!=null)
+                    System.out.println("TOWER PRESENT: "+ island.getTower().getColor());
+            }
+        if(getData().getMotherNature()==i)
+            System.out.println("MOTHER NATURE PRESENT HERE");
+        }
+        System.out.println("--------------------------");
+        System.out.println("CLOUDS");
+        for(Cloud cloud:getData().getClouds()){
+            for(Student student:cloud.getStudents())
+                System.out.print(student.getColor()+"---");
+            System.out.print("\n");
+        }
+        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
     }
 }

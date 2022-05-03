@@ -105,8 +105,8 @@ public class Controller implements EventListener {
 
     public void update(MoveStudentToDiningEvent event) {
         checkActionMoveStudentPhase();
-        if (!((Player)event.getSource()).equals(game.getCurrPlayer()))
-            throw new InvalidPlayerException();
+    //    if (!((Player)event.getSource()).equals(game.getCurrPlayer()))
+   //         throw new InvalidPlayerException();
         if (event.getColorIndex() < 0)
             throw new InvalidColorException();
         if (game.getCurrPlayer().getMySchoolBoard().getDiningRoom()[event.getColorIndex()].size() >= 10) {
@@ -128,8 +128,8 @@ public class Controller implements EventListener {
 
     public void update(MoveStudentToIslandEvent event) {
         checkActionMoveStudentPhase();
-        if (!event.getSource().equals(game.getCurrPlayer()))
-            throw new InvalidPlayerException();
+     //   if (!event.getSource().equals(game.getCurrPlayer()))
+ //           throw new InvalidPlayerException();
         if (event.getIslandIndex() < 0 || event.getIslandIndex() > game.getIslands().size())
             throw new InvalidIslandIndexException();
         if (event.getColorIndex() < 0 || event.getColorIndex() > COLOR.values().length)
@@ -149,8 +149,8 @@ public class Controller implements EventListener {
 
     public void update(MoveMotherEvent event) {
         checkActionMoveMotherPhase();
-        if (!event.getSource().equals(game.getCurrPlayer()))
-            throw new InvalidPlayerException();
+    //    if (!event.getSource().equals(game.getCurrPlayer()))
+     //       throw new InvalidPlayerException();
         if (event.getIndex() < 0 || event.getIndex() > game.getCurrPlayer().getChosenCard().getSteps())
             throw new InvalidStepsException();
         game.moveMother(event.getIndex());
@@ -159,8 +159,8 @@ public class Controller implements EventListener {
 
     public void update(ChooseCloudEvent event) {
         checkActionChooseCloudPhase();
-        if (!event.getSource().equals(game.getCurrPlayer()))
-            throw new InvalidPlayerException();
+        //        if (!event.getSource().equals(game.getCurrPlayer()))
+       //     throw new InvalidPlayerException();
         if (event.getIndex() < 0 || event.getIndex() >= game.getClouds().size())
             throw new InvalidCloudIndexException();
         game.chooseCloud(event.getIndex());
