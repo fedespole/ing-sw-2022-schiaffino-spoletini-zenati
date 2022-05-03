@@ -71,9 +71,9 @@ public class CliView extends View {
 
             input = in.nextLine().toLowerCase();
             if (input.equals("basicgame")) {
-                this.client.getClientEvs().add(new SelectedGameSetUpEvent(this, numPlayers, false));
+                this.client.getClientEvs().add(new SelectedGameSetUpEvent(this.getData().getOwner(), numPlayers, false));
             } else if (input.equals("expertgame")) {
-                this.client.getClientEvs().add(new SelectedGameSetUpEvent(this, numPlayers, true));
+                this.client.getClientEvs().add(new SelectedGameSetUpEvent(this.getData().getOwner(), numPlayers, true));
             }
                 else {  //   per ora rompeva, nun me va ora di pensarci
                     in.reset();
@@ -93,7 +93,7 @@ public class CliView extends View {
                 //stampare assistant cards available
                 String input = in.nextLine();
                 int assistantCard = Integer.parseInt(input);
-                this.client.getClientEvs().add(new DrawAssistantCardEvent(this, assistantCard));
+                this.client.getClientEvs().add(new DrawAssistantCardEvent(this.getData().getOwner(), assistantCard));
             } else if (getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)){
                 in.reset();
                 System.out.println("Choose color to move from entrance");
@@ -124,10 +124,10 @@ public class CliView extends View {
                         in.reset();
                         System.out.println("Choose island ");
                         int island = in.nextInt();
-                        this.client.getClientEvs().add(new MoveStudentToIslandEvent(this, colorIndex,island));
+                        this.client.getClientEvs().add(new MoveStudentToIslandEvent(this.getData().getOwner(), colorIndex,island));
                         break;
                     case "diningroom":
-                        this.client.getClientEvs().add(new MoveStudentToDiningEvent(this, colorIndex));
+                        this.client.getClientEvs().add(new MoveStudentToDiningEvent(this.getData().getOwner(), colorIndex));
                         break;
                 }
             }
@@ -135,13 +135,13 @@ public class CliView extends View {
                 in.reset();
                 System.out.println("Choose number of jumps of mother nature");
                 int motherNature = in.nextInt();
-                this.client.getClientEvs().add(new MoveMotherEvent(this,motherNature));
+                this.client.getClientEvs().add(new MoveMotherEvent(this.getData().getOwner(),motherNature));
             }
             else if(getData().getStatusGame().getStatus().equals(STATUS.ACTION_CHOOSECLOUD)){
                 in.reset();
                 System.out.println("Choose cloud");
                 int cloud= in.nextInt();
-                this.client.getClientEvs().add(new MoveMotherEvent(this,cloud));
+                this.client.getClientEvs().add(new MoveMotherEvent(this.getData().getOwner(),cloud));
             }
         }
     }

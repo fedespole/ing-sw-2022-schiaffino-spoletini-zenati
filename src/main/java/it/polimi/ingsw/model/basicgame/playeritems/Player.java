@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.basicgame.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Player implements Serializable {
     private final String username;
@@ -56,7 +57,18 @@ public class Player implements Serializable {
         this.chosenCard = chosenCard;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return username.equals(player.username);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(username);
+    }
 }
 
 

@@ -20,6 +20,7 @@ import it.polimi.ingsw.model.expertgame.gamemodes.GameMode2;
 import it.polimi.ingsw.model.expertgame.gamemodes.GameMode6;
 import it.polimi.ingsw.model.expertgame.gamemodes.GameMode8;
 import it.polimi.ingsw.model.expertgame.gamemodes.GameMode9;
+import it.polimi.ingsw.view.ViewData;
 
 import java.util.ArrayList;
 import java.util.EventListener;
@@ -104,7 +105,7 @@ public class Controller implements EventListener {
 
     public void update(MoveStudentToDiningEvent event) {
         checkActionMoveStudentPhase();
-        if (!event.getSource().equals(game.getCurrPlayer()))
+        if (!((Player)event.getSource()).equals(game.getCurrPlayer()))
             throw new InvalidPlayerException();
         if (event.getColorIndex() < 0)
             throw new InvalidColorException();

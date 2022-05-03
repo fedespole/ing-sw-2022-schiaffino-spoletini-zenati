@@ -1,5 +1,7 @@
 package it.polimi.ingsw.network;
 
+import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
@@ -7,7 +9,7 @@ import java.util.concurrent.BlockingQueue;
 
 public class SocketReader<T> implements Runnable{
     private final Socket socket;
-    private final ObjectInputStream in;
+    private  ObjectInputStream in;
     private final BlockingQueue<T> objectsToBeRead;
     private final Class<T> objClass;
 

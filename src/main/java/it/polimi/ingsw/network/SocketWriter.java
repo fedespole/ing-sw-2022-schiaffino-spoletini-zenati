@@ -1,5 +1,7 @@
 package it.polimi.ingsw.network;
 
+import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -7,7 +9,7 @@ import java.util.concurrent.BlockingQueue;
 
 public class SocketWriter<T> implements Runnable {
     private final Socket socket;
-    private final ObjectOutputStream out;
+    private ObjectOutputStream out;
     private final BlockingQueue<T> objectsToBeWritten;
 
     public SocketWriter(Socket socket, BlockingQueue<T> objectsToBeWritten) throws IOException {
@@ -20,13 +22,12 @@ public class SocketWriter<T> implements Runnable {
         while (true) {
             try {
                 T obj = objectsToBeWritten.take();
-                System.out.println(obj);
                 out.writeObject(obj);
                 out.flush();
+                out.reset();
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
-            ;
         }
     }
 }
