@@ -60,23 +60,26 @@ public class CliView extends View {
     public void update(RequestNumPlayersEvent event) {
         super.update(event);
         if (event.getPlayer().equals(this.getData().getOwner())) {
+            String input;
             System.out.println("You are the first player connected, your username is : " + getData().getOwner().getUsername());
             in.reset();
             System.out.println("Choose number of players: 2 or 3 players available");
-            int numPlayers = in.nextInt();
+            input = in.nextLine();
+            int numPlayers = Integer.parseInt(input);
             in.reset();
+            System.out.println(numPlayers);
             System.out.println("Choose game mode: BasicGame or ExpertGame");
 
-            String gameMode = in.nextLine().toLowerCase();
-            if (gameMode.equals("basicgame")) {
+            input = in.nextLine().toLowerCase();
+            if (input.equals("basicgame")) {
                 this.client.getClientEvs().add(new SelectedGameSetUpEvent(this, numPlayers, false));
-            } else if (gameMode.equals("expertgame")) {
+            } else if (input.equals("expertgame")) {
                 this.client.getClientEvs().add(new SelectedGameSetUpEvent(this, numPlayers, true));
             }
-                /*else {     per ora rompeva, nun me va ora di pensarci
+                else {  //   per ora rompeva, nun me va ora di pensarci
                     in.reset();
                     System.out.println("Invalid game mode");
-                } */
+                }
         }
     }
 
