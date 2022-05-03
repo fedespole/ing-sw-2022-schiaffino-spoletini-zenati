@@ -1,9 +1,11 @@
 package it.polimi.ingsw.model.basicgame;
 import it.polimi.ingsw.model.basicgame.Bag;
 import it.polimi.ingsw.model.basicgame.Student;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Cloud {
+public class Cloud implements Serializable {
     private final ArrayList<Student> students;
 
     public Cloud() {

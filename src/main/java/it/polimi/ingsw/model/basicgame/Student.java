@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.basicgame;
 
-public class Student {
+import java.io.Serializable;
+
+public class Student implements Serializable {
     private final COLOR color;
     public Student(COLOR color) {
         this.color = color;

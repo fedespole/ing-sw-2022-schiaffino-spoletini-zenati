@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.basicgame;
 
-public enum TEAM {
+import java.io.Serializable;
+
+public enum TEAM implements Serializable {
     WHITE,
     GREY,
     BLACK

@@ -23,6 +23,7 @@ public class ViewData implements Serializable {
 
     public ViewData(){
         this.owner = null;
+        this.players= new ArrayList<>();
     }
 
     public ViewData( ArrayList<Player> players, int numPlayers, ArrayList<ArrayList<Island>> islands, ArrayList<Professor> professors, int motherNature, Player currPlayer, ArrayList<Cloud> clouds, StatusGame statusGame) {

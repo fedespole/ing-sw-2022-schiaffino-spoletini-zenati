@@ -1,7 +1,8 @@
 package it.polimi.ingsw.model.basicgame;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Island {
+public class Island implements Serializable {
     private final ArrayList<Student> students;
     private Tower tower;
     private boolean noEntry;

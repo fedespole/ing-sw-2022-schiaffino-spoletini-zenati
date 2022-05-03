@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.basicgame;
 
-public enum STATUS{
+import java.io.Serializable;
+
+public enum STATUS implements Serializable {
     SETUP,
     PLANNING,
     ACTION_MOVESTUD,

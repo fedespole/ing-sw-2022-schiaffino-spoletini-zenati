@@ -48,13 +48,15 @@ public class Controller implements EventListener {
                 throw new InvalidUserNameException();
         }
         Player newPlayer = new Player(event.getUsername());
-        if(getGame().getPlayers().size()!=0)
+        if (getGame().getPlayers().size() != 0)
             GameHandler.calls(new NewPlayerCreatedEvent(this, newPlayer));
         else
-            GameHandler.calls(new RequestNumPlayersEvent(this,newPlayer));
+            GameHandler.calls(new RequestNumPlayersEvent(this, newPlayer));
         game.getPlayers().add(newPlayer);
-        if(getGame().getPlayers().size() == getGame().getNumPlayers())
+        if (getGame().getPlayers().size() == getGame().getNumPlayers()) {
             game.setUp();
+            GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
+        }
     }
 
     public void update(SelectedGameSetUpEvent event){

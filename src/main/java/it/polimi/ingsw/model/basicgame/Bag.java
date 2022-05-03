@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model.basicgame;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Bag {
+public class Bag implements Serializable {
     private final ArrayList<Student> students;
 
     public Bag() {
