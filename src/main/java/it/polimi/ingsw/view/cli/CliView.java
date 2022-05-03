@@ -67,7 +67,6 @@ public class CliView extends View {
             input = in.nextLine();
             int numPlayers = Integer.parseInt(input);
             in.reset();
-            System.out.println(numPlayers);
             System.out.println("Choose game mode: BasicGame or ExpertGame");
 
             input = in.nextLine().toLowerCase();
@@ -92,7 +91,8 @@ public class CliView extends View {
                 in.reset();
                 System.out.println("Draw assistant card from available ");
                 //stampare assistant cards available
-                int assistantCard = in.nextInt();
+                String input = in.nextLine();
+                int assistantCard = Integer.parseInt(input);
                 this.client.getClientEvs().add(new DrawAssistantCardEvent(this, assistantCard));
             } else if (getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)){
                 in.reset();
