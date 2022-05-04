@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.cli;
 
+import it.polimi.ingsw.common.ANSIcolors.ANSI;
 import it.polimi.ingsw.common.events.fromClientEvents.*;
 import it.polimi.ingsw.common.events.fromServerEvents.*;
 import it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent;
@@ -35,7 +36,7 @@ public class CliView extends View {
     public void setup() {
         String username;
         System.out.println("> Insert your nickname: ");
-        System.out.print("> ");
+        System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
         username = in.nextLine();
         this.client.getClientEvs().add(new PlayerAccessEvent(this, username, this.client.getSocket().toString()));
     }
@@ -47,7 +48,7 @@ public class CliView extends View {
         // Checks the client that caused the invalidUserName using only the socket, as owner is set only with NewPlayerCreated
         if (event.getException() instanceof InvalidUserNameException
                 && ((InvalidUserNameException)event.getException()).getClientThatCausedEx().equals(this.client.getSocket().toString())){
-                System.err.println("> Username already chosen");
+            System.out.println(ANSI.RED + "> Username already chosen" + ANSI.RESET);
                 try {
                     Thread.currentThread().sleep(500);
                 } catch (InterruptedException e) {
@@ -70,39 +71,51 @@ public class CliView extends View {
         if (getData().getOwner().equals(event.getPlayer()))
             System.out.println("You have been accepted in the game, you username is : " + getData().getOwner().getUsername());
         else
-            System.out.println("Username " + event.getPlayer().getUsername() + " has been accepted in the game");
+            System.out.println("Player " + event.getPlayer().getUsername() + " has been accepted in the game");
     }
 
     @Override
     public void update(RequestNumPlayersEvent event) {
         super.update(event);
-        int numPlayers;
+        int numPlayers = 0;
         if (event.getPlayer().equals(this.getData().getOwner())) {
             String input;
             System.out.println("You are the first player connected, your username is : " + getData().getOwner().getUsername());
             in.reset();
-            System.out.println("Choose number of players: 2 or 3 players available");
+            System.out.println("> Choose number of players: 2 or 3 players available");
+            System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
             while(true) {
                 input = in.nextLine();
-                numPlayers = Integer.parseInt(input);
+                try {
+                    numPlayers = Integer.parseInt(input);
+                }catch(NumberFormatException e){
+                    //goes to else
+                    }
                 in.reset();
                 if(numPlayers<2 || numPlayers>3){
-                    System.err.println("> Please type a valid number");
-                    System.err.print("> ");
+                    in.reset();
+                    System.out.println(ANSI.RED + "> Please choose between 2 or 3 players" + ANSI.RESET);
+                    System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
                 }
                 else break;
             }
-            System.out.println("Choose game mode: BasicGame or ExpertGame");
+            System.out.println("> Choose the Game Mode: BasicGame or ExpertGame?");
+            System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
 
-            input = in.nextLine().toLowerCase();
+            while(true){
+                input = in.nextLine().toLowerCase();
             if (input.equals("basicgame")) {
                 this.client.getClientEvs().add(new SelectedGameSetUpEvent(this.getData().getOwner(), numPlayers, false));
+                break;
             } else if (input.equals("expertgame")) {
                 this.client.getClientEvs().add(new SelectedGameSetUpEvent(this.getData().getOwner(), numPlayers, true));
+                break;
             }
             else {
                 in.reset();
-                System.out.println("Invalid game mode");
+                System.out.println(ANSI.RED + "> Please type a valid Game Mode" + ANSI.RESET);
+                System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+                }
             }
             System.out.println("Waiting for other " + (numPlayers-1) + " player(s) to join, " + input + " selected...");
         }
@@ -121,64 +134,118 @@ public class CliView extends View {
             printOwnBoard();
             String input;
             if (getData().getStatusGame().getStatus().equals(STATUS.PLANNING)) {
-                System.out.println("Draw assistant card from available ");
-                in.reset();
-                input = in.nextLine();
-                int assistantCard = Integer.parseInt(input);
+                System.out.println("> Draw assistant card from those available by typing its value");
+                System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+                int assistantCard;
+                while (true) {
+                    input = in.nextLine();
+                    try {
+                        assistantCard = Integer.parseInt(input);
+                        break;
+                    } catch (NumberFormatException e) {
+                        System.out.println(ANSI.RED + "> Please type a number" + ANSI.RESET);
+                        System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+                        in.reset();
+                    }
+                }
                 this.client.getClientEvs().add(new DrawAssistantCardEvent(this.getData().getOwner(), assistantCard));
             } else if (getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)){
-                System.out.println("Choose color to move from entrance");
-                in.reset();
-                input=in.nextLine().toLowerCase();
+                System.out.println("> Choose the color of the student to move from entrance:");
+                System.out.println("   -Green ");
+                System.out.println("   -Red ");
+                System.out.println("   -Yellow ");
+                System.out.println("   -Pink ");
+                System.out.println("   -Blue ");
                 int colorIndex=-1;
-                switch (input){
-                    case "green":
-                        colorIndex = COLOR.GREEN.ordinal();
-                        break;
-                    case "red":
-                        colorIndex = COLOR.RED.ordinal();
-                        break;
-                    case "yellow":
-                        colorIndex = COLOR.YELLOW.ordinal();
-                        break;
-                    case "pink":
-                        colorIndex = COLOR.PINK.ordinal();
-                        break;
-                    case "blue":
-                        colorIndex = COLOR.BLUE.ordinal();
-                        break;
+                while (colorIndex < 0) {
+                    in.reset();
+                    input = in.nextLine().toLowerCase();
+                    switch (input) {
+                        case "green":
+                            colorIndex = COLOR.GREEN.ordinal();
+                            break;
+                        case "red":
+                            colorIndex = COLOR.RED.ordinal();
+                            break;
+                        case "yellow":
+                            colorIndex = COLOR.YELLOW.ordinal();
+                            break;
+                        case "pink":
+                            colorIndex = COLOR.PINK.ordinal();
+                            break;
+                        case "blue":
+                            colorIndex = COLOR.BLUE.ordinal();
+                            break;
+                        default:
+                            System.out.println(ANSI.RED + "> Please type a color from those above" + ANSI.RESET);
+                            System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+                            in.reset();
+                    }
                 }
-                System.out.println("Choose destination: Island or DiningRoom");
-                in.reset();
-                input = in.nextLine().toLowerCase();
-                switch (input){
-                    case "island": {
-                        System.out.println("Choose island ");
-                        in.reset();
-                        input = in.nextLine();
-                        int island = Integer.parseInt(input);
-                        this.client.getClientEvs().add(new MoveStudentToIslandEvent(this.getData().getOwner(), colorIndex, island));
-                        break;
+                System.out.println("> Choose destination: Island or DiningRoom");
+                System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+                boolean thisFlag = false;
+                int island = 0;
+                while(!thisFlag) {
+                    in.reset();
+                    input = in.nextLine().toLowerCase();
+                    switch (input) {
+                        case "island": {
+                            System.out.println("Choose island ");
+                            in.reset();
+                            input = in.nextLine();
+                            try{island = Integer.parseInt(input);
+                            } catch (NumberFormatException e){
+                                System.out.println(ANSI.RED + "> Please type a number" + ANSI.RESET);
+                                System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+                            }
+                            this.client.getClientEvs().add(new MoveStudentToIslandEvent(this.getData().getOwner(), colorIndex, island));
+                            thisFlag = true;
+                            break;
+                        }
+                        case "diningroom": {
+                            this.client.getClientEvs().add(new MoveStudentToDiningEvent(this.getData().getOwner(), colorIndex));
+                            thisFlag = true;
+                            break;
+                        }
+                        default:
+                            System.out.println(ANSI.RED + "> Please type 'Island' or 'DiningRoom'" + ANSI.RESET);
+                            System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
                     }
-                    case "diningroom": {
-                        this.client.getClientEvs().add(new MoveStudentToDiningEvent(this.getData().getOwner(), colorIndex));
-                        break;
-                    }
-                    default : System.err.println("Wrong choice");
                 }
             }
             else if(getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVEMN)){
+                int motherNature = 0;
+                while(true){
                 in.reset();
-                System.out.println("Choose number of jumps of mother nature");
+                System.out.println("> Choose number of jumps of mother nature");
                 input = in.nextLine();
-                int motherNature= Integer.parseInt(input);
+                try{
+                    motherNature= Integer.parseInt(input);
+                    break;
+                }catch(NumberFormatException e){
+                    System.out.println(ANSI.RED + "> Please enter a number" + ANSI.RESET);
+                    System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+                    }
+                }
                 this.client.getClientEvs().add(new MoveMotherEvent(this.getData().getOwner(),motherNature));
+
             }
             else if(getData().getStatusGame().getStatus().equals(STATUS.ACTION_CHOOSECLOUD)){
-                in.reset();
-                System.out.println("Choose cloud");
-                input= in.nextLine();
-                int cloud = Integer.parseInt(input);
+                int cloud = 0;
+                while(true){
+                    in.reset();
+                    System.out.println("> Choose cloud");
+                    input= in.nextLine();
+                    try{
+                    cloud = Integer.parseInt(input);
+                        break;
+                        }catch(NumberFormatException e){
+                        System.out.println(ANSI.RED + "> Please enter a number" + ANSI.RESET);
+                        System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+                    }
+
+                }
                 this.client.getClientEvs().add(new ChooseCloudEvent(this.getData().getOwner(),cloud));
             }
         }
