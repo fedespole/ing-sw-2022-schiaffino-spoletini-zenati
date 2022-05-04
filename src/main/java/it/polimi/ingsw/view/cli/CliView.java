@@ -183,7 +183,7 @@ public class CliView extends View {
             }
         }
         else {
-            System.out.println(getData().getOwner().getUsername() + "'s turn");
+            System.out.println(getData().getCurrPlayer().getUsername() + "'s turn");
         }
     }
 
