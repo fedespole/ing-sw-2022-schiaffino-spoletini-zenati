@@ -10,13 +10,14 @@ import it.polimi.ingsw.view.cli.CliView;
 import it.polimi.ingsw.view.gui.GuiView;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class Client implements Runnable{
+public class Client implements Runnable {
     private final LinkedBlockingQueue<GameEvent> clientEvs;
     private final LinkedBlockingQueue<GameEvent> serverEvs;
     private ExecutorService executor;

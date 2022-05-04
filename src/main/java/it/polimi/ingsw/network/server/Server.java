@@ -1,7 +1,6 @@
 package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.common.events.GameEvent;
-import it.polimi.ingsw.common.events.GameHandler;
 import it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent;
 import it.polimi.ingsw.common.events.fromClientEvents.PlayerAccessEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.NewMidGamePlayerEvent;
@@ -87,13 +86,13 @@ public class Server implements Runnable {
                     playingConnection.add(remoteView);
                     executor.execute(remoteView);
                 } else {
-                    remoteView.update(new NotifyExceptionEvent(this, new InvalidUserNameException()));
+                    remoteView.update(new NotifyExceptionEvent(this, new InvalidUserNameException(null)));
                 }
                 return;
             }
         }
         // If username is not matched
-        remoteView.update(new NotifyExceptionEvent(this, new InvalidUserNameException()));
+        remoteView.update(new NotifyExceptionEvent(this, new InvalidUserNameException(null)));
     }
 
     public int getPort(){

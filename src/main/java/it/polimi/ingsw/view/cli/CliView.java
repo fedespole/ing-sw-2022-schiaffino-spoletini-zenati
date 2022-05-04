@@ -36,17 +36,16 @@ public class CliView extends View {
         System.out.println("> Insert your nickname: ");
         System.out.print("> ");
         username = in.nextLine();
-        this.client.getClientEvs().add(new PlayerAccessEvent(this, username));
+        this.client.getClientEvs().add(new PlayerAccessEvent(this, username, this.client.getSocket().toString()));
     }
 
 
     @Override
     public void update(NotifyExceptionEvent event) {
 
-        // If client doesn't have owner at this stage, it means that has caused InvalidUserNameException
-        if(getData().getOwner()==null) {
-
-            if (event.getException() instanceof InvalidUserNameException) {
+        // Checks the client that caused the invalidUserName using only the socket, as owner is set only with NewPlayerCreated
+        if (event.getException() instanceof InvalidUserNameException
+                && ((InvalidUserNameException)event.getException()).getClientThatCausedEx().equals(this.client.getSocket().toString())){
                 System.err.println("> Username already chosen");
                 try {
                     Thread.currentThread().sleep(500);
@@ -54,10 +53,11 @@ public class CliView extends View {
                     e.printStackTrace();
                 }
                 setup();
-            }
         }
         // Notifies only player that caused exception
-        else if(getData().getOwner().equals(getData().getCurrPlayer())) {
+        else if(getData().getOwner()!=null && getData().getOwner().equals(getData().getCurrPlayer())) {
+
+           // if(event.getException() instanceof )
 
         }
 
@@ -69,20 +69,28 @@ public class CliView extends View {
         if (getData().getOwner().equals(event.getPlayer()))
             System.out.println("You have been accepted in the game, you username is : " + getData().getOwner().getUsername());
         else
-            System.out.println("Username " + event.getPlayer().getUsername() + "has been accepted in the game");
+            System.out.println("Username " + event.getPlayer().getUsername() + " has been accepted in the game");
     }
 
     @Override
     public void update(RequestNumPlayersEvent event) {
         super.update(event);
+        int numPlayers;
         if (event.getPlayer().equals(this.getData().getOwner())) {
             String input;
             System.out.println("You are the first player connected, your username is : " + getData().getOwner().getUsername());
             in.reset();
             System.out.println("Choose number of players: 2 or 3 players available");
-            input = in.nextLine();
-            int numPlayers = Integer.parseInt(input);
-            in.reset();
+            while(true) {
+                input = in.nextLine();
+                numPlayers = Integer.parseInt(input);
+                in.reset();
+                if(numPlayers<2 || numPlayers>3){
+                    System.err.println("> Please type a valid number");
+                    System.err.print("> ");
+                }
+                else break;
+            }
             System.out.println("Choose game mode: BasicGame or ExpertGame");
 
             input = in.nextLine().toLowerCase();
