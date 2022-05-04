@@ -160,6 +160,7 @@ public class CliView extends View {
                         this.client.getClientEvs().add(new MoveStudentToDiningEvent(this.getData().getOwner(), colorIndex));
                         break;
                     }
+                    default : System.err.println("Wrong choice");
                 }
             }
             else if(getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVEMN)){
