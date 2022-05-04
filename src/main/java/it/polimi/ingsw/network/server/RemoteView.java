@@ -58,8 +58,7 @@ public class RemoteView extends View implements Runnable{
     @Override
     public void update(UpdatedDataEvent event) {
         super.update(event);
-        if (!clientSocket.isClosed())
-            serverEvs.add(event);
+        serverEvs.add(event);
     }
 
     @Override
