@@ -17,7 +17,7 @@ public class BasicGameTest extends TestCase {
         int int_random = rand.nextInt(2)+2;// is 2 or 3
         game =new BasicGame();
         for(int i=0;i<int_random;i++){
-            game.getPlayers().add(new Player("Test"));
+            game.getPlayers().add(new Player("Test"+i));
         }
         game.setUp();
     }
@@ -109,7 +109,7 @@ public class BasicGameTest extends TestCase {
 
     @Test
     public void TestPhaseFlow() {//to check if the automized action of the game work
-   /*     if (game.getNumPlayers() == 3) {
+        if (game.getNumPlayers() == 3) {
             assertEquals(3,game.getClouds().size());
             assertEquals(STATUS.PLANNING, game.getStatusGame().getStatus());
             for (Cloud cloud : game.getClouds()) {
@@ -144,6 +144,6 @@ public class BasicGameTest extends TestCase {
             }
             assertEquals(STATUS.PLANNING, game.getStatusGame().getStatus());
             assertEquals(game.getCurrPlayer(),game.getPlayers().get(2));
-        }*/
+        }
     }
 }
