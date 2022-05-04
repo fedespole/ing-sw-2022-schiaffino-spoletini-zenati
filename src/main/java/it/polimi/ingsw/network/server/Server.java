@@ -67,32 +67,30 @@ public class Server implements Runnable {
     private void newMidGameClientConnection(RemoteView remoteView) throws InterruptedException, IOException {//resilience
         remoteView.update(new NewMidGamePlayerEvent(this));
         GameEvent gameEvent;
-
         while (true) {
             gameEvent = remoteView.getClientEvs().take();
             if (gameEvent instanceof PlayerAccessEvent)
                 break;
         }
-
-        for (RemoteView remoteView1 : playingConnection) {
-            // Checks if username given in PlayerAccessEvent matches with one of the usernames in the game
-            if (((PlayerAccessEvent) gameEvent).getUsername().equals(remoteView1.getData().getOwner().getUsername())) {
-
-                // Checks if player with this username is actually disconnected
-                if (remoteView1.getClientSocket().getInputStream().read() == -1) {
-                    remoteView.update(new NewPlayerCreatedEvent(this,remoteView1.getData().getOwner()));
+        String username = ((PlayerAccessEvent)gameEvent).getUsername();
+        // Checks if username given in PlayerAccessEvent matches with one of the usernames in the game, and it is actually disconnected
+        if (controller.getDisconnectedPlayers().containsKey(username)) {
+            for(RemoteView view: this.playingConnection) {
+                if (view.getData().getOwner().getUsername().equals(username)) {
+                    remoteView.update(new NewPlayerCreatedEvent(this, view.getData().getOwner()));
                     remoteView.update(new UpdatedDataEvent(this, game.getData()));
-                    playingConnection.remove(remoteView1);
+                    playingConnection.remove(view);
                     playingConnection.add(remoteView);
                     executor.execute(remoteView);
-                } else {
-                    remoteView.update(new NotifyExceptionEvent(this, new InvalidUserNameException()));
+                    controller.getDisconnectedPlayers().replace(username,true);
+                    System.out.println("RECONNECTED:"+username);
+                    break;
                 }
-                return;
             }
+        } else {
+            remoteView.update(new NotifyExceptionEvent(this, new InvalidUserNameException()));
+        return;
         }
-        // If username is not matched
-        remoteView.update(new NotifyExceptionEvent(this, new InvalidUserNameException()));
     }
 
     public int getPort(){

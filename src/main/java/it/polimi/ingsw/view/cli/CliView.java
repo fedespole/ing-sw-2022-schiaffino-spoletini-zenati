@@ -1,10 +1,7 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.common.events.fromClientEvents.*;
-import it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent;
-import it.polimi.ingsw.common.events.fromServerEvents.NewPlayerCreatedEvent;
-import it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent;
-import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.*;
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.network.client.Client;
@@ -84,6 +81,9 @@ public class CliView extends View {
         }
     }
 
+    public void update(NewMidGamePlayerEvent event){
+        System.out.println("The game has already started");
+    }
     @Override//TODO CHECK ALL THE INPUTS
     public void update(UpdatedDataEvent event) {
         super.update(event);

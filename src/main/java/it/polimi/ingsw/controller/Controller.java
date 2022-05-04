@@ -22,19 +22,21 @@ import it.polimi.ingsw.model.expertgame.gamemodes.GameMode8;
 import it.polimi.ingsw.model.expertgame.gamemodes.GameMode9;
 import it.polimi.ingsw.view.ViewData;
 
-import java.util.ArrayList;
-import java.util.EventListener;
+import java.util.*;
 
 public class Controller implements EventListener {
     private Game game;
     private boolean hasCardBeenUsed;   //true if a CharacterCard has been used in this turn
     private int numOfMoveStudent;      //counts how many student the currPlayer has moved
 
+    private HashMap<String,Boolean> disconnectedPlayers;
+
     public Controller(Game game) {
         this.game = game;
         this.hasCardBeenUsed = false;
         GameHandler.addEventListener(this);
         this.numOfMoveStudent = 0;
+        disconnectedPlayers = new HashMap<>();
     }
 
     public Game getGame() {
@@ -100,6 +102,7 @@ public class Controller implements EventListener {
         } catch (NotAvailableCardException e) {
             throw new NotAvailableCardException();
         }
+        checkDisconnection();
     }
 
 
@@ -168,6 +171,7 @@ public class Controller implements EventListener {
         if ((game instanceof GameMode2) || (game instanceof GameMode6) || (game instanceof GameMode8) || (game instanceof GameMode9)) {
             game = new ConcreteExpertGame((ConcreteExpertGame) game);
         }
+        checkDisconnection();
     }
 
     public void update(UseCharacter1Event event) {
@@ -329,7 +333,10 @@ public class Controller implements EventListener {
         }
         throw new InvalidCharacterException();
     }
-
+    public void update(ClientDisconnectedEvent event){
+        this.disconnectedPlayers.put(event.getPlayer().getUsername(),false);
+        System.out.print("DISCONNECTED:"+event.getPlayer().getUsername()+" "+this.disconnectedPlayers.get(event.getPlayer().getUsername()));
+    }
     private void checkAbility(Character c) {
         //checks if a card has been used in this turn
         if (hasCardBeenUsed)
@@ -363,7 +370,27 @@ public class Controller implements EventListener {
             throw new InvalidPhaseException();
     }
 
-
-
+    private void checkDisconnection() {
+        if (this.disconnectedPlayers.containsKey(game.getCurrPlayer().getUsername())) {
+            if (game.getStatusGame().getStatus().equals(STATUS.PLANNING)) {
+                if (this.disconnectedPlayers.get(game.getCurrPlayer().getUsername())) {
+                    this.disconnectedPlayers.remove(game.getCurrPlayer().getUsername());
+                    return;
+                }
+                Random random = new Random();
+                int int_random = random.nextInt(game.getCurrPlayer().getMyDeck().getCards().size());
+                this.update(new DrawAssistantCardEvent(this, game.getCurrPlayer().getMyDeck().getCards().get(int_random).getValue()));
+            } else if (game.getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)) {
+                if (game.getStatusGame().getOrder().indexOf(game.getCurrPlayer()) != game.getStatusGame().getOrder().size() - 1) {
+                    game.setCurrPlayer(game.getStatusGame().getOrder().get(game.getStatusGame().getOrder().indexOf(game.getCurrPlayer()) + 1));
+                } else {
+                    game.fillClouds();
+                }
+            }
+        }
+    }
+    public HashMap<String, Boolean> getDisconnectedPlayers() {
+        return disconnectedPlayers;
+    }
 }
 

@@ -100,20 +100,21 @@ public class BasicGame implements Game{
         else if (numPlayers==3 && (this.getBag().getStudents().size() < 12)) lastRound = true;
         else {
             for(Cloud c: clouds){
+                if(c.getStudents().size()==0){
+                    switch (numPlayers) {
+                        case 2:
+                            c.addStudent(this.bag);
+                            c.addStudent(this.bag);
+                            c.addStudent(this.bag);
+                            break;
 
-                switch (numPlayers){
-                    case 2:
-                        c.addStudent(this.bag);
-                        c.addStudent(this.bag);
-                        c.addStudent(this.bag);
-                        break;
-
-                    case 3:
-                        c.addStudent(this.bag);
-                        c.addStudent(this.bag);
-                        c.addStudent(this.bag);
-                        c.addStudent(this.bag);
-                        break;
+                        case 3:
+                            c.addStudent(this.bag);
+                            c.addStudent(this.bag);
+                            c.addStudent(this.bag);
+                            c.addStudent(this.bag);
+                           break;
+                }
                 }
             }
         }

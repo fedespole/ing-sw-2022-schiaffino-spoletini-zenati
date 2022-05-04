@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network;
 
+import it.polimi.ingsw.common.events.ClientDisconnectedEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
 
 import java.io.IOException;
@@ -28,9 +29,14 @@ public class SocketReader<T> implements Runnable{
                     objectsToBeRead.put(objClass.cast(receivedObj));
                 }
             } catch (IOException | ClassNotFoundException | InterruptedException e) {
-                e.printStackTrace();
+                try {
+                    socket.close();
+                    objectsToBeRead.put(objClass.cast(new ClientDisconnectedEvent(this)));
+                    break;
+                } catch (IOException | InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
-            ;
         }
     }
 }

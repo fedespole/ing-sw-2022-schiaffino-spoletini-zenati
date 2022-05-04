@@ -38,6 +38,9 @@ public class RemoteView extends View implements Runnable{
         while(!Thread.currentThread().isInterrupted()){
             try {
                 GameEvent currEvent = clientEvs.take();
+                if(currEvent instanceof ClientDisconnectedEvent) {
+                    ((ClientDisconnectedEvent) currEvent).setPlayer(getData().getOwner());
+                }
                 GameHandler.calls(currEvent);
                 System.out.println("arriva evento" + currEvent);
             } catch (InterruptedException e) {
@@ -55,7 +58,8 @@ public class RemoteView extends View implements Runnable{
     @Override
     public void update(UpdatedDataEvent event) {
         super.update(event);
-        serverEvs.add(event);
+        if (!clientSocket.isClosed())
+            serverEvs.add(event);
     }
 
     @Override
