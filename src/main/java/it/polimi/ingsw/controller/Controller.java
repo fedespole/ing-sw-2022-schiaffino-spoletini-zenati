@@ -339,10 +339,10 @@ public class Controller implements EventListener {
     private void checkAbility(Character c) {
         //checks if a card has been used in this turn
         if (hasCardBeenUsed)
-            throw new AbilityAlreadyUsedException();
+            GameHandler.calls(new NotifyExceptionEvent(this, new AbilityAlreadyUsedException()));
         //check if the player can pay the character
         if (game.getCurrPlayer().getCoins() < c.getCost())
-            throw new TooPoorException();
+            GameHandler.calls(new NotifyExceptionEvent(this, new TooPoorException()));
         this.hasCardBeenUsed = true;
     }
 
