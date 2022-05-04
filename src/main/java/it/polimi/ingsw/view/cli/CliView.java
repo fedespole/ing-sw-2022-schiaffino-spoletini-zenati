@@ -43,20 +43,24 @@ public class CliView extends View {
     @Override
     public void update(NotifyExceptionEvent event) {
 
-        if (event.getException() instanceof InvalidUserNameException) {
-            System.err.println("> Username already chosen");
-            try{
-                Thread.currentThread().sleep(1000);
-            }catch(InterruptedException e){
-                e.printStackTrace();
+        // If client doesn't have owner at this stage, it means that has caused InvalidUserNameException
+        if(getData().getOwner()==null) {
+
+            if (event.getException() instanceof InvalidUserNameException) {
+                System.err.println("> Username already chosen");
+                try {
+                    Thread.currentThread().sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                setup();
             }
-            setup();
+        }
+        // Notifies only player that caused exception
+        else if(getData().getOwner().equals(getData().getCurrPlayer())) {
+
         }
 
-       /* // Notifies only player that caused exception
-        if(getData().getOwner().equals(getData().getCurrPlayer())) {
-
-        }*/
     }
 
     @Override
@@ -166,7 +170,7 @@ public class CliView extends View {
             }
         }
         else {
-            System.out.println(getData().getOwner().getUsername() + "'s turn");
+            System.out.println("Other player's turn");
         }
     }
 
