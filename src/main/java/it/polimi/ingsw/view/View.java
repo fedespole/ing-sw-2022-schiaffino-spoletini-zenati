@@ -31,12 +31,9 @@ public abstract class View implements EventListener {
     }
 
     public void update(UpdatedDataEvent event){
-        Player owner = data.getOwner();
-        data = event.getViewData();
-        for(Player player:data.getPlayers()){
-            if(player.equals(owner))
-                data.setOwner(player);//viewData has owner== null
-        }
+        Player owner = this.data.getOwner();
+        this.data=event.getViewData();
+        this.data.setOwner(owner);
     }
 
     public void update(VictoryEvent event){

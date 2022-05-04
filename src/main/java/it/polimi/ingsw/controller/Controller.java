@@ -45,22 +45,24 @@ public class Controller implements EventListener {
 
 
     public void update(PlayerAccessEvent event) {
-        checkSetUpPhase();
-        for (Player player : game.getPlayers()) {
-            if (player.getUsername().equals(event.getUsername())) {
-                GameHandler.calls(new NotifyExceptionEvent(this, new InvalidUserNameException(event.getClient())));
-                return;
+        if (game.getStatusGame().getStatus().equals(STATUS.SETUP)) {
+            checkSetUpPhase();
+            for (Player player : game.getPlayers()) {
+                if (player.getUsername().equals(event.getUsername())) {
+                    GameHandler.calls(new NotifyExceptionEvent(this, new InvalidUserNameException(event.getClient())));
+                    return;
+                }
             }
-        }
-        Player newPlayer = new Player(event.getUsername());
-        if (getGame().getPlayers().size() != 0)
-            GameHandler.calls(new NewPlayerCreatedEvent(this, newPlayer));
-        else
-            GameHandler.calls(new RequestNumPlayersEvent(this, newPlayer));
-        game.getPlayers().add(newPlayer);
-        if (getGame().getPlayers().size() == getGame().getNumPlayers()) {
-            game.setUp();
-            GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
+            Player newPlayer = new Player(event.getUsername());
+            if (getGame().getPlayers().size() != 0)
+                GameHandler.calls(new NewPlayerCreatedEvent(this, newPlayer));
+            else
+                GameHandler.calls(new RequestNumPlayersEvent(this, newPlayer));
+            game.getPlayers().add(newPlayer);
+            if (getGame().getPlayers().size() == getGame().getNumPlayers()) {
+                game.setUp();
+                GameHandler.calls(new UpdatedDataEvent(this, game.getData()));//return updated version of a ViewData object
+            }
         }
     }
 
@@ -334,7 +336,7 @@ public class Controller implements EventListener {
     }
     public void update(ClientDisconnectedEvent event){
         this.disconnectedPlayers.put(event.getPlayer().getUsername(),false);
-        System.out.print("DISCONNECTED:"+event.getPlayer().getUsername()+" "+this.disconnectedPlayers.get(event.getPlayer().getUsername()));
+        System.out.println("DISCONNECTED:"+event.getPlayer().getUsername()+" "+this.disconnectedPlayers.get(event.getPlayer().getUsername()));
     }
     private void checkAbility(Character c) {
         //checks if a card has been used in this turn
