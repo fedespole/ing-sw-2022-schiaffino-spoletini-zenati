@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.client;
 
+import it.polimi.ingsw.common.ANSIcolors.ANSI;
 import it.polimi.ingsw.common.events.*;
 import it.polimi.ingsw.common.events.GameHandler;
 import it.polimi.ingsw.network.SocketReader;
@@ -11,7 +12,9 @@ import it.polimi.ingsw.view.gui.GuiView;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.ConnectException;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -25,7 +28,12 @@ public class Client implements Runnable {
     View view;
 
     public Client(String ip, int port, int chosenView) throws IOException {
-        socket = new Socket(ip, port);
+        try{
+            socket = new Socket(ip, port);
+        }catch(UnknownHostException| ConnectException e){
+            System.out.println(ANSI.RED + "> The connection to the server failed, please try again" + ANSI.RESET);
+            Client.main(null);
+        }
 
         clientEvs = new LinkedBlockingQueue<>();
         serverEvs = new LinkedBlockingQueue<>();
@@ -42,7 +50,7 @@ public class Client implements Runnable {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 GameEvent currEvent = serverEvs.take();
-                System.out.println("arriva evento" + currEvent);
+                System.out.println(ANSI.PURPLE + "Arriva evento: " + currEvent + ANSI.RESET);
                 GameHandler.calls(currEvent);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
@@ -65,20 +73,20 @@ public class Client implements Runnable {
     public static void main(String[] args) throws IOException {
         Scanner in = new Scanner(System.in);
         System.out.println("> Insert the server IP address");
-        System.out.print("> ");
+        System.out.print(ANSI.GREEN +  "> " + ANSI.RESET);
         String ip = in.nextLine();
         System.out.println("> Insert the server port");
-        System.out.print("> ");
+        System.out.print(ANSI.GREEN +  "> " + ANSI.RESET);
         int port = in.nextInt();
         System.out.println("> Choose an Interface");
-
-        System.out.println(" Type CLI or GUI:");
-        System.out.print("> ");
+        System.out.println("   -CLI");
+        System.out.println("   -GUI");
+        System.out.print(ANSI.GREEN +  "> " + ANSI.RESET);
 
         Scanner scanner = new Scanner(System.in);
         while(true){
             String choice = scanner.nextLine();
-            choice.toLowerCase();
+            choice = choice.toLowerCase();
             switch (choice) {
                 case "cli" : {
                     Client client = new Client(ip, port, 0);
@@ -91,8 +99,8 @@ public class Client implements Runnable {
                     break;
                 }
                 default : {
-                    System.err.println("> Please type a valid interface");
-                    System.err.print("> ");
+                    System.out.println(ANSI.RED + "> Please type a valid interface" + ANSI.RESET);
+                    System.out.print(ANSI.GREEN+  "> " + ANSI.RESET);
                 }
             }
         }

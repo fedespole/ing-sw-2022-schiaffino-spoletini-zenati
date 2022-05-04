@@ -57,7 +57,7 @@ public class CliView extends View {
         // Notifies only player that caused exception
         else if(getData().getOwner()!=null && getData().getOwner().equals(getData().getCurrPlayer())) {
 
-           // if(event.getException() instanceof )
+            // if(event.getException() instanceof )
 
         }
 
@@ -100,8 +100,8 @@ public class CliView extends View {
                 this.client.getClientEvs().add(new SelectedGameSetUpEvent(this.getData().getOwner(), numPlayers, true));
             }
             else {
-                    in.reset();
-                    System.out.println("Invalid game mode");
+                in.reset();
+                System.out.println("Invalid game mode");
             }
             System.out.println("Waiting for other " + (numPlayers-1) + " player(s) to join, " + input + " selected...");
         }
@@ -178,7 +178,7 @@ public class CliView extends View {
             }
         }
         else {
-            System.out.println("Other player's turn");
+            System.out.println(getData().getOwner().getUsername() + "'s turn");
         }
     }
 
@@ -216,8 +216,8 @@ public class CliView extends View {
                 if(island.getTower()!=null)
                     System.out.println("TOWER PRESENT: "+ island.getTower().getColor());
             }
-        if(getData().getMotherNature()==i)
-            System.out.println("MOTHER NATURE PRESENT HERE");
+            if(getData().getMotherNature()==i)
+                System.out.println("MOTHER NATURE PRESENT HERE");
         }
         System.out.println("--------------------------");
         System.out.println("CLOUDS");
