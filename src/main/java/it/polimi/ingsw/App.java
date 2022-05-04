@@ -5,7 +5,7 @@ import it.polimi.ingsw.network.server.Server;
 
 import java.io.IOException;
 import java.util.Scanner;
-
+import it.polimi.ingsw.common.ANSIcolors.ANSI;
 /**
  * Hello world!
  *
@@ -14,14 +14,13 @@ public class App {
 
     public static void main( String[] args ) throws IOException {
 
-        System.out.println( "Eryantis" );
-        System.out.println( "> Type server or client: " );
-        System.out.print( "> " );
-
+        System.out.println(ANSI.CYAN_BOLD+  "Welcome to Eryantis!" + ANSI.RESET);
+        System.out.println( "> Type Server or Client: ");
+        System.out.print(ANSI.GREEN+  "> " + ANSI.RESET);
         Scanner scanner = new Scanner(System.in);
         while(true) {
             String cmd = scanner.nextLine();
-            cmd.toLowerCase();
+            cmd = cmd.toLowerCase();
             switch(cmd){
                 case "server" : {
                     Server.main(null);
@@ -32,7 +31,8 @@ public class App {
                     break;
                 }
                 default : {
-                    System.err.println("> Please enter a correct input.");
+                    System.out.println(ANSI.RED+ "> Please enter a correct input." + ANSI.RESET);
+                    System.out.print(ANSI.GREEN+  "> " + ANSI.RESET);
                 }
             }
 
