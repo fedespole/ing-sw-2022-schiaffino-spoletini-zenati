@@ -4,6 +4,7 @@ import it.polimi.ingsw.common.events.*;
 import it.polimi.ingsw.common.events.fromClientEvents.*;
 import it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.*;
 import it.polimi.ingsw.common.events.fromServerEvents.NewPlayerCreatedEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
 import it.polimi.ingsw.common.exceptions.*;
@@ -45,8 +46,10 @@ public class Controller implements EventListener {
     public void update(PlayerAccessEvent event) {
         checkSetUpPhase();
         for (Player player : game.getPlayers()) {
-            if (player.getUsername().equals(event.getUsername()))
-                throw new InvalidUserNameException();
+            if (player.getUsername().equals(event.getUsername())) {
+                GameHandler.calls(new NotifyExceptionEvent(this, new InvalidUserNameException()));
+                return;
+            }
         }
         Player newPlayer = new Player(event.getUsername());
         if (getGame().getPlayers().size() != 0)

@@ -5,6 +5,7 @@ import it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.NewPlayerCreatedEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
+import it.polimi.ingsw.common.exceptions.InvalidUserNameException;
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.network.client.Client;
@@ -41,12 +42,21 @@ public class CliView extends View {
 
     @Override
     public void update(NotifyExceptionEvent event) {
-        switch (event.getException().toString()) {
-            case "InvalidUserNameException": {
-                System.err.println("> Username already chosen");
-                setup();
+
+        if (event.getException() instanceof InvalidUserNameException) {
+            System.err.println("> Username already chosen");
+            try{
+                Thread.currentThread().sleep(1000);
+            }catch(InterruptedException e){
+                e.printStackTrace();
             }
+            setup();
         }
+
+       /* // Notifies only player that caused exception
+        if(getData().getOwner().equals(getData().getCurrPlayer())) {
+
+        }*/
     }
 
     @Override
@@ -77,24 +87,25 @@ public class CliView extends View {
             } else if (input.equals("expertgame")) {
                 this.client.getClientEvs().add(new SelectedGameSetUpEvent(this.getData().getOwner(), numPlayers, true));
             }
-                else {  //   per ora rompeva, nun me va ora di pensarci
+            else {
                     in.reset();
                     System.out.println("Invalid game mode");
-                }
+            }
+            System.out.println("Waiting for other " + (numPlayers-1) + " player(s) to join, " + input + " selected...");
         }
     }
 
     @Override//TODO CHECK ALL THE INPUTS
     public void update(UpdatedDataEvent event) {
         super.update(event);
+        // Printing an updated game board
         printTable();
-        //stampare una board aggiornata in qualche modo
         if (getData().getOwner().equals(getData().getCurrPlayer())) {
+            // Printing only the currPlayer items
             printOwnBoard();
             String input;
             if (getData().getStatusGame().getStatus().equals(STATUS.PLANNING)) {
                 System.out.println("Draw assistant card from available ");
-                //stampare assistant cards available
                 in.reset();
                 input = in.nextLine();
                 int assistantCard = Integer.parseInt(input);
@@ -125,16 +136,18 @@ public class CliView extends View {
                 in.reset();
                 input = in.nextLine().toLowerCase();
                 switch (input){
-                    case "island":
+                    case "island": {
                         System.out.println("Choose island ");
                         in.reset();
-                        input=in.nextLine();
-                        int island= Integer.parseInt(input);
-                        this.client.getClientEvs().add(new MoveStudentToIslandEvent(this.getData().getOwner(), colorIndex,island));
+                        input = in.nextLine();
+                        int island = Integer.parseInt(input);
+                        this.client.getClientEvs().add(new MoveStudentToIslandEvent(this.getData().getOwner(), colorIndex, island));
                         break;
-                    case "diningroom":
+                    }
+                    case "diningroom": {
                         this.client.getClientEvs().add(new MoveStudentToDiningEvent(this.getData().getOwner(), colorIndex));
                         break;
+                    }
                 }
             }
             else if(getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVEMN)){
@@ -152,7 +165,11 @@ public class CliView extends View {
                 this.client.getClientEvs().add(new ChooseCloudEvent(this.getData().getOwner(),cloud));
             }
         }
+        else {
+            System.out.println(getData().getOwner().getUsername() + "'s turn");
+        }
     }
+
     private void printOwnBoard(){
         System.out.println(getData().getOwner().getUsername()+" TEAM "+getData().getOwner().getTeam());
         System.out.println("ASSISTANT CARDS");
@@ -175,7 +192,7 @@ public class CliView extends View {
 
     }
 
-    private  void printTable(){
+    private void printTable(){
         System.out.println("--------------------------");
         System.out.println("ISLANDS");
         for(int i=0;i<getData().getIslands().size();i++){

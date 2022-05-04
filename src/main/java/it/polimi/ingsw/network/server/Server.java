@@ -38,6 +38,7 @@ public class Server implements Runnable {
         Server server = new Server();
         Thread serverThread = new Thread(server);
         serverThread.start();
+        System.out.println("Waiting for clients to connect...");
     }
 
     public void run() {
