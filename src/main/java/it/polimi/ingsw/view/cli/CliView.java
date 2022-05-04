@@ -2,6 +2,11 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.common.events.fromClientEvents.*;
 import it.polimi.ingsw.common.events.fromServerEvents.*;
+import it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.NewPlayerCreatedEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
+import it.polimi.ingsw.common.exceptions.InvalidUserNameException;
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.network.client.Client;
@@ -32,18 +37,31 @@ public class CliView extends View {
         System.out.println("> Insert your nickname: ");
         System.out.print("> ");
         username = in.nextLine();
-        this.client.getClientEvs().add(new PlayerAccessEvent(this, username));
+        this.client.getClientEvs().add(new PlayerAccessEvent(this, username, this.client.getSocket().toString()));
     }
 
 
     @Override
     public void update(NotifyExceptionEvent event) {
-        switch (event.getException().toString()) {
-            case "InvalidUserNameException": {
+
+        // Checks the client that caused the invalidUserName using only the socket, as owner is set only with NewPlayerCreated
+        if (event.getException() instanceof InvalidUserNameException
+                && ((InvalidUserNameException)event.getException()).getClientThatCausedEx().equals(this.client.getSocket().toString())){
                 System.err.println("> Username already chosen");
+                try {
+                    Thread.currentThread().sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 setup();
-            }
         }
+        // Notifies only player that caused exception
+        else if(getData().getOwner()!=null && getData().getOwner().equals(getData().getCurrPlayer())) {
+
+            // if(event.getException() instanceof )
+
+        }
+
     }
 
     @Override
@@ -52,20 +70,28 @@ public class CliView extends View {
         if (getData().getOwner().equals(event.getPlayer()))
             System.out.println("You have been accepted in the game, you username is : " + getData().getOwner().getUsername());
         else
-            System.out.println("Username " + event.getPlayer().getUsername() + "has been accepted in the game");
+            System.out.println("Username " + event.getPlayer().getUsername() + " has been accepted in the game");
     }
 
     @Override
     public void update(RequestNumPlayersEvent event) {
         super.update(event);
+        int numPlayers;
         if (event.getPlayer().equals(this.getData().getOwner())) {
             String input;
             System.out.println("You are the first player connected, your username is : " + getData().getOwner().getUsername());
             in.reset();
             System.out.println("Choose number of players: 2 or 3 players available");
-            input = in.nextLine();
-            int numPlayers = Integer.parseInt(input);
-            in.reset();
+            while(true) {
+                input = in.nextLine();
+                numPlayers = Integer.parseInt(input);
+                in.reset();
+                if(numPlayers<2 || numPlayers>3){
+                    System.err.println("> Please type a valid number");
+                    System.err.print("> ");
+                }
+                else break;
+            }
             System.out.println("Choose game mode: BasicGame or ExpertGame");
 
             input = in.nextLine().toLowerCase();
@@ -74,10 +100,11 @@ public class CliView extends View {
             } else if (input.equals("expertgame")) {
                 this.client.getClientEvs().add(new SelectedGameSetUpEvent(this.getData().getOwner(), numPlayers, true));
             }
-                else {  //   per ora rompeva, nun me va ora di pensarci
-                    in.reset();
-                    System.out.println("Invalid game mode");
-                }
+            else {
+                in.reset();
+                System.out.println("Invalid game mode");
+            }
+            System.out.println("Waiting for other " + (numPlayers-1) + " player(s) to join, " + input + " selected...");
         }
     }
 
@@ -87,14 +114,14 @@ public class CliView extends View {
     @Override//TODO CHECK ALL THE INPUTS
     public void update(UpdatedDataEvent event) {
         super.update(event);
+        // Printing an updated game board
         printTable();
-        //stampare una board aggiornata in qualche modo
         if (getData().getOwner().equals(getData().getCurrPlayer())) {
+            // Printing only the currPlayer items
             printOwnBoard();
             String input;
             if (getData().getStatusGame().getStatus().equals(STATUS.PLANNING)) {
                 System.out.println("Draw assistant card from available ");
-                //stampare assistant cards available
                 in.reset();
                 input = in.nextLine();
                 int assistantCard = Integer.parseInt(input);
@@ -125,16 +152,19 @@ public class CliView extends View {
                 in.reset();
                 input = in.nextLine().toLowerCase();
                 switch (input){
-                    case "island":
+                    case "island": {
                         System.out.println("Choose island ");
                         in.reset();
-                        input=in.nextLine();
-                        int island= Integer.parseInt(input);
-                        this.client.getClientEvs().add(new MoveStudentToIslandEvent(this.getData().getOwner(), colorIndex,island));
+                        input = in.nextLine();
+                        int island = Integer.parseInt(input);
+                        this.client.getClientEvs().add(new MoveStudentToIslandEvent(this.getData().getOwner(), colorIndex, island));
                         break;
-                    case "diningroom":
+                    }
+                    case "diningroom": {
                         this.client.getClientEvs().add(new MoveStudentToDiningEvent(this.getData().getOwner(), colorIndex));
                         break;
+                    }
+                    default : System.err.println("Wrong choice");
                 }
             }
             else if(getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVEMN)){
@@ -152,7 +182,11 @@ public class CliView extends View {
                 this.client.getClientEvs().add(new ChooseCloudEvent(this.getData().getOwner(),cloud));
             }
         }
+        else {
+            System.out.println(getData().getOwner().getUsername() + "'s turn");
+        }
     }
+
     private void printOwnBoard(){
         System.out.println(getData().getOwner().getUsername()+" TEAM "+getData().getOwner().getTeam());
         System.out.println("ASSISTANT CARDS");
@@ -175,7 +209,7 @@ public class CliView extends View {
 
     }
 
-    private  void printTable(){
+    private void printTable(){
         System.out.println("--------------------------");
         System.out.println("ISLANDS");
         for(int i=0;i<getData().getIslands().size();i++){
@@ -187,8 +221,8 @@ public class CliView extends View {
                 if(island.getTower()!=null)
                     System.out.println("TOWER PRESENT: "+ island.getTower().getColor());
             }
-        if(getData().getMotherNature()==i)
-            System.out.println("MOTHER NATURE PRESENT HERE");
+            if(getData().getMotherNature()==i)
+                System.out.println("MOTHER NATURE PRESENT HERE");
         }
         System.out.println("--------------------------");
         System.out.println("CLOUDS");

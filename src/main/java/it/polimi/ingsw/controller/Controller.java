@@ -4,6 +4,7 @@ import it.polimi.ingsw.common.events.*;
 import it.polimi.ingsw.common.events.fromClientEvents.*;
 import it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.*;
 import it.polimi.ingsw.common.events.fromServerEvents.NewPlayerCreatedEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
 import it.polimi.ingsw.common.exceptions.*;
@@ -20,7 +21,6 @@ import it.polimi.ingsw.model.expertgame.gamemodes.GameMode2;
 import it.polimi.ingsw.model.expertgame.gamemodes.GameMode6;
 import it.polimi.ingsw.model.expertgame.gamemodes.GameMode8;
 import it.polimi.ingsw.model.expertgame.gamemodes.GameMode9;
-import it.polimi.ingsw.view.ViewData;
 
 import java.util.*;
 
@@ -47,8 +47,10 @@ public class Controller implements EventListener {
     public void update(PlayerAccessEvent event) {
         checkSetUpPhase();
         for (Player player : game.getPlayers()) {
-            if (player.getUsername().equals(event.getUsername()))
-                throw new InvalidUserNameException();
+            if (player.getUsername().equals(event.getUsername())) {
+                GameHandler.calls(new NotifyExceptionEvent(this, new InvalidUserNameException(event.getClient())));
+                return;
+            }
         }
         Player newPlayer = new Player(event.getUsername());
         if (getGame().getPlayers().size() != 0)
@@ -65,9 +67,6 @@ public class Controller implements EventListener {
     public void update(SelectedGameSetUpEvent event){
         checkSetUpPhase();
 
-        if(event.getNumPlayers()<2 || event.getNumPlayers()>3){
-            throw new InvalidNumPlayersException();
-        }
         getGame().setNumPlayers(event.getNumPlayers());
         if (event.isExpert()) {
             game = new ConcreteExpertGame(game);
@@ -78,7 +77,7 @@ public class Controller implements EventListener {
         int chosenValue = event.getValue();
 
         if (chosenValue < 1 || chosenValue > 10)
-            throw new OutOfBoundCardSelectionException();
+            GameHandler.calls(new NotifyExceptionEvent(this, new OutOfBoundCardSelectionException()));
 
         checkPlanningPhase();
 
@@ -94,13 +93,13 @@ public class Controller implements EventListener {
         }
         boolean allowedToPutIt = deck.getCards().containsAll(cards) && cards.size() == deck.getCards().size(); //my deck has only cards that were played
         if(!allowedToPutIt && alreadyUsedCard)
-            throw new AlreadyUsedCardException();
+            GameHandler.calls(new NotifyExceptionEvent(this, new AlreadyUsedCardException()));
 
         try {
             game.chooseCard(chosenValue);
             GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
         } catch (NotAvailableCardException e) {
-            throw new NotAvailableCardException();
+            GameHandler.calls(new NotifyExceptionEvent(this, e));
         }
         checkDisconnection();
     }
@@ -111,15 +110,15 @@ public class Controller implements EventListener {
     //    if (!((Player)event.getSource()).equals(game.getCurrPlayer()))
    //         throw new InvalidPlayerException();
         if (event.getColorIndex() < 0)
-            throw new InvalidColorException();
+            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidColorException()));
         if (game.getCurrPlayer().getMySchoolBoard().getDiningRoom()[event.getColorIndex()].size() >= 10) {
-            throw new NoMoreSpaceException();
+            GameHandler.calls(new NotifyExceptionEvent(this, new NoMoreSpaceException()));
         }
         try {
             game.moveStudentFromEntranceToDining(COLOR.values()[event.getColorIndex()]);
             GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
         } catch (StudentNotPresentException e) {
-            throw new StudentNotPresentException();
+            GameHandler.calls(new NotifyExceptionEvent(this, e));
         }
         numOfMoveStudent++;
         if(((numOfMoveStudent==3) && getGame().getNumPlayers()==2) || ((numOfMoveStudent==4) && getGame().getNumPlayers()==3)){
@@ -134,14 +133,14 @@ public class Controller implements EventListener {
      //   if (!event.getSource().equals(game.getCurrPlayer()))
  //           throw new InvalidPlayerException();
         if (event.getIslandIndex() < 0 || event.getIslandIndex() > game.getIslands().size())
-            throw new InvalidIslandIndexException();
+            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidIslandIndexException()));
         if (event.getColorIndex() < 0 || event.getColorIndex() > COLOR.values().length)
-            throw new InvalidColorException();
+            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidColorException()));
         try {
             game.moveStudentFromEntranceToIsland(COLOR.values()[event.getColorIndex()], game.getIslands().get(event.getIslandIndex()).get(0));
             GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
         } catch (StudentNotPresentException e) {
-            throw new StudentNotPresentException();
+            GameHandler.calls(new NotifyExceptionEvent(this, e));
         }
         numOfMoveStudent++;
         if(((numOfMoveStudent==3) && getGame().getNumPlayers()==2) || ((numOfMoveStudent==4) && getGame().getNumPlayers()==3)){
@@ -155,7 +154,7 @@ public class Controller implements EventListener {
     //    if (!event.getSource().equals(game.getCurrPlayer()))
      //       throw new InvalidPlayerException();
         if (event.getIndex() < 0 || event.getIndex() > game.getCurrPlayer().getChosenCard().getSteps())
-            throw new InvalidStepsException();
+            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidStepsException()));
         game.moveMother(event.getIndex());
         GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
     }
@@ -165,7 +164,7 @@ public class Controller implements EventListener {
         //        if (!event.getSource().equals(game.getCurrPlayer()))
        //     throw new InvalidPlayerException();
         if (event.getIndex() < 0 || event.getIndex() >= game.getClouds().size())
-            throw new InvalidCloudIndexException();
+            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidCloudIndexException()));
         game.chooseCloud(event.getIndex());
         GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
         if ((game instanceof GameMode2) || (game instanceof GameMode6) || (game instanceof GameMode8) || (game instanceof GameMode9)) {
@@ -183,7 +182,7 @@ public class Controller implements EventListener {
                 return;
             }
         }
-        throw new InvalidCharacterException();
+        GameHandler.calls(new NotifyExceptionEvent(this, new InvalidCharacterException()));
     }
 
     public void update(UseCharacter2Event event) {
@@ -195,7 +194,7 @@ public class Controller implements EventListener {
                 return;
             }
         }
-        throw new InvalidCharacterException();
+        GameHandler.calls(new NotifyExceptionEvent(this, new InvalidCharacterException()));
     }
 
     public void update(UseCharacter3Event event) {
@@ -208,7 +207,7 @@ public class Controller implements EventListener {
                 return;
             }
         }
-        throw new InvalidCharacterException();
+        GameHandler.calls(new NotifyExceptionEvent(this, new InvalidCharacterException()));
     }
 
     public void update(UseCharacter4Event event) {
@@ -221,7 +220,7 @@ public class Controller implements EventListener {
                 return;
             }
         }
-        throw new InvalidCharacterException();
+        GameHandler.calls(new NotifyExceptionEvent(this, new InvalidCharacterException()));
     }
 
     public void update(UseCharacter5Event event) {
@@ -234,7 +233,7 @@ public class Controller implements EventListener {
                 return;
             }
         }
-        throw new InvalidCharacterException();
+        GameHandler.calls(new NotifyExceptionEvent(this, new InvalidCharacterException()));
     }
 
     public void update(UseCharacter6Event event) {
@@ -246,7 +245,7 @@ public class Controller implements EventListener {
                 return;
             }
         }
-        throw new InvalidCharacterException();
+        GameHandler.calls(new NotifyExceptionEvent(this, new InvalidCharacterException()));
     }
 
     public void update(UseCharacter7Event event) {
@@ -263,7 +262,7 @@ public class Controller implements EventListener {
                 return;
             }
         }
-        throw new InvalidCharacterException();
+        GameHandler.calls(new NotifyExceptionEvent(this, new InvalidCharacterException()));
     }
 
     public void update(UseCharacter8Event event) {
@@ -275,7 +274,7 @@ public class Controller implements EventListener {
                 return;
             }
         }
-        throw new InvalidCharacterException();
+        GameHandler.calls(new NotifyExceptionEvent(this, new InvalidCharacterException()));
     }
 
     public void update(UseCharacter9Event event) {
@@ -288,7 +287,7 @@ public class Controller implements EventListener {
                 return;
             }
         }
-        throw new InvalidCharacterException();
+        GameHandler.calls(new NotifyExceptionEvent(this, new InvalidCharacterException()));
     }
 
     public void update(UseCharacter10Event event) {
@@ -305,7 +304,7 @@ public class Controller implements EventListener {
                 return;
             }
         }
-        throw new InvalidCharacterException();
+        GameHandler.calls(new NotifyExceptionEvent(this, new InvalidCharacterException()));
     }
 
     public void update(UseCharacter11Event event) {
@@ -318,7 +317,7 @@ public class Controller implements EventListener {
                 return;
             }
         }
-        throw new InvalidCharacterException();
+        GameHandler.calls(new NotifyExceptionEvent(this, new InvalidCharacterException()));
     }
 
     public void update(UseCharacter12Event event) {
@@ -331,7 +330,7 @@ public class Controller implements EventListener {
                 return;
             }
         }
-        throw new InvalidCharacterException();
+        GameHandler.calls(new NotifyExceptionEvent(this, new InvalidCharacterException()));
     }
     public void update(ClientDisconnectedEvent event){
         this.disconnectedPlayers.put(event.getPlayer().getUsername(),false);
@@ -349,25 +348,25 @@ public class Controller implements EventListener {
 
     private void checkSetUpPhase() {
         if (!game.getStatusGame().getStatus().equals(STATUS.SETUP))
-            throw new InvalidPhaseException();
+            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidPhaseException()));
     }
 
     private void checkPlanningPhase() {
         if (!game.getStatusGame().getStatus().equals(STATUS.PLANNING))
-            throw new InvalidPhaseException();
+            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidPhaseException()));
     }
 
     private void checkActionMoveStudentPhase() {
         if (!game.getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD))
-            throw new InvalidPhaseException();
+            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidPhaseException()));
     }
     private void checkActionMoveMotherPhase() {
         if (!game.getStatusGame().getStatus().equals(STATUS.ACTION_MOVEMN))
-            throw new InvalidPhaseException();
+            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidPhaseException()));
     }
     private void checkActionChooseCloudPhase(){
         if (!game.getStatusGame().getStatus().equals(STATUS.ACTION_CHOOSECLOUD))
-            throw new InvalidPhaseException();
+            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidPhaseException()));
     }
 
     private void checkDisconnection() {
