@@ -1,5 +1,7 @@
 package it.polimi.ingsw.common.ANSIcolors;
 
+import it.polimi.ingsw.model.basicgame.COLOR;
+
 public class ANSI {
     // Reset
     public static final String RESET = "\033[0m";  // Text Reset
@@ -63,4 +65,22 @@ public class ANSI {
     public static final String PURPLE_BOLD_BRIGHT = "\033[1;95m";// PURPLE
     public static final String CYAN_BOLD_BRIGHT = "\033[1;96m";  // CYAN
     public static final String WHITE_BOLD_BRIGHT = "\033[1;97m"; // WHITE
+
+    public static void writeTitle(String s){
+        System.out.println(CYAN + s + RESET);
+    }
+
+    public static void writeInColor(COLOR color, String s){
+        if(color.toString().equals("GREEN"))
+            System.out.print(GREEN + s + RESET);
+        if (color.toString().equals("RED"))
+            System.out.print(RED + s + RESET);
+        if(color.toString().equals("PINK"))
+            System.out.print(PURPLE + s + RESET);
+        if(color.toString().equals("BLUE"))
+        System.out.print(BLUE + s + RESET);
+        if(color.toString().equals("YELLOW"))
+        System.out.print(YELLOW + s + RESET);
+    }
+
 }

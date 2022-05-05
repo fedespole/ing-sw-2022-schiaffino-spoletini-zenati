@@ -14,6 +14,7 @@ import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.view.View;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -194,11 +195,7 @@ public class CliView extends View {
 
     private void moveStudent(){
         System.out.println("> Choose the color of the student to move from entrance:");
-        System.out.println("   -Green ");
-        System.out.println("   -Red ");
-        System.out.println("   -Yellow ");
-        System.out.println("   -Pink ");
-        System.out.println("   -Blue ");
+        System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
         in.reset();
         String input;
         int colorIndex=-1;
@@ -270,6 +267,7 @@ public class CliView extends View {
     private void moveMother(){
         int motherNature = 0;
         System.out.println("> Choose number of jumps of mother nature");
+        System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
         while(true){
             in.reset();
             String input = in.nextLine();
@@ -288,6 +286,7 @@ public class CliView extends View {
         int cloud = 0;
         String input;
         System.out.println("> Choose cloud");
+        System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
         while (true) {
             in.reset();
             input = in.nextLine();
@@ -308,49 +307,55 @@ public class CliView extends View {
     }
 
     private void printOwnBoard(){
-        System.out.println(getData().getOwner().getUsername()+" TEAM "+getData().getOwner().getTeam());
-        System.out.println("ASSISTANT CARDS");
+        ANSI.writeTitle(getData().getOwner().getUsername()+" TEAM "+getData().getOwner().getTeam());
+        ANSI.writeTitle("ASSISTANT CARDS");
         for(AssistantCard assistantCard:getData().getOwner().getMyDeck().getCards()){
-            System.out.print(assistantCard.getValue()+"---");
+            System.out.print(assistantCard.getValue()+"   ");
         }
-        System.out.print("\nSTUDENTS IN ENTRANCE\n");
+        ANSI.writeTitle("\nSTUDENTS IN ENTRANCE: ");
         for(Student student:getData().getOwner().getMySchoolBoard().getEntrance()){
-            System.out.print(student.getColor()+"---");
+            ANSI.writeInColor(student.getColor(),student.getColor()+"   ");
         }
-        System.out.print("\nSTUDENTS IN DINING ROOM\n");
+        ANSI.writeTitle("\nSTUDENTS IN DINING ROOM");
         for(int i=0;i<5;i++){
-            System.out.println(Arrays.stream(COLOR.values()).toArray()[i]+" "+getData().getOwner().getMySchoolBoard().getDiningRoom()[i].size());
+            ANSI.writeInColor(COLOR.values()[i], "  -" + COLOR.values()[i].toString() + ": " );
+            System.out.print(getData().getOwner().getMySchoolBoard().getDiningRoom()[i].size());
             for(Professor professor:getData().getOwner().getMySchoolBoard().getProfessors()){
                 if(professor.getColor().equals(Arrays.stream(COLOR.values()).toArray()[i]))
-                    System.out.println(professor.getColor()+" PROFESSOR PRESENT");
+                    ANSI.writeInColor(professor.getColor(),"   " + professor.getColor()+" PROFESSOR HERE ");
             }
+            System.out.println("");
         }
-        System.out.println("TOWERS\n"+getData().getOwner().getMySchoolBoard().getTowers().size());
+        ANSI.writeTitle("TOWERS: " + getData().getOwner().getMySchoolBoard().getTowers().size());
 
     }
 
     private void printTable(){
-        System.out.println("--------------------------");
-        System.out.println("ISLANDS");
+        System.out.println("--------------------------------------------------------------------------------------------------------------");
+        ANSI.writeTitle("ISLANDS");
         for(int i=0;i<getData().getIslands().size();i++){
-            System.out.println("ISLAND NUMBER "+i);
+            System.out.print("Island "+i + ": ");
             for(Island island: getData().getIslands().get(i)){
                 for(Student student:island.getStudents())
-                    System.out.print(student.getColor()+"---");
-                System.out.print("\n");
+                    ANSI.writeInColor(student.getColor(), student.getColor()+"   ");
                 if(island.getTower()!=null)
-                    System.out.println("TOWER PRESENT: "+ island.getTower().getColor());
+                    System.out.println("Tower team: "+ island.getTower().getColor());
             }
             if(getData().getMotherNature()==i)
-                System.out.println("MOTHER NATURE PRESENT HERE");
+                System.out.println( "  " + ANSI.WHITE_UNDERLINED + "MOTHER NATURE PRESENT HERE" + ANSI.RESET);
+            else
+                System.out.println("");
         }
-        System.out.println("--------------------------");
-        System.out.println("CLOUDS");
-        for(Cloud cloud:getData().getClouds()){
-            for(Student student:cloud.getStudents())
-                System.out.print(student.getColor()+"---");
+        System.out.println("--------------------------------------------------------------------------------------------------------------");
+        ANSI.writeTitle("CLOUDS");
+        ArrayList<Cloud> clouds = getData().getClouds();
+        for (int i = 0, cloudsSize = clouds.size(); i < cloudsSize; i++) {
+            Cloud cloud = clouds.get(i);
+            System.out.print("Cloud "+ i + ": ");
+            for (Student student : cloud.getStudents())
+                ANSI.writeInColor(student.getColor(),student.getColor() + "   ");
             System.out.print("\n");
         }
-        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
     }
 }
