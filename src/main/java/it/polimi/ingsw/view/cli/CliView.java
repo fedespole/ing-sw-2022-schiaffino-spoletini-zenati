@@ -168,7 +168,9 @@ public class CliView extends View {
     @Override
     public void update(VictoryEvent event){
         if(event.getWinningPlayer().equals(this.getOwner()))
-            System.out.println("YOU WON");
+            System.out.println(ANSI.PURPLE+"You won!"+ANSI.RESET);
+        else
+            System.out.println(ANSI.PURPLE+"Player "+ event.getWinningPlayer() +" won"+ANSI.RESET);
     }
     private void drawAssistantCard() {
         java.lang.String input;
