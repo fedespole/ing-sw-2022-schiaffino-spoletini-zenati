@@ -1,7 +1,5 @@
 package it.polimi.ingsw.common.exceptions;
 
-import it.polimi.ingsw.network.client.Client;
-
 public class InvalidUserNameException extends RuntimeException{
     private final String clientThatCausedEx;
 

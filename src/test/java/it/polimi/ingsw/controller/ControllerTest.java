@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ControllerTest {
-/*
+
     private Controller controller;
 
     @BeforeEach
@@ -31,7 +31,7 @@ public class ControllerTest {
     }
     @Test
     public void FirstPlayerAccessEventTest(){
-        PlayerAccessEvent event = new PlayerAccessEvent(this, "Host", client);
+        PlayerAccessEvent event = new PlayerAccessEvent(this, "Host", null);
         controller.update(event);
         SelectedGameSetUpEvent event1= new SelectedGameSetUpEvent(this,3,false);
         controller.update(event1);
@@ -40,7 +40,7 @@ public class ControllerTest {
     }
     @Test
     public void ExpertGameFirstPlayerAccessEventTest(){
-        PlayerAccessEvent event = new PlayerAccessEvent(this, "Host", client);
+        PlayerAccessEvent event = new PlayerAccessEvent(this, "Host", null);
         controller.update(event);
         SelectedGameSetUpEvent event1= new SelectedGameSetUpEvent(this,3,true);
         controller.update(event1);
@@ -50,10 +50,10 @@ public class ControllerTest {
     @Test
     public void PlayerAccessEventTest() {
         this.ExpertGameFirstPlayerAccessEventTest();
-        PlayerAccessEvent event = new PlayerAccessEvent(this, "Test1", client);
+        PlayerAccessEvent event = new PlayerAccessEvent(this, "Test1", null);
         controller.update(event);
         assertEquals("Test1", controller.getGame().getPlayers().get(1).getUsername());
-        event = new PlayerAccessEvent(this, "Test2", client);
+        event = new PlayerAccessEvent(this, "Test2", null);
         controller.update(event);
         assertEquals("Test2", controller.getGame().getPlayers().get(2).getUsername());
 
@@ -378,6 +378,4 @@ public class ControllerTest {
             }
         }
     }
-    
- */
 }

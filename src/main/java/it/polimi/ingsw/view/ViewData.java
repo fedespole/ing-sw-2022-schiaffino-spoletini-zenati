@@ -38,6 +38,10 @@ public class ViewData implements Serializable {
         //owner == null when we send a viewData to View
     }
 
+    public int getNumPlayers() {
+        return numPlayers;
+    }
+
     public Player getOwner() {
         return owner;
     }

@@ -43,7 +43,6 @@ public class Controller implements EventListener {
         return game;
     }
 
-
     public void update(PlayerAccessEvent event) {
         if (game.getStatusGame().getStatus().equals(STATUS.SETUP)) {
             checkSetUpPhase();
@@ -78,9 +77,6 @@ public class Controller implements EventListener {
     public void update(DrawAssistantCardEvent event) {
         int chosenValue = event.getValue();
 
-        if (chosenValue < 1 || chosenValue > 10)
-            GameHandler.calls(new NotifyExceptionEvent(this, new OutOfBoundCardSelectionException()));
-
         checkPlanningPhase();
 
         boolean alreadyUsedCard = false;
@@ -94,33 +90,35 @@ public class Controller implements EventListener {
                 alreadyUsedCard = true;
         }
         boolean allowedToPutIt = deck.getCards().containsAll(cards) && cards.size() == deck.getCards().size(); //my deck has only cards that were played
-        if(!allowedToPutIt && alreadyUsedCard)
+        if(!allowedToPutIt && alreadyUsedCard) {
             GameHandler.calls(new NotifyExceptionEvent(this, new AlreadyUsedCardException()));
+            return;
+        }
 
         try {
             game.chooseCard(chosenValue);
             GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
         } catch (NotAvailableCardException e) {
             GameHandler.calls(new NotifyExceptionEvent(this, e));
+            return;
         }
         checkDisconnection();
     }
-
 
     public void update(MoveStudentToDiningEvent event) {
         checkActionMoveStudentPhase();
     //    if (!((Player)event.getSource()).equals(game.getCurrPlayer()))
    //         throw new InvalidPlayerException();
-        if (event.getColorIndex() < 0)
-            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidColorException()));
         if (game.getCurrPlayer().getMySchoolBoard().getDiningRoom()[event.getColorIndex()].size() >= 10) {
             GameHandler.calls(new NotifyExceptionEvent(this, new NoMoreSpaceException()));
+            return;
         }
         try {
             game.moveStudentFromEntranceToDining(COLOR.values()[event.getColorIndex()]);
             GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
         } catch (StudentNotPresentException e) {
             GameHandler.calls(new NotifyExceptionEvent(this, e));
+            return;
         }
         numOfMoveStudent++;
         if(((numOfMoveStudent==3) && getGame().getNumPlayers()==2) || ((numOfMoveStudent==4) && getGame().getNumPlayers()==3)){
@@ -134,15 +132,16 @@ public class Controller implements EventListener {
         checkActionMoveStudentPhase();
      //   if (!event.getSource().equals(game.getCurrPlayer()))
  //           throw new InvalidPlayerException();
-        if (event.getIslandIndex() < 0 || event.getIslandIndex() > game.getIslands().size())
+        if (event.getIslandIndex() < 0 || event.getIslandIndex() > game.getIslands().size()) {
             GameHandler.calls(new NotifyExceptionEvent(this, new InvalidIslandIndexException()));
-        if (event.getColorIndex() < 0 || event.getColorIndex() > COLOR.values().length)
-            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidColorException()));
+            return;
+        }
         try {
             game.moveStudentFromEntranceToIsland(COLOR.values()[event.getColorIndex()], game.getIslands().get(event.getIslandIndex()).get(0));
             GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
         } catch (StudentNotPresentException e) {
             GameHandler.calls(new NotifyExceptionEvent(this, e));
+            return;
         }
         numOfMoveStudent++;
         if(((numOfMoveStudent==3) && getGame().getNumPlayers()==2) || ((numOfMoveStudent==4) && getGame().getNumPlayers()==3)){
@@ -155,8 +154,10 @@ public class Controller implements EventListener {
         checkActionMoveMotherPhase();
     //    if (!event.getSource().equals(game.getCurrPlayer()))
      //       throw new InvalidPlayerException();
-        if (event.getIndex() < 0 || event.getIndex() > game.getCurrPlayer().getChosenCard().getSteps())
+        if (event.getIndex() < 0 || event.getIndex() > game.getCurrPlayer().getChosenCard().getSteps()) {
             GameHandler.calls(new NotifyExceptionEvent(this, new InvalidStepsException()));
+            return;
+        }
         game.moveMother(event.getIndex());
         GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
     }
@@ -165,8 +166,6 @@ public class Controller implements EventListener {
         checkActionChooseCloudPhase();
         //        if (!event.getSource().equals(game.getCurrPlayer()))
        //     throw new InvalidPlayerException();
-        if (event.getIndex() < 0 || event.getIndex() >= game.getClouds().size())
-            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidCloudIndexException()));
         game.chooseCloud(event.getIndex());
         GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
         if ((game instanceof GameMode2) || (game instanceof GameMode6) || (game instanceof GameMode8) || (game instanceof GameMode9)) {
@@ -340,11 +339,15 @@ public class Controller implements EventListener {
     }
     private void checkAbility(Character c) {
         //checks if a card has been used in this turn
-        if (hasCardBeenUsed)
+        if (hasCardBeenUsed) {
             GameHandler.calls(new NotifyExceptionEvent(this, new AbilityAlreadyUsedException()));
+            return;
+        }
         //check if the player can pay the character
-        if (game.getCurrPlayer().getCoins() < c.getCost())
+        if (game.getCurrPlayer().getCoins() < c.getCost()){
             GameHandler.calls(new NotifyExceptionEvent(this, new TooPoorException()));
+            return;
+        }
         this.hasCardBeenUsed = true;
     }
 

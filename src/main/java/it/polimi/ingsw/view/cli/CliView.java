@@ -7,14 +7,13 @@ import it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.NewPlayerCreatedEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
-import it.polimi.ingsw.common.exceptions.InvalidUserNameException;
+import it.polimi.ingsw.common.exceptions.*;
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.view.View;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -22,14 +21,12 @@ public class CliView extends View {
 
     private final Scanner in;
     private final PrintStream out;
-    private boolean activeGame;
     private final Client client;
 
     public CliView(Client client) {
         this.client = client;
         in = new Scanner(System.in);
         out = new PrintStream(System.out);
-        activeGame = true;
         setup();
     }
 
@@ -49,18 +46,39 @@ public class CliView extends View {
         if (event.getException() instanceof InvalidUserNameException
                 && ((InvalidUserNameException)event.getException()).getClientThatCausedEx().equals(this.client.getSocket().toString())){
             System.out.println(ANSI.RED + "> Username already chosen" + ANSI.RESET);
-                try {
-                    Thread.currentThread().sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                setup();
+            try {
+                Thread.currentThread().sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            setup();
         }
         // Notifies only player that caused exception
         else if(getData().getOwner()!=null && getData().getOwner().equals(getData().getCurrPlayer())) {
 
-            // if(event.getException() instanceof )
-
+            if(event.getException() instanceof AlreadyUsedCardException || event.getException() instanceof NotAvailableCardException) {
+                System.out.println(ANSI.RED + "> Card already drawn" + ANSI.RESET);
+                drawAssistantCard();
+            }
+            else if(event.getException() instanceof StudentNotPresentException){
+                System.out.println(ANSI.RED + "> Student not present in Entrance" + ANSI.RESET);
+                moveStudent();
+            }
+            else if(event.getException() instanceof NoMoreSpaceException){             // Potrebbe essere spacchettata
+                System.out.println(ANSI.RED + "> Dining room of student is already full, redo the move" + ANSI.RESET);
+                moveStudent();
+            }
+            else if(event.getException() instanceof InvalidIslandIndexException){      // Potrebbe essere spacchettata
+                System.out.println(ANSI.RED + "> Island no longer exists, redo the move" + ANSI.RESET);
+                moveStudent();
+            }
+            else if(event.getException() instanceof InvalidStepsException){
+                System.out.println(ANSI.RED + "> Not allowed to move mother nature this much" + ANSI.RESET);
+                moveMother();
+            }
+            else if(event.getException() instanceof InvalidPhaseException || event.getException() instanceof InvalidPlayerException){
+                System.out.println(ANSI.RED + "> Anomaly" + ANSI.RESET);    // Questo non dovrebbe mai capire se cli passiva
+            }
         }
 
     }
@@ -99,15 +117,15 @@ public class CliView extends View {
                 }
                 else break;
             }
-            System.out.println("> Choose the Game Mode: BasicGame or ExpertGame?");
+            System.out.println("> Choose the Game Mode: Basic or Expert?");
             System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
 
             while(true){
                 input = in.nextLine().toLowerCase();
-            if (input.equals("basicgame")) {
+            if (input.equals("basic")) {
                 this.client.getClientEvs().add(new SelectedGameSetUpEvent(this.getData().getOwner(), numPlayers, false));
                 break;
-            } else if (input.equals("expertgame")) {
+            } else if (input.equals("expert")) {
                 this.client.getClientEvs().add(new SelectedGameSetUpEvent(this.getData().getOwner(), numPlayers, true));
                 break;
             }
@@ -125,7 +143,7 @@ public class CliView extends View {
         System.out.println("The game has already started");
     }
 
-    @Override//TODO CHECK ALL THE INPUTS
+    @Override
     public void update(UpdatedDataEvent event) {
         super.update(event);
         // Printing an updated game board
@@ -133,126 +151,160 @@ public class CliView extends View {
         if (getData().getOwner().equals(getData().getCurrPlayer())) {
             // Printing only the currPlayer items
             printOwnBoard();
-            String input;
             if (getData().getStatusGame().getStatus().equals(STATUS.PLANNING)) {
-                System.out.println("> Draw assistant card from those available by typing its value");
-                System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
-                int assistantCard;
-                while (true) {
-                    input = in.nextLine();
-                    try {
-                        assistantCard = Integer.parseInt(input);
-                        break;
-                    } catch (NumberFormatException e) {
-                        System.out.println(ANSI.RED + "> Please type a number" + ANSI.RESET);
-                        System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
-                        in.reset();
-                    }
-                }
-                this.client.getClientEvs().add(new DrawAssistantCardEvent(this.getData().getOwner(), assistantCard));
+                drawAssistantCard();
             } else if (getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)){
-                System.out.println("> Choose the color of the student to move from entrance:");
-                System.out.println("   -Green ");
-                System.out.println("   -Red ");
-                System.out.println("   -Yellow ");
-                System.out.println("   -Pink ");
-                System.out.println("   -Blue ");
-                int colorIndex=-1;
-                while (colorIndex < 0) {
-                    in.reset();
-                    input = in.nextLine().toLowerCase();
-                    switch (input) {
-                        case "green":
-                            colorIndex = COLOR.GREEN.ordinal();
-                            break;
-                        case "red":
-                            colorIndex = COLOR.RED.ordinal();
-                            break;
-                        case "yellow":
-                            colorIndex = COLOR.YELLOW.ordinal();
-                            break;
-                        case "pink":
-                            colorIndex = COLOR.PINK.ordinal();
-                            break;
-                        case "blue":
-                            colorIndex = COLOR.BLUE.ordinal();
-                            break;
-                        default:
-                            System.out.println(ANSI.RED + "> Please type a color from those above" + ANSI.RESET);
-                            System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
-                            in.reset();
-                    }
-                }
-                System.out.println("> Choose destination: Island or DiningRoom");
-                System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
-                boolean thisFlag = false;
-                int island = 0;
-                while(!thisFlag) {
-                    in.reset();
-                    input = in.nextLine().toLowerCase();
-                    switch (input) {
-                        case "island": {
-                            System.out.println("Choose island ");
-                            in.reset();
-                            input = in.nextLine();
-                            try{island = Integer.parseInt(input);
-                            } catch (NumberFormatException e){
-                                System.out.println(ANSI.RED + "> Please type a number" + ANSI.RESET);
-                                System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
-                            }
-                            this.client.getClientEvs().add(new MoveStudentToIslandEvent(this.getData().getOwner(), colorIndex, island));
-                            thisFlag = true;
-                            break;
-                        }
-                        case "diningroom": {
-                            this.client.getClientEvs().add(new MoveStudentToDiningEvent(this.getData().getOwner(), colorIndex));
-                            thisFlag = true;
-                            break;
-                        }
-                        default:
-                            System.out.println(ANSI.RED + "> Please type 'Island' or 'DiningRoom'" + ANSI.RESET);
-                            System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
-                    }
-                }
+                moveStudent();
             }
             else if(getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVEMN)){
-                int motherNature = 0;
-                while(true){
-                in.reset();
-                System.out.println("> Choose number of jumps of mother nature");
-                input = in.nextLine();
-                try{
-                    motherNature= Integer.parseInt(input);
-                    break;
-                }catch(NumberFormatException e){
-                    System.out.println(ANSI.RED + "> Please enter a number" + ANSI.RESET);
-                    System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
-                    }
-                }
-                this.client.getClientEvs().add(new MoveMotherEvent(this.getData().getOwner(),motherNature));
-
+                moveMother();
             }
             else if(getData().getStatusGame().getStatus().equals(STATUS.ACTION_CHOOSECLOUD)){
-                int cloud = 0;
-                while(true){
-                    in.reset();
-                    System.out.println("> Choose cloud");
-                    input= in.nextLine();
-                    try{
-                    cloud = Integer.parseInt(input);
-                        break;
-                        }catch(NumberFormatException e){
-                        System.out.println(ANSI.RED + "> Please enter a number" + ANSI.RESET);
-                        System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
-                    }
-
-                }
-                this.client.getClientEvs().add(new ChooseCloudEvent(this.getData().getOwner(),cloud));
+                chooseCloud();
             }
         }
         else {
             System.out.println(getData().getCurrPlayer().getUsername() + "'s turn");
         }
+    }
+
+    private void drawAssistantCard() {
+        String input;
+        int assistantCard;
+        System.out.println("> Draw assistant card from those available by typing its value");
+        System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+        while (true) {
+            input = in.nextLine();
+            try {
+                assistantCard = Integer.parseInt(input);
+                if(assistantCard < 1 || assistantCard > 10){
+                    System.out.println(ANSI.RED + "> Please type a number between 1 and 10" + ANSI.RESET);
+                    System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+                    in.reset();
+                }
+                else break;
+            } catch (NumberFormatException e) {
+                System.out.println(ANSI.RED + "> Please type a number" + ANSI.RESET);
+                System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+                in.reset();
+            }
+        }
+        this.client.getClientEvs().add(new DrawAssistantCardEvent(this.getData().getOwner(), assistantCard));
+    }
+
+    private void moveStudent(){
+        System.out.println("> Choose the color of the student to move from entrance:");
+        System.out.println("   -Green ");
+        System.out.println("   -Red ");
+        System.out.println("   -Yellow ");
+        System.out.println("   -Pink ");
+        System.out.println("   -Blue ");
+        in.reset();
+        String input;
+        int colorIndex=-1;
+        while (colorIndex < 0) {
+            input = in.nextLine().toLowerCase();
+            switch (input) {
+                case "green":
+                    colorIndex = COLOR.GREEN.ordinal();
+                    break;
+                case "red":
+                    colorIndex = COLOR.RED.ordinal();
+                    break;
+                case "yellow":
+                    colorIndex = COLOR.YELLOW.ordinal();
+                    break;
+                case "pink":
+                    colorIndex = COLOR.PINK.ordinal();
+                    break;
+                case "blue":
+                    colorIndex = COLOR.BLUE.ordinal();
+                    break;
+                default:
+                    System.out.println(ANSI.RED + "> Please type a color from those above" + ANSI.RESET);
+                    System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+                    in.reset();
+            }
+        }
+        System.out.println("> Choose destination: Island or DiningRoom");
+        System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+        boolean thisFlag = false;
+        int island = 0;
+        while(!thisFlag) {
+            in.reset();
+            input = in.nextLine().toLowerCase();
+            switch (input) {
+                case "island" : {
+                    System.out.println("Choose island ");
+                    in.reset();
+                    while (true) {
+                        input = in.nextLine();
+                        try {
+                            island = Integer.parseInt(input);
+                            if(island < 0 || island > 11) {
+                                System.out.println(ANSI.RED + "> Please type a number between 0 and 11" + ANSI.RESET);
+                                System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+                            }
+                            else break;
+                        } catch (NumberFormatException e) {
+                            System.out.println(ANSI.RED + "> Please type a number" + ANSI.RESET);
+                            System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+                        }
+                    }
+                    this.client.getClientEvs().add(new MoveStudentToIslandEvent(this.getData().getOwner(), colorIndex, island));
+                    thisFlag = true;
+                    break;
+                }
+                case "diningroom": {
+                    this.client.getClientEvs().add(new MoveStudentToDiningEvent(this.getData().getOwner(), colorIndex));
+                    thisFlag = true;
+                    break;
+                }
+                default:
+                    System.out.println(ANSI.RED + "> Please type 'Island' or 'DiningRoom'" + ANSI.RESET);
+                    System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+            }
+        }
+    }
+
+    private void moveMother(){
+        int motherNature = 0;
+        System.out.println("> Choose number of jumps of mother nature");
+        while(true){
+            in.reset();
+            String input = in.nextLine();
+            try{
+                motherNature= Integer.parseInt(input);
+                break;
+            }catch(NumberFormatException e){
+                System.out.println(ANSI.RED + "> Please enter a number" + ANSI.RESET);
+                System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+            }
+        }
+        this.client.getClientEvs().add(new MoveMotherEvent(this.getData().getOwner(),motherNature));
+    }
+
+    public void chooseCloud() {
+        int cloud = 0;
+        String input;
+        System.out.println("> Choose cloud");
+        while (true) {
+            in.reset();
+            input = in.nextLine();
+            try {
+                cloud = Integer.parseInt(input);
+                if (cloud < 0 || cloud > (getData().getNumPlayers() - 1)) {
+                    System.out.println(ANSI.RED + "> Please enter a number between 0 and " + (getData().getNumPlayers() - 1) + ANSI.RESET);
+                    System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+                }
+                else break;
+            } catch (NumberFormatException e) {
+                System.out.println(ANSI.RED + "> Please enter a number" + ANSI.RESET);
+                System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+            }
+
+        }
+        this.client.getClientEvs().add(new ChooseCloudEvent(this.getData().getOwner(), cloud));
     }
 
     private void printOwnBoard(){

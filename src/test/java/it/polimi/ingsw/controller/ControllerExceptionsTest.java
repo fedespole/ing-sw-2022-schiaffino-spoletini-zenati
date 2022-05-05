@@ -14,8 +14,9 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ControllerExceptionsTest extends TestCase {
- /*   private Controller controller;
+public class ControllerExceptionsTest extends TestCase {     // No more needed as are thrown as events and view handles them
+ /*
+    private Controller controller;
 
     @BeforeEach
     public void setUp(){
@@ -27,11 +28,11 @@ public class ControllerExceptionsTest extends TestCase {
 
     @Test
     public void PlayerAccessEventExceptionTest() {
-        PlayerAccessEvent event = new PlayerAccessEvent(this,"Test1");
+        PlayerAccessEvent event = new PlayerAccessEvent(this,"Test1", null);
         PlayerAccessEvent finalEvent = event;
         assertDoesNotThrow(()-> controller.update(finalEvent));
         assertEquals("Test1",controller.getGame().getPlayers().get(1).getUsername());
-        event = new PlayerAccessEvent(this,"Test2");
+        event = new PlayerAccessEvent(this,"Test2", null);
         PlayerAccessEvent finalEvent1 = event;
         assertDoesNotThrow(()-> controller.update(finalEvent1));
         assertEquals("Test2",controller.getGame().getPlayers().get(2).getUsername());
@@ -47,13 +48,8 @@ public class ControllerExceptionsTest extends TestCase {
     public void DrawAssistantCardEventExceptionTest(){
         //adding 3 players and starting the game
         controller.getGame().setNumPlayers(3);
-        controller.update(new PlayerAccessEvent(this, "Test1"));
-        controller.update(new PlayerAccessEvent(this, "Test2"));
-        //Launching OutOfBoundCardSelection with 0 and
-        DrawAssistantCardEvent event3 = new DrawAssistantCardEvent(this, 0);
-        assertThrows(OutOfBoundCardSelectionException.class, ()-> controller.update(event3));
-        DrawAssistantCardEvent event4 = new DrawAssistantCardEvent(this, 11);
-        assertThrows(OutOfBoundCardSelectionException.class, ()-> controller.update(event4));
+        controller.update(new PlayerAccessEvent(this, "Test1", null));
+        controller.update(new PlayerAccessEvent(this, "Test2", null));
         //Change phase to launch InvalidPhase
         controller.getGame().getStatusGame().setStatus(STATUS.SETUP);
         assertThrows(InvalidPhaseException.class, () -> controller.update(new DrawAssistantCardEvent(this, 2)));
@@ -72,8 +68,8 @@ public class ControllerExceptionsTest extends TestCase {
     public void MoveStudentToDiningEventExceptionTest(){
         //adding 3 players and starting the game
         controller.getGame().setNumPlayers(3);
-        controller.update(new PlayerAccessEvent(this, "Test1"));
-        controller.update(new PlayerAccessEvent(this, "Test2"));
+        controller.update(new PlayerAccessEvent(this, "Test1", null));
+        controller.update(new PlayerAccessEvent(this, "Test2", null));
 
         controller.update(new DrawAssistantCardEvent(this,1 ));
         controller.update(new DrawAssistantCardEvent(this,2 ));
@@ -88,8 +84,7 @@ public class ControllerExceptionsTest extends TestCase {
         assertThrows(InvalidPlayerException.class, () ->controller.update(new MoveStudentToDiningEvent(new Player("WrongPlayer"), finalColor.ordinal())));
         currPlayer.getMySchoolBoard().getEntrance().remove(0);
         currPlayer.getMySchoolBoard().getEntrance().add(new Student(COLOR.PINK));
-        //tests InvalidColor and ArrayIndexOutOfBound
-        assertThrows(InvalidColorException.class, () -> controller.update(new MoveStudentToDiningEvent(currPlayer, -1)));
+        //tests ArrayIndexOutOfBound
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> controller.update(new MoveStudentToDiningEvent(currPlayer, 5)));
         //tests NoMoreSpace
         for(int i=0;currPlayer.getMySchoolBoard().getDiningRoom()[3].size() < 10; i++){
@@ -106,8 +101,8 @@ public class ControllerExceptionsTest extends TestCase {
     public void MoveStudentToIslandEventTest(){
         //adding 3 players and starting the game
         controller.getGame().setNumPlayers(3);
-        controller.update(new PlayerAccessEvent(this, "Test1"));
-        controller.update(new PlayerAccessEvent(this, "Test2"));
+        controller.update(new PlayerAccessEvent(this, "Test1", null));
+        controller.update(new PlayerAccessEvent(this, "Test2", null));
 
         controller.update(new DrawAssistantCardEvent(this,1 ));
         controller.update(new DrawAssistantCardEvent(this,2 ));
@@ -119,7 +114,6 @@ public class ControllerExceptionsTest extends TestCase {
         assertThrows(InvalidIslandIndexException.class,() -> controller.update(new MoveStudentToIslandEvent(currPlayer,0, -1 )));
         assertThrows(InvalidIslandIndexException.class,() -> controller.update(new MoveStudentToIslandEvent(currPlayer,0, controller.getGame().getIslands().size()+1 )));
         //tests InvalidColor
-        assertThrows(InvalidColorException.class, () -> controller.update(new MoveStudentToIslandEvent(currPlayer, -1, 0)));
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> controller.update(new MoveStudentToIslandEvent(currPlayer, 5, 0)));
         //tests StudentNotPresent
         currPlayer.getMySchoolBoard().getEntrance().removeAll(currPlayer.getMySchoolBoard().getEntrance());
@@ -131,8 +125,8 @@ public class ControllerExceptionsTest extends TestCase {
     public void MoveMotherEventTest(){
         //adding 3 players and starting the game
         controller.getGame().setNumPlayers(3);
-        controller.update(new PlayerAccessEvent(this, "Test1"));
-        controller.update(new PlayerAccessEvent(this, "Test2"));
+        controller.update(new PlayerAccessEvent(this, "Test1", null));
+        controller.update(new PlayerAccessEvent(this, "Test2", null));
 
         controller.update(new DrawAssistantCardEvent(this,1 ));
         controller.update(new DrawAssistantCardEvent(this,2 ));
@@ -148,8 +142,8 @@ public class ControllerExceptionsTest extends TestCase {
         public void ChooseCloudTest(){
             //adding 3 players and starting the game
             controller.getGame().setNumPlayers(3);
-            controller.update(new PlayerAccessEvent(this, "Test1"));
-            controller.update(new PlayerAccessEvent(this, "Test2"));
+            controller.update(new PlayerAccessEvent(this, "Test1", null));
+            controller.update(new PlayerAccessEvent(this, "Test2", null));
 
             controller.update(new DrawAssistantCardEvent(this,1 ));
             controller.update(new DrawAssistantCardEvent(this,2 ));
@@ -157,10 +151,6 @@ public class ControllerExceptionsTest extends TestCase {
             Player currPlayer = controller.getGame().getCurrPlayer();
             controller.getGame().getStatusGame().setStatus(STATUS.ACTION_MOVEMN);
             controller.update(new MoveMotherEvent(currPlayer, 1));
-            //tests InvalidCloudIndex
-            assertThrows(InvalidCloudIndexException.class, () -> controller.update(new ChooseCloudEvent(currPlayer, -1)));
-            assertThrows(InvalidCloudIndexException.class, () -> controller.update(new ChooseCloudEvent(currPlayer, controller.getGame().getClouds().size())));
         }
-
-  */
+*/
 }
