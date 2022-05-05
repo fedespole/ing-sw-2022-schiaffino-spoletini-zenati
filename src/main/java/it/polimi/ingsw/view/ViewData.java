@@ -1,22 +1,22 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.model.basicgame.*;
-import it.polimi.ingsw.model.basicgame.playeritems.String;
+import it.polimi.ingsw.model.basicgame.playeritems.Player;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ViewData implements Serializable {
-    private  ArrayList<String> players;
+    private  ArrayList<Player> players;
     private int numPlayers;
     private  ArrayList<ArrayList<Island>> islands;
     private  ArrayList<Professor> professors;
     private int motherNature;
-    private String currPlayer;
+    private Player currPlayer;
     private  ArrayList<Cloud> clouds;
     private  StatusGame statusGame;
     private String winner;
-    private ArrayList<String> tiePlayers;
+    private ArrayList<Player> tiePlayers;
 
     private ArrayList<Character> characters;
 
@@ -24,7 +24,7 @@ public class ViewData implements Serializable {
         this.players= new ArrayList<>();
     }
 
-    public ViewData(ArrayList<String> players, int numPlayers, ArrayList<ArrayList<Island>> islands, ArrayList<Professor> professors, int motherNature, String currPlayer, ArrayList<Cloud> clouds, StatusGame statusGame) {
+    public ViewData(ArrayList<Player> players, int numPlayers, ArrayList<ArrayList<Island>> islands, ArrayList<Professor> professors, int motherNature, Player currPlayer, ArrayList<Cloud> clouds, StatusGame statusGame) {
         this.players = players;
         this.numPlayers = numPlayers;
         this.islands = islands;
@@ -41,7 +41,7 @@ public class ViewData implements Serializable {
     }
 
 
-    public ArrayList<String> getPlayers() {
+    public ArrayList<Player> getPlayers() {
         return players;
     }
 
@@ -54,11 +54,11 @@ public class ViewData implements Serializable {
         this.winner = winner;
     }
 
-    public ArrayList<String> getTiePlayers() {
+    public ArrayList<Player> getTiePlayers() {
         return tiePlayers;
     }
 
-    public void setTiePlayers(ArrayList<String> tiePlayers) {
+    public void setTiePlayers(ArrayList<Player> tiePlayers) {
         this.tiePlayers = tiePlayers;
     }
 
@@ -70,7 +70,7 @@ public class ViewData implements Serializable {
         return statusGame;
     }
 
-    public String getCurrPlayer() {
+    public Player getCurrPlayer() {
         return currPlayer;
     }
 

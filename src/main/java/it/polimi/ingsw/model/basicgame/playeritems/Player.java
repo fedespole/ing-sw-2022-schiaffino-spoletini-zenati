@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.basicgame.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class String implements Serializable {
+public class Player implements Serializable {
     private final java.lang.String username;
     private int coins;
     private final Deck myDeck;
@@ -13,7 +13,7 @@ public class String implements Serializable {
     private TEAM team;
     private AssistantCard chosenCard;
 
-    public String(java.lang.String username) {
+    public Player(java.lang.String username) {
         this.username = username;
         this.myDeck = new Deck();
         this.mySchoolBoard = new SchoolBoard();
@@ -60,7 +60,7 @@ public class String implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        String player = (String) o;
+        Player player = (Player) o;
         return username.equals(player.username);
     }
 

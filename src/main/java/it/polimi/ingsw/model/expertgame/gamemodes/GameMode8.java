@@ -75,6 +75,6 @@ public class GameMode8 extends ConcreteExpertGame {
 
         if(this.getIslands().size()==3) checkWinner();
 
-        if(getCurrPlayer().getMySchoolBoard().getTowers().size()==0) new VictoryEvent(this, getCurrPlayer());
+        if(getCurrPlayer().getMySchoolBoard().getTowers().size()==0) new VictoryEvent(this, getCurrPlayer().getUsername());
     }
 }

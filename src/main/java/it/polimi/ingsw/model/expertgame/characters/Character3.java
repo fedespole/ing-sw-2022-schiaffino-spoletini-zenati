@@ -78,7 +78,7 @@ public class Character3 extends Character{
 
         if(currGame.getIslands().size()==3) currGame.checkWinner();
 
-        if(currGame.getCurrPlayer().getMySchoolBoard().getTowers().size()==0) new VictoryEvent(this, currGame.getCurrPlayer());
+        if(currGame.getCurrPlayer().getMySchoolBoard().getTowers().size()==0) new VictoryEvent(this, currGame.getCurrPlayer().getUsername());
     }
 }
 

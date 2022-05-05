@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.basicgame;
 
-import it.polimi.ingsw.model.basicgame.playeritems.String;
+import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.view.ViewData;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public interface Game {
 
     int getMotherNature();
 
-    ArrayList<String> getPlayers();
+    ArrayList<Player> getPlayers();
 
     int getNumPlayers();
 
@@ -44,9 +44,9 @@ public interface Game {
 
     void setMotherNature(int motherNature);
 
-    String getCurrPlayer();
+    Player getCurrPlayer();
 
-    void setCurrPlayer(String currPlayer);
+    void setCurrPlayer(Player currPlayer);
 
     ArrayList<Cloud> getClouds();
 

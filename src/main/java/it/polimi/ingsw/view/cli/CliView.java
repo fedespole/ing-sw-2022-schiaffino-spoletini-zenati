@@ -10,7 +10,7 @@ import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
 import it.polimi.ingsw.common.exceptions.*;
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
-import it.polimi.ingsw.model.basicgame.playeritems.String;
+import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.view.View;
 
@@ -169,7 +169,11 @@ public class CliView extends View {
             System.out.println(getData().getCurrPlayer().getUsername() + "'s turn");
         }
     }
-
+    @Override
+    public void update(VictoryEvent event){
+        if(event.getWinningPlayer().equals(this.getOwner()))
+            System.out.println("YOU WON");
+    }
     private void drawAssistantCard() {
         java.lang.String input;
         int assistantCard;
@@ -308,8 +312,8 @@ public class CliView extends View {
     }
 
     private void printOwnBoard(){
-        String playerOwner=null;
-        for(String player: getData().getPlayers()){
+        Player playerOwner=null;
+        for(Player player: getData().getPlayers()){
             if(player.getUsername().equals(getOwner())){
                 playerOwner=player;
                 break;

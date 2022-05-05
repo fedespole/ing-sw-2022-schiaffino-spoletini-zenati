@@ -3,17 +3,14 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.common.events.*;
 import it.polimi.ingsw.common.events.fromClientEvents.*;
 import it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.*;
-import it.polimi.ingsw.common.events.fromServerEvents.NewPlayerCreatedEvent;
-import it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent;
-import it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent;
-import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.*;
 import it.polimi.ingsw.common.exceptions.*;
 import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.STATUS;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.model.basicgame.playeritems.Deck;
-import it.polimi.ingsw.model.basicgame.playeritems.String;
+import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 import it.polimi.ingsw.model.expertgame.characters.*;
 import it.polimi.ingsw.model.expertgame.characters.Character;
@@ -46,13 +43,13 @@ public class Controller implements EventListener {
     public void update(PlayerAccessEvent event) {
         if (game.getStatusGame().getStatus().equals(STATUS.SETUP)) {
             checkSetUpPhase();
-            for (String player : game.getPlayers()) {
+            for (Player player : game.getPlayers()) {
                 if (player.getUsername().equals(event.getUsername())) {
                     GameHandler.calls(new NotifyExceptionEvent(this, new InvalidUserNameException(event.getClient())));
                     return;
                 }
             }
-            String newPlayer = new String(event.getUsername());
+            Player newPlayer = new Player(event.getUsername());
             if (getGame().getPlayers().size() != 0)
                 GameHandler.calls(new NewPlayerCreatedEvent(this, newPlayer.getUsername()));
             else
@@ -62,9 +59,6 @@ public class Controller implements EventListener {
                 game.setUp();
                 GameHandler.calls(new UpdatedDataEvent(this, game.getData()));//return updated version of a ViewData object
             }
-        }
-        else{
-
         }
     }
 
@@ -85,7 +79,7 @@ public class Controller implements EventListener {
         boolean alreadyUsedCard = false;
         Deck deck = getGame().getCurrPlayer().getMyDeck();
         ArrayList<AssistantCard> cards = new ArrayList<AssistantCard>();
-        for(String p: getGame().getStatusGame().getOrder()){
+        for(Player p: getGame().getStatusGame().getOrder()){
             //save in "cards" all played cards
             cards.add(p.getChosenCard());
             if(p.getChosenCard().getValue()==chosenValue && !p.equals(game.getCurrPlayer()))
@@ -379,7 +373,29 @@ public class Controller implements EventListener {
     }
 
     private void checkDisconnection() {
-        if (this.disconnectedPlayers.containsKey(game.getCurrPlayer().getUsername())) {
+        if (this.disconnectedPlayers.size() >= this.game.getNumPlayers() - 1 && !this.disconnectedPlayers.containsValue(true)) {
+            //fare exception x unico client rimasto
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if(disconnectedPlayers.size() >= game.getNumPlayers() - 1 && !disconnectedPlayers.containsValue(true)) {
+                        String winner = null;
+                        for (Player player : game.getPlayers()) {
+                            if (!disconnectedPlayers.containsKey(player.getUsername())) {
+                                winner = player.getUsername();
+                                break;
+                            }
+                        }
+                        if(winner!=null)
+                            GameHandler.calls(new VictoryEvent(this, winner));
+                        else {
+                            System.out.println("GAME ENDED WITHOUT WINNERS");
+                        }
+                    }
+                }
+            }, 45*1000);
+
+        }else if (this.disconnectedPlayers.containsKey(game.getCurrPlayer().getUsername())) {
             if (game.getStatusGame().getStatus().equals(STATUS.PLANNING)) {
                 if (this.disconnectedPlayers.get(game.getCurrPlayer().getUsername())) {
                     this.disconnectedPlayers.remove(game.getCurrPlayer().getUsername());

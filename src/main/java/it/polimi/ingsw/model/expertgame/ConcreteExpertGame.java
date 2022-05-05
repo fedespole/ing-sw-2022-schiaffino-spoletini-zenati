@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.expertgame;
 
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.Cloud;
-import it.polimi.ingsw.model.basicgame.playeritems.String;
+import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.model.expertgame.characters.*;
 import it.polimi.ingsw.model.expertgame.characters.Character;
 import it.polimi.ingsw.view.ViewData;
@@ -39,7 +39,7 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     public void setUp() {
         ArrayList<Integer> randomNumbers= new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12));
         game.setUp();
-        for(String player : this.getPlayers()){
+        for(Player player : this.getPlayers()){
             player.setCoins(1);
         }
         for(int i=0;i<3;i++){
@@ -170,12 +170,12 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
         return game.getMotherNature();
     }
 
-    public String getCurrPlayer() {
+    public Player getCurrPlayer() {
         return game.getCurrPlayer();
     }
 
     @Override
-    public ArrayList<String> getPlayers() {
+    public ArrayList<Player> getPlayers() {
         return game.getPlayers();
     }
 
@@ -205,7 +205,7 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     }
 
     @Override
-    public void setCurrPlayer(String currPlayer) {
+    public void setCurrPlayer(Player currPlayer) {
         game.setCurrPlayer(currPlayer);
     }
 

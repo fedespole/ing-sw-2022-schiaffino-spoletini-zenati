@@ -4,20 +4,20 @@ import it.polimi.ingsw.common.events.fromServerEvents.TieEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.VictoryEvent;
 import it.polimi.ingsw.common.exceptions.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
-import it.polimi.ingsw.model.basicgame.playeritems.String;
+import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.view.ViewData;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class BasicGame implements Game{
-    private final ArrayList<String> players;
+    private final ArrayList<Player> players;
     private int numPlayers;
     private final Bag bag;
     private final ArrayList<ArrayList<Island>> islands;
     private final ArrayList<Professor> professors;
     private int motherNature;
-    private String currPlayer;
+    private Player currPlayer;
     private final ArrayList<Cloud> clouds;
     private final StatusGame statusGame;
     private boolean lastRound;
@@ -25,7 +25,7 @@ public class BasicGame implements Game{
     public BasicGame() {
         this.bag = new Bag();
         this.islands = new ArrayList<ArrayList<Island>>();
-        this.players = new ArrayList<String>();
+        this.players = new ArrayList<Player>();
         this.clouds = new ArrayList<Cloud>();
         for(int i=0; i<12; i++){
             islands.add(new ArrayList<Island>());
@@ -266,7 +266,7 @@ public class BasicGame implements Game{
 
         if(this.getIslands().size()==3) checkWinner();
 
-        if(currPlayer.getMySchoolBoard().getTowers().size()==0) new VictoryEvent(this, getCurrPlayer());
+        if(currPlayer.getMySchoolBoard().getTowers().size()==0) new VictoryEvent(this, getCurrPlayer().getUsername());
     }
 
     @Override
@@ -321,10 +321,10 @@ public class BasicGame implements Game{
     public void checkWinner(){
 
         int minTowers=9; // in 3 player maxTower is 8, so 9 is a ceiling for the minSort
-        String winner = null;
-        ArrayList<String> tiePlayers = new ArrayList<>();
+        Player winner = null;
+        ArrayList<Player> tiePlayers = new ArrayList<>();
 
-        for(String player : this.players){
+        for(Player player : this.players){
 
             // Updates player with less towers in board, so more towers placed on islands
             if(minTowers > player.getMySchoolBoard().getTowers().size()){
@@ -346,7 +346,7 @@ public class BasicGame implements Game{
             }
         }
         if(tiePlayers.size()==0)
-            GameHandler.calls(new VictoryEvent(this, winner));
+            GameHandler.calls(new VictoryEvent(this, winner.getUsername()));
         else
             GameHandler.calls(new TieEvent(this, tiePlayers));
     }
@@ -361,7 +361,7 @@ public class BasicGame implements Game{
         return motherNature;
     }
 
-    public ArrayList<String> getPlayers() {
+    public ArrayList<Player> getPlayers() {
         return players;
     }
 
@@ -385,11 +385,11 @@ public class BasicGame implements Game{
         this.motherNature = motherNature;
     }
 
-    public String getCurrPlayer() {
+    public Player getCurrPlayer() {
         return currPlayer;
     }
 
-    public void setCurrPlayer(String currPlayer) {
+    public void setCurrPlayer(Player currPlayer) {
         this.currPlayer = currPlayer;
     }
 

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.basicgame;
 
-import it.polimi.ingsw.model.basicgame.playeritems.String;
+import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ public class BasicGameTest extends TestCase {
         int int_random = rand.nextInt(2)+2;// is 2 or 3
         game =new BasicGame();
         for(int i=0;i<int_random;i++){
-            game.getPlayers().add(new String("Test"+i));
+            game.getPlayers().add(new Player("Test"+i));
         }
         game.setUp();
     }

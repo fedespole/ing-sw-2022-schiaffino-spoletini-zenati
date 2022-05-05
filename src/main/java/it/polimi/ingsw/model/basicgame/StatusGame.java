@@ -1,13 +1,13 @@
 package it.polimi.ingsw.model.basicgame;
 
-import it.polimi.ingsw.model.basicgame.playeritems.String;
+import it.polimi.ingsw.model.basicgame.playeritems.Player;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class StatusGame implements Serializable {
     private STATUS status;    //Saves the next correct move to be made by currPlayer
-    private ArrayList<String> order;        // action phase order
+    private ArrayList<Player> order;        // action phase order
 
 
     public StatusGame() {
@@ -19,7 +19,7 @@ public class StatusGame implements Serializable {
         return status;
     }
 
-    public ArrayList<String> getOrder() {
+    public ArrayList<Player> getOrder() {
         return order;
     }
 
@@ -27,11 +27,11 @@ public class StatusGame implements Serializable {
         this.status = status;
     }
 
-    public void setOrder(ArrayList<String> order) {
+    public void setOrder(ArrayList<Player> order) {
         this.order = order;
     }
 
-    public void addSort(String currPlayer){
+    public void addSort(Player currPlayer){
 
         for(int i=0; i< order.size(); i++){
             // If currPlayer has chosen a lower value card, the order is sorted

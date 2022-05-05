@@ -84,8 +84,6 @@ public class Server implements Runnable {
                     controller.getDisconnectedPlayers().replace(username,true);
                     System.out.println("RECONNECTED:"+username);
                     break;
-                } else {
-                    remoteView.update(new NotifyExceptionEvent(this, new InvalidUserNameException(null)));
                 }
                 return;
             }

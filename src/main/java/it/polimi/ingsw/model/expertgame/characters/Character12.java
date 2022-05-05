@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.expertgame.characters;
 
 import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Game;
-import it.polimi.ingsw.model.basicgame.playeritems.String;
+import it.polimi.ingsw.model.basicgame.playeritems.Player;
 
 public class Character12 extends Character{
 
@@ -16,7 +16,7 @@ public class Character12 extends Character{
 
         playerPayment(currGame.getCurrPlayer());
         changeCost();
-        for(String player : currGame.getPlayers()){
+        for(Player player : currGame.getPlayers()){
             for(int i=0;i<3 && player.getMySchoolBoard().getDiningRoom()[color.ordinal()].size()!=0;i++){
                 currGame.getBag().addStudent(player.getMySchoolBoard().removeStudentFromDiningRoom(color));
             }

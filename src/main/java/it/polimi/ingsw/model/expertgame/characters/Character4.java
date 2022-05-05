@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
-import it.polimi.ingsw.model.basicgame.playeritems.String;
+import it.polimi.ingsw.model.basicgame.playeritems.Player;
 
 public class Character4 extends Character{
 
@@ -10,7 +10,7 @@ public class Character4 extends Character{
         setHasBeenUsed(false);
     }
 
-    public void useAbility(String player){
+    public void useAbility(Player player){
         playerPayment(player);
         changeCost();
         player.getChosenCard().setSteps(2+player.getChosenCard().getSteps());
