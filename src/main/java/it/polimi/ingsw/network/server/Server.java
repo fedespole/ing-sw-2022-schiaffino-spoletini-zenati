@@ -65,7 +65,6 @@ public class Server implements Runnable {
     }
 
     private void newMidGameClientConnection(RemoteView remoteView) throws InterruptedException, IOException {//resilience
-        remoteView.update(new NewMidGamePlayerEvent(this));
         GameEvent gameEvent;
         while (true) {
             gameEvent = remoteView.getClientEvs().take();
@@ -75,11 +74,11 @@ public class Server implements Runnable {
         String username = ((PlayerAccessEvent)gameEvent).getUsername();
         // Checks if username given in PlayerAccessEvent matches with one of the usernames in the game, and it is actually disconnected
         if (controller.getDisconnectedPlayers().containsKey(username)) {
-            for(RemoteView view: this.playingConnection) {
-                if (view.getData().getOwner().getUsername().equals(username)) {
-                    remoteView.update(new NewPlayerCreatedEvent(this, view.getData().getOwner()));
+            for(RemoteView oldView: this.playingConnection) {
+                if (oldView.getOwner().equals(username)) {
+                    remoteView.update(new NewPlayerCreatedEvent(this, username));
                     remoteView.update(new UpdatedDataEvent(this, game.getData()));
-                    playingConnection.remove(view);
+                    playingConnection.remove(oldView);
                     playingConnection.add(remoteView);
                     executor.execute(remoteView);
                     controller.getDisconnectedPlayers().replace(username,true);

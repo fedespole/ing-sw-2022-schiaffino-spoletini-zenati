@@ -3,7 +3,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.common.events.fromClientEvents.*;
 import it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.*;
 import it.polimi.ingsw.model.basicgame.*;
-import it.polimi.ingsw.model.basicgame.playeritems.Player;
+import it.polimi.ingsw.model.basicgame.playeritems.String;
 import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 import it.polimi.ingsw.model.expertgame.characters.*;
 import it.polimi.ingsw.model.expertgame.characters.Character;
@@ -63,14 +63,14 @@ public class ControllerTest {
     public void DrawAssistantCardEventTest() {
         this.PlayerAccessEventTest();
         DrawAssistantCardEvent event = new DrawAssistantCardEvent(this, 3);
-        Player firstPlayer = controller.getGame().getCurrPlayer();
+        String firstPlayer = controller.getGame().getCurrPlayer();
         controller.update(event);
         assertEquals(3, firstPlayer.getChosenCard().getValue());
-        Player second_player = controller.getGame().getCurrPlayer();
+        String second_player = controller.getGame().getCurrPlayer();
         event = new DrawAssistantCardEvent(this, 5);
         controller.update(event);
         assertEquals(5, second_player.getChosenCard().getValue());
-        Player third_player = controller.getGame().getCurrPlayer();
+        String third_player = controller.getGame().getCurrPlayer();
         event = new DrawAssistantCardEvent(this, 8);
         controller.update(event);
         assertEquals(8, third_player.getChosenCard().getValue());
@@ -80,7 +80,7 @@ public class ControllerTest {
     @Test
     public void MoveStudentToDiningEventTest() {//test for one player only
         this.DrawAssistantCardEventTest();
-        Player currPlayer = controller.getGame().getCurrPlayer();
+        String currPlayer = controller.getGame().getCurrPlayer();
         COLOR color;
         MoveStudentToDiningEvent event;
         int size;
@@ -98,7 +98,7 @@ public class ControllerTest {
     @Test
     public void MoveStudentToIslandEventTest() {
         this.MoveStudentToDiningEventTest();
-        Player currPlayer = controller.getGame().getCurrPlayer();
+        String currPlayer = controller.getGame().getCurrPlayer();
         Student student;
         MoveStudentToIslandEvent event;
         for (int i = 0; i < 2; i++) {
@@ -114,7 +114,7 @@ public class ControllerTest {
     @Test
     public void MoveMotherEventTest() {
         this.MoveStudentToIslandEventTest();
-        Player currPlayer = controller.getGame().getCurrPlayer();
+        String currPlayer = controller.getGame().getCurrPlayer();
         int oldIsland = controller.getGame().getMotherNature();
         MoveMotherEvent event = new MoveMotherEvent(currPlayer, 1);
         controller.update(event);
@@ -124,7 +124,7 @@ public class ControllerTest {
     @Test
     public void ChooseCloudEventTest() {
         this.MoveMotherEventTest();
-        Player currPlayer = controller.getGame().getCurrPlayer();
+        String currPlayer = controller.getGame().getCurrPlayer();
         int cloud = 0;
         for (int i = 0; i < 3; i++) {
             if (controller.getGame().getClouds().get(i).getStudents().size() != 0) {

@@ -10,6 +10,7 @@ import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
 import it.polimi.ingsw.common.exceptions.*;
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
+import it.polimi.ingsw.model.basicgame.playeritems.String;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.view.View;
 
@@ -32,7 +33,7 @@ public class CliView extends View {
     }
 
     public void setup() {
-        String username;
+        java.lang.String username;
         System.out.println("> Insert your nickname: ");
         System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
         username = in.nextLine();
@@ -55,7 +56,7 @@ public class CliView extends View {
             setup();
         }
         // Notifies only player that caused exception
-        else if(getData().getOwner()!=null && getData().getOwner().equals(getData().getCurrPlayer())) {
+        else if(getOwner()!=null && getOwner().equals(getData().getCurrPlayer().getUsername())) {
 
             if(event.getException() instanceof AlreadyUsedCardException || event.getException() instanceof NotAvailableCardException) {
                 System.out.println(ANSI.RED + "> Card already drawn" + ANSI.RESET);
@@ -87,19 +88,19 @@ public class CliView extends View {
     @Override
     public void update(NewPlayerCreatedEvent event) {
         super.update(event);
-        if (getData().getOwner().equals(event.getPlayer()))
-            System.out.println("You have been accepted in the game, you username is : " + getData().getOwner().getUsername());
+        if (this.getOwner().equals(event.getUsername()))
+            System.out.println("You have been accepted in the game, you username is : " + getOwner());
         else
-            System.out.println("Player " + event.getPlayer().getUsername() + " has been accepted in the game");
+            System.out.println("Player " + event.getUsername() + " has been accepted in the game");
     }
 
     @Override
     public void update(RequestNumPlayersEvent event) {
         super.update(event);
         int numPlayers = 0;
-        if (event.getPlayer().equals(this.getData().getOwner())) {
-            String input;
-            System.out.println("You are the first player connected, your username is : " + getData().getOwner().getUsername());
+        if (event.getUsername().equals(this.getOwner())) {
+            java.lang.String input;
+            System.out.println("You are the first player connected, your username is : " + getOwner());
             in.reset();
             System.out.println("> Choose number of players: 2 or 3 players available");
             System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
@@ -124,10 +125,10 @@ public class CliView extends View {
             while(true){
                 input = in.nextLine().toLowerCase();
             if (input.equals("basic")) {
-                this.client.getClientEvs().add(new SelectedGameSetUpEvent(this.getData().getOwner(), numPlayers, false));
+                this.client.getClientEvs().add(new SelectedGameSetUpEvent(this.getOwner(), numPlayers, false));
                 break;
             } else if (input.equals("expert")) {
-                this.client.getClientEvs().add(new SelectedGameSetUpEvent(this.getData().getOwner(), numPlayers, true));
+                this.client.getClientEvs().add(new SelectedGameSetUpEvent(this.getOwner(), numPlayers, true));
                 break;
             }
             else {
@@ -149,7 +150,7 @@ public class CliView extends View {
         super.update(event);
         // Printing an updated game board
         printTable();
-        if (getData().getOwner().equals(getData().getCurrPlayer())) {
+        if (getOwner().equals(getData().getCurrPlayer().getUsername())) {
             // Printing only the currPlayer items
             printOwnBoard();
             if (getData().getStatusGame().getStatus().equals(STATUS.PLANNING)) {
@@ -170,7 +171,7 @@ public class CliView extends View {
     }
 
     private void drawAssistantCard() {
-        String input;
+        java.lang.String input;
         int assistantCard;
         System.out.println("> Draw assistant card from those available by typing its value");
         System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
@@ -190,14 +191,14 @@ public class CliView extends View {
                 in.reset();
             }
         }
-        this.client.getClientEvs().add(new DrawAssistantCardEvent(this.getData().getOwner(), assistantCard));
+        this.client.getClientEvs().add(new DrawAssistantCardEvent(this.getOwner(), assistantCard));
     }
 
     private void moveStudent(){
         System.out.println("> Choose the color of the student to move from entrance:");
         System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
         in.reset();
-        String input;
+        java.lang.String input;
         int colorIndex=-1;
         while (colorIndex < 0) {
             input = in.nextLine().toLowerCase();
@@ -248,12 +249,12 @@ public class CliView extends View {
                             System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
                         }
                     }
-                    this.client.getClientEvs().add(new MoveStudentToIslandEvent(this.getData().getOwner(), colorIndex, island));
+                    this.client.getClientEvs().add(new MoveStudentToIslandEvent(this.getOwner(), colorIndex, island));
                     thisFlag = true;
                     break;
                 }
                 case "diningroom": {
-                    this.client.getClientEvs().add(new MoveStudentToDiningEvent(this.getData().getOwner(), colorIndex));
+                    this.client.getClientEvs().add(new MoveStudentToDiningEvent(this.getOwner(), colorIndex));
                     thisFlag = true;
                     break;
                 }
@@ -270,7 +271,7 @@ public class CliView extends View {
         System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
         while(true){
             in.reset();
-            String input = in.nextLine();
+            java.lang.String input = in.nextLine();
             try{
                 motherNature= Integer.parseInt(input);
                 break;
@@ -279,12 +280,12 @@ public class CliView extends View {
                 System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
             }
         }
-        this.client.getClientEvs().add(new MoveMotherEvent(this.getData().getOwner(),motherNature));
+        this.client.getClientEvs().add(new MoveMotherEvent(this.getOwner(),motherNature));
     }
 
     public void chooseCloud() {
         int cloud = 0;
-        String input;
+        java.lang.String input;
         System.out.println("> Choose cloud");
         System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
         while (true) {
@@ -303,30 +304,37 @@ public class CliView extends View {
             }
 
         }
-        this.client.getClientEvs().add(new ChooseCloudEvent(this.getData().getOwner(), cloud));
+        this.client.getClientEvs().add(new ChooseCloudEvent(this.getOwner(), cloud));
     }
 
     private void printOwnBoard(){
-        ANSI.writeTitle(getData().getOwner().getUsername()+" TEAM "+getData().getOwner().getTeam());
+        String playerOwner=null;
+        for(String player: getData().getPlayers()){
+            if(player.getUsername().equals(getOwner())){
+                playerOwner=player;
+                break;
+            }
+        }
+        ANSI.writeTitle(getOwner()+" TEAM "+playerOwner.getTeam());
         ANSI.writeTitle("ASSISTANT CARDS");
-        for(AssistantCard assistantCard:getData().getOwner().getMyDeck().getCards()){
+        for(AssistantCard assistantCard:playerOwner.getMyDeck().getCards()){
             System.out.print(assistantCard.getValue()+"   ");
         }
         ANSI.writeTitle("\nSTUDENTS IN ENTRANCE: ");
-        for(Student student:getData().getOwner().getMySchoolBoard().getEntrance()){
+        for(Student student:playerOwner.getMySchoolBoard().getEntrance()){
             ANSI.writeInColor(student.getColor(),student.getColor()+"   ");
         }
         ANSI.writeTitle("\nSTUDENTS IN DINING ROOM");
         for(int i=0;i<5;i++){
             ANSI.writeInColor(COLOR.values()[i], "  -" + COLOR.values()[i].toString() + ": " );
-            System.out.print(getData().getOwner().getMySchoolBoard().getDiningRoom()[i].size());
-            for(Professor professor:getData().getOwner().getMySchoolBoard().getProfessors()){
+            System.out.print(playerOwner.getMySchoolBoard().getDiningRoom()[i].size());
+            for(Professor professor:playerOwner.getMySchoolBoard().getProfessors()){
                 if(professor.getColor().equals(Arrays.stream(COLOR.values()).toArray()[i]))
                     ANSI.writeInColor(professor.getColor(),"   " + professor.getColor()+" PROFESSOR HERE ");
             }
             System.out.println("");
         }
-        ANSI.writeTitle("TOWERS: " + getData().getOwner().getMySchoolBoard().getTowers().size());
+        ANSI.writeTitle("TOWERS: " + playerOwner.getMySchoolBoard().getTowers().size());
 
     }
 

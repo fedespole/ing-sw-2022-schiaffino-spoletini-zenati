@@ -1,18 +1,17 @@
 package it.polimi.ingsw.common.events;
 
-import it.polimi.ingsw.model.basicgame.playeritems.Player;
 
 public class ClientDisconnectedEvent extends GameEvent{
-    private Player player;
+    private String username;
     public ClientDisconnectedEvent(Object source) {
         super(source);
     }
 
-    public Player getPlayer() {
-        return player;
+    public String getUsername() {
+        return username;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

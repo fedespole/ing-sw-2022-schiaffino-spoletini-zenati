@@ -4,20 +4,20 @@ import it.polimi.ingsw.common.events.fromServerEvents.TieEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.VictoryEvent;
 import it.polimi.ingsw.common.exceptions.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
-import it.polimi.ingsw.model.basicgame.playeritems.Player;
+import it.polimi.ingsw.model.basicgame.playeritems.String;
 import it.polimi.ingsw.view.ViewData;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class BasicGame implements Game{
-    private final ArrayList<Player> players;
+    private final ArrayList<String> players;
     private int numPlayers;
     private final Bag bag;
     private final ArrayList<ArrayList<Island>> islands;
     private final ArrayList<Professor> professors;
     private int motherNature;
-    private Player currPlayer;
+    private String currPlayer;
     private final ArrayList<Cloud> clouds;
     private final StatusGame statusGame;
     private boolean lastRound;
@@ -25,7 +25,7 @@ public class BasicGame implements Game{
     public BasicGame() {
         this.bag = new Bag();
         this.islands = new ArrayList<ArrayList<Island>>();
-        this.players = new ArrayList<Player>();
+        this.players = new ArrayList<String>();
         this.clouds = new ArrayList<Cloud>();
         for(int i=0; i<12; i++){
             islands.add(new ArrayList<Island>());
@@ -321,10 +321,10 @@ public class BasicGame implements Game{
     public void checkWinner(){
 
         int minTowers=9; // in 3 player maxTower is 8, so 9 is a ceiling for the minSort
-        Player winner = null;
-        ArrayList<Player> tiePlayers = new ArrayList<>();
+        String winner = null;
+        ArrayList<String> tiePlayers = new ArrayList<>();
 
-        for(Player player : this.players){
+        for(String player : this.players){
 
             // Updates player with less towers in board, so more towers placed on islands
             if(minTowers > player.getMySchoolBoard().getTowers().size()){
@@ -361,7 +361,7 @@ public class BasicGame implements Game{
         return motherNature;
     }
 
-    public ArrayList<Player> getPlayers() {
+    public ArrayList<String> getPlayers() {
         return players;
     }
 
@@ -385,11 +385,11 @@ public class BasicGame implements Game{
         this.motherNature = motherNature;
     }
 
-    public Player getCurrPlayer() {
+    public String getCurrPlayer() {
         return currPlayer;
     }
 
-    public void setCurrPlayer(Player currPlayer) {
+    public void setCurrPlayer(String currPlayer) {
         this.currPlayer = currPlayer;
     }
 

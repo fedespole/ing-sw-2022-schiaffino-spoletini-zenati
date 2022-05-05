@@ -1,16 +1,16 @@
 package it.polimi.ingsw.common.events.fromServerEvents;
 
 import it.polimi.ingsw.common.events.GameEvent;
-import it.polimi.ingsw.model.basicgame.playeritems.Player;
+import it.polimi.ingsw.model.basicgame.playeritems.String;
 
 public class VictoryEvent extends GameEvent {
 
-    private final Player winningPlayer;
+    private final String winningPlayer;
 
-    public VictoryEvent(Object source, Player winningPlayer){
+    public VictoryEvent(Object source, String winningPlayer){
         super(source);
         this.winningPlayer = winningPlayer;
     }
 
-    public Player getWinningPlayer(){return winningPlayer;}
+    public String getWinningPlayer(){return winningPlayer;}
 }

@@ -1,12 +1,12 @@
 package it.polimi.ingsw.model.basicgame;
 
-import it.polimi.ingsw.model.basicgame.playeritems.Player;
+import it.polimi.ingsw.model.basicgame.playeritems.String;
 
 import java.io.Serializable;
 
 public class Professor implements Serializable {
     private final COLOR color;
-    private Player owner;
+    private String owner;
 
     public Professor(COLOR color) {
         this.color = color;
@@ -16,11 +16,11 @@ public class Professor implements Serializable {
         return color;
     }
 
-    public Player getOwner() {
+    public String getOwner() {
         return owner;
     }
 
-    public void setOwner(Player owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 }

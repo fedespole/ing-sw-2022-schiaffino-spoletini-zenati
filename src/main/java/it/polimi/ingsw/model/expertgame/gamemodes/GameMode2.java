@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model.expertgame.gamemodes;
 import it.polimi.ingsw.model.basicgame.COLOR;
-import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 
 public class GameMode2 extends ConcreteExpertGame {

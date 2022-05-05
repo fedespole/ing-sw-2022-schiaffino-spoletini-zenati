@@ -13,7 +13,7 @@ import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.STATUS;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.model.basicgame.playeritems.Deck;
-import it.polimi.ingsw.model.basicgame.playeritems.Player;
+import it.polimi.ingsw.model.basicgame.playeritems.String;
 import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 import it.polimi.ingsw.model.expertgame.characters.*;
 import it.polimi.ingsw.model.expertgame.characters.Character;
@@ -29,7 +29,7 @@ public class Controller implements EventListener {
     private boolean hasCardBeenUsed;   //true if a CharacterCard has been used in this turn
     private int numOfMoveStudent;      //counts how many student the currPlayer has moved
 
-    private HashMap<String,Boolean> disconnectedPlayers;
+    private HashMap<java.lang.String,Boolean> disconnectedPlayers;
 
     public Controller(Game game) {
         this.game = game;
@@ -46,22 +46,25 @@ public class Controller implements EventListener {
     public void update(PlayerAccessEvent event) {
         if (game.getStatusGame().getStatus().equals(STATUS.SETUP)) {
             checkSetUpPhase();
-            for (Player player : game.getPlayers()) {
+            for (String player : game.getPlayers()) {
                 if (player.getUsername().equals(event.getUsername())) {
                     GameHandler.calls(new NotifyExceptionEvent(this, new InvalidUserNameException(event.getClient())));
                     return;
                 }
             }
-            Player newPlayer = new Player(event.getUsername());
+            String newPlayer = new String(event.getUsername());
             if (getGame().getPlayers().size() != 0)
-                GameHandler.calls(new NewPlayerCreatedEvent(this, newPlayer));
+                GameHandler.calls(new NewPlayerCreatedEvent(this, newPlayer.getUsername()));
             else
-                GameHandler.calls(new RequestNumPlayersEvent(this, newPlayer));
+                GameHandler.calls(new RequestNumPlayersEvent(this, newPlayer.getUsername()));
             game.getPlayers().add(newPlayer);
             if (getGame().getPlayers().size() == getGame().getNumPlayers()) {
                 game.setUp();
                 GameHandler.calls(new UpdatedDataEvent(this, game.getData()));//return updated version of a ViewData object
             }
+        }
+        else{
+
         }
     }
 
@@ -82,7 +85,7 @@ public class Controller implements EventListener {
         boolean alreadyUsedCard = false;
         Deck deck = getGame().getCurrPlayer().getMyDeck();
         ArrayList<AssistantCard> cards = new ArrayList<AssistantCard>();
-        for(Player p: getGame().getStatusGame().getOrder()){
+        for(String p: getGame().getStatusGame().getOrder()){
             //save in "cards" all played cards
             cards.add(p.getChosenCard());
             if(p.getChosenCard().getValue()==chosenValue && !p.equals(game.getCurrPlayer()))
@@ -334,8 +337,9 @@ public class Controller implements EventListener {
         GameHandler.calls(new NotifyExceptionEvent(this, new InvalidCharacterException()));
     }
     public void update(ClientDisconnectedEvent event){
-        this.disconnectedPlayers.put(event.getPlayer().getUsername(),false);
-        System.out.println("DISCONNECTED:"+event.getPlayer().getUsername()+" "+this.disconnectedPlayers.get(event.getPlayer().getUsername()));
+        this.disconnectedPlayers.put(event.getUsername(),false);
+        System.out.println("DISCONNECTED:"+event.getUsername()+" "+this.disconnectedPlayers.get(event.getUsername()));
+        this.checkDisconnection();
     }
     private void checkAbility(Character c) {
         //checks if a card has been used in this turn
@@ -379,21 +383,26 @@ public class Controller implements EventListener {
             if (game.getStatusGame().getStatus().equals(STATUS.PLANNING)) {
                 if (this.disconnectedPlayers.get(game.getCurrPlayer().getUsername())) {
                     this.disconnectedPlayers.remove(game.getCurrPlayer().getUsername());
+                    System.out.println("PLAYER BACK IN THE GAME:"+game.getCurrPlayer().getUsername());
                     return;
                 }
                 Random random = new Random();
                 int int_random = random.nextInt(game.getCurrPlayer().getMyDeck().getCards().size());
+                System.out.println("COMPUTER CHOSE "+game.getCurrPlayer().getMyDeck().getCards().get(int_random).getValue() +" FOR "+game.getCurrPlayer().getUsername());
                 this.update(new DrawAssistantCardEvent(this, game.getCurrPlayer().getMyDeck().getCards().get(int_random).getValue()));
             } else if (game.getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)) {
+                System.out.println(game.getCurrPlayer().getUsername() + " TURN SKIPPED");
                 if (game.getStatusGame().getOrder().indexOf(game.getCurrPlayer()) != game.getStatusGame().getOrder().size() - 1) {
                     game.setCurrPlayer(game.getStatusGame().getOrder().get(game.getStatusGame().getOrder().indexOf(game.getCurrPlayer()) + 1));
                 } else {
                     game.fillClouds();
                 }
+                GameHandler.calls(new UpdatedDataEvent(this,game.getData()));
             }
+            checkDisconnection();
         }
     }
-    public HashMap<String, Boolean> getDisconnectedPlayers() {
+    public HashMap<java.lang.String, Boolean> getDisconnectedPlayers() {
         return disconnectedPlayers;
     }
 }

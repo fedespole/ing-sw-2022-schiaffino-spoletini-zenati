@@ -19,14 +19,18 @@ public class SocketWriter<T> implements Runnable {
     }
 
     public void run() {
-        while (true) {
+        while (!socket.isClosed()) {
             try {
                 T obj = objectsToBeWritten.take();
                 out.writeObject(obj);
                 out.flush();
                 out.reset();
             } catch (InterruptedException | IOException e) {
-                e.printStackTrace();
+                try {
+                    socket.close();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         }
     }

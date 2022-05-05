@@ -1,32 +1,30 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.model.basicgame.*;
-import it.polimi.ingsw.model.basicgame.playeritems.Player;
+import it.polimi.ingsw.model.basicgame.playeritems.String;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ViewData implements Serializable {
-    private  Player owner;
-    private  ArrayList<Player> players;
+    private  ArrayList<String> players;
     private int numPlayers;
     private  ArrayList<ArrayList<Island>> islands;
     private  ArrayList<Professor> professors;
     private int motherNature;
-    private Player currPlayer;
+    private String currPlayer;
     private  ArrayList<Cloud> clouds;
     private  StatusGame statusGame;
-    private Player winner;
-    private ArrayList<Player> tiePlayers;
+    private String winner;
+    private ArrayList<String> tiePlayers;
 
     private ArrayList<Character> characters;
 
-    public ViewData(){
-        this.owner = null;
+    public ViewData(){;
         this.players= new ArrayList<>();
     }
 
-    public ViewData( ArrayList<Player> players, int numPlayers, ArrayList<ArrayList<Island>> islands, ArrayList<Professor> professors, int motherNature, Player currPlayer, ArrayList<Cloud> clouds, StatusGame statusGame) {
+    public ViewData(ArrayList<String> players, int numPlayers, ArrayList<ArrayList<Island>> islands, ArrayList<Professor> professors, int motherNature, String currPlayer, ArrayList<Cloud> clouds, StatusGame statusGame) {
         this.players = players;
         this.numPlayers = numPlayers;
         this.islands = islands;
@@ -42,31 +40,25 @@ public class ViewData implements Serializable {
         return numPlayers;
     }
 
-    public Player getOwner() {
-        return owner;
-    }
 
-    public ArrayList<Player> getPlayers() {
+    public ArrayList<String> getPlayers() {
         return players;
     }
 
-    public void setOwner(Player owner) {
-        this.owner = owner;
-    }
 
-    public Player getWinner() {
+    public String getWinner() {
         return winner;
     }
 
-    public void setWinner(Player winner) {
+    public void setWinner(String winner) {
         this.winner = winner;
     }
 
-    public ArrayList<Player> getTiePlayers() {
+    public ArrayList<String> getTiePlayers() {
         return tiePlayers;
     }
 
-    public void setTiePlayers(ArrayList<Player> tiePlayers) {
+    public void setTiePlayers(ArrayList<String> tiePlayers) {
         this.tiePlayers = tiePlayers;
     }
 
@@ -78,7 +70,7 @@ public class ViewData implements Serializable {
         return statusGame;
     }
 
-    public Player getCurrPlayer() {
+    public String getCurrPlayer() {
         return currPlayer;
     }
 

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.expertgame;
 
 import it.polimi.ingsw.model.basicgame.*;
-import it.polimi.ingsw.model.basicgame.playeritems.Player;
+import it.polimi.ingsw.model.basicgame.playeritems.String;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,10 +16,10 @@ public class ExpertGameTest extends TestCase {
             Random rand = new Random(); //instance of random class
             int int_random = rand.nextInt(2)+1;// is 1 or 2
             game = new BasicGame();
-            game.getPlayers().add(new Player("Host"));
+            game.getPlayers().add(new String("Host"));
             game = new ConcreteExpertGame(game);
             for(int i=0;i<int_random;i++){
-                game.getPlayers().add(new Player("Test"));
+                game.getPlayers().add(new String("Test"));
             }
             game.setUp();
         }

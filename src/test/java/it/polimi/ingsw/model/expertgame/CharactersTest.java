@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Student;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
-import it.polimi.ingsw.model.basicgame.playeritems.Player;
+import it.polimi.ingsw.model.basicgame.playeritems.String;
 import it.polimi.ingsw.model.expertgame.characters.*;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +26,7 @@ public class CharactersTest extends TestCase {
         int int_random = rand.nextInt(2)+2;// is 2 or 3
         game =new BasicGame();
         for(int i=0;i<int_random;i++){
-            game.getPlayers().add(new Player("Test"+i));
+            game.getPlayers().add(new String("Test"+i));
         }
         game.setUp();
         this.game =new ConcreteExpertGame(game);

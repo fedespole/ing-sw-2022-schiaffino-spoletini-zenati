@@ -1,17 +1,16 @@
 package it.polimi.ingsw.common.events.fromServerEvents;
 
 import it.polimi.ingsw.common.events.GameEvent;
-import it.polimi.ingsw.model.basicgame.playeritems.Player;
 
 public class RequestNumPlayersEvent extends GameEvent {
-    private final Player player;
+    private final String username;
 
-    public RequestNumPlayersEvent(Object source, Player player) {
+    public RequestNumPlayersEvent(Object source, String player) {
         super(source);
-        this.player = player;
+        this.username = player;
     }
 
-    public Player getPlayer() {
-        return player;
+    public String getUsername() {
+        return username;
     }
 }

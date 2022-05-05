@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.basicgame.BasicGame;
 import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Student;
-import it.polimi.ingsw.model.basicgame.playeritems.Player;
+import it.polimi.ingsw.model.basicgame.playeritems.String;
 import it.polimi.ingsw.model.expertgame.characters.*;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,9 +27,9 @@ public class CharactersExceptionsTest extends TestCase{
         Random rand = new Random(); //instance of random class
         int int_random = rand.nextInt(2)+1;// is 1 or 2
         game =new BasicGame();
-        game.getPlayers().add(new Player("Host"));
+        game.getPlayers().add(new String("Host"));
         for(int i=0;i<int_random;i++){
-            game.getPlayers().add(new Player("Test"));
+            game.getPlayers().add(new String("Test"));
         }
         game.setUp();
         this.game =new ConcreteExpertGame(game);

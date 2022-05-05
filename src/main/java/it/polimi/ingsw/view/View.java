@@ -3,12 +3,12 @@ package it.polimi.ingsw.view;
 import it.polimi.ingsw.common.events.*;
 import it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.*;
-import it.polimi.ingsw.model.basicgame.playeritems.Player;
 
 
 import java.util.EventListener;
 
 public abstract class View implements EventListener {
+    private String owner;
     private ViewData data;
 
     public View(){
@@ -25,18 +25,12 @@ public abstract class View implements EventListener {
     }
 
     public void update(NewPlayerCreatedEvent event){
-        if(data.getOwner()==null)
-            data.setOwner(event.getPlayer());
-        data.getPlayers().add(event.getPlayer());
+        if(this.owner==null)
+           this.owner=event.getUsername();
     }
 
     public void update(UpdatedDataEvent event){
-        Player owner = data.getOwner();
         data = event.getViewData();
-        for(Player player:data.getPlayers()){
-            if(player.equals(owner))
-                data.setOwner(player);//viewData has owner== null
-        }
     }
 
     public void update(VictoryEvent event){
@@ -48,12 +42,20 @@ public abstract class View implements EventListener {
     }
 
     public void update(RequestNumPlayersEvent event){
-        if(data.getOwner()==null) {
-            data.setOwner(event.getPlayer());
+        if(this.owner==null) {
+            this.owner=event.getUsername();
         }
     }
 
     public void update(NewMidGamePlayerEvent event){}
 
     public void update(NotifyExceptionEvent event){}
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
 }
