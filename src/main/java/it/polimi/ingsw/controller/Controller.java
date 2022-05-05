@@ -413,7 +413,6 @@ public class Controller implements EventListener {
                 } else {
                     game.fillClouds();
                 }
-                GameHandler.calls(new UpdatedDataEvent(this,game.getData()));
             }
             checkDisconnection();
         }

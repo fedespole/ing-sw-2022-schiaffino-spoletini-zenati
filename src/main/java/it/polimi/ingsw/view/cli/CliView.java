@@ -141,10 +141,6 @@ public class CliView extends View {
         }
     }
 
-    public void update(NewMidGamePlayerEvent event){
-        System.out.println("The game has already started");
-    }
-
     @Override
     public void update(UpdatedDataEvent event) {
         super.update(event);

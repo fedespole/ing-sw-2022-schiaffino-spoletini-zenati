@@ -47,8 +47,6 @@ public abstract class View implements EventListener {
         }
     }
 
-    public void update(NewMidGamePlayerEvent event){}
-
     public void update(NotifyExceptionEvent event){}
 
     public String getOwner() {

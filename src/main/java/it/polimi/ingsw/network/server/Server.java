@@ -3,7 +3,6 @@ package it.polimi.ingsw.network.server;
 import it.polimi.ingsw.common.events.GameEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent;
 import it.polimi.ingsw.common.events.fromClientEvents.PlayerAccessEvent;
-import it.polimi.ingsw.common.events.fromServerEvents.NewMidGamePlayerEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.NewPlayerCreatedEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
 import it.polimi.ingsw.common.exceptions.InvalidUserNameException;
@@ -75,9 +74,10 @@ public class Server implements Runnable {
         // Checks if username given in PlayerAccessEvent matches with one of the usernames in the game, and it is actually disconnected
         if (controller.getDisconnectedPlayers().containsKey(username)) {
             for(RemoteView oldView: this.playingConnection) {
-                System.out.println(oldView.getOwner());
                 if (oldView.getOwner().equals(username)) {
+                    System.out.println("USERNAME: "+username +"CURRENT PLAYER "+game.getCurrPlayer().getUsername());
                     remoteView.update(new NewPlayerCreatedEvent(this, username));
+                    Thread.sleep(100);
                     remoteView.update(new UpdatedDataEvent(this, game.getData()));
                     playingConnection.remove(oldView);
                     playingConnection.add(remoteView);
@@ -86,8 +86,8 @@ public class Server implements Runnable {
                     System.out.println("RECONNECTED:"+username);
                     break;
                 }
-                return;
             }
+            return;
         }
         // If username is not matched
         remoteView.update(new NotifyExceptionEvent(this, new InvalidUserNameException(null)));
