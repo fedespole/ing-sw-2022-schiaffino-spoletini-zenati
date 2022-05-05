@@ -26,7 +26,10 @@ public class RemoteView extends View implements Runnable{
         executor.execute(new SocketWriter<>(clientSocket,serverEvs));
         executor.execute(new SocketReader<>(clientSocket,clientEvs,GameEvent.class));
     }
-
+    public RemoteView(){
+        clientEvs = new LinkedBlockingQueue<>();
+        serverEvs = new LinkedBlockingQueue<>();
+    }
     @Override
     public void run(){
         while(!Thread.currentThread().isInterrupted()){

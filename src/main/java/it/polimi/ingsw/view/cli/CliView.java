@@ -175,17 +175,17 @@ public class CliView extends View {
     @Override
     public void update(VictoryEvent event){
         if(event.getWinningPlayer().equals(this.getOwner()))
-            System.out.println("YOU WON THE GAME");
+            System.out.println(ANSI.PURPLE+"You won!"+ANSI.RESET);
         else{
-            System.out.println("YOU LOST THE GAME");
+            System.out.println(ANSI.PURPLE+"Player "+ event.getWinningPlayer() +" won"+ANSI.RESET);
         }
     }
 
     public void update(TieEvent event){
         if(event.getTiePlayers().contains(this.getOwner()))
-            System.out.println("YOU WON THE GAME (TIE)");
+            System.out.println(ANSI.PURPLE+"You won!"+ANSI.RESET);
         else{
-            System.out.println("YOU LOST THE GAME (TIE)");
+            System.out.println(ANSI.PURPLE+"Players "+ event.getTiePlayers().get(0) + " and " + event.getTiePlayers().get(1) +" won"+ANSI.RESET);
         }
     }
 
