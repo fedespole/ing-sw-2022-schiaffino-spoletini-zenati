@@ -322,7 +322,7 @@ public class BasicGame implements Game{
 
         int minTowers=9; // in 3 player maxTower is 8, so 9 is a ceiling for the minSort
         Player winner = null;
-        ArrayList<Player> tiePlayers = new ArrayList<>();
+        ArrayList<String> tiePlayers = new ArrayList<>();
 
         for(Player player : this.players){
 
@@ -340,8 +340,8 @@ public class BasicGame implements Game{
                     winner = player;
                 // if two players have the same amount of professors and towers placed, they tie
                 else if(winner.getMySchoolBoard().getProfessors().size()==player.getMySchoolBoard().getProfessors().size()){
-                    tiePlayers.add(winner);
-                    tiePlayers.add(player);
+                    tiePlayers.add(winner.getUsername());
+                    tiePlayers.add(player.getUsername());
                 }
             }
         }

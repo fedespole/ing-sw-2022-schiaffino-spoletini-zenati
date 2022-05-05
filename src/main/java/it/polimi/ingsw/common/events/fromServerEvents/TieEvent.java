@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public class TieEvent extends GameEvent {
 
-    private final ArrayList<Player> tiePlayers;
+    private final ArrayList<String> tiePlayers;
 
-    public TieEvent(Object source, ArrayList<Player> tiePlayers){
+    public TieEvent(Object source, ArrayList<String> tiePlayers){
         super(source);
         this.tiePlayers = tiePlayers;
     }
 
-    public ArrayList<Player> getTiePlayers(){return tiePlayers;}
+    public ArrayList<String> getTiePlayers(){return tiePlayers;}
 }

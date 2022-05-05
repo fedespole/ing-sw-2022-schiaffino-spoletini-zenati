@@ -1,7 +1,10 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.common.ANSIcolors.ANSI;
+import it.polimi.ingsw.common.events.GameEvent;
+import it.polimi.ingsw.common.events.GameHandler;
 import it.polimi.ingsw.common.events.fromClientEvents.*;
+import it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.*;
 import it.polimi.ingsw.common.events.fromServerEvents.*;
 import it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.NewPlayerCreatedEvent;
@@ -11,6 +14,7 @@ import it.polimi.ingsw.common.exceptions.*;
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
+import it.polimi.ingsw.model.expertgame.characters.Character;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.view.View;
 
@@ -49,7 +53,7 @@ public class CliView extends View {
                 && ((InvalidUserNameException)event.getException()).getClientThatCausedEx().equals(this.client.getSocket().toString())){
             System.out.println(ANSI.RED + "> Username already chosen" + ANSI.RESET);
             try {
-                Thread.currentThread().sleep(200);
+                Thread.sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -66,11 +70,11 @@ public class CliView extends View {
                 System.out.println(ANSI.RED + "> Student not present in Entrance" + ANSI.RESET);
                 moveStudent();
             }
-            else if(event.getException() instanceof NoMoreSpaceException){             // Potrebbe essere spacchettata
+            else if(event.getException() instanceof NoMoreSpaceException){
                 System.out.println(ANSI.RED + "> Dining room of student is already full, redo the move" + ANSI.RESET);
                 moveStudent();
             }
-            else if(event.getException() instanceof InvalidIslandIndexException){      // Potrebbe essere spacchettata
+            else if(event.getException() instanceof InvalidIslandIndexException){
                 System.out.println(ANSI.RED + "> Island no longer exists, redo the move" + ANSI.RESET);
                 moveStudent();
             }
@@ -78,8 +82,8 @@ public class CliView extends View {
                 System.out.println(ANSI.RED + "> Not allowed to move mother nature this much" + ANSI.RESET);
                 moveMother();
             }
-            else if(event.getException() instanceof InvalidPhaseException || event.getException() instanceof InvalidPlayerException){
-                System.out.println(ANSI.RED + "> Anomaly" + ANSI.RESET);    // Questo non dovrebbe mai capire se cli passiva
+            else if(event.getException() instanceof InvalidPhaseException){
+                System.out.println(ANSI.RED + "> Anomaly" + ANSI.RESET);
             }
         }
 
@@ -128,6 +132,8 @@ public class CliView extends View {
                 this.client.getClientEvs().add(new SelectedGameSetUpEvent(this.getOwner(), numPlayers, false));
                 break;
             } else if (input.equals("expert")) {
+                this.getData().setExpert(true);
+                System.out.println("Whenever is your turn, to use an ability type: character");
                 this.client.getClientEvs().add(new SelectedGameSetUpEvent(this.getOwner(), numPlayers, true));
                 break;
             }
@@ -165,11 +171,24 @@ public class CliView extends View {
             System.out.println(getData().getCurrPlayer().getUsername() + "'s turn");
         }
     }
+
     @Override
     public void update(VictoryEvent event){
         if(event.getWinningPlayer().equals(this.getOwner()))
-            System.out.println("YOU WON");
+            System.out.println("YOU WON THE GAME");
+        else{
+            System.out.println("YOU LOST THE GAME");
+        }
     }
+
+    public void update(TieEvent event){
+        if(event.getTiePlayers().contains(this.getOwner()))
+            System.out.println("YOU WON THE GAME (TIE)");
+        else{
+            System.out.println("YOU LOST THE GAME (TIE)");
+        }
+    }
+
     private void drawAssistantCard() {
         java.lang.String input;
         int assistantCard;
@@ -177,6 +196,7 @@ public class CliView extends View {
         System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
         while (true) {
             input = in.nextLine();
+            useCharacter(input);
             try {
                 assistantCard = Integer.parseInt(input);
                 if(assistantCard < 1 || assistantCard > 10){
@@ -202,6 +222,7 @@ public class CliView extends View {
         int colorIndex=-1;
         while (colorIndex < 0) {
             input = in.nextLine().toLowerCase();
+            useCharacter(input);
             switch (input) {
                 case "green":
                     colorIndex = COLOR.GREEN.ordinal();
@@ -231,6 +252,7 @@ public class CliView extends View {
         while(!thisFlag) {
             in.reset();
             input = in.nextLine().toLowerCase();
+            useCharacter(input);
             switch (input) {
                 case "island" : {
                     System.out.println("Choose island ");
@@ -272,6 +294,7 @@ public class CliView extends View {
         while(true){
             in.reset();
             java.lang.String input = in.nextLine();
+            useCharacter(input);
             try{
                 motherNature= Integer.parseInt(input);
                 break;
@@ -291,6 +314,7 @@ public class CliView extends View {
         while (true) {
             in.reset();
             input = in.nextLine();
+            useCharacter(input);
             try {
                 cloud = Integer.parseInt(input);
                 if (cloud < 0 || cloud > (getData().getNumPlayers() - 1)) {
@@ -305,6 +329,90 @@ public class CliView extends View {
 
         }
         this.client.getClientEvs().add(new ChooseCloudEvent(this.getOwner(), cloud));
+    }
+
+    private void useCharacter(String input){
+        if(this.getData().isExpert()){
+            if(input.equals("character")) {
+                System.out.println("> Choose which character to activate");
+                System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
+                int charIn;
+                while (true) {
+                    in.reset();
+                    String inputChar = in.nextLine();
+                    try {
+                        charIn = Integer.parseInt(inputChar);
+                        if (charIn < 1 || charIn > 12) {
+                            System.out.println(ANSI.RED + "> Please type a number between 1 and 12" + ANSI.RESET);
+                            System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+                        } else break;
+                    } catch (NumberFormatException e) {
+                        System.out.println(ANSI.RED + "> Please enter a number" + ANSI.RESET);
+                        System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+                    }
+                }
+                String inputIsland;
+                int islandInt;
+                switch (charIn){
+                    case 1:
+                        System.out.println("> Pick a student");
+                        System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
+                        in.reset();
+                        String inputStud = in.nextLine();
+                        int studInt = Integer.parseInt(inputStud);
+                        System.out.println("> Choose an island");
+                        System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
+                        in.reset();
+                        inputIsland = in.nextLine();
+                        islandInt = Integer.parseInt(inputIsland);
+                        this.client.getClientEvs().add(new UseCharacter1Event(this.getOwner(), studInt, islandInt));
+                        break;
+                    case 2:
+                        this.client.getClientEvs().add(new UseCharacter2Event(this.getOwner()));
+                        break;
+                    case 3:
+                        System.out.println("> Choose an island");
+                        System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
+                        in.reset();
+                        inputIsland = in.nextLine();
+                        islandInt = Integer.parseInt(inputIsland);
+                        this.client.getClientEvs().add(new UseCharacter3Event(this.getOwner(), islandInt));
+                        break;
+                    case 4:
+                        System.out.println("> Choose a player");
+                        System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
+                        in.reset();
+                        String inputPlayer = in.nextLine();
+                        int playerInt = Integer.parseInt(inputPlayer);
+                        this.client.getClientEvs().add(new UseCharacter3Event(this.getOwner(), playerInt));
+                        break;
+                    /*case 5:
+
+                        break;
+                    case 6:
+                        colorIndex = COLOR.BLUE.ordinal();
+                        break;
+                    case 7:
+                        colorIndex = COLOR.GREEN.ordinal();
+                        break;
+                    case 8:
+                        colorIndex = COLOR.RED.ordinal();
+                        break;
+                    case 9:
+                        colorIndex = COLOR.YELLOW.ordinal();
+                        break;
+                    case 10:
+                        colorIndex = COLOR.PINK.ordinal();
+                        break;
+                    case 11:
+                        colorIndex = COLOR.BLUE.ordinal();
+                        break;
+                    case 12:
+                        charIn=0;
+                        break; */
+                }
+            }
+        }
     }
 
     private void printOwnBoard(){
@@ -362,6 +470,15 @@ public class CliView extends View {
             System.out.print("Cloud "+ i + ": ");
             for (Student student : cloud.getStudents())
                 ANSI.writeInColor(student.getColor(),student.getColor() + "   ");
+            System.out.print("\n");
+        }
+        if(this.getData().isExpert()){
+            ANSI.writeTitle("CHARACTERS");
+            for (int i = 0; i < 3; i++) {
+                Character character = getData().getCharacters().get(i);
+                System.out.print(character.getId() + "(cost: " + character.getCost() + ")");
+                System.out.print("\t");
+            }
             System.out.print("\n");
         }
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");

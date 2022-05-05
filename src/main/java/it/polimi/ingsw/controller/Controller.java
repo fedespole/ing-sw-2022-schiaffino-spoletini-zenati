@@ -104,8 +104,7 @@ public class Controller implements EventListener {
 
     public void update(MoveStudentToDiningEvent event) {
         checkActionMoveStudentPhase();
-    //    if (!((Player)event.getSource()).equals(game.getCurrPlayer()))
-   //         throw new InvalidPlayerException();
+
         if (game.getCurrPlayer().getMySchoolBoard().getDiningRoom()[event.getColorIndex()].size() >= 10) {
             GameHandler.calls(new NotifyExceptionEvent(this, new NoMoreSpaceException()));
             return;
@@ -127,8 +126,7 @@ public class Controller implements EventListener {
 
     public void update(MoveStudentToIslandEvent event) {
         checkActionMoveStudentPhase();
-     //   if (!event.getSource().equals(game.getCurrPlayer()))
- //           throw new InvalidPlayerException();
+
         if (event.getIslandIndex() < 0 || event.getIslandIndex() > game.getIslands().size()) {
             GameHandler.calls(new NotifyExceptionEvent(this, new InvalidIslandIndexException()));
             return;
@@ -149,8 +147,7 @@ public class Controller implements EventListener {
 
     public void update(MoveMotherEvent event) {
         checkActionMoveMotherPhase();
-    //    if (!event.getSource().equals(game.getCurrPlayer()))
-     //       throw new InvalidPlayerException();
+
         if (event.getIndex() < 0 || event.getIndex() > game.getCurrPlayer().getChosenCard().getSteps()) {
             GameHandler.calls(new NotifyExceptionEvent(this, new InvalidStepsException()));
             return;
@@ -161,8 +158,7 @@ public class Controller implements EventListener {
 
     public void update(ChooseCloudEvent event) {
         checkActionChooseCloudPhase();
-        //        if (!event.getSource().equals(game.getCurrPlayer()))
-       //     throw new InvalidPlayerException();
+
         game.chooseCloud(event.getIndex());
         GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
         if ((game instanceof GameMode2) || (game instanceof GameMode6) || (game instanceof GameMode8) || (game instanceof GameMode9)) {

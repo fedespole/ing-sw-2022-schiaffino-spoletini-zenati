@@ -2,6 +2,7 @@ package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
+import it.polimi.ingsw.model.expertgame.characters.Character;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,11 +17,12 @@ public class ViewData implements Serializable {
     private  ArrayList<Cloud> clouds;
     private  StatusGame statusGame;
     private String winner;
-    private ArrayList<Player> tiePlayers;
+    private ArrayList<String> tiePlayers;
 
+    private boolean isExpert;
     private ArrayList<Character> characters;
 
-    public ViewData(){;
+    public ViewData(){
         this.players= new ArrayList<>();
     }
 
@@ -36,15 +38,21 @@ public class ViewData implements Serializable {
         //owner == null when we send a viewData to View
     }
 
+    public boolean isExpert() {
+        return isExpert;
+    }
+
+    public void setExpert(boolean expert) {
+        isExpert = expert;
+    }
+
     public int getNumPlayers() {
         return numPlayers;
     }
 
-
     public ArrayList<Player> getPlayers() {
         return players;
     }
-
 
     public String getWinner() {
         return winner;
@@ -54,12 +62,16 @@ public class ViewData implements Serializable {
         this.winner = winner;
     }
 
-    public ArrayList<Player> getTiePlayers() {
+    public ArrayList<String> getTiePlayers() {
         return tiePlayers;
     }
 
-    public void setTiePlayers(ArrayList<Player> tiePlayers) {
+    public void setTiePlayers(ArrayList<String> tiePlayers) {
         this.tiePlayers = tiePlayers;
+    }
+
+    public ArrayList<Character> getCharacters() {
+        return characters;
     }
 
     public void setCharacters(ArrayList<Character> characters) {

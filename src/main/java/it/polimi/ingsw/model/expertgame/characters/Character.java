@@ -2,7 +2,9 @@ package it.polimi.ingsw.model.expertgame.characters;
 
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 
-public abstract class Character {
+import java.io.Serializable;
+
+public abstract class Character implements Serializable {
     private int cost;
     private int id;
     private boolean hasBeenUsed;
