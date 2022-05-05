@@ -75,6 +75,7 @@ public class Server implements Runnable {
         // Checks if username given in PlayerAccessEvent matches with one of the usernames in the game, and it is actually disconnected
         if (controller.getDisconnectedPlayers().containsKey(username)) {
             for(RemoteView oldView: this.playingConnection) {
+                System.out.println(oldView.getOwner());
                 if (oldView.getOwner().equals(username)) {
                     remoteView.update(new NewPlayerCreatedEvent(this, username));
                     remoteView.update(new UpdatedDataEvent(this, game.getData()));
