@@ -161,7 +161,8 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     @Override
     public ViewData getData(){//returns a ViewData with a list of characters
         ViewData viewData = game.getData();
-        viewData.setCharacters((ArrayList<it.polimi.ingsw.model.expertgame.characters.Character>) characters.clone());
+        viewData.setCharacters((ArrayList<Character>) characters.clone());
+        viewData.setExpert(true);
         return viewData;
     }
 

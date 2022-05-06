@@ -18,6 +18,7 @@ import it.polimi.ingsw.model.expertgame.gamemodes.GameMode2;
 import it.polimi.ingsw.model.expertgame.gamemodes.GameMode6;
 import it.polimi.ingsw.model.expertgame.gamemodes.GameMode8;
 import it.polimi.ingsw.model.expertgame.gamemodes.GameMode9;
+import it.polimi.ingsw.view.ViewData;
 
 import java.util.*;
 
@@ -172,7 +173,9 @@ public class Controller implements EventListener {
             if (character instanceof Character1) {
                 checkAbility(character);
                 ((Character1) character).useAbility(game, event.getIndexStudent(), game.getIslands().get(event.getIndexIsland()));
-                GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
+                ViewData data = game.getData();
+                data.setIndexCharacterUsed(1);
+                GameHandler.calls(new UpdatedDataEvent(this,data));//return updated version of a ViewData object
                 return;
             }
         }
@@ -185,6 +188,9 @@ public class Controller implements EventListener {
             if (character instanceof Character2) {
                 checkAbility(character);
                 game = ((Character2) character).useAbility(game);
+                ViewData data = game.getData();
+                data.setIndexCharacterUsed(2);
+                GameHandler.calls(new UpdatedDataEvent(this,data));//return updated version of a ViewData object
                 return;
             }
         }
@@ -197,7 +203,9 @@ public class Controller implements EventListener {
             if (character instanceof Character3) {
                 checkAbility(character);
                 ((Character3) character).useAbility(game, event.getIndexIsland());
-                GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
+                ViewData data = game.getData();
+                data.setIndexCharacterUsed(3);
+                GameHandler.calls(new UpdatedDataEvent(this,data));//return updated version of a ViewData object
                 return;
             }
         }
@@ -210,7 +218,9 @@ public class Controller implements EventListener {
             if (character instanceof Character4) {
                 checkAbility(character);
                 ((Character4) character).useAbility(game.getPlayers().get(event.getIndexPlayer()));
-                GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
+                ViewData data = game.getData();
+                data.setIndexCharacterUsed(4);
+                GameHandler.calls(new UpdatedDataEvent(this,data));//return updated version of a ViewData object
                 return;
             }
         }
@@ -223,7 +233,9 @@ public class Controller implements EventListener {
             if (character instanceof Character5) {
                 checkAbility(character);
                 ((Character5) character).useAbility(game, game.getIslands().get(event.getIndexIsland()));
-                GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
+                ViewData data = game.getData();
+                data.setIndexCharacterUsed(5);
+                GameHandler.calls(new UpdatedDataEvent(this,data));//return updated version of a ViewData object
                 return;
             }
         }
@@ -236,6 +248,9 @@ public class Controller implements EventListener {
             if (character instanceof Character6) {
                 checkAbility(character);
                 game = ((Character6) character).useAbility(game);
+                ViewData data = game.getData();
+                data.setIndexCharacterUsed(6);
+                GameHandler.calls(new UpdatedDataEvent(this,data));//return updated version of a ViewData object
                 return;
             }
         }
@@ -252,7 +267,9 @@ public class Controller implements EventListener {
             if (character instanceof Character7) {
                 checkAbility(character);
                 ((Character7) character).useAbility(game, colors);
-                GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
+                ViewData data = game.getData();
+                data.setIndexCharacterUsed(7);
+                GameHandler.calls(new UpdatedDataEvent(this,data));//return updated version of a ViewData object
                 return;
             }
         }
@@ -265,6 +282,9 @@ public class Controller implements EventListener {
             if (character instanceof Character8) {
                 checkAbility(character);
                 game = ((Character8) character).useAbility(game);
+                ViewData data = game.getData();
+                data.setIndexCharacterUsed(8);
+                GameHandler.calls(new UpdatedDataEvent(this,data));//return updated version of a ViewData object
                 return;
             }
         }
@@ -277,7 +297,9 @@ public class Controller implements EventListener {
             if (character instanceof Character9) {
                 checkAbility(character);
                 game = ((Character9) character).useAbility(game, COLOR.values()[event.getIndexColor()]);
-                GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
+                ViewData data = game.getData();
+                data.setIndexCharacterUsed(9);
+                GameHandler.calls(new UpdatedDataEvent(this,data));//return updated version of a ViewData object
                 return;
             }
         }
@@ -294,7 +316,9 @@ public class Controller implements EventListener {
             if (character instanceof Character10) {
                 checkAbility(character);
                 ((Character10) character).useAbility(game, colors);
-                GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
+                ViewData data = game.getData();
+                data.setIndexCharacterUsed(10);
+                GameHandler.calls(new UpdatedDataEvent(this,data));//return updated version of a ViewData object
                 return;
             }
         }
@@ -307,7 +331,9 @@ public class Controller implements EventListener {
             if (character instanceof Character11) {
                 checkAbility(character);
                 ((Character11) character).useAbility(game, event.getIndexStudent());
-                GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
+                ViewData data = game.getData();
+                data.setIndexCharacterUsed(11);
+                GameHandler.calls(new UpdatedDataEvent(this,data));//return updated version of a ViewData object
                 return;
             }
         }
@@ -320,7 +346,9 @@ public class Controller implements EventListener {
             if (character instanceof Character12) {
                 checkAbility(character);
                 ((Character12) character).useAbility(game, COLOR.values()[event.getIndexColor()]);
-                GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
+                ViewData data = game.getData();
+                data.setIndexCharacterUsed(12);
+                GameHandler.calls(new UpdatedDataEvent(this,data));//return updated version of a ViewData object
                 return;
             }
         }

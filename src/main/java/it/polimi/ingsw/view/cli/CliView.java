@@ -132,7 +132,6 @@ public class CliView extends View {
                 this.client.getClientEvs().add(new SelectedGameSetUpEvent(this.getOwner(), numPlayers, false));
                 break;
             } else if (input.equals("expert")) {
-                this.getData().setExpert(true);
                 System.out.println("Whenever is your turn, to use an ability type: character");
                 this.client.getClientEvs().add(new SelectedGameSetUpEvent(this.getOwner(), numPlayers, true));
                 break;
@@ -196,7 +195,10 @@ public class CliView extends View {
         System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
         while (true) {
             input = in.nextLine();
-            useCharacter(input);
+            if(input.equals("character") && getData().isExpert()) {
+                useCharacter();
+                return;
+            }
             try {
                 assistantCard = Integer.parseInt(input);
                 if(assistantCard < 1 || assistantCard > 10){
@@ -219,32 +221,12 @@ public class CliView extends View {
         System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
         in.reset();
         java.lang.String input;
-        int colorIndex=-1;
-        while (colorIndex < 0) {
-            input = in.nextLine().toLowerCase();
-            useCharacter(input);
-            switch (input) {
-                case "green":
-                    colorIndex = COLOR.GREEN.ordinal();
-                    break;
-                case "red":
-                    colorIndex = COLOR.RED.ordinal();
-                    break;
-                case "yellow":
-                    colorIndex = COLOR.YELLOW.ordinal();
-                    break;
-                case "pink":
-                    colorIndex = COLOR.PINK.ordinal();
-                    break;
-                case "blue":
-                    colorIndex = COLOR.BLUE.ordinal();
-                    break;
-                default:
-                    System.out.println(ANSI.RED + "> Please type a color from those above" + ANSI.RESET);
-                    System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
-                    in.reset();
-            }
+        input = in.nextLine().toLowerCase();
+        if(input.equals("character") && getData().isExpert()) {
+            useCharacter();
+            return;
         }
+        int colorIndex = chooseColor(input);
         System.out.println("> Choose destination: Island or DiningRoom");
         System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
         boolean thisFlag = false;
@@ -252,7 +234,6 @@ public class CliView extends View {
         while(!thisFlag) {
             in.reset();
             input = in.nextLine().toLowerCase();
-            useCharacter(input);
             switch (input) {
                 case "island" : {
                     System.out.println("Choose island ");
@@ -294,7 +275,10 @@ public class CliView extends View {
         while(true){
             in.reset();
             java.lang.String input = in.nextLine();
-            useCharacter(input);
+            if(input.equals("character") && getData().isExpert()) {
+                useCharacter();
+                return;
+            }
             try{
                 motherNature= Integer.parseInt(input);
                 break;
@@ -314,7 +298,10 @@ public class CliView extends View {
         while (true) {
             in.reset();
             input = in.nextLine();
-            useCharacter(input);
+            if(input.equals("character") && getData().isExpert()) {
+                useCharacter();
+                return;
+            }
             try {
                 cloud = Integer.parseInt(input);
                 if (cloud < 0 || cloud > (getData().getNumPlayers() - 1)) {
@@ -331,88 +318,119 @@ public class CliView extends View {
         this.client.getClientEvs().add(new ChooseCloudEvent(this.getOwner(), cloud));
     }
 
-    private void useCharacter(String input){
-        if(this.getData().isExpert()){
-            if(input.equals("character")) {
-                System.out.println("> Choose which character to activate");
-                System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
-                int charIn;
-                while (true) {
-                    in.reset();
-                    String inputChar = in.nextLine();
-                    try {
-                        charIn = Integer.parseInt(inputChar);
-                        if (charIn < 1 || charIn > 12) {
-                            System.out.println(ANSI.RED + "> Please type a number between 1 and 12" + ANSI.RESET);
-                            System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
-                        } else break;
-                    } catch (NumberFormatException e) {
-                        System.out.println(ANSI.RED + "> Please enter a number" + ANSI.RESET);
+    private void useCharacter(){
+            System.out.println("> Choose which character to activate");
+            System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
+            int charIn;
+            while (true) {
+                in.reset();
+                String inputChar = in.nextLine();
+                try {
+                    charIn = Integer.parseInt(inputChar);
+                    if (charIn < 1 || charIn > 12) {
+                        System.out.println(ANSI.RED + "> Please type a number between 1 and 12" + ANSI.RESET);
                         System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
-                    }
-                }
-                String inputIsland;
-                int islandInt;
-                switch (charIn){
-                    case 1:
-                        System.out.println("> Pick a student");
-                        System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
-                        in.reset();
-                        String inputStud = in.nextLine();
-                        int studInt = Integer.parseInt(inputStud);
-                        System.out.println("> Choose an island");
-                        System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
-                        in.reset();
-                        inputIsland = in.nextLine();
-                        islandInt = Integer.parseInt(inputIsland);
-                        this.client.getClientEvs().add(new UseCharacter1Event(this.getOwner(), studInt, islandInt));
-                        break;
-                    case 2:
-                        this.client.getClientEvs().add(new UseCharacter2Event(this.getOwner()));
-                        break;
-                    case 3:
-                        System.out.println("> Choose an island");
-                        System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
-                        in.reset();
-                        inputIsland = in.nextLine();
-                        islandInt = Integer.parseInt(inputIsland);
-                        this.client.getClientEvs().add(new UseCharacter3Event(this.getOwner(), islandInt));
-                        break;
-                    case 4:
-                        System.out.println("> Choose a player");
-                        System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
-                        in.reset();
-                        String inputPlayer = in.nextLine();
-                        int playerInt = Integer.parseInt(inputPlayer);
-                        this.client.getClientEvs().add(new UseCharacter3Event(this.getOwner(), playerInt));
-                        break;
-                    /*case 5:
-
-                        break;
-                    case 6:
-                        colorIndex = COLOR.BLUE.ordinal();
-                        break;
-                    case 7:
-                        colorIndex = COLOR.GREEN.ordinal();
-                        break;
-                    case 8:
-                        colorIndex = COLOR.RED.ordinal();
-                        break;
-                    case 9:
-                        colorIndex = COLOR.YELLOW.ordinal();
-                        break;
-                    case 10:
-                        colorIndex = COLOR.PINK.ordinal();
-                        break;
-                    case 11:
-                        colorIndex = COLOR.BLUE.ordinal();
-                        break;
-                    case 12:
-                        charIn=0;
-                        break; */
+                    } else break;
+                } catch (NumberFormatException e) {
+                    System.out.println(ANSI.RED + "> Please enter a number" + ANSI.RESET);
+                    System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
                 }
             }
-        }
+            String inputIsland;
+            int islandInt;
+            switch (charIn){
+                case 1:
+                    //TODO usiamo i colori non gli indici
+                    System.out.println("> Pick a student");
+                    System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
+                    in.reset();
+                    String inputStud = in.nextLine();
+                    int studInt = Integer.parseInt(inputStud);
+                    System.out.println("> Choose an island");
+                    System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
+                    in.reset();
+                    inputIsland = in.nextLine();
+                    islandInt = Integer.parseInt(inputIsland);
+                    this.client.getClientEvs().add(new UseCharacter1Event(this.getOwner(), studInt, islandInt));
+                    break;
+                case 2:
+                    this.client.getClientEvs().add(new UseCharacter2Event(this.getOwner()));
+                    break;
+                case 3:
+                    System.out.println("> Choose an island");
+                    System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
+                    in.reset();
+                    inputIsland = in.nextLine();
+                    islandInt = Integer.parseInt(inputIsland);
+                    this.client.getClientEvs().add(new UseCharacter3Event(this.getOwner(), islandInt));
+                    break;
+                case 4:
+                    //TODO inutile dargli l'indice del current player,lo sa gia
+                    this.client.getClientEvs().add(new UseCharacter4Event(this.getOwner(), getData().getPlayers().indexOf(getData().getCurrPlayer())));
+                    break;
+                case 5:
+                    System.out.println("> Choose an island");
+                    System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
+                    in.reset();
+                    inputIsland = in.nextLine();
+                    islandInt = Integer.parseInt(inputIsland);
+                    this.client.getClientEvs().add(new UseCharacter5Event(this.getOwner(), islandInt));
+                    break;
+                case 6:
+                    this.client.getClientEvs().add(new UseCharacter6Event(this.getOwner()));
+                    break;
+                case 7:
+                    ArrayList<Integer> colors = new ArrayList<>();
+                    for(int i=0;i<2;i++) {
+                        System.out.println("> Choose a color from the entrance or type stop ");
+                        System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
+                        String color = in.nextLine().toLowerCase();
+                        if(color.equals("stop"))
+                            break;
+                        colors.add(chooseColor(color));
+                        System.out.println("> Choose a color from the card");
+                        System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
+                        color = in.nextLine().toLowerCase();
+                        colors.add(chooseColor(color));
+                    }
+                    this.client.getClientEvs().add(new UseCharacter7Event(this.getOwner(), colors));
+                    break;
+                case 8:
+                    this.client.getClientEvs().add(new UseCharacter8Event(this.getOwner()));
+                    break;
+                case 9:
+                    System.out.println("> Choose a color");
+                    System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
+                    String input= in.nextLine().toLowerCase();
+                    int colorIndex=  chooseColor(input);
+                    this.client.getClientEvs().add(new UseCharacter9Event(this.getOwner(),colorIndex));
+                    break;
+                case 10:
+                    colors = new ArrayList<>();
+                    for(int i=0;i<2;i++) {
+                        System.out.println("> Choose a color from the dining room or type stop ");
+                        System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
+                        String color = in.nextLine().toLowerCase();
+                        if(color.equals("stop"))
+                            break;
+                        colors.add(chooseColor(color));
+                        System.out.println("> Choose a color from the entrance");
+                        System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
+                        color = in.nextLine().toLowerCase();
+                        colors.add(chooseColor(color));
+                    }
+                    this.client.getClientEvs().add(new UseCharacter10Event(this.getOwner(), colors));
+                case 11:
+                    //TODO  bisogna correggere il character
+                    break;
+                case 12:
+                    System.out.println("> Choose a color");
+                    System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
+                    String inputColor= in.nextLine().toLowerCase();
+                    int color=  chooseColor(inputColor);
+                    this.client.getClientEvs().add(new UseCharacter12Event(this.getOwner(),color));
+                    break;
+            }
     }
 
     private void printOwnBoard(){
@@ -477,10 +495,35 @@ public class CliView extends View {
             for (int i = 0; i < 3; i++) {
                 Character character = getData().getCharacters().get(i);
                 System.out.print(character.getId() + "(cost: " + character.getCost() + ")");
+                //TODO bisogna stampare anche le cose contenute nel character,come numero divieti o studenti
                 System.out.print("\t");
             }
             System.out.print("\n");
+            if(getData().getIndexCharacterUsed()!=-1)
+                System.out.println("Character "+getData().getIndexCharacterUsed()+" has been used in this round by "+getData().getCurrPlayer());
         }
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+    }
+
+    private int chooseColor(String input){
+        while(true) {
+            switch (input) {
+                case "green":
+                    return COLOR.GREEN.ordinal();
+                case "red":
+                    return COLOR.RED.ordinal();
+                case "yellow":
+                    return COLOR.YELLOW.ordinal();
+                case "pink":
+                    return COLOR.PINK.ordinal();
+                case "blue":
+                    return COLOR.BLUE.ordinal();
+                default:
+                    System.out.println(ANSI.RED + "> Please type a color from those above" + ANSI.RESET);
+                    System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
+                    in.reset();
+                    input=in.nextLine();
+            }
+        }
     }
 }

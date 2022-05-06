@@ -22,6 +22,7 @@ public class BasicGame implements Game{
     private final StatusGame statusGame;
     private boolean lastRound;
 
+
     public BasicGame() {
         this.bag = new Bag();
         this.islands = new ArrayList<ArrayList<Island>>();
@@ -353,7 +354,7 @@ public class BasicGame implements Game{
 
     @Override
     public ViewData getData(){
-        return new ViewData(players,numPlayers,islands,professors,motherNature,currPlayer,clouds,statusGame);
+        return new ViewData(players,numPlayers,islands,professors,motherNature,currPlayer,clouds,statusGame,false);
     }
 
     @Override

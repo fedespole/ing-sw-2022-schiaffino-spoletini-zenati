@@ -22,11 +22,13 @@ public class ViewData implements Serializable {
     private boolean isExpert;
     private ArrayList<Character> characters;
 
+    private int indexCharacterUsed=-1;
+
     public ViewData(){
         this.players= new ArrayList<>();
     }
 
-    public ViewData(ArrayList<Player> players, int numPlayers, ArrayList<ArrayList<Island>> islands, ArrayList<Professor> professors, int motherNature, Player currPlayer, ArrayList<Cloud> clouds, StatusGame statusGame) {
+    public ViewData(ArrayList<Player> players, int numPlayers, ArrayList<ArrayList<Island>> islands, ArrayList<Professor> professors, int motherNature, Player currPlayer, ArrayList<Cloud> clouds, StatusGame statusGame,boolean isExpert) {
         this.players = players;
         this.numPlayers = numPlayers;
         this.islands = islands;
@@ -100,5 +102,13 @@ public class ViewData implements Serializable {
 
     public ArrayList<Cloud> getClouds() {
         return clouds;
+    }
+
+    public int getIndexCharacterUsed() {
+        return indexCharacterUsed;
+    }
+
+    public void setIndexCharacterUsed(int indexCharacterUsed) {
+        this.indexCharacterUsed = indexCharacterUsed;
     }
 }
