@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
+import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Island;
 import it.polimi.ingsw.model.basicgame.Student;
@@ -19,14 +20,19 @@ public class Character1 extends Character {
         }
     }
 
-    public void useAbility(Game currGame, int index, ArrayList<Island> island){
-
+    public void useAbility(Game currGame, int colorIndex, ArrayList<Island> island){
+        COLOR color= COLOR.values()[colorIndex];
         playerPayment(currGame.getCurrPlayer());
         changeCost();
-        Student student = students.get(index);
-        students.remove(index);
-        island.get(0).addStudent(student);
-        students.add(currGame.getBag().removeStudent());
+        for(int i=0;i<students.size();i++) {
+            if(students.get(i).getColor().equals(color)) {
+                Student student = students.get(i);
+                students.remove(student);
+                island.get(0).addStudent(student);
+                students.add(currGame.getBag().removeStudent());
+                break;
+            }
+        }
     }
 
     public ArrayList<Student> getStudents() {

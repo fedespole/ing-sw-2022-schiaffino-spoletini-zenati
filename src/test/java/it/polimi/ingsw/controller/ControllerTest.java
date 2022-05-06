@@ -209,7 +209,7 @@ public class ControllerTest {
                 controller.getGame().getCurrPlayer().setCoins(6);
                 int index = controller.getGame().getPlayers().indexOf(controller.getGame().getCurrPlayer());
                 int old_steps = controller.getGame().getCurrPlayer().getChosenCard().getSteps();
-                UseCharacter4Event event = new UseCharacter4Event(controller.getGame().getCurrPlayer(),index);
+                UseCharacter4Event event = new UseCharacter4Event(controller.getGame().getCurrPlayer());
                 controller.update(event);
                 int new_steps = controller.getGame().getCurrPlayer().getChosenCard().getSteps();
                 assertEquals(old_steps+2,new_steps);

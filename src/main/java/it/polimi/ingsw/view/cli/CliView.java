@@ -21,6 +21,7 @@ import it.polimi.ingsw.view.View;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class CliView extends View {
@@ -336,22 +337,22 @@ public class CliView extends View {
                     System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
                 }
             }
-            String inputIsland;
-            int islandInt;
+            String inputString;
+            int inputInteger;
+            int color;
             switch (charIn){
                 case 1:
-                    //TODO usiamo i colori non gli indici
-                    System.out.println("> Pick a student");
+                    System.out.println("> Pick a color of a student present on the card");
                     System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
                     in.reset();
-                    String inputStud = in.nextLine();
-                    int studInt = Integer.parseInt(inputStud);
+                    inputString = in.nextLine().toLowerCase(Locale.ROOT);
+                    color = chooseColor(inputString);
                     System.out.println("> Choose an island");
                     System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
                     in.reset();
-                    inputIsland = in.nextLine();
-                    islandInt = Integer.parseInt(inputIsland);
-                    this.client.getClientEvs().add(new UseCharacter1Event(this.getOwner(), studInt, islandInt));
+                    inputString = in.nextLine();
+                    inputInteger = Integer.parseInt(inputString);
+                    this.client.getClientEvs().add(new UseCharacter1Event(this.getOwner(), color, inputInteger));
                     break;
                 case 2:
                     this.client.getClientEvs().add(new UseCharacter2Event(this.getOwner()));
@@ -360,21 +361,25 @@ public class CliView extends View {
                     System.out.println("> Choose an island");
                     System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
                     in.reset();
-                    inputIsland = in.nextLine();
-                    islandInt = Integer.parseInt(inputIsland);
-                    this.client.getClientEvs().add(new UseCharacter3Event(this.getOwner(), islandInt));
+                    inputString = in.nextLine();
+                    inputInteger = Integer.parseInt(inputString);
+                    this.client.getClientEvs().add(new UseCharacter3Event(this.getOwner(), inputInteger));
                     break;
                 case 4:
-                    //TODO inutile dargli l'indice del current player,lo sa gia
-                    this.client.getClientEvs().add(new UseCharacter4Event(this.getOwner(), getData().getPlayers().indexOf(getData().getCurrPlayer())));
+                    if(getData().getStatusGame().getStatus().equals(STATUS.PLANNING)) {
+                        System.out.println(ANSI.RED +"> Before picking character 4, you should select an assistant card"+ANSI.RESET);
+                        this.drawAssistantCard();
+
+                    }else
+                        this.client.getClientEvs().add(new UseCharacter4Event(this.getOwner()));
                     break;
                 case 5:
                     System.out.println("> Choose an island");
                     System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
                     in.reset();
-                    inputIsland = in.nextLine();
-                    islandInt = Integer.parseInt(inputIsland);
-                    this.client.getClientEvs().add(new UseCharacter5Event(this.getOwner(), islandInt));
+                    inputString = in.nextLine();
+                    inputInteger = Integer.parseInt(inputString);
+                    this.client.getClientEvs().add(new UseCharacter5Event(this.getOwner(), inputInteger));
                     break;
                 case 6:
                     this.client.getClientEvs().add(new UseCharacter6Event(this.getOwner()));
@@ -384,14 +389,14 @@ public class CliView extends View {
                     for(int i=0;i<2;i++) {
                         System.out.println("> Choose a color from the entrance or type stop ");
                         System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
-                        String color = in.nextLine().toLowerCase();
-                        if(color.equals("stop"))
+                        inputString = in.nextLine().toLowerCase();
+                        if(inputString.equals("stop"))
                             break;
-                        colors.add(chooseColor(color));
+                        colors.add(chooseColor(inputString));
                         System.out.println("> Choose a color from the card");
                         System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
-                        color = in.nextLine().toLowerCase();
-                        colors.add(chooseColor(color));
+                        inputString = in.nextLine().toLowerCase();
+                        colors.add(chooseColor(inputString));
                     }
                     this.client.getClientEvs().add(new UseCharacter7Event(this.getOwner(), colors));
                     break;
@@ -401,34 +406,39 @@ public class CliView extends View {
                 case 9:
                     System.out.println("> Choose a color");
                     System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
-                    String input= in.nextLine().toLowerCase();
-                    int colorIndex=  chooseColor(input);
-                    this.client.getClientEvs().add(new UseCharacter9Event(this.getOwner(),colorIndex));
+                    inputString= in.nextLine().toLowerCase();
+                    color=  chooseColor(inputString);
+                    this.client.getClientEvs().add(new UseCharacter9Event(this.getOwner(),color));
                     break;
                 case 10:
                     colors = new ArrayList<>();
                     for(int i=0;i<2;i++) {
                         System.out.println("> Choose a color from the dining room or type stop ");
                         System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
-                        String color = in.nextLine().toLowerCase();
-                        if(color.equals("stop"))
+                        inputString= in.nextLine().toLowerCase();
+                        if(inputString.equals("stop"))
                             break;
-                        colors.add(chooseColor(color));
+                        colors.add(chooseColor(inputString));
                         System.out.println("> Choose a color from the entrance");
                         System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
-                        color = in.nextLine().toLowerCase();
-                        colors.add(chooseColor(color));
+                        inputString = in.nextLine().toLowerCase();
+                        colors.add(chooseColor(inputString));
                     }
                     this.client.getClientEvs().add(new UseCharacter10Event(this.getOwner(), colors));
                 case 11:
-                    //TODO  bisogna correggere il character
+                    System.out.println("> Pick a color of a student present on the card");
+                    System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
+                    in.reset();
+                    inputString = in.nextLine().toLowerCase(Locale.ROOT);
+                    color = chooseColor(inputString);
+                    this.client.getClientEvs().add(new UseCharacter11Event(this.getOwner(), color));
                     break;
                 case 12:
                     System.out.println("> Choose a color");
                     System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
-                    String inputColor= in.nextLine().toLowerCase();
-                    int color=  chooseColor(inputColor);
-                    this.client.getClientEvs().add(new UseCharacter12Event(this.getOwner(),color));
+                    inputString= in.nextLine().toLowerCase();
+                    inputInteger=  chooseColor(inputString);
+                    this.client.getClientEvs().add(new UseCharacter12Event(this.getOwner(),inputInteger));
                     break;
             }
     }
@@ -461,6 +471,8 @@ public class CliView extends View {
             System.out.println("");
         }
         ANSI.writeTitle("TOWERS: " + playerOwner.getMySchoolBoard().getTowers().size());
+        if(getData().isExpert())
+            ANSI.writeTitle("\n YOU HAVE "+playerOwner.getCoins()+ " COINS");
 
     }
 
@@ -500,7 +512,7 @@ public class CliView extends View {
             }
             System.out.print("\n");
             if(getData().getIndexCharacterUsed()!=-1)
-                System.out.println("Character "+getData().getIndexCharacterUsed()+" has been used in this round by "+getData().getCurrPlayer());
+                System.out.println("Character "+getData().getIndexCharacterUsed()+" has been used in this round by "+getData().getCurrPlayer().getUsername());
         }
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
     }

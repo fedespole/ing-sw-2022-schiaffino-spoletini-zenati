@@ -3,14 +3,13 @@ package it.polimi.ingsw.common.events.fromClientEvents.charactersEvents;
 import it.polimi.ingsw.common.events.GameEvent;
 
 public class UseCharacter11Event extends GameEvent {
-    private final int indexStudent;
-//TODO cambiare da index a color(o color.index)
-    public UseCharacter11Event(Object source,int indexStudent) {
+    private final int indexColor;
+    public UseCharacter11Event(Object source,int indexColor) {
         super(source);
-        this.indexStudent = indexStudent;
+        this.indexColor = indexColor;
     }
 
-    public int getIndexStudent() {
-        return indexStudent;
+    public int getIndexColor() {
+        return indexColor;
     }
 }

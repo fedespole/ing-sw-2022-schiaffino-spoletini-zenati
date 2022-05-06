@@ -159,7 +159,6 @@ public class Controller implements EventListener {
 
     public void update(ChooseCloudEvent event) {
         checkActionChooseCloudPhase();
-
         game.chooseCloud(event.getIndex());
         GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
         if ((game instanceof GameMode2) || (game instanceof GameMode6) || (game instanceof GameMode8) || (game instanceof GameMode9)) {
@@ -171,8 +170,9 @@ public class Controller implements EventListener {
     public void update(UseCharacter1Event event) {
         for (Character character : ((ConcreteExpertGame)game).getCharacters()) {
             if (character instanceof Character1) {
-                checkAbility(character);
-                ((Character1) character).useAbility(game, event.getIndexStudent(), game.getIslands().get(event.getIndexIsland()));
+                if(checkAbility(character))
+                    return;
+                ((Character1) character).useAbility(game, event.getIndexColor(), game.getIslands().get(event.getIndexIsland()));
                 ViewData data = game.getData();
                 data.setIndexCharacterUsed(1);
                 GameHandler.calls(new UpdatedDataEvent(this,data));//return updated version of a ViewData object
@@ -186,7 +186,8 @@ public class Controller implements EventListener {
         ConcreteExpertGame currGame = (ConcreteExpertGame) game;
         for (Character character : currGame.getCharacters()) {
             if (character instanceof Character2) {
-                checkAbility(character);
+                if(checkAbility(character))
+                    return;
                 game = ((Character2) character).useAbility(game);
                 ViewData data = game.getData();
                 data.setIndexCharacterUsed(2);
@@ -201,7 +202,8 @@ public class Controller implements EventListener {
         ConcreteExpertGame currGame = (ConcreteExpertGame) game;
         for (Character character : currGame.getCharacters()) {
             if (character instanceof Character3) {
-                checkAbility(character);
+                if(checkAbility(character))
+                    return;
                 ((Character3) character).useAbility(game, event.getIndexIsland());
                 ViewData data = game.getData();
                 data.setIndexCharacterUsed(3);
@@ -216,8 +218,9 @@ public class Controller implements EventListener {
         ConcreteExpertGame currGame = (ConcreteExpertGame) game;
         for (Character character : currGame.getCharacters()) {
             if (character instanceof Character4) {
-                checkAbility(character);
-                ((Character4) character).useAbility(game.getPlayers().get(event.getIndexPlayer()));
+                if(checkAbility(character))
+                    return;
+                ((Character4) character).useAbility(game.getCurrPlayer());
                 ViewData data = game.getData();
                 data.setIndexCharacterUsed(4);
                 GameHandler.calls(new UpdatedDataEvent(this,data));//return updated version of a ViewData object
@@ -231,7 +234,8 @@ public class Controller implements EventListener {
         ConcreteExpertGame currGame = (ConcreteExpertGame) game;
         for (Character character : currGame.getCharacters()) {
             if (character instanceof Character5) {
-                checkAbility(character);
+                if(checkAbility(character))
+                    return;
                 ((Character5) character).useAbility(game, game.getIslands().get(event.getIndexIsland()));
                 ViewData data = game.getData();
                 data.setIndexCharacterUsed(5);
@@ -246,7 +250,8 @@ public class Controller implements EventListener {
         ConcreteExpertGame currGame = (ConcreteExpertGame) game;
         for (Character character : currGame.getCharacters()) {
             if (character instanceof Character6) {
-                checkAbility(character);
+                if(checkAbility(character))
+                    return;
                 game = ((Character6) character).useAbility(game);
                 ViewData data = game.getData();
                 data.setIndexCharacterUsed(6);
@@ -265,7 +270,8 @@ public class Controller implements EventListener {
         }
         for (Character character : currGame.getCharacters()) {
             if (character instanceof Character7) {
-                checkAbility(character);
+                if(checkAbility(character))
+                    return;
                 ((Character7) character).useAbility(game, colors);
                 ViewData data = game.getData();
                 data.setIndexCharacterUsed(7);
@@ -280,7 +286,8 @@ public class Controller implements EventListener {
         ConcreteExpertGame currGame = (ConcreteExpertGame) game;
         for (Character character : currGame.getCharacters()) {
             if (character instanceof Character8) {
-                checkAbility(character);
+                if(checkAbility(character))
+                    return;
                 game = ((Character8) character).useAbility(game);
                 ViewData data = game.getData();
                 data.setIndexCharacterUsed(8);
@@ -295,7 +302,8 @@ public class Controller implements EventListener {
         ConcreteExpertGame currGame = (ConcreteExpertGame) game;
         for (Character character : currGame.getCharacters()) {
             if (character instanceof Character9) {
-                checkAbility(character);
+                if(checkAbility(character))
+                    return;
                 game = ((Character9) character).useAbility(game, COLOR.values()[event.getIndexColor()]);
                 ViewData data = game.getData();
                 data.setIndexCharacterUsed(9);
@@ -314,7 +322,8 @@ public class Controller implements EventListener {
         }
         for (Character character : currGame.getCharacters()) {
             if (character instanceof Character10) {
-                checkAbility(character);
+                if(checkAbility(character))
+                    return;
                 ((Character10) character).useAbility(game, colors);
                 ViewData data = game.getData();
                 data.setIndexCharacterUsed(10);
@@ -329,8 +338,9 @@ public class Controller implements EventListener {
         ConcreteExpertGame currGame = (ConcreteExpertGame) game;
         for (Character character : currGame.getCharacters()) {
             if (character instanceof Character11) {
-                checkAbility(character);
-                ((Character11) character).useAbility(game, event.getIndexStudent());
+                if(checkAbility(character))
+                    return;
+                ((Character11) character).useAbility(game, event.getIndexColor());
                 ViewData data = game.getData();
                 data.setIndexCharacterUsed(11);
                 GameHandler.calls(new UpdatedDataEvent(this,data));//return updated version of a ViewData object
@@ -344,7 +354,8 @@ public class Controller implements EventListener {
         ConcreteExpertGame currGame = (ConcreteExpertGame) game;
         for (Character character : currGame.getCharacters()) {
             if (character instanceof Character12) {
-                checkAbility(character);
+                if(checkAbility(character))
+                    return;
                 ((Character12) character).useAbility(game, COLOR.values()[event.getIndexColor()]);
                 ViewData data = game.getData();
                 data.setIndexCharacterUsed(12);
@@ -359,18 +370,19 @@ public class Controller implements EventListener {
         System.out.println("DISCONNECTED:"+event.getUsername()+" "+this.disconnectedPlayers.get(event.getUsername()));
         this.checkDisconnection();
     }
-    private void checkAbility(Character c) {
+    private boolean checkAbility(Character c) {
         //checks if a card has been used in this turn
         if (hasCardBeenUsed) {
             GameHandler.calls(new NotifyExceptionEvent(this, new AbilityAlreadyUsedException()));
-            return;
+            return true;
         }
         //check if the player can pay the character
         if (game.getCurrPlayer().getCoins() < c.getCost()){
             GameHandler.calls(new NotifyExceptionEvent(this, new TooPoorException()));
-            return;
+            return true;
         }
         this.hasCardBeenUsed = true;
+        return false;
     }
 
     private void checkSetUpPhase() {

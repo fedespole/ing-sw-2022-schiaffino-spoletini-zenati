@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
 import it.polimi.ingsw.common.exceptions.StudentNotPresentException;
+import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Student;
 
@@ -19,14 +20,20 @@ public class Character11 extends Character{
             addStudent(currGame.getBag().removeStudent());
         }
     }
-
-    public void useAbility(Game currGame, int indexStudent) {
+//TODO manca check exception per colore non valido
+    public void useAbility(Game currGame, int indexColor) {
         playerPayment(currGame.getCurrPlayer());
         changeCost();
-        Student student = this.getStudents().get(indexStudent);
-        removeStudent(student);
-        currGame.getCurrPlayer().getMySchoolBoard().addStudentToDining(student);
-        addStudent(currGame.getBag().removeStudent());
+        COLOR color= COLOR.values()[indexColor];
+        for(int i=0;i<students.size();i++){
+            if(students.get(i).getColor().equals(color)){
+                Student student=students.get(i);
+                removeStudent(student);
+                currGame.getCurrPlayer().getMySchoolBoard().addStudentToDining(student);
+                addStudent(currGame.getBag().removeStudent());
+                break;
+            }
+        }
     }
 
     public void removeStudent(Student student){

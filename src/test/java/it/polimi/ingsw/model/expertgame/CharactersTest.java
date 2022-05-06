@@ -43,7 +43,7 @@ public class CharactersTest extends TestCase {
         for (Student student : game.getIslands().get(0).get(0).getStudents())
             if (student.getColor() == color)
                 old_size++;
-        aux.useAbility(game,3,game.getIslands().get(0));
+        aux.useAbility(game,color.ordinal(),game.getIslands().get(0));
         int new_size = 0;
         for (Student student : game.getIslands().get(0).get(0).getStudents())
             if (student.getColor() == color)
@@ -264,15 +264,14 @@ public class CharactersTest extends TestCase {
     public void Character11Test(){
         Character11 character11 = new Character11(game);
         ((ConcreteExpertGame)game).getCharacters().add(character11);
-        int rnd= new Random().nextInt(3);
-        Student student = character11.getStudents().get(rnd);
-        character11.useAbility(game,rnd);
-        for(COLOR color:COLOR.values()){
-            if(color == student.getColor()){
+        COLOR color= character11.getStudents().get(0).getColor();
+        character11.useAbility(game,color.ordinal());
+        for(COLOR color1:COLOR.values()){
+            if(color1 == color){
                 assertEquals(1,game.getCurrPlayer().getMySchoolBoard().getDiningRoom()[color.ordinal()].size());
             }
             else{
-                assertEquals(0,game.getCurrPlayer().getMySchoolBoard().getDiningRoom()[color.ordinal()].size());
+                assertEquals(0,game.getCurrPlayer().getMySchoolBoard().getDiningRoom()[color1.ordinal()].size());
             }
         }
         assertEquals(4,character11.getStudents().size());

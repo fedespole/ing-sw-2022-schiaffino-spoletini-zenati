@@ -18,7 +18,7 @@ public class Character10 extends Character {
     public void useAbility(Game currGame, ArrayList<COLOR> colors) {
 
 
-        if (colors.size() == 2 || colors.size() == 4) {
+        if (colors.size() == 2 || colors.size() == 4 || colors.size()==0) {
 
             // Colors is an array composed by one or two pairs of students, otherwise an exception is raised:
             // (student_color_room1 and student_color_entrance1 + eventually 2 and 2)
