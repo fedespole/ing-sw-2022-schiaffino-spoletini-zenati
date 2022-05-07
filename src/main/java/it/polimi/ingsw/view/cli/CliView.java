@@ -296,7 +296,7 @@ public class CliView extends View {
 
     private void moveMother(){
         int motherNature = 0;
-        System.out.println("> Choose number of jumps of mother nature");
+        System.out.println("> Choose number of jumps of mother nature, from 1 to "+getData().getCurrPlayer().getChosenCard().getSteps());
         System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
         while(true){
             in.reset();
