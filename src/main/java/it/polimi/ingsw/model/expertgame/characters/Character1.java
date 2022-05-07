@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
+import it.polimi.ingsw.common.events.GameHandler;
+import it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent;
+import it.polimi.ingsw.common.exceptions.StudentNotPresentInCharacterException;
 import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Island;
@@ -22,17 +25,18 @@ public class Character1 extends Character {
 
     public void useAbility(Game currGame, int colorIndex, ArrayList<Island> island){
         COLOR color= COLOR.values()[colorIndex];
-        playerPayment(currGame.getCurrPlayer());
-        changeCost();
         for(int i=0;i<students.size();i++) {
             if(students.get(i).getColor().equals(color)) {
+                playerPayment(currGame.getCurrPlayer());
+                changeCost();
                 Student student = students.get(i);
                 students.remove(student);
                 island.get(0).addStudent(student);
                 students.add(currGame.getBag().removeStudent());
-                break;
+                return;
             }
         }
+        GameHandler.calls(new NotifyExceptionEvent(this, new StudentNotPresentInCharacterException()));
     }
 
     public ArrayList<Student> getStudents() {

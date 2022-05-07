@@ -100,6 +100,10 @@ public class CliView extends View {
                 System.out.println(ANSI.RED + "> Selected invalid number of students" + ANSI.RESET);
                 update(new UpdatedDataEvent(this, this.getData()));
             }
+            else if(event.getException() instanceof StudentNotPresentInCharacterException){
+                System.out.println(ANSI.RED + "> Student not present on this character card" + ANSI.RESET);
+                update(new UpdatedDataEvent(this, this.getData()));
+            }
             else if(event.getException() instanceof InvalidPhaseException){
                 System.out.println(ANSI.RED + "> Anomaly" + ANSI.RESET);
             }

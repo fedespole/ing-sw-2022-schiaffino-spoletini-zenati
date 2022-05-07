@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.expertgame.characters;
 
 import it.polimi.ingsw.common.events.GameHandler;
 import it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent;
-import it.polimi.ingsw.common.exceptions.StudentNotPresentException;
+import it.polimi.ingsw.common.exceptions.StudentNotPresentInCharacterException;
 import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Student;
@@ -52,7 +52,7 @@ public class Character7 extends Character{
             }
         }
         // else, color not present in list and exception is raised
-        GameHandler.calls(new NotifyExceptionEvent(this, new StudentNotPresentException()));
+        GameHandler.calls(new NotifyExceptionEvent(this, new StudentNotPresentInCharacterException()));
         return null;
     }
 
