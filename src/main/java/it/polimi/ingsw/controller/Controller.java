@@ -365,11 +365,13 @@ public class Controller implements EventListener {
         }
         GameHandler.calls(new NotifyExceptionEvent(this, new InvalidCharacterException()));
     }
+
     public void update(ClientDisconnectedEvent event){
         this.disconnectedPlayers.put(event.getUsername(),false);
         System.out.println("DISCONNECTED:"+event.getUsername()+" "+this.disconnectedPlayers.get(event.getUsername()));
         this.checkDisconnection();
     }
+
     private boolean checkAbility(Character c) {
         //checks if a card has been used in this turn
         if (hasCardBeenUsed) {

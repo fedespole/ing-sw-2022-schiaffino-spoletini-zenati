@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
+import it.polimi.ingsw.common.events.GameHandler;
+import it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent;
 import it.polimi.ingsw.common.exceptions.StudentNotPresentException;
 import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Game;
@@ -50,7 +52,8 @@ public class Character7 extends Character{
             }
         }
         // else, color not present in list and exception is raised
-        throw new StudentNotPresentException();
+        GameHandler.calls(new NotifyExceptionEvent(this, new StudentNotPresentException()));
+        return null;
     }
 
     public void addStudent(Student student){

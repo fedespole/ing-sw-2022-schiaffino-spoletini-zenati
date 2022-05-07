@@ -1,4 +1,5 @@
 package it.polimi.ingsw.model.expertgame.gamemodes;
+import it.polimi.ingsw.common.events.GameHandler;
 import it.polimi.ingsw.common.events.fromServerEvents.VictoryEvent;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Island;
@@ -75,6 +76,8 @@ public class GameMode8 extends ConcreteExpertGame {
 
         if(this.getIslands().size()==3) checkWinner();
 
-        if(getCurrPlayer().getMySchoolBoard().getTowers().size()==0) new VictoryEvent(this, getCurrPlayer().getUsername());
+        if(getCurrPlayer().getMySchoolBoard().getTowers().size()==0){
+            GameHandler.calls(new VictoryEvent(this, getCurrPlayer().getUsername()));
+        }
     }
 }
