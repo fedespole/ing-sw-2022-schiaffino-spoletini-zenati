@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class CharactersExceptionsTest extends TestCase{
+ /*
     Game game;
 
     @BeforeEach
@@ -109,4 +110,6 @@ public class CharactersExceptionsTest extends TestCase{
         students.remove(students.size()-1);
         assertThrows(InvalidNumStudentsException.class, ()->character10.useAbility(game,students));
     }
+
+  */
 }

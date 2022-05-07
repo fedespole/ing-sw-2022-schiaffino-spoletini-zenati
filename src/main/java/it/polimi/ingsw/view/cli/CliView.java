@@ -104,6 +104,10 @@ public class CliView extends View {
                 System.out.println(ANSI.RED + "> Student not present on this character card" + ANSI.RESET);
                 update(new UpdatedDataEvent(this, this.getData()));
             }
+            else if(event.getException() instanceof InvalidCharIslandIndexException){
+                System.out.println(ANSI.RED + "> Island no longer exists" + ANSI.RESET);
+                update(new UpdatedDataEvent(this, this.getData()));
+            }
             else if(event.getException() instanceof InvalidPhaseException){
                 System.out.println(ANSI.RED + "> Anomaly" + ANSI.RESET);
             }

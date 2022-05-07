@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
 import it.polimi.ingsw.common.events.GameHandler;
+import it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.VictoryEvent;
-import it.polimi.ingsw.common.exceptions.InvalidIslandIndexException;
+import it.polimi.ingsw.common.exceptions.InvalidCharIslandIndexException;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Island;
 import it.polimi.ingsw.model.basicgame.Professor;
@@ -21,7 +22,9 @@ public class Character3 extends Character{
 
         ConcreteExpertGame currGame = (ConcreteExpertGame) game;
 
-        if(destination < 0 || destination > currGame.getIslands().size()) throw new InvalidIslandIndexException();
+        if(destination < 0 || destination > currGame.getIslands().size()){
+            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidCharIslandIndexException()));
+        }
         playerPayment(currGame.getCurrPlayer());
         changeCost();
 

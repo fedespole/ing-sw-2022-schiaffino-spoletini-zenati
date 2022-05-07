@@ -144,6 +144,7 @@ public class ControllerTest {
 
         for (Character character : ((ConcreteExpertGame)controller.getGame()).getCharacters()) {
             if (character instanceof Character1) {
+                controller.getGame().getCurrPlayer().setCoins(6);
                 int rnd = new Random().nextInt(4);
                 COLOR color = ((Character1)character).getStudents().get(rnd).getColor();
                 int old_size = 0;
