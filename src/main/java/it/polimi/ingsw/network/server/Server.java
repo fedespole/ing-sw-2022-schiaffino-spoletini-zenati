@@ -1,6 +1,9 @@
 package it.polimi.ingsw.network.server;
 
+import it.polimi.ingsw.common.events.ClientDisconnectedEvent;
 import it.polimi.ingsw.common.events.GameEvent;
+import it.polimi.ingsw.common.events.GameHandler;
+import it.polimi.ingsw.common.events.fromClientEvents.SelectedGameSetUpEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent;
 import it.polimi.ingsw.common.events.fromClientEvents.PlayerAccessEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.NewPlayerCreatedEvent;
@@ -42,8 +45,9 @@ public class Server implements Runnable {
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                    this.newClientConnection();
-                    System.out.println("Connection ok!");
+                Socket newSocket = serverSocket.accept();
+                this.newClientConnection(newSocket);
+                System.out.println("Connection ok!");
 
             } catch (IOException | InterruptedException e) {
                 System.out.println("Connection Error!");
@@ -51,14 +55,26 @@ public class Server implements Runnable {
         }
     }
 
-    public void newClientConnection() throws IOException, InterruptedException {
-        Socket newSocket = serverSocket.accept();
+    public synchronized void newClientConnection(Socket newSocket) throws IOException, InterruptedException {
         RemoteView remoteView = new RemoteView(newSocket);
         if(controller.getGame().getStatusGame().getStatus() != STATUS.SETUP) {
             newMidGameClientConnection(remoteView);
         }
         else {
             playingConnection.add(remoteView);
+            if(controller.getGame().getPlayers().size()==0){
+                while(true){
+                    GameEvent currEvent = remoteView.getClientEvs().take();
+                    if(currEvent instanceof PlayerAccessEvent) {
+                        GameHandler.calls(currEvent);
+                        currEvent=remoteView.getClientEvs().take();
+                        if(currEvent instanceof SelectedGameSetUpEvent){
+                            GameHandler.calls(currEvent);
+                            break;
+                        }
+                    }
+                }
+            }
             executor.execute(remoteView);
         }
     }
