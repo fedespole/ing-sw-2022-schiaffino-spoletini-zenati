@@ -1,6 +1,9 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
+import it.polimi.ingsw.common.events.GameHandler;
+import it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent;
 import it.polimi.ingsw.common.exceptions.AbilityAlreadyUsedException;
+import it.polimi.ingsw.common.exceptions.InvalidCharacterException;
 import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.Island;
 
@@ -19,7 +22,7 @@ public class Character5 extends Character {
 
     public void useAbility(Game currGame, ArrayList<Island> island) {
 
-        if (noEntries == 0) throw new AbilityAlreadyUsedException();
+        if (noEntries == 0) GameHandler.calls(new NotifyExceptionEvent(this, new AbilityAlreadyUsedException()));
 
         playerPayment(currGame.getCurrPlayer());
         changeCost();

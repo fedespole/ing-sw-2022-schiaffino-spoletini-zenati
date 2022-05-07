@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
+import it.polimi.ingsw.common.events.GameHandler;
+import it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent;
 import it.polimi.ingsw.common.exceptions.InvalidNumStudentsException;
 import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Game;
@@ -43,7 +45,9 @@ public class Character10 extends Character {
                 currGame.getCurrPlayer().getMySchoolBoard().addStudentToDining(student);
             }
         }
-        else throw new InvalidNumStudentsException();
+        else{
+            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidNumStudentsException()));
+        }
 
     }
 

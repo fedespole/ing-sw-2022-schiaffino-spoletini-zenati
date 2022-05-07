@@ -83,6 +83,22 @@ public class CliView extends View {
                 System.out.println(ANSI.RED + "> Not allowed to move mother nature this much" + ANSI.RESET);
                 moveMother();
             }
+            else if(event.getException() instanceof AbilityAlreadyUsedException){
+                System.out.println(ANSI.RED + "> Character card has already been used in this turn" + ANSI.RESET);
+                update(new UpdatedDataEvent(this, this.getData()));
+            }
+            else if(event.getException() instanceof TooPoorException){
+                System.out.println(ANSI.RED + "> You don't have enough coins to use this character" + ANSI.RESET);
+                update(new UpdatedDataEvent(this, this.getData()));
+            }
+            else if(event.getException() instanceof InvalidCharacterException){
+                System.out.println(ANSI.RED + "> This character is not available in this match" + ANSI.RESET);
+                update(new UpdatedDataEvent(this, this.getData()));
+            }
+            else if(event.getException() instanceof InvalidNumStudentsException){
+                System.out.println(ANSI.RED + "> Selected invalid number of students" + ANSI.RESET);
+                update(new UpdatedDataEvent(this, this.getData()));
+            }
             else if(event.getException() instanceof InvalidPhaseException){
                 System.out.println(ANSI.RED + "> Anomaly" + ANSI.RESET);
             }
