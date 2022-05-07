@@ -14,6 +14,7 @@ import it.polimi.ingsw.common.exceptions.*;
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
+import it.polimi.ingsw.model.expertgame.characters.*;
 import it.polimi.ingsw.model.expertgame.characters.Character;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.view.View;
@@ -386,7 +387,7 @@ public class CliView extends View {
                     break;
                 case 7:
                     ArrayList<Integer> colors = new ArrayList<>();
-                    for(int i=0;i<2;i++) {
+                    for(int i=0;i<3;i++) {
                         System.out.println("> Choose a color from the entrance or type stop ");
                         System.out.print(ANSI.BLUE + "> " + ANSI.RESET);
                         inputString = in.nextLine().toLowerCase();
@@ -506,9 +507,23 @@ public class CliView extends View {
             ANSI.writeTitle("CHARACTERS");
             for (int i = 0; i < 3; i++) {
                 Character character = getData().getCharacters().get(i);
-                System.out.print(character.getId() + "(cost: " + character.getCost() + ")");
-                //TODO bisogna stampare anche le cose contenute nel character,come numero divieti o studenti
-                System.out.print("\t");
+                System.out.print(character.getId() + "(cost: " + character.getCost() + ") "+messageCharacter(character.getId())+" ");
+                if(character instanceof Character1){
+                    for(Student student:((Character1)character).getStudents()){
+                        ANSI.writeInColor(student.getColor(),student.getColor()+"   ");
+                    }
+                }else if(character instanceof Character5) {
+                    System.out.println(((Character5) character).getNoEntries());
+                }else if(character instanceof Character7) {
+                    for(Student student:((Character7)character).getStudents()){
+                        ANSI.writeInColor(student.getColor(),student.getColor()+"   ");
+                    }
+                }else if(character instanceof Character11){
+                    for(Student student:((Character11)character).getStudents()){
+                        ANSI.writeInColor(student.getColor(),student.getColor()+"   ");
+                    }
+                }
+            System.out.println();
             }
             System.out.print("\n");
             if(getData().getIndexCharacterUsed()!=-1)
@@ -537,5 +552,48 @@ public class CliView extends View {
                     input=in.nextLine();
             }
         }
+    }
+
+    private String messageCharacter(int i){
+        String result=null;
+        switch (i){
+            case 1:
+                result = "Take 1 Student from this card and place it on an Island of your choice. Then, draw a new student from the Bag and place it on this card.";
+                break;
+            case 2:
+                result= "During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them";
+                break;
+            case 3:
+                result= "Choose an lsland and resolve the Island as if Mother Nature had ended her movement there. Mother Nature will still move and the Island where she ends her movement will also be resolved.";
+                break;
+            case 4:
+                result = "You may move Mother Nature up to 2 additional islands than is indicated by the Assistant card you've played.";
+                break;
+            case 5:
+                result = "Place a No Entry tile on an island of your choice. The first time Mother Nature ends her movement there, put the No Entry tile back onto this card DO NOT calculate influence on that Island, or place any Towers.";
+                break;
+            case 6:
+                result = "When resolving a Conquering on an Island, towers do not count towards influence.";
+                break;
+            case 7:
+                result= "You may take up to 3 Students from this card and replace them with the same number of Students from your Entrance.";
+                break;
+            case 8:
+                result = "During the influence calculation this turn, you count as having 2 more influence.";
+                break;
+            case 9:
+                result ="Choose a color of Student: during the influence calculation this turn, that color adds no influence.";
+                break;
+            case 10:
+                result ="You may exchange up to 2 Students between your Entrance and your Dining Room.";
+                break;
+            case 11:
+                result ="Take 1 Student from this card and place it in your Dining Roam. Then, draw a new student from the Bag and place it on this card.";
+                break;
+            case 12:
+                result="Choose a type of Student: every player (including yourself) must return 3 Students of that type from their Dining Room to the bag. If any player has fewer than 3 Students of that type, return as many Students as they have.";
+                break;
+        }
+        return  result;
     }
 }
