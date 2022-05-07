@@ -38,12 +38,11 @@ public class CharactersExceptionsTest extends TestCase{
 
     @Test
     public void Character1InvalidPlayerIndexTest(){
-        //TODO creare nuova exception per character 1, bisogna verificare che il colore effettivamente ci sia
-      /*  ((ConcreteExpertGame)game).getCharacters().add(new Character1(game));
+       ((ConcreteExpertGame)game).getCharacters().add(new Character1(game));
         int sizeIsland= game.getIslands().get(0).get(0).getStudents().size();
         assertDoesNotThrow( ()->((Character1)((ConcreteExpertGame)game).getCharacters().get(0)).useAbility(game,1,game.getIslands().get(0)));
         assertThrows(IndexOutOfBoundsException.class, () -> ((Character1)((ConcreteExpertGame)game).getCharacters().get(0)).useAbility(game,-1,game.getIslands().get(0)));
-        assertThrows(IndexOutOfBoundsException.class, () -> ((Character1)((ConcreteExpertGame)game).getCharacters().get(0)).useAbility(game,4,game.getIslands().get(0)));*/
+        assertThrows(IndexOutOfBoundsException.class, () -> ((Character1)((ConcreteExpertGame)game).getCharacters().get(0)).useAbility(game,4,game.getIslands().get(0)));
     }
 
     @Test
