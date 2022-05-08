@@ -147,13 +147,12 @@ public class ControllerTest {
         for (Character character : ((ConcreteExpertGame)controller.getGame()).getCharacters()) {
             if (character instanceof Character1) {
                 controller.getGame().getCurrPlayer().setCoins(6);
-                int rnd = new Random().nextInt(4);
-                COLOR color = ((Character1)character).getStudents().get(rnd).getColor();
+                COLOR color = ((Character1)character).getStudents().get(0).getColor();
                 int old_size = 0;
                 for (Student student : controller.getGame().getIslands().get(3).get(0).getStudents())
                     if (student.getColor() == color)
                         old_size++;
-                UseCharacter1Event event = new UseCharacter1Event(controller.getGame().getCurrPlayer(), rnd, 3);
+                UseCharacter1Event event = new UseCharacter1Event(controller.getGame().getCurrPlayer(), color.ordinal(), 3);
                 controller.update(event);
                 int new_size = 0;
                 for (Student student : controller.getGame().getIslands().get(3).get(0).getStudents())
@@ -344,7 +343,7 @@ public class ControllerTest {
                 controller.getGame().getCurrPlayer().setCoins(6);
                 int rnd= new Random().nextInt(3);
                 Student student = ((Character11)character).getStudents().get(rnd);
-                UseCharacter11Event event = new UseCharacter11Event(controller.getGame().getCurrPlayer(),rnd);
+                UseCharacter11Event event = new UseCharacter11Event(controller.getGame().getCurrPlayer(),student.getColor().ordinal());
                 controller.update(event);
                 for(COLOR color:COLOR.values()){
                     if(color == student.getColor()){
