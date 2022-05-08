@@ -29,6 +29,7 @@ public class ControllerTest {
         Game game = new BasicGame();
         this.controller = new Controller(game);
     }
+
     @Test
     public void FirstPlayerAccessEventTest(){
         PlayerAccessEvent event = new PlayerAccessEvent(this, "Host", null);
@@ -38,6 +39,7 @@ public class ControllerTest {
         assertTrue(controller.getGame() instanceof BasicGame);
         assertEquals(3,controller.getGame().getNumPlayers());
     }
+
     @Test
     public void ExpertGameFirstPlayerAccessEventTest(){
         PlayerAccessEvent event = new PlayerAccessEvent(this, "Host", null);
