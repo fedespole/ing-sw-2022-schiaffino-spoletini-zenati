@@ -476,7 +476,7 @@ public class CliView extends View {
                 break;
             }
         }
-        ANSI.writeTitle(getOwner()+" TEAM "+playerOwner.getTeam());
+        ANSI.writeTitle("YOUR BOARD, TEAM COLOR "+playerOwner.getTeam());
         ANSI.writeTitle("ASSISTANT CARDS");
         for(AssistantCard assistantCard:playerOwner.getMyDeck().getCards()){
             System.out.print(assistantCard.getValue()+"   ");
@@ -528,6 +528,7 @@ public class CliView extends View {
             System.out.print("\n");
         }
         if(this.getData().isExpert()){
+            System.out.println("--------------------------------------------------------------------------------------------------------------");
             ANSI.writeTitle("CHARACTERS");
             for (int i = 0; i < 3; i++) {
                 Character character = getData().getCharacters().get(i);
@@ -554,6 +555,31 @@ public class CliView extends View {
                 System.out.println("Character "+getData().getIndexCharacterUsed()+" has been used in this round by "+getData().getCurrPlayer().getUsername());
         }
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+        for(Player player : getData().getPlayers()){
+            if(!player.getUsername().equals(getOwner())){
+                System.out.println("PLAYER "+player.getUsername() + " TEAM COLOR "+player.getTeam());
+                System.out.print("STUDENTS IN ENTRANCE: ");
+                for(Student student : player.getMySchoolBoard().getEntrance()) {
+                    ANSI.writeInColor(student.getColor(), student.getColor() + "   ");
+                }
+                System.out.print("\nSTUDENTS IN DINING ROOM ");
+                for(int i=0;i<5;i++) {
+                    ANSI.writeInColor(COLOR.values()[i], "  -" + COLOR.values()[i].toString() + ": ");
+                    System.out.print(player.getMySchoolBoard().getDiningRoom()[i].size());
+                    for (Professor professor : player.getMySchoolBoard().getProfessors()) {
+                        if (professor.getColor().equals(Arrays.stream(COLOR.values()).toArray()[i]))
+                            ANSI.writeInColor( professor.getColor(), "   " + professor.getColor() + " PROFESSOR HERE ");
+                    }
+                }
+                System.out.println("\nTOWERS: " + player.getMySchoolBoard().getTowers().size());
+                for(Player player1: getData().getStatusGame().getOrder()){
+                    if(player.equals(player1))
+                        System.out.println("ASSISTANT CARD CHOSEN: " + player1.getChosenCard().getValue()+", MAX STEPS:" +player1.getChosenCard().getSteps());
+                }
+                System.out.println("--------------------------------------------------------------------------------------------------------------");
+            }
+        }
+
     }
 
     private int chooseColor(String input){
