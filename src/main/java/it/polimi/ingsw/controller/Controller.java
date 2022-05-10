@@ -159,6 +159,10 @@ public class Controller implements EventListener {
 
     public void update(ChooseCloudEvent event) {
         checkActionChooseCloudPhase();
+        if (game.getClouds().get(event.getIndex()).getStudents().size()==0){
+            GameHandler.calls(new NotifyExceptionEvent(this, new CloudAlreadyChosenException()));
+            return;
+        }
         game.chooseCloud(event.getIndex());
         GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
         if ((game instanceof GameMode2) || (game instanceof GameMode6) || (game instanceof GameMode8) || (game instanceof GameMode9)) {
