@@ -43,7 +43,7 @@ public class Client implements Runnable {
 
         switch(chosenView) {
             case 0 : view = new CliView(this);
-            case 1 : view = new GuiView();
+            case 1 : view = new GuiView(this);
         }
     }
     public void run() {
