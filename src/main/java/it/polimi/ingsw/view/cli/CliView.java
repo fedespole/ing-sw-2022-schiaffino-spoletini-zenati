@@ -105,7 +105,11 @@ public class CliView extends View {
                 update(new UpdatedDataEvent(this, this.getData()));
             }
             else if(event.getException() instanceof InvalidCharIslandIndexException){
-                System.out.println(ANSI.RED + "> Island no longer exists" + ANSI.RESET);
+                System.out.println(ANSI.RED + "> This island no longer exists" + ANSI.RESET);
+                update(new UpdatedDataEvent(this, this.getData()));
+            }
+            else if(event.getException() instanceof CloudAlreadyChosenException){
+                System.out.println(ANSI.RED + "> This cloud is already chosen by another player" + ANSI.RESET);
                 update(new UpdatedDataEvent(this, this.getData()));
             }
             else if(event.getException() instanceof InvalidPhaseException){
