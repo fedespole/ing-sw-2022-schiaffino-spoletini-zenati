@@ -130,7 +130,7 @@ public class CliView extends View {
         int numPlayers = 0;
         if (event.getUsername().equals(this.getOwner())) {
             java.lang.String input;
-            System.out.println("You are the first player connected, your username is : " + getOwner());
+            System.out.println("> You are the first player connected, your username is : " + getOwner());
             in.reset();
             System.out.println("> Choose number of players: 2 or 3 players available");
             System.out.print(ANSI.GREEN + "> " + ANSI.RESET);
@@ -262,7 +262,7 @@ public class CliView extends View {
             input = in.nextLine().toLowerCase();
             switch (input) {
                 case "island" : {
-                    System.out.println("Choose island ");
+                    System.out.println("> Choose island ");
                     in.reset();
                     while (true) {
                         input = in.nextLine();
@@ -510,7 +510,7 @@ public class CliView extends View {
                 for(Student student:island.getStudents())
                     ANSI.writeInColor(student.getColor(), student.getColor()+"   ");
                 if(island.getTower()!=null)
-                    System.out.println("Tower team: "+ island.getTower().getColor());
+                    System.out.print("Tower team: "+ island.getTower().getColor());
             }
             if(getData().getMotherNature()==i)
                 System.out.println( "  " + ANSI.WHITE_UNDERLINED + "MOTHER NATURE PRESENT HERE" + ANSI.RESET);
