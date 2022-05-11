@@ -1,3 +1,4 @@
+/*
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.network.client.Client;
@@ -67,3 +68,4 @@ public class GuiManager extends View {
         this.currentScene = currentScene;
     }
 }
+*/
