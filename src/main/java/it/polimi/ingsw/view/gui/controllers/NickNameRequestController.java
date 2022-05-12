@@ -2,7 +2,10 @@ package it.polimi.ingsw.view.gui.controllers;
 
 import it.polimi.ingsw.common.events.GameHandler;
 import it.polimi.ingsw.common.events.fromClientEvents.PlayerAccessEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent;
+import it.polimi.ingsw.view.gui.Constants;
 import it.polimi.ingsw.view.gui.GuiManager;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -24,7 +27,6 @@ public class NickNameRequestController extends GuiController{
     public ImageView image;
 
 
-
     private GuiManager guimanager;
 
     @FXML
@@ -42,6 +44,14 @@ public class NickNameRequestController extends GuiController{
         }
         else{
             errorMessage.setText("Type a nickname");
+        }
+    }
+
+    @Override
+    public void update(RequestNumPlayersEvent event) {
+        System.out.println("Sono in RequestNumPayers");
+        if (event.getUsername().equals(guimanager.getOwner())){
+            Platform.runLater(() -> guimanager.setFXML(Constants.GAME_SETTINGS_SCENE));
         }
     }
 }

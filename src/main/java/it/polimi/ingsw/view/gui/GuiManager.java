@@ -1,8 +1,10 @@
 package it.polimi.ingsw.view.gui;
 
+import it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.gui.controllers.GuiController;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -73,6 +75,11 @@ public class GuiManager extends View {
 
     public void setCurrentScene(Scene currentScene) {
         this.currentScene = currentScene;
+    }
+
+    public void update(RequestNumPlayersEvent event){
+        super.update(event);
+        Platform.runLater(() -> currentController.update(event)); //currentController is a NickNameRequestController
     }
 }
 
