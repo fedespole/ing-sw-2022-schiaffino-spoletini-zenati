@@ -8,6 +8,7 @@ import it.polimi.ingsw.network.SocketWriter;
 import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.cli.CliView;
+import it.polimi.ingsw.view.gui.GuiManager;
 //import it.polimi.ingsw.view.gui.GuiManager;
 //import it.polimi.ingsw.view.gui.GuiView;
 
@@ -42,12 +43,11 @@ public class Client implements Runnable {
         executor.execute(new SocketWriter<>(socket,clientEvs));
         executor.execute(new SocketReader<>(socket,serverEvs,GameEvent.class));
 
-        switch(chosenView) {
-            case 0 : view = new CliView(this);
-            case 1 : {
-                //view =  GuiManager.getInstance(this);
-                //((GuiManager) view).gameSetUp();
-            }
+        if(chosenView==0)
+            view = new CliView(this);
+        else{
+            view = GuiManager.getInstance(this);
+            ((GuiManager) view).gameSetUp();
         }
     }
     public void run() {

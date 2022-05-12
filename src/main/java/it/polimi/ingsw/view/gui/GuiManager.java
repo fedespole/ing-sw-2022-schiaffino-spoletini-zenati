@@ -1,4 +1,3 @@
-/*
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.network.client.Client;
@@ -32,15 +31,17 @@ public class GuiManager extends View {
         else
             return instance;
     }
+
     public static GuiManager getInstance(){
             return instance;
     }
+
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
     public void gameSetUp(){
-        GuiView.main(null);
+        javafx.application.Application.launch(GuiView.class);
     }
 
     public void setFXML(String path) {
@@ -48,6 +49,9 @@ public class GuiManager extends View {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(GuiManager.class.getResource(path));
         Pane pane;
+        try{
+            pane = loader.load();
+            currentScene.setRoot(pane);
             this.currentController = loader.getController();
             boolean isMaximized = stage.isMaximized();
             boolean isFullScreen = stage.isFullScreen();
@@ -58,6 +62,9 @@ public class GuiManager extends View {
                 stage.setMinWidth(stage.getWidth());
                 stage.setMinHeight(stage.getHeight());
             }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
 
     }
     public Client getClient() {
@@ -68,4 +75,4 @@ public class GuiManager extends View {
         this.currentScene = currentScene;
     }
 }
-*/
+

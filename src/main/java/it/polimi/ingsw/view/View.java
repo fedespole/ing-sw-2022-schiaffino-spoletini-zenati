@@ -3,6 +3,8 @@ package it.polimi.ingsw.view;
 import it.polimi.ingsw.common.events.*;
 import it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.*;
+import it.polimi.ingsw.network.client.Client;
+import javafx.fxml.FXML;
 
 
 import java.util.EventListener;
@@ -10,6 +12,7 @@ import java.util.EventListener;
 public abstract class View implements EventListener {
     private String owner;
     private ViewData data;
+    private Client client;
 
     public View(){
         GameHandler.addEventListener(this);
@@ -55,5 +58,13 @@ public abstract class View implements EventListener {
 
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

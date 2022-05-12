@@ -1,4 +1,4 @@
-/*
+
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.view.View;
@@ -14,7 +14,7 @@ public class GuiView extends Application {
 
 
     @Override
-    public void start(Stage stage){
+    public void start(Stage stage) {
 
         stage.setScene(new Scene(new Pane()));
         stage.sizeToScene();
@@ -36,4 +36,4 @@ public class GuiView extends Application {
         launch(args);
     }
 }
-*/
+
