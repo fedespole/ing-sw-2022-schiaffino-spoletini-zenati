@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import javax.swing.text.html.ImageView;
+import java.util.Objects;
 
 public class NickNameRequestController extends GuiController{
 
@@ -18,7 +19,7 @@ public class NickNameRequestController extends GuiController{
     @FXML
     public Label errorMessage;
     @FXML
-    public Button playButton;
+    public Button playButton;   // slow button ON
     @FXML
     public ImageView image;
 
@@ -34,9 +35,10 @@ public class NickNameRequestController extends GuiController{
     @FXML
     public void loginAction(ActionEvent actionEvent) {
         String chosenNickname= nicknameTextField.getText();
-        if(chosenNickname!=null){
-        this.guimanager.getClient().getClientEvs().add(new PlayerAccessEvent(this, chosenNickname,this.guimanager.getClient().getSocket().toString()));
-        playButton.setDisable(true);
+        if(!Objects.equals(chosenNickname, "")){
+            this.guimanager.getClient().getClientEvs().add(new PlayerAccessEvent(this, chosenNickname,this.guimanager.getClient().getSocket().toString()));
+            playButton.setDisable(true);
+            errorMessage.setText(chosenNickname);
         }
         else{
             errorMessage.setText("Type a nickname");

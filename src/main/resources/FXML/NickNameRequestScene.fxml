@@ -18,6 +18,9 @@
             <Font name="Comic Sans MS" size="12.0" />
          </font>
       </Button>
-      <Label fx:id="errorMessage" layoutX="162.0" layoutY="379.0" prefHeight="18.0" prefWidth="150.0" />
+      <Label fx:id="errorMessage" layoutX="149.0" layoutY="385.0" prefHeight="18.0" prefWidth="104.0" textFill="#dc0c0c">
+         <font>
+            <Font name="Algerian" size="12.0" />
+         </font></Label>
    </children>
 </AnchorPane>
