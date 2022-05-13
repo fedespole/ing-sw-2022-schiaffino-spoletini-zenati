@@ -11,6 +11,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class GuiManager extends View {
@@ -20,6 +22,8 @@ public class GuiManager extends View {
     private Stage stage;
     private Scene currentScene;
     private GuiController currentController;
+    private ExecutorService executor = Executors.newFixedThreadPool(128);
+
 
     private GuiManager(Client client){
         super();
@@ -43,7 +47,14 @@ public class GuiManager extends View {
     }
 
     public void gameSetUp(){
-        javafx.application.Application.launch(GuiView.class);
+        Thread thread = new Thread("New Thread") {
+            public void run(){
+                GuiView.go();
+            }
+        };
+
+        thread.start();
+        //javafx.application.Application.launch(GuiView.class);
     }
 
     public void setFXML(String path) {

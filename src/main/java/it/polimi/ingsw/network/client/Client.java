@@ -48,8 +48,6 @@ public class Client implements Runnable {
         else{
             view = GuiManager.getInstance(this);
             ((GuiManager) view).gameSetUp();
-            //TODO: sistemare il fatto che non ritorna dal setup e quindi non arriva qui e non runna il client8cioè non si ricevono eventi
-            System.out.println("Sono dopo il setup");
         }
     }
     public void run() {

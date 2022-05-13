@@ -25,15 +25,14 @@ public class GuiView extends Application {
         stage.setMinWidth(stage.getWidth());
         stage.setMinHeight(stage.getHeight());
         stage.setTitle("Eriantys");
-
         stage.setOnCloseRequest((windowEvent) -> {
             Platform.exit();
             System.exit(0);
         });
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    public static void go() {
+        launch(null);
     }
 }
 
