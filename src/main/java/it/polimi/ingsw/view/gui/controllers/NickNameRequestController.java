@@ -41,17 +41,11 @@ public class NickNameRequestController extends GuiController{
             this.guimanager.getClient().getClientEvs().add(new PlayerAccessEvent(this, chosenNickname,this.guimanager.getClient().getSocket().toString()));
             playButton.setDisable(true);
             errorMessage.setText(chosenNickname);
+            Platform.runLater(() -> guimanager.setFXML(Constants.WAITING_ROOM_SCENE));
         }
         else{
             errorMessage.setText("Type a nickname");
         }
     }
 
-    @Override
-    public void update(RequestNumPlayersEvent event) {
-        System.out.println("Sono in RequestNumPayers");
-        if (event.getUsername().equals(guimanager.getOwner())){
-            Platform.runLater(() -> guimanager.setFXML(Constants.GAME_SETTINGS_SCENE));
-        }
-    }
 }

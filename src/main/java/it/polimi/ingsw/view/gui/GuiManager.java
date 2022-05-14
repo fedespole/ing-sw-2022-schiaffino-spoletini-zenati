@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.gui.controllers.GuiController;
@@ -91,6 +92,11 @@ public class GuiManager extends View {
     public void update(RequestNumPlayersEvent event){
         super.update(event);
         Platform.runLater(() -> currentController.update(event)); //currentController is a NickNameRequestController
+    }
+
+    public void update(UpdatedDataEvent event){
+        super.update(event);
+        Platform.runLater(() -> currentController.update(event));
     }
 }
 
