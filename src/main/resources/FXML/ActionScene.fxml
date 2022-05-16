@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.ActionSceneController">
+   <children>
+      <FlowPane fx:id="islandsPane" layoutX="-4.0" layoutY="214.0" prefHeight="494.0" prefWidth="1922.0" />
+      <ImageView fx:id="background" fitHeight="1089.0" fitWidth="1944.0" layoutX="-21.0" layoutY="-9.0" pickOnBounds="true">
+         <image>
+            <Image url="@../graphics/provasfondo.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="phaseLabel" prefHeight="155.0" prefWidth="1922.0" text="Label" />
+      <FlowPane fx:id="boardsPane" layoutX="-4.0" layoutY="639.0" prefHeight="438.0" prefWidth="1924.0" />
+   </children>
+</AnchorPane>
