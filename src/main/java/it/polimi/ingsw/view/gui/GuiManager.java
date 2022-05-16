@@ -101,5 +101,6 @@ public class GuiManager extends View {
     public Stage getStage() {
         return stage;
     }
+
 }
 
