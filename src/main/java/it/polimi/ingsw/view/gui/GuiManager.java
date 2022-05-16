@@ -59,7 +59,6 @@ public class GuiManager extends View {
     }
 
     public void setFXML(String path) {
-
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(GuiManager.class.getResource(path));
         Pane pane;
@@ -97,6 +96,10 @@ public class GuiManager extends View {
     public void update(UpdatedDataEvent event){
         super.update(event);
         Platform.runLater(() -> currentController.update(event));
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }
 

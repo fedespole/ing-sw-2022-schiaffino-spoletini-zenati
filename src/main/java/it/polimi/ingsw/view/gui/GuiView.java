@@ -25,6 +25,13 @@ public class GuiView extends Application {
         stage.setMinWidth(stage.getWidth());
         stage.setMinHeight(stage.getHeight());
         stage.setTitle("Eriantys");
+        stage.maximizedProperty().addListener((obs, wasMaximized, willBeMaximized) -> {
+            if (wasMaximized && !willBeMaximized) {
+                stage.sizeToScene();
+                stage.setMinWidth(stage.getWidth());
+                stage.setMinHeight(stage.getHeight());
+            }
+        });
         stage.setOnCloseRequest((windowEvent) -> {
             Platform.exit();
             System.exit(0);
