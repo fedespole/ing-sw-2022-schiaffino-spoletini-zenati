@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="474.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.WaitingRoomController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1360.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.WaitingRoomController">
    <children>
-      <ImageView fitHeight="408.0" fitWidth="481.0" layoutX="-3.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="765.0" fitWidth="1360.0" layoutX="-3.0" layoutY="-2.0" opacity="0.9" pickOnBounds="true">
          <image>
             <Image url="@../graphics/provasfondo.png" />
          </image>
       </ImageView>
-      <Label layoutX="110.0" layoutY="14.0" prefHeight="90.0" prefWidth="332.0" text="Waiting for other players..." textFill="WHITE">
+      <Label alignment="CENTER" layoutX="1.0" layoutY="116.0" prefHeight="90.0" prefWidth="1358.0" text="Waiting for other players to connect..." textFill="WHITE">
          <font>
-            <Font name="System Bold" size="21.0" />
+            <Font name="Algerian" size="45.0" />
          </font>
       </Label>
    </children>

@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="398.0" prefWidth="396.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.NickNameRequestController">
+<AnchorPane maxHeight="765.0" maxWidth="1360.0" prefHeight="761.0" prefWidth="1353.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.NickNameRequestController">
    <children>
-      <ImageView fitHeight="402.0" fitWidth="470.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="765.0" fitWidth="1360.0" layoutX="-1.0" opacity="0.9" pickOnBounds="true">
          <image>
             <Image url="@../graphics/EriantysIntro.jpg" />
          </image>
       </ImageView>
-      <TextField fx:id="nicknameTextField" layoutX="76.0" layoutY="358.0" prefHeight="26.0" prefWidth="247.0" promptText="Insert your nickname" />
-      <Button fx:id="playButton" layoutX="324.0" layoutY="358.0" mnemonicParsing="false" onAction="#loginAction" text="Play">
+      <TextField fx:id="nicknameTextField" alignment="CENTER" layoutX="201.0" layoutY="679.0" prefHeight="59.0" prefWidth="985.0" promptText="Insert your nickname">
          <font>
-            <Font name="Comic Sans MS" size="12.0" />
+            <Font size="28.0" />
+         </font></TextField>
+      <Button fx:id="playButton" layoutX="1193.0" layoutY="677.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="61.0" prefWidth="66.0" text="Play">
+         <font>
+            <Font name="Comic Sans MS" size="20.0" />
          </font>
       </Button>
-      <Label fx:id="errorMessage" layoutX="149.0" layoutY="385.0" prefHeight="18.0" prefWidth="104.0" textFill="#dc0c0c">
+      <Label fx:id="errorMessage" alignment="CENTER" layoutX="642.0" layoutY="741.0" prefHeight="20.0" prefWidth="127.0" textAlignment="CENTER" textFill="#dc0c0c">
          <font>
             <Font name="Algerian" size="12.0" />
          </font></Label>
