@@ -44,6 +44,7 @@ public class PlanningController extends GuiController{
     @Override
     public void initialize() {
         super.initialize();
+        guiManager.getStage().setFullScreen(true);
         if(guiManager.getData().getNumPlayers()==3){
             Image image= new Image(GuiManager.class.getResource("/graphics/playerItems/schoolBoard/Plancia_DEF3.png").toString());
             Player2Board.setImage(image);

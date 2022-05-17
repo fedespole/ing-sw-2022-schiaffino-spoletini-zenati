@@ -75,7 +75,7 @@ public class Client implements Runnable {
     }
 
     public static void main(String[] args) throws IOException {
-        Scanner in = new Scanner(System.in);
+        /*Scanner in = new Scanner(System.in);
         System.out.println("> Insert the server IP address");
         System.out.print(ANSI.GREEN +  "> " + ANSI.RESET);
         String ip = in.nextLine();
@@ -107,7 +107,9 @@ public class Client implements Runnable {
                     System.out.print(ANSI.GREEN+  "> " + ANSI.RESET);
                 }
             }
-        }
+        }*/
+        Client client = new Client("localhost", 12345, 1);
+        client.run();
     }
 }
 

@@ -187,11 +187,12 @@ public class ActionSceneController extends GuiController{
     private void fillIslands(){
         for (int i = 0; i < guiManager.getData().getIslands().size(); i++) {
 
-            ImageView island = new ImageView(GuiManager.class.getResource("/graphics/pieces/island"+ (i%3)+1 +".png").toString());
+            ImageView island = new ImageView(GuiManager.class.getResource("/graphics/pieces/island1.png").toString());
             island.setPreserveRatio(true);
             island.setFitWidth(150);
             island.setFitHeight(0);
             islandsPane.getChildren().add(island);
+            islandsPane.toFront();
         }
     }
 
