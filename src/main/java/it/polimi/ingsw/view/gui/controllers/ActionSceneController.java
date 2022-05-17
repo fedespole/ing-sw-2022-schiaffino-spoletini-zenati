@@ -50,9 +50,9 @@ public class ActionSceneController extends GuiController{
             Image image= new Image(GuiManager.class.getResource("/graphics/playerItems/schoolBoard/Plancia_DEF3.png").toString());
             Player2Board.setImage(image);
         }
-    /*    this.fillMyDiningRoom();
+        this.fillMyDiningRoom();
         this.fillOtherPlayers();
-        this.fillIslands();*/
+        this.fillIslands();
 
     }
 
@@ -81,11 +81,12 @@ public class ActionSceneController extends GuiController{
     private void fillIslands(){
         for (int i = 0; i < guiManager.getData().getIslands().size(); i++) {
 
-            ImageView island = new ImageView(GuiManager.class.getResource("/graphics/pieces/island"+ (i%3)+1 +".png").toString());
+            ImageView island = new ImageView(GuiManager.class.getResource("/graphics/pieces/island1.png").toString());
             island.setPreserveRatio(true);
             island.setFitWidth(150);
             island.setFitHeight(0);
             islandsPane.getChildren().add(island);
+            islandsPane.toFront();
         }
     }
 
