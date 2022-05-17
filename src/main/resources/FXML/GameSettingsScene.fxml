@@ -17,7 +17,7 @@
          <Image url="@../graphics/provasfondo.png" />
       </image>
    </ImageView>
-   <Label alignment="CENTER" layoutX="2.0" layoutY="154.0" prefHeight="64.0" prefWidth="1361.0" text="Choose the number of players:" textAlignment="CENTER" textFill="#e9c9f4">
+   <Label alignment="CENTER" layoutX="2.0" layoutY="154.0" prefHeight="64.0" prefWidth="1361.0" text="Choose the number of players:" textAlignment="CENTER" textFill="#571b6b">
       <font>
          <Font name="Algerian" size="57.0" />
       </font>

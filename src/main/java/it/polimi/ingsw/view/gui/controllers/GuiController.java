@@ -1,13 +1,18 @@
 package it.polimi.ingsw.view.gui.controllers;
 
 import it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.TieEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.VictoryEvent;
 import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.basicgame.Professor;
 import it.polimi.ingsw.model.basicgame.TEAM;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
+import it.polimi.ingsw.view.gui.Constants;
 import it.polimi.ingsw.view.gui.GuiManager;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
@@ -100,9 +105,32 @@ public class GuiController {
         }
     }
 
+    public void fillIslands(GridPane islandsPane, double sizeW, double sizeH){
+
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+
+                if(!((j==1 || j==2)&&(i==1 || i==2))){
+                    ImageView island = new ImageView(GuiManager.class.getResource("/graphics/pieces/island" + ((i % 3) + 1) + ".png").toString());
+                    island.setPreserveRatio(true);
+                    island.setFitWidth(sizeW);
+                    island.setFitHeight(sizeH);
+                    islandsPane.add(island, i, j);
+                    islandsPane.toFront();
+                }
+
+            }
+        }
+        islandsPane.setAlignment(Pos.CENTER);
+
+    }
+
     public void update(RequestNumPlayersEvent event) {
     }
     public void update(UpdatedDataEvent event){
-
+    }
+    public void update(VictoryEvent event){
+    }
+    public void update(TieEvent event){
     }
 }

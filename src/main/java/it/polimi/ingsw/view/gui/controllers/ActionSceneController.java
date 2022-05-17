@@ -5,13 +5,17 @@ import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.VictoryEvent;
 import it.polimi.ingsw.model.basicgame.STATUS;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
+import it.polimi.ingsw.model.expertgame.characters.Character;
 import it.polimi.ingsw.view.gui.Constants;
 import it.polimi.ingsw.view.gui.GuiManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 
 public class ActionSceneController extends GuiController{
@@ -35,8 +39,11 @@ public class ActionSceneController extends GuiController{
     public GridPane Player2DiningRoom;
     public ImageView Player2Board;
     public GridPane Player2Professors;
+    public ImageView CharacterBack;
+    public FlowPane Characters;
 
     @FXML
+    @Override
     public void initialize(){
         super.initialize();
         if(guiManager.getData().getNumPlayers()==3){
@@ -45,7 +52,10 @@ public class ActionSceneController extends GuiController{
         }
         this.fillMyDiningRoomAction();
         this.fillOtherPlayersAction();
-        this.fillIslands();
+        super.fillIslands(islandsPane, 180.0, 120.0);
+
+        if(guiManager.getData().isExpert())
+            this.setCharacters();
 
         if (guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername())) {
             phaseLabel.setText("Your turn, " + guiManager.getData().getStatusGame().getStatus().toString());
@@ -67,10 +77,34 @@ public class ActionSceneController extends GuiController{
 
     }
 
+    public void mouseOffCharacters(MouseEvent mouseEvent){
+        Characters.setVisible(false);
+        CharacterBack.setVisible(true);
+        Characters.getScene().setCursor(Cursor.DEFAULT);
+    }
+
+    public void mouseOnCharacterBack(MouseEvent mouseEvent){
+        Characters.getScene().setCursor(Cursor.HAND);
+    }
+
+    public void mouseClickedBackCharacter(MouseEvent mouseEvent){
+        Characters.setVisible(true);
+        CharacterBack.setVisible(false);
+        Characters.getScene().setCursor(Cursor.HAND);
+    }
+
+    public void mouseClickedCharacter(MouseEvent mouseEvent) {
+        int valueChar = Integer.parseInt(((ImageView) mouseEvent.getSource()).getId());
+    }
+
     private void fillMyDiningRoomAction(){
         for (Player player : guiManager.getData().getPlayers()) {
             if (player.getUsername().equals(guiManager.getOwner())) {
                 super.fillMyDiningRoom(player, MyDiningRoom, MyEntrance, MyProfessors, MyTowers);
+                MyDiningRoom.toFront();
+                MyEntrance.toFront();
+                MyProfessors.toFront();
+                MyTowers.toFront();
             }
         }
     }
@@ -85,27 +119,35 @@ public class ActionSceneController extends GuiController{
                     diningroom=Player2DiningRoom;
                     professors=Player2Professors;
                     towers=Player2Towers;
+                    Player2DiningRoom.toFront();
+                    Player2Entrance.toFront();
+                    Player2Professors.toFront();
+                    Player2Towers.toFront();
                 }
                 super.fillOtherPlayers(entrance, diningroom, professors, towers, player);
+                Player1DiningRoom.toFront();
+                Player1Entrance.toFront();
+                Player1Professors.toFront();
+                Player1Towers.toFront();
                 flag++;
             }
         }
     }
 
-    private void fillIslands(){
-
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-
-                if(!((j==1 || j==2)&&(i==1 || i==2))){
-                    ImageView island = new ImageView(GuiManager.class.getResource("/graphics/pieces/island" + ((i % 3) + 1) + ".png").toString());
-                    island.setPreserveRatio(true);
-                    island.setFitWidth(80);
-                    islandsPane.add(island, i, j);
-                    islandsPane.toFront();
-                }
-
-            }
+    private void setCharacters(){
+        this.CharacterBack.setImage(new Image(GuiManager.class.getResource("/graphics/characters/Personaggi_retro.jpg").toString()));
+        this.CharacterBack.setOnMouseClicked(this::mouseClickedBackCharacter);
+        this.CharacterBack.setOnMouseEntered(this::mouseOnCharacterBack);
+        this.CharacterBack.toFront();
+        this.Characters.setVisible(false);
+        this.Characters.setOnMouseExited(this::mouseOffCharacters);
+        for(Character character: guiManager.getData().getCharacters()){
+            ImageView imageView = new ImageView(GuiManager.class.getResource("/graphics/characters/CarteTOT_front"+character.getId()+".jpg").toString());
+            imageView.setPreserveRatio(true);
+            imageView.setFitWidth(100);
+            imageView.setOnMouseClicked(this::mouseClickedCharacter);
+            imageView.setId(Integer.toString(character.getId()));
+            Characters.getChildren().add(imageView);
         }
     }
 
@@ -119,12 +161,14 @@ public class ActionSceneController extends GuiController{
 
     }
 
+    @Override
     public void update(VictoryEvent event){
-
+        Platform.runLater(() -> guiManager.setFXML(Constants.END_SCENE));
     }
 
+    @Override
     public void update(TieEvent event){
-
+        Platform.runLater(() -> guiManager.setFXML(Constants.END_SCENE));
     }
 
 }

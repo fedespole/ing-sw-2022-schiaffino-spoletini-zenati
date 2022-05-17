@@ -40,6 +40,7 @@ public class PlanningController extends GuiController{
     public ImageView ChosenCard;
     public ImageView CharacterBack;
     public FlowPane Characters;
+    public GridPane islandsPane;
 
     @FXML
     @Override
@@ -51,9 +52,14 @@ public class PlanningController extends GuiController{
         }
         if(guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername()))
             Title.setText("CHOOSE YOUR ASSISTANT CARD");
-        this.fillMyDiningRoom();
+        else
+            Title.setText(guiManager.getData().getCurrPlayer().getUsername() + "'s turn");
+
+        this.fillMyDiningRoomPlanning();
+        this.fillOtherPlayersPlanning();
         this.addAvailableAssistantCards();
-        this.fillOtherPlayers();
+        super.fillIslands(islandsPane, 130.0, 80.0);
+
         if(guiManager.getData().isExpert())
             this.setCharacters();
     }
@@ -70,23 +76,27 @@ public class PlanningController extends GuiController{
         if(AssistantCards.getScene()!=null)
             AssistantCards.getScene().setCursor(Cursor.DEFAULT);
     }
+
     public void mouseOffCharacters(MouseEvent mouseEvent){
         Characters.setVisible(false);
         CharacterBack.setVisible(true);
-        AssistantCards.getScene().setCursor(Cursor.DEFAULT);
+        Characters.getScene().setCursor(Cursor.DEFAULT);
     }
 
     public void mouseOnCharacterBack(MouseEvent mouseEvent){
-        AssistantCards.getScene().setCursor(Cursor.HAND);
+       Characters.getScene().setCursor(Cursor.HAND);
     }
+
     public void mouseClickedBackCharacter(MouseEvent mouseEvent){
         Characters.setVisible(true);
         CharacterBack.setVisible(false);
         Characters.getScene().setCursor(Cursor.HAND);
     }
+
     public void mouseClickedCharacter(MouseEvent mouseEvent){
         int valueChar=Integer.parseInt(((ImageView) mouseEvent.getSource()).getId());
     }
+
     public void mouseClickedAssistant(MouseEvent mouseEvent){
         if(guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername())) {
             ((ImageView) mouseEvent.getSource()).setOpacity(0);
@@ -116,45 +126,10 @@ public class PlanningController extends GuiController{
         }
     }
 
-    private void fillMyDiningRoom(){
+    private void fillMyDiningRoomPlanning(){
         for (Player player : guiManager.getData().getPlayers()) {
             if (player.getUsername().equals(guiManager.getOwner())) {
-                for (int i=0;i<5;i++){
-                    for(int j=0;j<player.getMySchoolBoard().getDiningRoom()[i].size();j++){
-                        ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+COLOR.values()[i].toString().toLowerCase()+".png").toString());
-                        imageView.setPreserveRatio(true);
-                        imageView.setFitWidth(20);
-                        MyDiningRoom.add(imageView,i,j);
-                    }
-                }
-                for(int i=0;i<player.getMySchoolBoard().getEntrance().size();i++){
-                    COLOR color=player.getMySchoolBoard().getEntrance().get(i).getColor();
-                    ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+color.toString().toLowerCase()+".png").toString());
-                    imageView.setPreserveRatio(true);
-                    imageView.setFitWidth(20);
-                    if(i%2==0)
-                        MyEntrance.add(imageView,1,i/2);
-                    else
-                        MyEntrance.add(imageView,0,i/2+1);
-                }
-                for(Professor professor: player.getMySchoolBoard().getProfessors()){
-                    COLOR color=professor.getColor();
-                    ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/teacher_"+color.toString().toLowerCase()+".png").toString());
-                    imageView.setPreserveRatio(true);
-                    imageView.setFitWidth(20);
-                    imageView.setRotate(29.7);
-                    MyProfessors.add(imageView,0,color.ordinal());
-                }
-                for(int i=0;i<player.getMySchoolBoard().getTowers().size();i++){
-                    TEAM team=player.getTeam();
-                    ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/"+team.toString().toLowerCase()+"_tower.png").toString());
-                    imageView.setPreserveRatio(true);
-                    imageView.setFitWidth(60);
-                    if(i%2==0)
-                        MyTowers.add(imageView,0,i/2);
-                    else
-                        MyTowers.add(imageView,1,i/2);
-                }
+                super.fillMyDiningRoom(player, MyDiningRoom, MyEntrance, MyProfessors, MyTowers);
                 if(player.getChosenCard()!=null) {
                     Image image = new Image(GuiManager.class.getResource("/graphics/playerItems/deck/assistantCards/Assistente (" + player.getChosenCard().getValue() + ").png").toString());
                     ChosenCard.setImage(image);
@@ -163,7 +138,7 @@ public class PlanningController extends GuiController{
         }
     }
 
-    private void fillOtherPlayers(){
+    private void fillOtherPlayersPlanning(){
         int flag=0;
         GridPane entrance=Player1Entrance,diningroom=Player1DiningRoom,professors=Player1Professors,towers=Player1Towers;
         ImageView assistantCard=Player1AssistantCard;
@@ -176,45 +151,7 @@ public class PlanningController extends GuiController{
                     towers=Player2Towers;
                     assistantCard=Player2AssistantCard;
                 }
-                for(int i=0;i<5;i++){
-                    player.getMySchoolBoard().addProfessor(new Professor(COLOR.values()[i]));
-                }
-                for (int i=0;i<5;i++){
-                    for(int j=0;j<player.getMySchoolBoard().getDiningRoom()[i].size();j++){
-                        ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+COLOR.values()[i].toString().toLowerCase()+".png").toString());
-                        imageView.setPreserveRatio(true);
-                        imageView.setFitWidth(20);
-                        diningroom.add(imageView,i,j);
-                    }
-                }
-                for(int i=0;i<player.getMySchoolBoard().getEntrance().size();i++){
-                    COLOR color=player.getMySchoolBoard().getEntrance().get(i).getColor();
-                    ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+color.toString().toLowerCase()+".png").toString());
-                    imageView.setPreserveRatio(true);
-                    imageView.setFitWidth(20);
-                    if(i%2==0)
-                        entrance.add(imageView,1,i/2);
-                    else
-                        entrance.add(imageView,0,i/2+1);
-                }
-                for(Professor professor: player.getMySchoolBoard().getProfessors()){
-                    COLOR color=professor.getColor();
-                    ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/teacher_"+color.toString().toLowerCase()+".png").toString());
-                    imageView.setPreserveRatio(true);
-                    imageView.setFitWidth(20);
-                    imageView.setRotate(29.7);
-                    professors.add(imageView,0,color.ordinal());
-                }
-                for(int i=0;i<player.getMySchoolBoard().getTowers().size();i++){
-                    TEAM team=player.getTeam();
-                    ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/"+team.toString().toLowerCase()+"_tower.png").toString());
-                    imageView.setPreserveRatio(true);
-                    imageView.setFitWidth(60);
-                    if(i%2==0)
-                        towers.add(imageView,0,i/2);
-                    else
-                        towers.add(imageView,1,i/2);
-                }
+                super.fillOtherPlayers(entrance, diningroom, professors, towers, player);
                 if(player.getChosenCard()!=null){
                     Image image= new Image(GuiManager.class.getResource("/graphics/playerItems/deck/assistantCards/Assistente ("+player.getChosenCard().getValue()+").png").toString());
                     assistantCard.setImage(image);
@@ -240,6 +177,7 @@ public class PlanningController extends GuiController{
             Characters.getChildren().add(imageView);
         }
     }
+
     @Override
     public void update(UpdatedDataEvent event) {
         if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.PLANNING))
