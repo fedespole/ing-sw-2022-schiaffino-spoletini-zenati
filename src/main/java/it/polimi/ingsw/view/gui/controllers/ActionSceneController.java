@@ -20,7 +20,6 @@ import java.io.File;
 
 public class ActionSceneController extends GuiController{
 
-    private GuiManager guimanager;
     @FXML
     private Label phaseLabel;
     @FXML
@@ -60,13 +59,13 @@ public class ActionSceneController extends GuiController{
     @Override
     public void update(UpdatedDataEvent event) {
 
-        phaseLabel.setText("Current phase is " + guimanager.getData().getStatusGame().toString());
+        phaseLabel.setText("Current phase is " + guiManager.getData().getStatusGame().toString());
 
 
     }
 
     private void fillMyDiningRoom(){
-        for (int i = 0; i < guimanager.getData().getNumPlayers(); i++) {
+        for (int i = 0; i < guiManager.getData().getNumPlayers(); i++) {
 
             ImageView board = new ImageView(GuiManager.class.getResource("/graphics/playerItems/schoolBoard/Plancia_DEF3.png").toString());
             board.setFitWidth(250);
@@ -80,13 +79,14 @@ public class ActionSceneController extends GuiController{
     }
 
     private void fillIslands(){
-        for (int i = 0; i < guimanager.getData().getIslands().size(); i++) {
+        for (int i = 0; i < guiManager.getData().getIslands().size(); i++) {
 
-            ImageView island = new ImageView(GuiManager.class.getResource("/graphics/pieces/island"+ (i%3)+1 +".png").toString());
+            ImageView island = new ImageView(GuiManager.class.getResource("/graphics/pieces/island1.png").toString());
             island.setPreserveRatio(true);
             island.setFitWidth(150);
             island.setFitHeight(0);
             islandsPane.getChildren().add(island);
+            islandsPane.toFront();
         }
     }
 
