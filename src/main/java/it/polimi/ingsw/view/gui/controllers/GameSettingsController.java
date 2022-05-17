@@ -2,7 +2,6 @@ package it.polimi.ingsw.view.gui.controllers;
 
 import it.polimi.ingsw.common.events.fromClientEvents.SelectedGameSetUpEvent;
 import it.polimi.ingsw.view.gui.Constants;
-import it.polimi.ingsw.view.gui.GuiManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,8 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.image.ImageView;
-
-import java.util.Locale;
 
 public class GameSettingsController extends GuiController{
     @FXML
@@ -32,12 +29,11 @@ public class GameSettingsController extends GuiController{
     private boolean is3players;
     private boolean isExpert;
 
-    private GuiManager guimanager;
 
     @FXML
     public void initialize(){
-        guimanager = GuiManager.getInstance();
-        String nickName = guimanager.getOwner();
+        super.initialize();
+        String nickName = guiManager.getOwner();
         nickNameLabel.setText("YOUR CHOSEN NICKNAME IS: " + nickName);
     }
 
@@ -58,8 +54,8 @@ public class GameSettingsController extends GuiController{
     }
 
     public void buttonPlaySelected(ActionEvent actionEvent) {
-        guimanager.getClient().getClientEvs().add(new SelectedGameSetUpEvent(guimanager.getOwner(), is3players ? 3 : 2, isExpert));
+        guiManager.getClient().getClientEvs().add(new SelectedGameSetUpEvent(guiManager.getOwner(), is3players ? 3 : 2, isExpert));
         buttonPlay.setDisable(true);
-        Platform.runLater(() -> guimanager.setFXML(Constants.WAITING_ROOM_SCENE));
+        Platform.runLater(() -> guiManager.setFXML(Constants.WAITING_ROOM_SCENE));
     }
 }

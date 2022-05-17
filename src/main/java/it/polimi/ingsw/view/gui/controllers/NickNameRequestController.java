@@ -26,22 +26,19 @@ public class NickNameRequestController extends GuiController{
     @FXML
     public ImageView image;
 
-
-    private GuiManager guimanager;
-
     @FXML
     public void initialize(){
-        guimanager = GuiManager.getInstance();
+        super.initialize();
     }
 
     @FXML
     public void loginAction(ActionEvent actionEvent) {
         String chosenNickname= nicknameTextField.getText();
         if(!Objects.equals(chosenNickname, "")){
-            this.guimanager.getClient().getClientEvs().add(new PlayerAccessEvent(this, chosenNickname,this.guimanager.getClient().getSocket().toString()));
+            guiManager.getClient().getClientEvs().add(new PlayerAccessEvent(this, chosenNickname, guiManager.getClient().getSocket().toString()));
             playButton.setDisable(true);
             errorMessage.setText(chosenNickname);
-            Platform.runLater(() -> guimanager.setFXML(Constants.WAITING_ROOM_SCENE));
+            Platform.runLater(() -> guiManager.setFXML(Constants.WAITING_ROOM_SCENE));
         }
         else{
             errorMessage.setText("Type a nickname");
