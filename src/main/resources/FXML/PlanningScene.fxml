@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.PlanningController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.PlanningController">
    <children>
       <ImageView fitHeight="1080.0" fitWidth="1920.0" opacity="0.8" pickOnBounds="true">
          <image>
@@ -63,7 +63,6 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <FlowPane fx:id="AssistantCards" alignment="BOTTOM_CENTER" columnHalignment="CENTER" layoutY="326.0" prefHeight="398.0" prefWidth="1922.0" />
             <GridPane fx:id="MyProfessors" layoutX="1065.0" layoutY="214.0" prefHeight="236.0" prefWidth="33.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -88,6 +87,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
+            <FlowPane fx:id="AssistantCards" alignment="BOTTOM_CENTER" columnHalignment="CENTER" layoutY="326.0" prefHeight="398.0" prefWidth="1922.0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutY="17.0" prefHeight="623.0" prefWidth="969.0">

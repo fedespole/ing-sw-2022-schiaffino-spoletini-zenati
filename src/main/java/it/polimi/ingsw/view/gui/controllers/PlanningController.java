@@ -1,11 +1,18 @@
 package it.polimi.ingsw.view.gui.controllers;
 
+import it.polimi.ingsw.common.events.fromClientEvents.DrawAssistantCardEvent;
+import it.polimi.ingsw.common.events.fromClientEvents.PlayerAccessEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
+import it.polimi.ingsw.view.gui.Constants;
 import it.polimi.ingsw.view.gui.GuiManager;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -16,7 +23,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class PlanningController extends GuiController{
-
     public FlowPane AssistantCards;
     public GridPane MyDiningRoom;
     public GridPane MyEntrance;
@@ -38,7 +44,6 @@ public class PlanningController extends GuiController{
     @Override
     public void initialize() {
         super.initialize();
-        guiManager.getStage().setFullScreen(true);
         if(guiManager.getData().getNumPlayers()==3){
             Image image= new Image(GuiManager.class.getResource("/graphics/playerItems/schoolBoard/Plancia_DEF3.png").toString());
             Player2Board.setImage(image);
@@ -48,14 +53,21 @@ public class PlanningController extends GuiController{
         this.fillOtherPlayers();
     }
 
-
     public void mouseOnCharacters(MouseEvent mouseEvent) {
+        AssistantCards.getScene().setCursor(Cursor.HAND);
         AssistantCards.alignmentProperty().setValue(Pos.TOP_CENTER);
     }
 
 
     public void mouseOffCharacters(MouseEvent mouseEvent) {
         AssistantCards.alignmentProperty().setValue(Pos.BOTTOM_CENTER);
+        if(AssistantCards.getScene()!=null)
+            AssistantCards.getScene().setCursor(Cursor.DEFAULT);
+    }
+
+    public void mouseClickedCharacter(MouseEvent mouseEvent){
+        int valueCard=Integer.parseInt(((ImageView)mouseEvent.getSource()).getId());
+        this.guiManager.getClient().getClientEvs().add(new DrawAssistantCardEvent(this, valueCard));
     }
 
     private void addAvailableAssistantCards() {
@@ -68,6 +80,9 @@ public class PlanningController extends GuiController{
                     imageView.setFitWidth(150);
                     imageView.setOnMouseEntered(this::mouseOnCharacters);
                     imageView.setOnMouseExited(this::mouseOffCharacters);
+                    if(player.getUsername().equals(guiManager.getData().getCurrPlayer().getUsername()))
+                        imageView.setOnMouseClicked(this::mouseClickedCharacter);
+                    imageView.setId(Integer.toString(assistantCard.getValue()));
                     AssistantCards.getChildren().add(imageView);
                     AssistantCards.toFront();
                 }
@@ -179,10 +194,6 @@ public class PlanningController extends GuiController{
                     else
                         towers.add(imageView,1,i/2);
                 }
-                if(flag==0)
-                    player.setChosenCard(new AssistantCard(8,3));
-                else
-                    player.setChosenCard(new AssistantCard(6,2));
                 if(player.getChosenCard()!=null){
                     Image image= new Image(GuiManager.class.getResource("/graphics/playerItems/deck/assistantCards/Assistente ("+player.getChosenCard().getValue()+").png").toString());
                     assistantCard.setImage(image);
@@ -190,5 +201,13 @@ public class PlanningController extends GuiController{
             flag++;
             }
         }
+    }
+
+    @Override
+    public void update(UpdatedDataEvent event) {
+        if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.PLANNING))
+            Platform.runLater(() -> guiManager.setFXML(Constants.PLANNING_SCENE));
+        else
+            Platform.runLater(() -> guiManager.setFXML(Constants.ACTION_SCENE));
     }
 }
