@@ -6,6 +6,7 @@ import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
+import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 import it.polimi.ingsw.model.expertgame.characters.*;
 import it.polimi.ingsw.model.expertgame.characters.Character;
 import it.polimi.ingsw.view.gui.Constants;
@@ -66,9 +67,6 @@ public class PlanningController extends GuiController{
     public void initialize() {
         super.initialize();
         ArrayList<Character> characters= new ArrayList<>();
-        for(int i=0;i<2;i++)
-            characters.add(new Character9());
-        characters.add(new Character12());
         guiManager.getData().setCharacters(characters);
         if(guiManager.getData().getNumPlayers()==3){
             Image image= new Image(GuiManager.class.getResource("/graphics/playerItems/schoolBoard/Plancia_DEF3.png").toString());
@@ -199,6 +197,25 @@ public class PlanningController extends GuiController{
         }
         ((Stage)((ImageView) mouseEvent.getSource()).getScene().getWindow()).close();
     }
+
+    public void mouseClickedStudentPopup(MouseEvent mouseEvent) {//0 for character 11
+        int character =Integer.parseInt(String.valueOf(((ImageView) mouseEvent.getSource()).getId().charAt(0)));
+        int color =Integer.parseInt(String.valueOf(((ImageView) mouseEvent.getSource()).getId().charAt(2)));
+        switch(character){
+            case 1:{
+                //TODO SCEGLI ISOLA
+                break;
+            }
+            case 7:{
+                //TODO SCEGLI STUDENTI
+                break;
+            }
+            case 0:{
+                this.guiManager.getClient().getClientEvs().add(new UseCharacter11Event(this, color));
+                break;
+            }
+        }
+    }
     private void addAvailableAssistantCards() {
         for (Player player : guiManager.getData().getPlayers()) {
             if(player.getUsername().equals(guiManager.getOwner())) {
@@ -326,8 +343,11 @@ public class PlanningController extends GuiController{
     }
 
     private void studentsPopup(int c){//we send 0 if the character is 11
+        Stage newStage = new Stage();
+        newStage.setTitle("Character"+c+" Selection");
+        Label title= new Label("Choose a Student: ");
         Character character=null;
-        ArrayList<Student> students;
+        ArrayList<Student> students= null;
         for(int i=0;i<3;i++)
             if(guiManager.getData().getCharacters().get(i).getId()==c){
                 character=guiManager.getData().getCharacters().get(i);
@@ -349,7 +369,28 @@ public class PlanningController extends GuiController{
                 break;
             }
         }
-
+        VBox colors=new VBox(title);
+        Student student;
+        for(int i=0;i<students.size();i++){
+            student=students.get(i);
+            ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+student.getColor().toString().toLowerCase()+".png").toString());
+            String id = character+" "+student.getColor().ordinal()+" "+i;
+            System.out.println(id);
+          //  imageView.setOnMouseClicked(this::mouseClickedColorPopup);
+            imageView.setId(id);
+            imageView.setOnMouseEntered(this::mouseOnGeneric);
+            imageView.setOnMouseExited(this::mouseOffGeneric);
+            colors.getChildren().add(imageView);
+        }
+        colors.setSpacing(15);
+        colors.setPadding(new Insets(25));
+        colors.setAlignment(Pos.CENTER);
+        colors.setStyle("-fx-background-color:WHITE");
+        colors.setAlignment(Pos.CENTER);
+        //set scene
+        newStage.setResizable(false);
+        newStage.setScene(new Scene(colors));
+        newStage.show();
     }
     @Override
     public void update(UpdatedDataEvent event) {
