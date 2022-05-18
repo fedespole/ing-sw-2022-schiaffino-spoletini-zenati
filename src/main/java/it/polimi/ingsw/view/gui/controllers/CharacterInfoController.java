@@ -36,12 +36,10 @@ public class CharacterInfoController extends GuiController{
     public Label characterEffectText;
 
     public void textOff(MouseEvent mouseEvent) {
-        ((ImageView) mouseEvent.getSource()).getScene().setCursor(Cursor.DEFAULT);
         characterEffectText.setText("");
     }
 
     public void c1On(MouseEvent mouseEvent) {
-        ((ImageView) mouseEvent.getSource()).getScene().setCursor(Cursor.HAND);
         characterEffectText.setText("Take 1 Student from this card and place it on an Island of your choice. Then, draw a new student from the Bag and place it on this card.");
     }
 

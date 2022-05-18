@@ -1,12 +1,12 @@
 package it.polimi.ingsw.view.gui.controllers;
 
+import it.polimi.ingsw.common.events.fromClientEvents.DrawAssistantCardEvent;
+import it.polimi.ingsw.common.events.fromClientEvents.MoveStudentToIslandEvent;
 import it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.*;
 import it.polimi.ingsw.common.events.fromServerEvents.TieEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.VictoryEvent;
-import it.polimi.ingsw.model.basicgame.COLOR;
-import it.polimi.ingsw.model.basicgame.STATUS;
-import it.polimi.ingsw.model.basicgame.Student;
+import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import it.polimi.ingsw.model.expertgame.characters.Character;
 import it.polimi.ingsw.model.expertgame.characters.Character1;
@@ -17,23 +17,27 @@ import it.polimi.ingsw.view.gui.GuiManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ActionSceneController extends GuiController{
 
@@ -74,7 +78,7 @@ public class ActionSceneController extends GuiController{
         }
         this.fillMyDiningRoomAction();
         this.fillOtherPlayersAction();
-        super.fillIslands(islandsPane, 190.0, 140.0, guiManager.getData().getIslands());
+        this.fillDraggableIslands(islandsPane, 190.0, 140.0, guiManager.getData().getIslands());
 
         if(guiManager.getData().isExpert())
             this.setCharacters();
@@ -102,7 +106,7 @@ public class ActionSceneController extends GuiController{
     private void fillMyDiningRoomAction(){
         for (Player player : guiManager.getData().getPlayers()) {
             if (player.getUsername().equals(guiManager.getOwner())) {
-                super.fillMyDiningRoom(player, MyDiningRoom, MyEntrance, MyProfessors, MyTowers, MyCoins);
+                this.fillMyDiningRoom(player, MyDiningRoom, MyEntrance, MyProfessors, MyTowers, MyCoins);
                 MyDiningRoom.toFront();
                 MyEntrance.toFront();
                 MyProfessors.toFront();
@@ -144,6 +148,7 @@ public class ActionSceneController extends GuiController{
         this.CharacterBack.setImage(new Image(GuiManager.class.getResource("/graphics/characters/Personaggi_retro.jpg").toString()));
         this.CharacterBack.setOnMouseClicked(this::mouseClickedBackCharacter);
         this.CharacterBack.setOnMouseEntered(this::mouseOnGeneric);
+        this.CharacterBack.setOnMouseExited(this::mouseOffGeneric);
         this.CharacterBack.toFront();
         this.Characters.setVisible(false);
         this.Characters.setOnMouseExited(this::mouseOffCharacters);
@@ -402,6 +407,143 @@ public class ActionSceneController extends GuiController{
     @Override
     public void update(TieEvent event){
         Platform.runLater(() -> guiManager.setFXML(Constants.END_SCENE));
+    }
+
+    @Override
+    public void fillMyDiningRoom(Player player, GridPane myDiningRoom, GridPane myEntrance, GridPane myProfessors, GridPane myTowers,Label myCoins) {
+        for (int i=0;i<5;i++){
+            for(int j=0;j<player.getMySchoolBoard().getDiningRoom()[i].size();j++){
+                ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+ COLOR.values()[i].toString().toLowerCase()+".png").toString());
+                imageView.setPreserveRatio(true);
+                imageView.setFitWidth(20);
+                myDiningRoom.add(imageView,i,j);
+            }
+        }
+        for(int i=0;i<player.getMySchoolBoard().getEntrance().size();i++){
+            COLOR color=player.getMySchoolBoard().getEntrance().get(i).getColor();
+            ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+color.toString().toLowerCase()+".png").toString());
+            imageView.setPreserveRatio(true);
+            imageView.setFitWidth(20);
+            imageView.setOnMouseEntered(event->{
+                imageView.getScene().setCursor(Cursor.HAND);
+            });
+            imageView.setOnMouseExited(event->{
+                imageView.getScene().setCursor(Cursor.HAND);
+            });
+
+            imageView.setOnDragDetected(mouseEvent -> {
+                System.out.println("onDragDetected");
+                Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
+                ClipboardContent content = new ClipboardContent();
+                content.putImage(imageView.getImage());
+                int a = COLOR.valueOf(color.toString()).ordinal();
+                String c = Integer.toString(a);
+                content.putString(c);
+                db.setContent(content);
+                mouseEvent.consume();
+            });
+
+            if(i%2==0)
+                myEntrance.add(imageView,1,i/2);
+            else
+                myEntrance.add(imageView,0,i/2+1);
+        }
+        for(Professor professor: player.getMySchoolBoard().getProfessors()){
+            COLOR color=professor.getColor();
+            ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/teacher_"+color.toString().toLowerCase()+".png").toString());
+            imageView.setPreserveRatio(true);
+            imageView.setFitWidth(20);
+            imageView.setRotate(29.7);
+            myProfessors.add(imageView,0,color.ordinal());
+        }
+        for(int i=0;i<player.getMySchoolBoard().getTowers().size();i++){
+            TEAM team=player.getTeam();
+            ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/"+team.toString().toLowerCase()+"_tower.png").toString());
+            imageView.setPreserveRatio(true);
+            imageView.setFitWidth(60);
+            if(i%2==0)
+                myTowers.add(imageView,0,i/2);
+            else
+                myTowers.add(imageView,1,i/2);
+        }
+        if(guiManager.getData().isExpert() && myCoins!=null)
+            myCoins.setText("COINS: "+player.getCoins());
+    }
+
+    public void fillDraggableIslands(GridPane islandsPane, double sizeW, double sizeH, ArrayList<ArrayList<Island>> islands){
+        // ID are progressive, counting from left to right and from top to bottom
+        int idCounter = 0;
+
+        for (int i = 0; i < 4 && idCounter < islands.size(); i++) {
+            for (int j = 0; j < 6 && idCounter < islands.size(); j++) {
+
+                if (!(((j == 1 || j == 2 || j == 3 || j == 4) && (i == 1 || i == 2))) && !((i == 0 || i == 3) && (j == 0 || j == 5))) {
+                    ImageView islandNode;
+                    //         if(islands.get(idCounter).size()==1) {
+                    islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/island" + ((j % 3) + 1) + ".png").toString());
+                    //       }
+                    //        else{
+                    //            islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/island" + ((j % 3) + 1) + ".png").toString());
+                    //       }
+                    islandNode.setPreserveRatio(true);
+                    islandNode.setFitWidth(sizeW);
+                    islandNode.setFitHeight(sizeH);
+                    //island node able to receive dragOver
+                    islandNode.setOnDragOver(event->{
+                        System.out.println("onDragOver");
+                        islandNode.getScene().setCursor(Cursor.NONE);
+                        if (event.getGestureSource() != islandNode) {
+                            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                        }
+                        event.consume();
+                    });
+
+                    islandNode.setOnDragEntered(event -> {
+                                System.out.println("onDragEntered");
+                                if (event.getGestureSource() != islandNode ) {
+                                    islandNode.setOpacity(0.5);
+                                }
+                                event.consume();
+                            }
+                    );
+
+                    islandNode.setOnDragExited(event -> {
+                        islandNode.getScene().setCursor(Cursor.DEFAULT);
+                        islandNode.setOpacity(1);
+                        event.consume();
+                    });
+
+                    int finalIdCounter = idCounter;
+                    islandNode.setOnDragDropped(event -> {
+
+                        System.out.println(event.getDragboard().getString());
+                        String color = event.getDragboard().getString();
+                        int a = Integer.parseInt(color);
+                        //TODO qui va bene mettere idCounter come numero dell'isola? (secondo me dipende da come le disponiamo alla fine)
+                        this.guiManager.getClient().getClientEvs().add(new MoveStudentToIslandEvent(this, a, finalIdCounter));
+                        event.setDropCompleted(true);
+                        islandNode.getScene().setCursor(Cursor.DEFAULT);
+                        event.consume();
+                    });
+
+                    islandNode.setOnDragDone(event -> {
+                        System.out.println("onDragDone");
+                        event.consume();
+                    });
+
+                    islandsPane.add(islandNode, j, i);
+                    islandNode.setId(Integer.toString(idCounter));
+                    idCounter++;
+                    if (j == 0 || j == 5) {
+                        if (i == 1) GridPane.setValignment(islandNode, VPos.BOTTOM);
+                        else GridPane.setValignment(islandNode, VPos.TOP);
+                    } else GridPane.setValignment(islandNode, VPos.CENTER);
+                    GridPane.setHalignment(islandNode, HPos.CENTER);
+                    islandsPane.toFront();
+                }
+
+            }
+        }
     }
 
 }
