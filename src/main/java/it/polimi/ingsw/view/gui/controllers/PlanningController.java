@@ -66,8 +66,6 @@ public class PlanningController extends GuiController{
     @Override
     public void initialize() {
         super.initialize();
-        ArrayList<Character> characters= new ArrayList<>();
-        guiManager.getData().setCharacters(characters);
         if(guiManager.getData().getNumPlayers()==3){
             Image image= new Image(GuiManager.class.getResource("/graphics/playerItems/schoolBoard/Plancia_DEF3.png").toString());
             Player2Board.setImage(image);
@@ -122,7 +120,8 @@ public class PlanningController extends GuiController{
         int valueChar=Integer.parseInt(((ImageView) mouseEvent.getSource()).getId());
         switch(valueChar){
             case 1:{
-                //TODO Character1 studenti
+               // studentsPopup(1);
+                break;
             }
             case 2:{
                 if(guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername()))
@@ -162,10 +161,12 @@ public class PlanningController extends GuiController{
                 //todo character10
             }
             case 11:{
-                //todo character 11
+                studentsPopup(11);
+                break;
             }
             case 12:{
-                colorPopup(12);
+                if(guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername()))
+                    colorPopup(12);
                 break;
             }
         }
@@ -215,6 +216,7 @@ public class PlanningController extends GuiController{
                 break;
             }
         }
+        ((Stage)((ImageView) mouseEvent.getSource()).getScene().getWindow()).close();
     }
     private void addAvailableAssistantCards() {
         for (Player player : guiManager.getData().getPlayers()) {
@@ -285,6 +287,7 @@ public class PlanningController extends GuiController{
             ImageView imageView = new ImageView(GuiManager.class.getResource("/graphics/characters/Character"+character.getId()+".jpg").toString());
             imageView.setPreserveRatio(true);
             imageView.setFitWidth(100);
+            System.out.println(character.getId());
             imageView.setOnMouseClicked(this::mouseClickedCharacter);
             imageView.setId(Integer.toString(character.getId()));
             Characters.getChildren().add(imageView);
@@ -378,12 +381,13 @@ public class PlanningController extends GuiController{
         for(int i=0;i<students.size();i++){
             student=students.get(i);
             ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+student.getColor().toString().toLowerCase()+".png").toString());
-            String id = character+" "+student.getColor().ordinal()+" "+i;
-            System.out.println(id);
-          //  imageView.setOnMouseClicked(this::mouseClickedColorPopup);
+            String id = c+" "+student.getColor().ordinal()+" "+i;
             imageView.setId(id);
-            imageView.setOnMouseEntered(this::mouseOnGeneric);
-            imageView.setOnMouseExited(this::mouseOffGeneric);
+            if(guiManager.getData().getCurrPlayer().getUsername().equals(guiManager.getOwner())) {
+                imageView.setOnMouseEntered(this::mouseOnGeneric);
+                imageView.setOnMouseExited(this::mouseOffGeneric);
+                imageView.setOnMouseClicked(this::mouseClickedStudentPopup);
+            }
             colors.getChildren().add(imageView);
         }
         colors.setSpacing(15);
