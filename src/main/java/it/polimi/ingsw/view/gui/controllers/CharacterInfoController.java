@@ -24,6 +24,7 @@ public class CharacterInfoController extends GuiController{
     @FXML
     @Override
     public void initialize(){
+        effectText = new Label();
         effectText.setText("");
     }
 
