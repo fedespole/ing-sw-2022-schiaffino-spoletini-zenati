@@ -15,12 +15,8 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PopupControl;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
@@ -28,7 +24,6 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -106,12 +101,13 @@ public class PlanningController extends GuiController{
         Characters.getScene().setCursor(Cursor.DEFAULT);
     }
 
-    public void mouseOnCharacterBack(MouseEvent mouseEvent){
-        for(Node node:Characters.getChildren())
-            System.out.println(((ImageView)node).getId());
-       Characters.getScene().setCursor(Cursor.HAND);
+    public void mouseOnGeneric(MouseEvent mouseEvent){
+        ((ImageView) mouseEvent.getSource()).getScene().setCursor(Cursor.HAND);
     }
 
+    public void mouseOffGeneric(MouseEvent mouseEvent){
+        ((ImageView) mouseEvent.getSource()).getScene().setCursor(Cursor.DEFAULT);
+    }
     public void mouseClickedBackCharacter(MouseEvent mouseEvent){
         Characters.setVisible(true);
         CharacterBack.setVisible(false);
@@ -150,29 +146,7 @@ public class PlanningController extends GuiController{
                 break;
             }
             case 9:{
-                //Creates PopUp
-                Stage newStage = new Stage();
-                newStage.setTitle("Character9 Selection");
-                Label title= new Label("Choose a Color: ");
-
-                //create images - prova a vedere se va bene usare gli studenti direttamente
-                ImageView blueImage= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_blue.png").toString());
-                ImageView greenImage = new ImageView(GuiManager.class.getResource("/graphics/pieces/student_green.png").toString());
-                ImageView pinkImage = new ImageView(GuiManager.class.getResource("/graphics/pieces/student_pink.png").toString());
-                ImageView redImage = new ImageView(GuiManager.class.getResource("/graphics/pieces/student_red.png").toString());
-                ImageView yellowImage = new ImageView(GuiManager.class.getResource("/graphics/pieces/student_yellow.png").toString());
-
-                //create Pane
-                VBox colors=new VBox(title, blueImage, greenImage,pinkImage,redImage,yellowImage);
-                colors.setSpacing(15);
-                colors.setPadding(new Insets(25));
-                colors.setAlignment(Pos.CENTER);
-                colors.setStyle("-fx-background-color:WHITE");
-                colors.setAlignment(Pos.CENTER);
-                //set scene
-                newStage.setResizable(false);
-                newStage.setScene(new Scene(colors));
-                newStage.show();
+                colorPopup(9);
                 break;
             }
             case 10:{
@@ -198,6 +172,16 @@ public class PlanningController extends GuiController{
         }
     }
 
+    public void mouseClickedColorPopup(MouseEvent mouseEvent){
+        int character =Integer.parseInt(String.valueOf(((ImageView) mouseEvent.getSource()).getId().charAt(0)));
+        int color =Integer.parseInt(String.valueOf(((ImageView) mouseEvent.getSource()).getId().charAt(2)));
+        switch(character){
+            case 9:{
+                this.guiManager.getClient().getClientEvs().add(new UseCharacter9Event(this, color));
+            }
+        }
+        ((Stage)((ImageView) mouseEvent.getSource()).getScene().getWindow()).close();
+    }
     private void addAvailableAssistantCards() {
         for (Player player : guiManager.getData().getPlayers()) {
             if(player.getUsername().equals(guiManager.getOwner())) {
@@ -259,18 +243,45 @@ public class PlanningController extends GuiController{
     private void setCharacters(){
         this.CharacterBack.setImage(new Image(GuiManager.class.getResource("/graphics/characters/Personaggi_retro.jpg").toString()));
         this.CharacterBack.setOnMouseClicked(this::mouseClickedBackCharacter);
-        this.CharacterBack.setOnMouseEntered(this::mouseOnCharacterBack);
+        this.CharacterBack.setOnMouseEntered(this::mouseOnGeneric);
         this.CharacterBack.toFront();
         this.Characters.setVisible(false);
         this.Characters.setOnMouseExited(this::mouseOffCharacters);
         for(Character character: guiManager.getData().getCharacters()){
-            ImageView imageView = new ImageView(GuiManager.class.getResource("/graphics/characters/CarteTOT_front"+character.getId()+".jpg").toString());
+            ImageView imageView = new ImageView(GuiManager.class.getResource("/graphics/characters/Character"+character.getId()+".jpg").toString());
             imageView.setPreserveRatio(true);
             imageView.setFitWidth(100);
             imageView.setOnMouseClicked(this::mouseClickedCharacter);
-            imageView.setId(Integer.toString(character.getId()));//todo non capisco perche serva il +1!!
+            imageView.setId(Integer.toString(character.getId()));
             Characters.getChildren().add(imageView);
         }
+    }
+
+    private void colorPopup(int character){
+        Stage newStage = new Stage();
+        newStage.setTitle("Character"+character+" Selection");
+        Label title= new Label("Choose a Color: ");
+
+        //create Pane
+        VBox colors=new VBox(title);
+        for(int i=0;i<5;i++){
+            ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+COLOR.values()[i].toString().toLowerCase()+".png").toString());
+            String id = character+" "+i;
+            imageView.setOnMouseClicked(this::mouseClickedColorPopup);
+            imageView.setId(id);
+            imageView.setOnMouseEntered(this::mouseOnGeneric);
+            imageView.setOnMouseExited(this::mouseOffGeneric);
+            colors.getChildren().add(imageView);
+        }
+        colors.setSpacing(15);
+        colors.setPadding(new Insets(25));
+        colors.setAlignment(Pos.CENTER);
+        colors.setStyle("-fx-background-color:WHITE");
+        colors.setAlignment(Pos.CENTER);
+        //set scene
+        newStage.setResizable(false);
+        newStage.setScene(new Scene(colors));
+        newStage.show();
     }
 
     @Override
@@ -280,12 +291,5 @@ public class PlanningController extends GuiController{
         else
             Platform.runLater(() -> guiManager.setFXML(Constants.ACTION_SCENE));
     }
-    private Image generateImage(double red, double green, double blue, double opacity) {
-        WritableImage img = new WritableImage(1, 1);
-        PixelWriter pw = img.getPixelWriter();
 
-        Color color = Color.color(red/255, green/255, blue/255, opacity/255);
-        pw.setColor(0, 0, color);
-        return img ;
-    }
 }
