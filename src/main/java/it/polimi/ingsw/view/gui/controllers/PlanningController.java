@@ -12,10 +12,12 @@ import it.polimi.ingsw.view.gui.Constants;
 import it.polimi.ingsw.view.gui.GuiManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PopupControl;
 import javafx.scene.control.TextField;
@@ -148,31 +150,29 @@ public class PlanningController extends GuiController{
                 break;
             }
             case 9:{
+                //Creates PopUp
                 Stage newStage = new Stage();
-                Label title= new Label("CHOOSE A COLOR");
-                FlowPane colors=new FlowPane();
-                colors.setVisible(true);
-                colors.setPrefWrapLength(200);
-                ImageView imageView=new ImageView(generateImage(102,204,0,1));
-                imageView.setFitWidth(200);
-                colors.getChildren().add(imageView);
-                imageView=new ImageView(generateImage(102,204,0,1));
-                colors.getChildren().add(imageView);
-                imageView=new ImageView(generateImage(255,0,0,1));
-                colors.getChildren().add(imageView);
-                imageView=new ImageView(generateImage(255,255,0,1));
-                colors.getChildren().add(imageView);
-                imageView=new ImageView(generateImage(255,204,229,1));
-                colors.getChildren().add(imageView);
-                imageView=new ImageView(generateImage(0,0,255,1));
-                colors.getChildren().add(imageView);
-                StackPane pane = new StackPane();
-                pane.getChildren().add(colors);
-                pane.setStyle("-fx-background-color:WHITE");
-                Scene stageScene = new Scene(pane, 300, 300);
-                newStage.setScene(stageScene);
-                newStage.show();
+                newStage.setTitle("Character9 Selection");
+                Label title= new Label("Choose a Color: ");
 
+                //create images - prova a vedere se va bene usare gli studenti direttamente
+                ImageView blueImage= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_blue.png").toString());
+                ImageView greenImage = new ImageView(GuiManager.class.getResource("/graphics/pieces/student_green.png").toString());
+                ImageView pinkImage = new ImageView(GuiManager.class.getResource("/graphics/pieces/student_pink.png").toString());
+                ImageView redImage = new ImageView(GuiManager.class.getResource("/graphics/pieces/student_red.png").toString());
+                ImageView yellowImage = new ImageView(GuiManager.class.getResource("/graphics/pieces/student_yellow.png").toString());
+
+                //create Pane
+                VBox colors=new VBox(title, blueImage, greenImage,pinkImage,redImage,yellowImage);
+                colors.setSpacing(15);
+                colors.setPadding(new Insets(25));
+                colors.setAlignment(Pos.CENTER);
+                colors.setStyle("-fx-background-color:WHITE");
+                colors.setAlignment(Pos.CENTER);
+                //set scene
+                newStage.setResizable(false);
+                newStage.setScene(new Scene(colors));
+                newStage.show();
                 break;
             }
             case 10:{
