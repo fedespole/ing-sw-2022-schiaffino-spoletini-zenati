@@ -260,7 +260,7 @@ public class PlanningController extends GuiController{
             imageView.setId(Integer.toString(character.getId()));
             Characters.getChildren().add(imageView);
         }
-        ImageView infoButton = new ImageView(GuiManager.class.getResource("/graphics/infoButton.jpg").toString());
+        ImageView infoButton = new ImageView(GuiManager.class.getResource("/graphics/infoButton.png").toString());
         infoButton.setPreserveRatio(true);
         infoButton.setFitWidth(60);
         infoButton.setId("infoButton");
@@ -270,7 +270,7 @@ public class PlanningController extends GuiController{
 
     private void infoButtonClicked(MouseEvent mouseEvent){
         //create new stage and load it with CharacterInfoScene
-        Parent root = null;
+        /*Parent root = null;
         try{
           root = FXMLLoader.load(GuiManager.class.getResource(Constants.CHARACTER_INFO));
         } catch(IOException e){};
@@ -279,7 +279,7 @@ public class PlanningController extends GuiController{
         newStage.setScene(scene);
         newStage.setResizable(false);
         newStage.setTitle("Characters' Infos");
-        newStage.show();
+        newStage.show();*/
     }
 
     private void colorPopup(int character){
