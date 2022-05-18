@@ -130,7 +130,7 @@
             <Insets left="20.0" right="20.0" />
          </opaqueInsets>
       </FlowPane>
-      <Label fx:id="characterEffectetext" alignment="CENTER" layoutX="104.0" layoutY="356.0" prefHeight="97.0" prefWidth="1197.0" textAlignment="CENTER" wrapText="true">
+      <Label fx:id="characterEffectText" alignment="CENTER" layoutX="104.0" layoutY="356.0" prefHeight="97.0" prefWidth="1197.0" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Algerian" size="20.0" />
          </font>
