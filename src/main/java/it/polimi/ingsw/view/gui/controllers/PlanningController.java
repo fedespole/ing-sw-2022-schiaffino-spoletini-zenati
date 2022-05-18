@@ -6,8 +6,8 @@ import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
+import it.polimi.ingsw.model.expertgame.characters.*;
 import it.polimi.ingsw.model.expertgame.characters.Character;
-import it.polimi.ingsw.model.expertgame.characters.Character9;
 import it.polimi.ingsw.view.gui.Constants;
 import it.polimi.ingsw.view.gui.GuiManager;
 import javafx.application.Platform;
@@ -61,8 +61,9 @@ public class PlanningController extends GuiController{
     public void initialize() {
         super.initialize();
         ArrayList<Character> characters= new ArrayList<>();
-        for(int i=0;i<3;i++)
+        for(int i=0;i<2;i++)
             characters.add(new Character9());
+        characters.add(new Character12());
         guiManager.getData().setCharacters(characters);
         if(guiManager.getData().getNumPlayers()==3){
             Image image= new Image(GuiManager.class.getResource("/graphics/playerItems/schoolBoard/Plancia_DEF3.png").toString());
@@ -121,32 +122,37 @@ public class PlanningController extends GuiController{
                 //TODO Character1 studenti
             }
             case 2:{
-                this.guiManager.getClient().getClientEvs().add(new UseCharacter2Event(this));
+                if(guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername()))
+                    this.guiManager.getClient().getClientEvs().add(new UseCharacter2Event(this));
                 break;
             }
             case 3:{
                 //TODO Character3
             }
             case 4:{
-                this.guiManager.getClient().getClientEvs().add(new UseCharacter4Event(this));
+                if(guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername()))
+                    this.guiManager.getClient().getClientEvs().add(new UseCharacter4Event(this));
                 break;
             }
             case 5:{
 
             }
             case 6:{
-                this.guiManager.getClient().getClientEvs().add(new UseCharacter6Event(this));
+                if(guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername()))
+                    this.guiManager.getClient().getClientEvs().add(new UseCharacter6Event(this));
                 break;
             }
             case 7:{
                 //todo character7
             }
             case 8:{
-                this.guiManager.getClient().getClientEvs().add(new UseCharacter8Event(this));
+                if(guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername()))
+                    this.guiManager.getClient().getClientEvs().add(new UseCharacter8Event(this));
                 break;
             }
             case 9:{
-                colorPopup(9);
+                if(guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername()))
+                    colorPopup(9);
                 break;
             }
             case 10:{
@@ -156,6 +162,7 @@ public class PlanningController extends GuiController{
                 //todo character 11
             }
             case 12:{
+                colorPopup(12);
                 break;
             }
         }
@@ -172,12 +179,17 @@ public class PlanningController extends GuiController{
         }
     }
 
-    public void mouseClickedColorPopup(MouseEvent mouseEvent){
+    public void mouseClickedColorPopup(MouseEvent mouseEvent){//0 for character 9,1 for character 12
         int character =Integer.parseInt(String.valueOf(((ImageView) mouseEvent.getSource()).getId().charAt(0)));
         int color =Integer.parseInt(String.valueOf(((ImageView) mouseEvent.getSource()).getId().charAt(2)));
         switch(character){
-            case 9:{
+            case 0:{
                 this.guiManager.getClient().getClientEvs().add(new UseCharacter9Event(this, color));
+                break;
+            }
+            case 1:{
+                this.guiManager.getClient().getClientEvs().add(new UseCharacter12Event(this, color));
+                break;
             }
         }
         ((Stage)((ImageView) mouseEvent.getSource()).getScene().getWindow()).close();
@@ -257,16 +269,20 @@ public class PlanningController extends GuiController{
         }
     }
 
-    private void colorPopup(int character){
+    private void colorPopup(int character){//we send 0 if the character is 9,1 if the character is 12
         Stage newStage = new Stage();
         newStage.setTitle("Character"+character+" Selection");
         Label title= new Label("Choose a Color: ");
-
+        if(character==9)
+            character=0;
+        else if(character==12)
+            character=1;
         //create Pane
         VBox colors=new VBox(title);
         for(int i=0;i<5;i++){
             ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+COLOR.values()[i].toString().toLowerCase()+".png").toString());
             String id = character+" "+i;
+            System.out.println(id);
             imageView.setOnMouseClicked(this::mouseClickedColorPopup);
             imageView.setId(id);
             imageView.setOnMouseEntered(this::mouseOnGeneric);
@@ -284,6 +300,32 @@ public class PlanningController extends GuiController{
         newStage.show();
     }
 
+    private void studentsPopup(int c){//we send 0 if the character is 11
+        Character character=null;
+        ArrayList<Student> students;
+        for(int i=0;i<3;i++)
+            if(guiManager.getData().getCharacters().get(i).getId()==c){
+                character=guiManager.getData().getCharacters().get(i);
+                break;
+            }
+        if(c==11)
+            c=0;
+        switch(c) {
+            case 1: {
+                students = ((Character1) character).getStudents();
+                break;
+            }
+            case 7: {
+                students = ((Character7) character).getStudents();
+                break;
+            }
+            case 0:{
+                students = ((Character11)character).getStudents();
+                break;
+            }
+        }
+
+    }
     @Override
     public void update(UpdatedDataEvent event) {
         if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.PLANNING))
