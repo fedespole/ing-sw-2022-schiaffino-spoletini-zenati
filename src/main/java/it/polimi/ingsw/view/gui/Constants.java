@@ -7,5 +7,5 @@ public class Constants {
     public static final String PLANNING_SCENE = "/FXML/PlanningScene.fxml";
     public static final String ACTION_SCENE = "/FXML/ActionScene.fxml";
     public static final String END_SCENE = "/FXML/EndScene.fxml";
-    public static final String CHARACTER_INFO = "/FXML/CharacterInfoScene.fxml";
+    public static final String CHARACTER_INFO_SCENE = "/FXML/CharacterInfoScene.fxml";
 }

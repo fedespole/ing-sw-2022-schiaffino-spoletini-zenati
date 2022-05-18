@@ -309,6 +309,19 @@ public class PlanningController extends GuiController{
         newStage.setResizable(false);
         newStage.setTitle("Characters' Infos");
         newStage.show();*/
+        Stage s = new Stage();
+        Parent parent = null;
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(GuiManager.class.getResource(Constants.CHARACTER_INFO_SCENE));
+            parent = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene scene = new Scene(parent);
+        s.setTitle("Info");
+        s.setScene(scene);
+        s.show();
     }
 
     private void colorPopup(int character){//we send 0 if the character is 9,1 if the character is 12
