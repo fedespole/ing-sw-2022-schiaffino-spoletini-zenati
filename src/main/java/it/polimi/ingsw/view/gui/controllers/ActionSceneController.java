@@ -100,7 +100,7 @@ public class ActionSceneController extends GuiController{
     private void fillMyDiningRoomAction(){
         for (Player player : guiManager.getData().getPlayers()) {
             if (player.getUsername().equals(guiManager.getOwner())) {
-                super.fillMyDiningRoom(player, MyDiningRoom, MyEntrance, MyProfessors, MyTowers);
+                super.fillMyDiningRoom(player, MyDiningRoom, MyEntrance, MyProfessors, MyTowers,null);
                 MyDiningRoom.toFront();
                 MyEntrance.toFront();
                 MyProfessors.toFront();
@@ -124,7 +124,7 @@ public class ActionSceneController extends GuiController{
                     Player2Professors.toFront();
                     Player2Towers.toFront();
                 }
-                super.fillOtherPlayers(entrance, diningroom, professors, towers, player);
+                super.fillOtherPlayers(entrance, diningroom, professors, towers, player,null);
                 Player1DiningRoom.toFront();
                 Player1Entrance.toFront();
                 Player1Professors.toFront();

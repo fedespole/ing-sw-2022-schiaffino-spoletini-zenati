@@ -13,6 +13,7 @@ import it.polimi.ingsw.view.gui.GuiManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
@@ -24,7 +25,7 @@ public class GuiController {
         guiManager = GuiManager.getInstance();
     }
 
-    public void fillMyDiningRoom(Player player, GridPane myDiningRoom, GridPane myEntrance, GridPane myProfessors, GridPane myTowers) {
+    public void fillMyDiningRoom(Player player, GridPane myDiningRoom, GridPane myEntrance, GridPane myProfessors, GridPane myTowers,Label myCoins) {
         for (int i=0;i<5;i++){
             for(int j=0;j<player.getMySchoolBoard().getDiningRoom()[i].size();j++){
                 ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+ COLOR.values()[i].toString().toLowerCase()+".png").toString());
@@ -61,9 +62,11 @@ public class GuiController {
             else
                 myTowers.add(imageView,1,i/2);
         }
+        if(guiManager.getData().isExpert() && myCoins!=null)//TODO ho messo coins a null in action scene
+            myCoins.setText("COINS: "+player.getCoins());
     }
 
-    public void fillOtherPlayers(GridPane entrance, GridPane diningroom, GridPane professors, GridPane towers, Player player) {
+    public void fillOtherPlayers(GridPane entrance, GridPane diningroom, GridPane professors, GridPane towers, Player player, Label coins) {
         for(int i=0;i<5;i++){
             player.getMySchoolBoard().addProfessor(new Professor(COLOR.values()[i]));
         }
@@ -103,6 +106,8 @@ public class GuiController {
             else
                 towers.add(imageView,1,i/2);
         }
+        if(guiManager.getData().isExpert())
+            coins.setText("COINS: "+player.getCoins());
     }
 
     public void fillIslands(GridPane islandsPane, double sizeW, double sizeH){
