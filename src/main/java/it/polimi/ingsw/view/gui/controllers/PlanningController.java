@@ -12,9 +12,12 @@ import it.polimi.ingsw.view.gui.Constants;
 import it.polimi.ingsw.view.gui.GuiManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -24,8 +27,10 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class PlanningController extends GuiController{
@@ -267,6 +272,26 @@ public class PlanningController extends GuiController{
             imageView.setId(Integer.toString(character.getId()));
             Characters.getChildren().add(imageView);
         }
+        ImageView infoButton = new ImageView(GuiManager.class.getResource("/graphics/infoButton.jpg").toString());
+        infoButton.setPreserveRatio(true);
+        infoButton.setFitWidth(60);
+        infoButton.setId("infoButton");
+        infoButton.setOnMousePressed(this::infoButtonClicked);
+        Characters.getChildren().add(0, infoButton);
+    }
+
+    private void infoButtonClicked(MouseEvent mouseEvent){
+        //create new stage and load it with CharacterInfoScene
+        Parent root = null;
+        try{
+          root = FXMLLoader.load(GuiManager.class.getResource(Constants.CHARACTER_INFO));
+        } catch(IOException e){};
+        Scene scene = new Scene(root, 1360, 765);
+        Stage newStage = new Stage();
+        newStage.setScene(scene);
+        newStage.setResizable(false);
+        newStage.setTitle("Characters' Infos");
+        newStage.show();
     }
 
     private void colorPopup(int character){//we send 0 if the character is 9,1 if the character is 12
@@ -333,5 +358,12 @@ public class PlanningController extends GuiController{
         else
             Platform.runLater(() -> guiManager.setFXML(Constants.ACTION_SCENE));
     }
+    private Image generateImage(double red, double green, double blue, double opacity) {
+        WritableImage img = new WritableImage(1, 1);
+        PixelWriter pw = img.getPixelWriter();
 
+        Color color = Color.color(red/255, green/255, blue/255, opacity/255);
+        pw.setColor(0, 0, color);
+        return img ;
+    }
 }
