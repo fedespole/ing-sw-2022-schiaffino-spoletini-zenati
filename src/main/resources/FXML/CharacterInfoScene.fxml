@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1360.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.CharacterInfoController">
+   <children>
+      <ImageView fitHeight="765.0" fitWidth="1360.0" opacity="0.9" pickOnBounds="true">
+         <image>
+            <Image url="@../graphics/provasfondo.png" />
+         </image>
+      </ImageView>
+      <FlowPane alignment="CENTER" layoutY="122.0" prefHeight="211.0" prefWidth="1367.0">
+         <children>
+            <ImageView fx:id="c1" fitHeight="225.0" fitWidth="140.0" onMouseEntered="#c1On" onMouseExited="#textOff" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/characters/Character1.jpg" />
+               </image>
+               <FlowPane.margin>
+                  <Insets left="30.0" right="90.0" />
+               </FlowPane.margin>
+            </ImageView>
+            <ImageView fx:id="c2" fitHeight="225.0" fitWidth="140.0" onMouseEntered="#c2On" onMouseExited="#textOff" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/characters/Character2.jpg" />
+               </image>
+               <FlowPane.margin>
+                  <Insets right="90.0" />
+               </FlowPane.margin>
+            </ImageView>
+            <ImageView fx:id="c3" fitHeight="225.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" onMouseEntered="#c3On" onMouseExited="#textOff">
+               <image>
+                  <Image url="@../graphics/characters/Character3.jpg" />
+               </image>
+               <FlowPane.margin>
+                  <Insets right="90.0" />
+               </FlowPane.margin>
+            </ImageView>
+            <ImageView fx:id="c4" fitHeight="225.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" onMouseEntered="#c4On" onMouseExited="#textOff">
+               <image>
+                  <Image url="@../graphics/characters/Character4.jpg" />
+               </image>
+               <FlowPane.margin>
+                  <Insets right="90.0" />
+               </FlowPane.margin>
+            </ImageView>
+            <ImageView fx:id="c5" fitHeight="225.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" onMouseEntered="#c5On" onMouseExited="#textOff">
+               <image>
+                  <Image url="@../graphics/characters/Character5.jpg" />
+               </image>
+               <FlowPane.margin>
+                  <Insets right="90.0" />
+               </FlowPane.margin>
+            </ImageView>
+            <ImageView fx:id="c6" fitHeight="225.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" onMouseEntered="#c6On" onMouseExited="#textOff">
+               <image>
+                  <Image url="@../graphics/characters/Character6.jpg" />
+               </image>
+            </ImageView>
+         </children>
+         <padding>
+            <Insets right="40.0" />
+         </padding>
+         <opaqueInsets>
+            <Insets left="20.0" right="20.0" />
+         </opaqueInsets>
+      </FlowPane>
+      <Label alignment="CENTER" layoutX="-1.0" layoutY="30.0" prefHeight="46.0" prefWidth="1363.0" text="Characters Effects" textFill="#f28de6">
+         <font>
+            <Font name="Algerian" size="50.0" />
+         </font>
+      </Label>
+      <FlowPane alignment="CENTER" layoutY="486.0" prefHeight="224.0" prefWidth="1365.0">
+         <children>
+            <ImageView fx:id="c7" fitHeight="225.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" onMouseEntered="#c7On" onMouseExited="#textOff">
+               <image>
+                  <Image url="@../graphics/characters/Character7.jpg" />
+               </image>
+               <FlowPane.margin>
+                  <Insets left="30.0" right="90.0" />
+               </FlowPane.margin>
+            </ImageView>
+            <ImageView fx:id="c8" fitHeight="225.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" onMouseEntered="#c8On" onMouseExited="#textOff">
+               <image>
+                  <Image url="@../graphics/characters/Character8.jpg" />
+               </image>
+               <FlowPane.margin>
+                  <Insets right="90.0" />
+               </FlowPane.margin>
+            </ImageView>
+            <ImageView fx:id="c9" fitHeight="225.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" onMouseEntered="#c9On" onMouseExited="#textOff">
+               <image>
+                  <Image url="@../graphics/characters/Character9.jpg" />
+               </image>
+               <FlowPane.margin>
+                  <Insets right="90.0" />
+               </FlowPane.margin>
+            </ImageView>
+            <ImageView fx:id="c10" fitHeight="225.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" onMouseEntered="#c10On" onMouseExited="#textOff">
+               <image>
+                  <Image url="@../graphics/characters/Character10.jpg" />
+               </image>
+               <FlowPane.margin>
+                  <Insets right="90.0" />
+               </FlowPane.margin>
+            </ImageView>
+            <ImageView fx:id="c11" fitHeight="225.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" onMouseEntered="#c11On" onMouseExited="#textOff">
+               <image>
+                  <Image url="@../graphics/characters/Character11.jpg" />
+               </image>
+               <FlowPane.margin>
+                  <Insets right="90.0" />
+               </FlowPane.margin>
+            </ImageView>
+            <ImageView fx:id="c12" fitHeight="225.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" onMouseEntered="#c12On" onMouseExited="#textOff">
+               <image>
+                  <Image url="@../graphics/characters/Character12.jpg" />
+               </image>
+            </ImageView>
+         </children>
+         <padding>
+            <Insets right="40.0" />
+         </padding>
+         <opaqueInsets>
+            <Insets left="20.0" right="20.0" />
+         </opaqueInsets>
+      </FlowPane>
+      <Label fx:id="characterEffectetext" alignment="CENTER" layoutX="104.0" layoutY="356.0" prefHeight="97.0" prefWidth="1197.0" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Algerian" size="20.0" />
+         </font>
+         <opaqueInsets>
+            <Insets left="40.0" right="40.0" />
+         </opaqueInsets>
+      </Label>
+      <Label layoutX="1111.0" layoutY="735.0" text="Move mouse over a card to see its effect" textFill="#4a224b">
+         <font>
+            <Font name="Bell MT" size="15.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

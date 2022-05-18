@@ -106,7 +106,7 @@ public class GuiController {
             else
                 towers.add(imageView,1,i/2);
         }
-        if(guiManager.getData().isExpert())
+        if(guiManager.getData().isExpert() && coins!=null)
             coins.setText("COINS: "+player.getCoins());
     }
 
