@@ -5,6 +5,7 @@ import it.polimi.ingsw.common.events.fromServerEvents.TieEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.VictoryEvent;
 import it.polimi.ingsw.model.basicgame.COLOR;
+import it.polimi.ingsw.model.basicgame.Island;
 import it.polimi.ingsw.model.basicgame.Professor;
 import it.polimi.ingsw.model.basicgame.TEAM;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
@@ -12,10 +13,14 @@ import it.polimi.ingsw.view.gui.Constants;
 import it.polimi.ingsw.view.gui.GuiManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+
+import java.util.ArrayList;
 
 public class GuiController {
     public GuiManager guiManager;
@@ -62,7 +67,7 @@ public class GuiController {
             else
                 myTowers.add(imageView,1,i/2);
         }
-        if(guiManager.getData().isExpert() && myCoins!=null)//TODO ho messo coins a null in action scene
+        if(guiManager.getData().isExpert() && myCoins!=null)
             myCoins.setText("COINS: "+player.getCoins());
     }
 
@@ -110,24 +115,38 @@ public class GuiController {
             coins.setText("COINS: "+player.getCoins());
     }
 
-    public void fillIslands(GridPane islandsPane, double sizeW, double sizeH){
+    // Based on islands array dimension, manually displays a different gridpane layout
+    public void fillIslands(GridPane islandsPane, double sizeW, double sizeH, ArrayList<ArrayList<Island>> islands){
+        // ID are progressive, counting from left to right and from top to bottom
+        int idCounter = 0;
 
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
+        for (int i = 0; i < 4 && idCounter < islands.size(); i++) {
+            for (int j = 0; j < 6 && idCounter < islands.size(); j++) {
 
-                if(!((j==1 || j==2)&&(i==1 || i==2))){
-                    ImageView island = new ImageView(GuiManager.class.getResource("/graphics/pieces/island" + ((i % 3) + 1) + ".png").toString());
-                    island.setPreserveRatio(true);
-                    island.setFitWidth(sizeW);
-                    island.setFitHeight(sizeH);
-                    islandsPane.add(island, i, j);
+                if (!(((j == 1 || j == 2 || j == 3 || j == 4) && (i == 1 || i == 2))) && !((i == 0 || i == 3) && (j == 0 || j == 5))) {
+                    ImageView islandNode;
+           //         if(islands.get(idCounter).size()==1) {
+                        islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/island" + ((j % 3) + 1) + ".png").toString());
+             //       }
+            //        else{
+            //            islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/island" + ((j % 3) + 1) + ".png").toString());
+             //       }
+                    islandNode.setPreserveRatio(true);
+                    islandNode.setFitWidth(sizeW);
+                    islandNode.setFitHeight(sizeH);
+                    islandsPane.add(islandNode, j, i);
+                    islandNode.setId(Integer.toString(idCounter));
+                    idCounter++;
+                    if (j == 0 || j == 5) {
+                        if (i == 1) GridPane.setValignment(islandNode, VPos.BOTTOM);
+                        else GridPane.setValignment(islandNode, VPos.TOP);
+                    } else GridPane.setValignment(islandNode, VPos.CENTER);
+                    GridPane.setHalignment(islandNode, HPos.CENTER);
                     islandsPane.toFront();
                 }
 
             }
         }
-        islandsPane.setAlignment(Pos.CENTER);
-
     }
 
     public void update(RequestNumPlayersEvent event) {
