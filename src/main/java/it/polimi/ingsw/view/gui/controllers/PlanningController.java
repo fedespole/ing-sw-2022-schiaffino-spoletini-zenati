@@ -294,21 +294,11 @@ public class PlanningController extends GuiController{
         infoButton.setFitWidth(60);
         infoButton.setId("infoButton");
         infoButton.setOnMousePressed(this::infoButtonClicked);
-        Characters.getChildren().add(0, infoButton);
+        Characters.getChildren().add( 0,infoButton);
     }
 
     private void infoButtonClicked(MouseEvent mouseEvent){
         //create new stage and load it with CharacterInfoScene
-        /*Parent root = null;
-        try{
-          root = FXMLLoader.load(GuiManager.class.getResource(Constants.CHARACTER_INFO));
-        } catch(IOException e){};
-        Scene scene = new Scene(root, 1360, 765);
-        Stage newStage = new Stage();
-        newStage.setScene(scene);
-        newStage.setResizable(false);
-        newStage.setTitle("Characters' Infos");
-        newStage.show();*/
         Stage s = new Stage();
         Parent parent = null;
         try {
@@ -318,9 +308,10 @@ public class PlanningController extends GuiController{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Scene scene = new Scene(parent);
+        Scene scene = new Scene(parent,1360,765);
         s.setTitle("Info");
         s.setScene(scene);
+        s.setResizable(false);
         s.show();
     }
 
