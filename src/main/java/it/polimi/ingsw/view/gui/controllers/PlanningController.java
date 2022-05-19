@@ -327,22 +327,33 @@ public class PlanningController extends GuiController{
         else if(character==12)
             character=1;
         //create Pane
-        VBox colors=new VBox(title);
-        for(int i=0;i<5;i++){
-            ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+COLOR.values()[i].toString().toLowerCase()+".png").toString());
-            String id = character+" "+i;
-            System.out.println(id);
-            imageView.setOnMouseClicked(this::mouseClickedColorPopup);
-            imageView.setId(id);
-            imageView.setOnMouseEntered(this::mouseOnGeneric);
-            imageView.setOnMouseExited(this::mouseOffGeneric);
-            colors.getChildren().add(imageView);
+        GridPane colors=new GridPane();
+        colors.addRow(0);
+        colors.addRow(1);
+        colors.addColumn(0);
+        colors.addColumn(1);
+        System.out.println((colors.getLayoutX()));
+        System.out.println(colors.getLayoutY());
+        int index=0;
+        for(int i=0;i<3;i++){
+            for(int j=0;j<2 && index<5;j++) {
+                ImageView imageView = new ImageView(GuiManager.class.getResource("/graphics/pieces/student_" + COLOR.values()[index].toString().toLowerCase() + ".png").toString());
+                String id = character + " " + index;
+                System.out.println(id);
+                imageView.setOnMouseClicked(this::mouseClickedColorPopup);
+                imageView.setId(id);
+                imageView.setOnMouseEntered(this::mouseOnGeneric);
+                imageView.setOnMouseExited(this::mouseOffGeneric);
+                colors.add(imageView,j,i);
+                index++;
+            }
         }
-        colors.setSpacing(15);
         colors.setPadding(new Insets(25));
         colors.setAlignment(Pos.CENTER);
         colors.setStyle("-fx-background-color:WHITE");
         colors.setAlignment(Pos.CENTER);
+        colors.setHgap(10);
+        colors.setVgap(10);
         //set scene
         newStage.setResizable(false);
         newStage.setScene(new Scene(colors));
@@ -376,21 +387,32 @@ public class PlanningController extends GuiController{
                 break;
             }
         }
-        VBox colors=new VBox(title);
+        GridPane colors=new GridPane();
+        colors.addRow(0);
+        colors.addRow(1);
+        colors.addColumn(0);
+        colors.addColumn(1);
+        if(students.size()>4)
+            colors.addColumn(2);
         Student student;
-        for(int i=0;i<students.size();i++){
-            student=students.get(i);
-            ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+student.getColor().toString().toLowerCase()+".png").toString());
-            String id = c+" "+student.getColor().ordinal()+" "+i;
-            imageView.setId(id);
-            if(guiManager.getData().getCurrPlayer().getUsername().equals(guiManager.getOwner())) {
-                imageView.setOnMouseEntered(this::mouseOnGeneric);
-                imageView.setOnMouseExited(this::mouseOffGeneric);
-                imageView.setOnMouseClicked(this::mouseClickedStudentPopup);
+        int index=0;
+        for(int i=0;i<students.size()/2;i++) {
+            for (int j = 0; j < 2 && index < students.size(); j++) {
+                student = students.get(index);
+                ImageView imageView = new ImageView(GuiManager.class.getResource("/graphics/pieces/student_" + student.getColor().toString().toLowerCase() + ".png").toString());
+                String id = c + " " + student.getColor().ordinal() + " " + index;
+                imageView.setId(id);
+                if (guiManager.getData().getCurrPlayer().getUsername().equals(guiManager.getOwner())) {
+                    imageView.setOnMouseEntered(this::mouseOnGeneric);
+                    imageView.setOnMouseExited(this::mouseOffGeneric);
+                    imageView.setOnMouseClicked(this::mouseClickedStudentPopup);
+                }
+                colors.add(imageView, j, i);
+                index++;
             }
-            colors.getChildren().add(imageView);
         }
-        colors.setSpacing(15);
+        colors.setHgap(10);
+        colors.setVgap(10);
         colors.setPadding(new Insets(25));
         colors.setAlignment(Pos.CENTER);
         colors.setStyle("-fx-background-color:WHITE");
