@@ -147,7 +147,7 @@ public class GuiController {
             imageViewN.toFront();
         }
 
-        if(!(guiManager.getData().getStatusGame().getStatus().equals(STATUS.PLANNING))) {
+        if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)) {
             //island able to receive dragOver
             elemPane.setOnDragOver(event -> {
                 System.out.println("onDragOver");

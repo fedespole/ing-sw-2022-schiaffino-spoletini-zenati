@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.gui.controllers;
 
 import it.polimi.ingsw.common.events.fromClientEvents.DrawAssistantCardEvent;
+import it.polimi.ingsw.common.events.fromClientEvents.MoveStudentToDiningEvent;
 import it.polimi.ingsw.common.events.fromClientEvents.MoveStudentToIslandEvent;
 import it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.*;
 import it.polimi.ingsw.common.events.fromServerEvents.TieEvent;
@@ -76,6 +77,45 @@ public class ActionSceneController extends GuiController{
             Image image= new Image(GuiManager.class.getResource("/graphics/playerItems/schoolBoard/Plancia_DEF3.png").toString());
             Player2Board.setImage(image);
         }
+        MyDiningRoom.setOnDragOver(event -> {
+
+                System.out.println("onDragOver");
+                MyDiningRoom.getScene().setCursor(Cursor.NONE);
+                if (event.getGestureSource() != MyDiningRoom) {
+                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                }
+                event.consume();
+        });
+
+        MyDiningRoom.setOnDragEntered(event->{
+            System.out.println("onDragEntered");
+            if (event.getGestureSource() != MyDiningRoom) {
+                MyDiningRoom.setOpacity(0.5);
+            }
+            event.consume();
+        });
+
+        MyDiningRoom.setOnDragExited(event -> {
+            MyDiningRoom.getScene().setCursor(Cursor.DEFAULT);
+            MyDiningRoom.setOpacity(1);
+            event.consume();
+        });
+
+        MyDiningRoom.setOnDragDropped(event -> {
+            System.out.println(event.getDragboard().getString());
+            String color = event.getDragboard().getString();
+            int a = Integer.parseInt(color);
+            this.guiManager.getClient().getClientEvs().add(new MoveStudentToDiningEvent(this, a));
+            event.setDropCompleted(true);
+            MyDiningRoom.getScene().setCursor(Cursor.DEFAULT);
+            event.consume();
+        });
+
+        MyDiningRoom.setOnDragDone(event -> {
+            System.out.println("onDragDone");
+            event.consume();
+        });
+
         this.fillMyDiningRoomAction();
         this.fillOtherPlayersAction();
         super.fillIslands(islandsPane, 190.0, 140.0, guiManager.getData().getIslands());
@@ -89,7 +129,7 @@ public class ActionSceneController extends GuiController{
                 phaseLabel.setText("Your turn, move a student.");
             }
             else if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVEMN)){
-                phaseLabel.setText("Your turn, move mother nature.");
+                phaseLabel.setText("Your turn, move mother nature (clockwise).");
             }
             else if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_CHOOSECLOUD)){
                 phaseLabel.setText("Your turn, choose a cloud.");

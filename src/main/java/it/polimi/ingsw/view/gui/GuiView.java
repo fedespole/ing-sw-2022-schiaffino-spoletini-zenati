@@ -5,6 +5,7 @@ import it.polimi.ingsw.view.View;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -26,6 +27,7 @@ public class GuiView extends Application {
         stage.setMinWidth(stage.getWidth());
         stage.setMinHeight(stage.getHeight());
         stage.setTitle("Eriantys");
+        stage.getIcons().add(new Image(GuiManager.class.getResource("/graphics/EriantysIntro.jpg").toString()));
         stage.setOnCloseRequest((windowEvent) -> {
             Platform.exit();
             System.exit(0);

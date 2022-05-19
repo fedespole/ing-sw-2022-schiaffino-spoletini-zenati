@@ -18,6 +18,7 @@ import it.polimi.ingsw.model.expertgame.characters.*;
 import it.polimi.ingsw.model.expertgame.characters.Character;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.view.View;
+import it.polimi.ingsw.view.gui.Constants;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class CliView extends View {
         // Checks the client that caused the invalidUserName using only the socket, as owner is set only with NewPlayerCreated
         if (event.getException() instanceof InvalidUserNameException
                 && ((InvalidUserNameException)event.getException()).getClientThatCausedEx().equals(this.client.getSocket().toString())){
-            out.println(ANSI.RED + "> Username already chosen" + ANSI.RESET);
+            out.println(ANSI.RED + Constants.INVALID_USERNAME_EXC + ANSI.RESET);
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
@@ -65,55 +66,55 @@ public class CliView extends View {
         else if(getOwner()!=null && getOwner().equals(getData().getCurrPlayer().getUsername())) {
 
             if(event.getException() instanceof AlreadyUsedCardException || event.getException() instanceof NotAvailableCardException) {
-                out.println(ANSI.RED + "> Card already drawn" + ANSI.RESET);
+                out.println(ANSI.RED + Constants.ALREADY_USED_CARD_EXC + ANSI.RESET);
                 drawAssistantCard();
             }
             else if(event.getException() instanceof StudentNotPresentException){
-                out.println(ANSI.RED + "> Student not present in Entrance" + ANSI.RESET);
+                out.println(ANSI.RED + Constants.STUDENT_NOT_PRESENT_EXC + ANSI.RESET);
                 moveStudent();
             }
             else if(event.getException() instanceof NoMoreSpaceException){
-                out.println(ANSI.RED + "> Dining room of student is already full, redo the move" + ANSI.RESET);
+                out.println(ANSI.RED +Constants.NO_MORE_SPACE_EXC + ANSI.RESET);
                 moveStudent();
             }
             else if(event.getException() instanceof InvalidIslandIndexException){
-                out.println(ANSI.RED + "> Island no longer exists, redo the move" + ANSI.RESET);
+                out.println(ANSI.RED +Constants.INVALID_ISLAND_INDEX_EXC + ANSI.RESET);
                 moveStudent();
             }
             else if(event.getException() instanceof InvalidStepsException){
-                out.println(ANSI.RED + "> Not allowed to move mother nature this much" + ANSI.RESET);
+                out.println(ANSI.RED +Constants.INVALID_STEPS_EXC + ANSI.RESET);
                 moveMother();
             }
             else if(event.getException() instanceof AbilityAlreadyUsedException){
-                out.println(ANSI.RED + "> Character card has already been used in this turn" + ANSI.RESET);
+                out.println(ANSI.RED + Constants.ABILITY_ALREADY_USED_EXC + ANSI.RESET);
                 update(new UpdatedDataEvent(this, this.getData()));
             }
             else if(event.getException() instanceof TooPoorException){
-                out.println(ANSI.RED + "> You don't have enough coins to use this character" + ANSI.RESET);
+                out.println(ANSI.RED + Constants.TOO_POOR_EXC + ANSI.RESET);
                 update(new UpdatedDataEvent(this, this.getData()));
             }
             else if(event.getException() instanceof InvalidCharacterException){
-                out.println(ANSI.RED + "> This character is not available in this match" + ANSI.RESET);
+                out.println(ANSI.RED + Constants.INVALID_CHARACTER_EXC + ANSI.RESET);
                 update(new UpdatedDataEvent(this, this.getData()));
             }
             else if(event.getException() instanceof InvalidNumStudentsException){
-                out.println(ANSI.RED + "> Selected invalid number of students" + ANSI.RESET);
+                out.println(ANSI.RED + Constants.INVALID_NUM_STUDENTS_EXC + ANSI.RESET);
                 update(new UpdatedDataEvent(this, this.getData()));
             }
             else if(event.getException() instanceof StudentNotPresentInCharacterException){
-                out.println(ANSI.RED + "> Student not present on this character card" + ANSI.RESET);
+                out.println(ANSI.RED + Constants.STUDENT_NOT_PRESENT_IN_CHARACTER_EXC + ANSI.RESET);
                 update(new UpdatedDataEvent(this, this.getData()));
             }
             else if(event.getException() instanceof InvalidCharIslandIndexException){
-                out.println(ANSI.RED + "> This island no longer exists" + ANSI.RESET);
+                out.println(ANSI.RED + Constants.INVALID_CHAR_ISLAND_EXC + ANSI.RESET);
                 update(new UpdatedDataEvent(this, this.getData()));
             }
             else if(event.getException() instanceof CloudAlreadyChosenException){
-                out.println(ANSI.RED + "> This cloud is already chosen by another player" + ANSI.RESET);
+                out.println(ANSI.RED + Constants.CLOUD_ALREADY_CHOSEN_EXCEPTION + ANSI.RESET);
                 update(new UpdatedDataEvent(this, this.getData()));
             }
             else if(event.getException() instanceof InvalidPhaseException){
-                out.println(ANSI.RED + "> Anomaly" + ANSI.RESET);
+                out.println(ANSI.RED + Constants.INVALID_PHASE_EXC + ANSI.RESET);
             }
         }
 
