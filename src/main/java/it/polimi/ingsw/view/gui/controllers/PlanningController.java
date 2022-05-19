@@ -78,7 +78,7 @@ public class PlanningController extends GuiController{
         this.fillMyDiningRoomPlanning();
         this.fillOtherPlayersPlanning();
         this.addAvailableAssistantCards();
-        super.fillIslands(islandsPane, 130.0, 80.0);
+        super.fillIslands(islandsPane, 150.0, 90.0, guiManager.getData().getIslands());
 
         if(guiManager.getData().isExpert())
             this.setCharacters();
@@ -132,12 +132,10 @@ public class PlanningController extends GuiController{
                 //TODO Character3
             }
             case 4:{
-                if(guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername()))
-                    this.guiManager.getClient().getClientEvs().add(new UseCharacter4Event(this));
-                break;
+                // exception pop up -> in planning non la puoi selezionare
             }
             case 5:{
-
+                //TODO Character5
             }
             case 6:{
                 if(guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername()))
@@ -240,9 +238,10 @@ public class PlanningController extends GuiController{
     }
 
     private void fillMyDiningRoomPlanning(){
+
         for (Player player : guiManager.getData().getPlayers()) {
             if (player.getUsername().equals(guiManager.getOwner())) {
-                super.fillMyDiningRoom(player, MyDiningRoom, MyEntrance, MyProfessors, MyTowers,MyCoins);
+                super.fillPlayerItems(MyEntrance, MyDiningRoom, MyProfessors, MyTowers, player, MyCoins);
                 if(player.getChosenCard()!=null) {
                     Image image = new Image(GuiManager.class.getResource("/graphics/playerItems/deck/assistantCards/Assistente (" + player.getChosenCard().getValue() + ").png").toString());
                     ChosenCard.setImage(image);
@@ -266,7 +265,7 @@ public class PlanningController extends GuiController{
                     assistantCard=Player2AssistantCard;
                     coins=Player2Coins;
                 }
-                super.fillOtherPlayers(entrance, diningroom, professors, towers, player,coins);
+                super.fillPlayerItems(entrance, diningroom, professors, towers, player,coins);
                 if(player.getChosenCard()!=null){
                     Image image= new Image(GuiManager.class.getResource("/graphics/playerItems/deck/assistantCards/Assistente ("+player.getChosenCard().getValue()+").png").toString());
                     assistantCard.setImage(image);
