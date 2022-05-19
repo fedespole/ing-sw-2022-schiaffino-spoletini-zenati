@@ -22,6 +22,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class GuiController {
                 ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+ COLOR.values()[i].toString().toLowerCase()+".png").toString());
                 imageView.setPreserveRatio(true);
                 imageView.setFitWidth(20);
-                diningroom.add(imageView,i,j);
+                diningroom.add(imageView,j,i);
             }
         }
         for(int i=0;i<player.getMySchoolBoard().getEntrance().size();i++){
@@ -150,7 +151,6 @@ public class GuiController {
         if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)) {
             //island able to receive dragOver
             elemPane.setOnDragOver(event -> {
-                System.out.println("onDragOver");
                 elemPane.getScene().setCursor(Cursor.NONE);
                 if (event.getGestureSource() != elemPane) {
                     event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
@@ -159,7 +159,6 @@ public class GuiController {
             });
 
             elemPane.setOnDragEntered(event -> {
-                        System.out.println("onDragEntered");
                         if (event.getGestureSource() != elemPane) {
                             elemPane.setOpacity(0.5);
                         }
@@ -185,12 +184,30 @@ public class GuiController {
             });
 
             elemPane.setOnDragDone(event -> {
-                System.out.println("onDragDone");
                 event.consume();
             });
         }
 
         elemPane.alignmentProperty().setValue(Pos.CENTER);
+    }
+
+    public void fillCloud(TilePane cloudPane, int i){
+
+        Cloud c = guiManager.getData().getClouds().get(i);
+        for(int x=0;x< c.getStudents().size();x++){
+            COLOR color = c.getStudents().get(x).getColor();
+            ImageView imageViewS = new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+color.toString().toLowerCase()+".png").toString());
+            imageViewS.setPreserveRatio(true);
+            imageViewS.setFitWidth(20);
+            cloudPane.getChildren().add(imageViewS);
+        }
+
+        cloudPane.setHgap(10);
+        cloudPane.setVgap(10);
+        cloudPane.setPrefColumns(2);
+        cloudPane.setPrefRows(2);
+        cloudPane.alignmentProperty().setValue(Pos.CENTER);
+
     }
 
     public void update(RequestNumPlayersEvent event) {

@@ -260,5 +260,6 @@
             </Label>
          </children>
       </AnchorPane>
+      <FlowPane fx:id="cloudsPane" layoutX="816.0" layoutY="187.0" prefHeight="200.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

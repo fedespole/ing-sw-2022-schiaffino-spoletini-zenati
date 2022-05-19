@@ -29,10 +29,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -43,6 +40,12 @@ import java.util.Arrays;
 public class ActionSceneController extends GuiController{
 
 
+    public TilePane clouds0Pane;
+    public TilePane clouds1Pane;
+    public TilePane clouds2Pane;
+    public ImageView cloud2;
+    public ImageView cloud0;
+    public ImageView cloud1;
     @FXML
     private Label phaseLabel;
     @FXML
@@ -79,7 +82,6 @@ public class ActionSceneController extends GuiController{
         }
         MyDiningRoom.setOnDragOver(event -> {
 
-                System.out.println("onDragOver");
                 MyDiningRoom.getScene().setCursor(Cursor.NONE);
                 if (event.getGestureSource() != MyDiningRoom) {
                     event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
@@ -88,7 +90,6 @@ public class ActionSceneController extends GuiController{
         });
 
         MyDiningRoom.setOnDragEntered(event->{
-            System.out.println("onDragEntered");
             if (event.getGestureSource() != MyDiningRoom) {
                 MyDiningRoom.setOpacity(0.5);
             }
@@ -112,13 +113,19 @@ public class ActionSceneController extends GuiController{
         });
 
         MyDiningRoom.setOnDragDone(event -> {
-            System.out.println("onDragDone");
             event.consume();
         });
 
         this.fillMyDiningRoomAction();
         this.fillOtherPlayersAction();
         super.fillIslands(islandsPane, 190.0, 140.0, guiManager.getData().getIslands());
+        super.fillCloud(clouds0Pane, 0);
+        super.fillCloud(clouds1Pane, 1);
+        if(guiManager.getData().getNumPlayers()==3){
+            Image image= new Image(GuiManager.class.getResource("/graphics/pieces/cloud_card.png").toString());
+            cloud2.setImage(image);
+            super.fillCloud(clouds2Pane, 2);
+        }
 
         if(guiManager.getData().isExpert())
             this.setCharacters();
@@ -150,7 +157,7 @@ public class ActionSceneController extends GuiController{
                         ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+ COLOR.values()[i].toString().toLowerCase()+".png").toString());
                         imageView.setPreserveRatio(true);
                         imageView.setFitWidth(20);
-                        MyDiningRoom.add(imageView,i,j);
+                        MyDiningRoom.add(imageView,j,i);
                     }
                 }
                 for(int i=0;i<player.getMySchoolBoard().getEntrance().size();i++){
@@ -166,7 +173,6 @@ public class ActionSceneController extends GuiController{
                     });
 
                     imageView.setOnDragDetected(mouseEvent -> {
-                        System.out.println("onDragDetected");
                         Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
                         ClipboardContent content = new ClipboardContent();
                         content.putImage(imageView.getImage());

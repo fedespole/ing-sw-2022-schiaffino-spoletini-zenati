@@ -54,6 +54,7 @@ public class PlanningController extends GuiController{
     public Label Player2Coins;
     public Label MyCoins;
     public AnchorPane CharactersAnchorPane;
+    public FlowPane cloudsPane;
 
 
     @FXML
