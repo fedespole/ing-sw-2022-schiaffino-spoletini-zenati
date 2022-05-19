@@ -6,7 +6,6 @@ import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
-import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 import it.polimi.ingsw.model.expertgame.characters.*;
 import it.polimi.ingsw.model.expertgame.characters.Character;
 import it.polimi.ingsw.view.gui.Constants;
@@ -17,18 +16,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -135,7 +129,8 @@ public class PlanningController extends GuiController{
                 // exception pop up -> in planning non la puoi selezionare
             }
             case 5:{
-                //TODO Character5
+                noEntriesPopup();
+                break;
             }
             case 6:{
                 if(guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername()))
@@ -216,6 +211,12 @@ public class PlanningController extends GuiController{
         }
         ((Stage)((ImageView) mouseEvent.getSource()).getScene().getWindow()).close();
     }
+
+    public void mouseClickedNoEntriesPopup(MouseEvent mouseEvent){
+        //TODO SCEGLIERE ISOLA
+        //this.guiManager.getClient().getClientEvs().add(new UseCharacter5Event(this,isola));
+        ((Stage)((ImageView) mouseEvent.getSource()).getScene().getWindow()).close();
+    }
     private void addAvailableAssistantCards() {
         for (Player player : guiManager.getData().getPlayers()) {
             if(player.getUsername().equals(guiManager.getOwner())) {
@@ -236,6 +237,7 @@ public class PlanningController extends GuiController{
 
         }
     }
+
 
     private void fillMyDiningRoomPlanning(){
 
@@ -326,22 +328,33 @@ public class PlanningController extends GuiController{
         else if(character==12)
             character=1;
         //create Pane
-        VBox colors=new VBox(title);
-        for(int i=0;i<5;i++){
-            ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+COLOR.values()[i].toString().toLowerCase()+".png").toString());
-            String id = character+" "+i;
-            System.out.println(id);
-            imageView.setOnMouseClicked(this::mouseClickedColorPopup);
-            imageView.setId(id);
-            imageView.setOnMouseEntered(this::mouseOnGeneric);
-            imageView.setOnMouseExited(this::mouseOffGeneric);
-            colors.getChildren().add(imageView);
+        GridPane colors=new GridPane();
+        colors.addRow(0);
+        colors.addRow(1);
+        colors.addColumn(0);
+        colors.addColumn(1);
+        System.out.println((colors.getLayoutX()));
+        System.out.println(colors.getLayoutY());
+        int index=0;
+        for(int i=0;i<3;i++){
+            for(int j=0;j<2 && index<5;j++) {
+                ImageView imageView = new ImageView(GuiManager.class.getResource("/graphics/pieces/student_" + COLOR.values()[index].toString().toLowerCase() + ".png").toString());
+                String id = character + " " + index;
+                System.out.println(id);
+                imageView.setOnMouseClicked(this::mouseClickedColorPopup);
+                imageView.setId(id);
+                imageView.setOnMouseEntered(this::mouseOnGeneric);
+                imageView.setOnMouseExited(this::mouseOffGeneric);
+                colors.add(imageView,j,i);
+                index++;
+            }
         }
-        colors.setSpacing(15);
         colors.setPadding(new Insets(25));
         colors.setAlignment(Pos.CENTER);
         colors.setStyle("-fx-background-color:WHITE");
         colors.setAlignment(Pos.CENTER);
+        colors.setHgap(10);
+        colors.setVgap(10);
         //set scene
         newStage.setResizable(false);
         newStage.setScene(new Scene(colors));
@@ -375,21 +388,32 @@ public class PlanningController extends GuiController{
                 break;
             }
         }
-        VBox colors=new VBox(title);
+        GridPane colors=new GridPane();
+        colors.addRow(0);
+        colors.addRow(1);
+        colors.addColumn(0);
+        colors.addColumn(1);
+        if(students.size()>4)
+            colors.addColumn(2);
         Student student;
-        for(int i=0;i<students.size();i++){
-            student=students.get(i);
-            ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+student.getColor().toString().toLowerCase()+".png").toString());
-            String id = c+" "+student.getColor().ordinal()+" "+i;
-            imageView.setId(id);
-            if(guiManager.getData().getCurrPlayer().getUsername().equals(guiManager.getOwner())) {
-                imageView.setOnMouseEntered(this::mouseOnGeneric);
-                imageView.setOnMouseExited(this::mouseOffGeneric);
-                imageView.setOnMouseClicked(this::mouseClickedStudentPopup);
+        int index=0;
+        for(int i=0;i<students.size()/2;i++) {
+            for (int j = 0; j < 2 && index < students.size(); j++) {
+                student = students.get(index);
+                ImageView imageView = new ImageView(GuiManager.class.getResource("/graphics/pieces/student_" + student.getColor().toString().toLowerCase() + ".png").toString());
+                String id = c + " " + student.getColor().ordinal() + " " + index;
+                imageView.setId(id);
+                if (guiManager.getData().getCurrPlayer().getUsername().equals(guiManager.getOwner())) {
+                    imageView.setOnMouseEntered(this::mouseOnGeneric);
+                    imageView.setOnMouseExited(this::mouseOffGeneric);
+                    imageView.setOnMouseClicked(this::mouseClickedStudentPopup);
+                }
+                colors.add(imageView, j, i);
+                index++;
             }
-            colors.getChildren().add(imageView);
         }
-        colors.setSpacing(15);
+        colors.setHgap(10);
+        colors.setVgap(10);
         colors.setPadding(new Insets(25));
         colors.setAlignment(Pos.CENTER);
         colors.setStyle("-fx-background-color:WHITE");
@@ -399,19 +423,49 @@ public class PlanningController extends GuiController{
         newStage.setScene(new Scene(colors));
         newStage.show();
     }
+
+    private void noEntriesPopup(){
+        Stage newStage = new Stage();
+        newStage.setTitle("Entries");
+        GridPane grid=new GridPane();
+        grid.addRow(0);
+        grid.addRow(1);
+        grid.addColumn(0);
+        grid.addColumn(1);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25));
+        grid.setAlignment(Pos.CENTER);
+        grid.setStyle("-fx-background-color:WHITE");
+        grid.setAlignment(Pos.CENTER);
+        Character5 character5=null;
+        for(Character character:guiManager.getData().getCharacters()){
+            if(character instanceof Character5)
+                character5=(Character5) character;
+        }
+        for(int i=0;i<character5.getNoEntries()/2;i++){
+            for(int j=0;j<character5.getNoEntries()/2;j++){
+                ImageView imageView = new ImageView(GuiManager.class.getResource("/graphics/pieces/deny_island_icon.png").toString());
+                if (guiManager.getData().getCurrPlayer().getUsername().equals(guiManager.getOwner())) {
+                    imageView.setOnMouseEntered(this::mouseOnGeneric);
+                    imageView.setOnMouseExited(this::mouseOffGeneric);
+                    imageView.setOnMouseClicked(this::mouseClickedNoEntriesPopup);
+                }
+                imageView.setPreserveRatio(true);
+                imageView.setFitWidth(40);
+                grid.add(imageView,j,i);
+            }
+        }
+        //set scene
+        newStage.setResizable(false);
+        newStage.setScene(new Scene(grid));
+        newStage.show();
+    }
     @Override
     public void update(UpdatedDataEvent event) {
         if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.PLANNING))
             Platform.runLater(() -> guiManager.setFXML(Constants.PLANNING_SCENE));
         else
             Platform.runLater(() -> guiManager.setFXML(Constants.ACTION_SCENE));
-    }
-    private Image generateImage(double red, double green, double blue, double opacity) {
-        WritableImage img = new WritableImage(1, 1);
-        PixelWriter pw = img.getPixelWriter();
-
-        Color color = Color.color(red/255, green/255, blue/255, opacity/255);
-        pw.setColor(0, 0, color);
-        return img ;
     }
 }
