@@ -19,7 +19,7 @@
       </ImageView>
       <Label fx:id="phaseLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="205.0" layoutY="-2.0" prefHeight="86.0" prefWidth="946.0" textAlignment="CENTER" textFill="#f7f6f6">
          <font>
-            <Font name="Algerian" size="60.0" />
+            <Font name="Algerian" size="40.0" />
          </font></Label>
       <AnchorPane layoutX="934.0" layoutY="543.0" prefHeight="214.0" prefWidth="420.0">
          <children>
@@ -109,10 +109,10 @@
             </GridPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="CharactersAnchorPane" layoutX="1095.0" layoutY="14.0" minHeight="0.0" minWidth="0.0" prefHeight="513.0" prefWidth="264.0">
+      <AnchorPane fx:id="CharactersAnchorPane" layoutX="1187.0" layoutY="212.0" minHeight="0.0" minWidth="0.0" prefHeight="576.0" prefWidth="172.0">
          <children>
-            <FlowPane fx:id="Characters" alignment="CENTER" layoutX="165.0" layoutY="-1.0" prefHeight="513.0" prefWidth="100.0" />
-            <ImageView fx:id="CharacterBack" fitHeight="150.0" fitWidth="100.0" layoutX="165.0" layoutY="363.0" pickOnBounds="true" preserveRatio="true" />
+            <FlowPane fx:id="Characters" alignment="CENTER" layoutX="68.0" layoutY="1.0" prefHeight="554.0" prefWidth="100.0" />
+            <ImageView fx:id="CharacterBack" fitHeight="150.0" fitWidth="100.0" layoutX="68.0" layoutY="401.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="7.0" layoutY="554.0" prefHeight="198.0" prefWidth="435.0">
