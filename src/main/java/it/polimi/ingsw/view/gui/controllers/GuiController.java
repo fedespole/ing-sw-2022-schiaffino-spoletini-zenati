@@ -99,9 +99,27 @@ public class GuiController {
                     islandNode.setFitHeight(sizeH);
                     //set mouseClickable if in MOVE_MN
                     islandsPane.add(islandNode, j, i);
+
+                    // Setting island count clockwise
+                    if(i==0){
+                        idCounter++;
+                    }
+                    else if(i==1){
+                       if(j==0) idCounter = 11;
+                       else idCounter = 4;
+                    }
+                    else if(i==2){
+                        if(j==0) idCounter = 10;
+                        else idCounter = 5;
+                    }
+                    else{
+                        idCounter = 10 - j;
+                    }
+
                     islandNode.setId(Integer.toString(idCounter));
                     fillElementsOnIsland(islandsPane, islands.get(idCounter), i, j, idCounter);
-                    idCounter++;
+
+                    // Layout
                     if (j == 0 || j == 5) {
                         if (i == 1) GridPane.setValignment(islandNode, VPos.BOTTOM);
                         else GridPane.setValignment(islandNode, VPos.TOP);
