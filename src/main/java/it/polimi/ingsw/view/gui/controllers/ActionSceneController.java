@@ -1,8 +1,6 @@
 package it.polimi.ingsw.view.gui.controllers;
 
-import it.polimi.ingsw.common.events.fromClientEvents.DrawAssistantCardEvent;
-import it.polimi.ingsw.common.events.fromClientEvents.MoveStudentToDiningEvent;
-import it.polimi.ingsw.common.events.fromClientEvents.MoveStudentToIslandEvent;
+import it.polimi.ingsw.common.events.fromClientEvents.*;
 import it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.*;
 import it.polimi.ingsw.common.events.fromServerEvents.TieEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
@@ -80,41 +78,7 @@ public class ActionSceneController extends GuiController{
             Image image= new Image(GuiManager.class.getResource("/graphics/playerItems/schoolBoard/Plancia_DEF3.png").toString());
             Player2Board.setImage(image);
         }
-        MyDiningRoom.setOnDragOver(event -> {
 
-                MyDiningRoom.getScene().setCursor(Cursor.NONE);
-                if (event.getGestureSource() != MyDiningRoom) {
-                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-                }
-                event.consume();
-        });
-
-        MyDiningRoom.setOnDragEntered(event->{
-            if (event.getGestureSource() != MyDiningRoom) {
-                MyDiningRoom.setOpacity(0.5);
-            }
-            event.consume();
-        });
-
-        MyDiningRoom.setOnDragExited(event -> {
-            MyDiningRoom.getScene().setCursor(Cursor.DEFAULT);
-            MyDiningRoom.setOpacity(1);
-            event.consume();
-        });
-
-        MyDiningRoom.setOnDragDropped(event -> {
-            System.out.println(event.getDragboard().getString());
-            String color = event.getDragboard().getString();
-            int a = Integer.parseInt(color);
-            this.guiManager.getClient().getClientEvs().add(new MoveStudentToDiningEvent(this, a));
-            event.setDropCompleted(true);
-            MyDiningRoom.getScene().setCursor(Cursor.DEFAULT);
-            event.consume();
-        });
-
-        MyDiningRoom.setOnDragDone(event -> {
-            event.consume();
-        });
 
         this.fillMyDiningRoomAction();
         this.fillOtherPlayersAction();
@@ -134,12 +98,92 @@ public class ActionSceneController extends GuiController{
 
             if (guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)){
                 phaseLabel.setText("Your turn, move a student.");
+                MyDiningRoom.setOnDragOver(event -> {
+
+                    MyDiningRoom.getScene().setCursor(Cursor.NONE);
+                    if (event.getGestureSource() != MyDiningRoom) {
+                        event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                    }
+                    event.consume();
+                });
+
+                MyDiningRoom.setOnDragEntered(event->{
+                    if (event.getGestureSource() != MyDiningRoom) {
+                        MyDiningRoom.setOpacity(0.5);
+                    }
+                    event.consume();
+                });
+
+                MyDiningRoom.setOnDragExited(event -> {
+                    MyDiningRoom.getScene().setCursor(Cursor.DEFAULT);
+                    MyDiningRoom.setOpacity(1);
+                    event.consume();
+                });
+
+                MyDiningRoom.setOnDragDropped(event -> {
+                    System.out.println(event.getDragboard().getString());
+                    String color = event.getDragboard().getString();
+                    int a = Integer.parseInt(color);
+                    this.guiManager.getClient().getClientEvs().add(new MoveStudentToDiningEvent(this, a));
+                    event.setDropCompleted(true);
+                    MyDiningRoom.getScene().setCursor(Cursor.DEFAULT);
+                    event.consume();
+                });
+
+                MyDiningRoom.setOnDragDone(event -> {
+                    event.consume();
+                });
             }
+
             else if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVEMN)){
-                phaseLabel.setText("Your turn, move mother nature (clockwise).");
+
+                phaseLabel.setText("Click on island to move Mother Nature");
+                islandsPane.setOnMouseEntered(event -> {
+                    islandsPane.getScene().setCursor(Cursor.HAND);
+                });
+                islandsPane.setOnMouseExited(event -> {
+                    islandsPane.getScene().setCursor(Cursor.HAND);
+                });
+
             }
+
             else if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_CHOOSECLOUD)){
-                phaseLabel.setText("Your turn, choose a cloud.");
+                phaseLabel.setText("Choose a Cloud");
+
+                //cloud0 onMouse
+                clouds0Pane.setOnMouseEntered(event -> {
+                    clouds0Pane.getScene().setCursor(Cursor.HAND);
+                });
+                clouds0Pane.setOnMouseExited(event -> {
+                    clouds0Pane.getScene().setCursor(Cursor.HAND);
+                });
+                clouds0Pane.setOnMouseClicked(event -> {
+                    this.guiManager.getClient().getClientEvs().add(new ChooseCloudEvent(this, 0));
+                });
+
+                //cloud1 onMouse
+                clouds1Pane.setOnMouseEntered(event -> {
+                    clouds1Pane.getScene().setCursor(Cursor.HAND);
+                });
+                clouds1Pane.setOnMouseExited(event -> {
+                    clouds1Pane.getScene().setCursor(Cursor.HAND);
+                });
+                clouds1Pane.setOnMouseClicked(event -> {
+                    this.guiManager.getClient().getClientEvs().add(new ChooseCloudEvent(this, 1));
+                });
+
+                if(guiManager.getData().getNumPlayers()==3){
+                    clouds2Pane.setOnMouseEntered(event -> {
+                        clouds2Pane.getScene().setCursor(Cursor.HAND);
+                    });
+                    clouds2Pane.setOnMouseExited(event -> {
+                        clouds2Pane.getScene().setCursor(Cursor.HAND);
+                    });
+                    clouds2Pane.setOnMouseClicked(event -> {
+                        this.guiManager.getClient().getClientEvs().add(new ChooseCloudEvent(this, 2));
+                    });
+                }
+
             }
 
         }
@@ -165,23 +209,26 @@ public class ActionSceneController extends GuiController{
                     ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+color.toString().toLowerCase()+".png").toString());
                     imageView.setPreserveRatio(true);
                     imageView.setFitWidth(20);
-                    imageView.setOnMouseEntered(event->{
-                        imageView.getScene().setCursor(Cursor.HAND);
-                    });
-                    imageView.setOnMouseExited(event->{
-                        imageView.getScene().setCursor(Cursor.HAND);
-                    });
+                    //draggable students if in ACTION_MOVESTUD
+                    if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)) {
+                        imageView.setOnMouseEntered(event -> {
+                            imageView.getScene().setCursor(Cursor.HAND);
+                        });
+                        imageView.setOnMouseExited(event -> {
+                            imageView.getScene().setCursor(Cursor.HAND);
+                        });
 
-                    imageView.setOnDragDetected(mouseEvent -> {
-                        Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
-                        ClipboardContent content = new ClipboardContent();
-                        content.putImage(imageView.getImage());
-                        int a = COLOR.valueOf(color.toString()).ordinal();
-                        String c = Integer.toString(a);
-                        content.putString(c);
-                        db.setContent(content);
-                        mouseEvent.consume();
-                    });
+                        imageView.setOnDragDetected(mouseEvent -> {
+                            Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
+                            ClipboardContent content = new ClipboardContent();
+                            content.putImage(imageView.getImage());
+                            int a = COLOR.valueOf(color.toString()).ordinal();
+                            String c = Integer.toString(a);
+                            content.putString(c);
+                            db.setContent(content);
+                            mouseEvent.consume();
+                        });
+                    }
 
                     if(i%2==0)
                         MyEntrance.add(imageView,1,i/2);

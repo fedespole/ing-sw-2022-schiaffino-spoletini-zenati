@@ -1,5 +1,7 @@
 package it.polimi.ingsw.view.gui.controllers;
 
+import it.polimi.ingsw.common.events.fromClientEvents.MoveMotherEvent;
+import it.polimi.ingsw.common.events.fromClientEvents.MoveStudentToDiningEvent;
 import it.polimi.ingsw.common.events.fromClientEvents.MoveStudentToIslandEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.TieEvent;
@@ -95,6 +97,13 @@ public class GuiController {
                     islandNode.setPreserveRatio(true);
                     islandNode.setFitWidth(sizeW);
                     islandNode.setFitHeight(sizeH);
+                    //set mouseClickable if in MOVE_MN
+                    if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVEMN)){
+                        int finalIdCounter = idCounter;
+                        islandNode.setOnMouseClicked(event -> {
+                            this.guiManager.getClient().getClientEvs().add(new MoveMotherEvent(this, finalIdCounter));
+                        });
+                    }
                     islandsPane.add(islandNode, j, i);
                     islandNode.setId(Integer.toString(idCounter));
                     fillElementsOnIsland(islandsPane, islands.get(idCounter), i, j, idCounter);
