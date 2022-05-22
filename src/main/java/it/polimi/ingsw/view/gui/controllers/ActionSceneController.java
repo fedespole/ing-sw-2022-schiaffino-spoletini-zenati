@@ -95,7 +95,7 @@ public class ActionSceneController extends GuiController{
             this.setCharacters();
 
         if (guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername())) {
-
+            //Mydining able to receive drag if i'm currPlayer
             if (guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)){
                 phaseLabel.setText("Your turn, move a student.");
                 MyDiningRoom.setOnDragOver(event -> {
@@ -138,18 +138,13 @@ public class ActionSceneController extends GuiController{
             else if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVEMN)){
 
                 phaseLabel.setText("Click on island to move Mother Nature");
-                islandsPane.setOnMouseEntered(event -> {
-                    islandsPane.getScene().setCursor(Cursor.HAND);
-                });
-                islandsPane.setOnMouseExited(event -> {
-                    islandsPane.getScene().setCursor(Cursor.HAND);
-                });
 
             }
 
             else if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_CHOOSECLOUD)){
                 phaseLabel.setText("Choose a Cloud");
-
+                clouds0Pane.toFront();
+                clouds1Pane.toFront();
                 //cloud0 onMouse
                 clouds0Pane.setOnMouseEntered(event -> {
                     clouds0Pane.getScene().setCursor(Cursor.HAND);
@@ -173,6 +168,7 @@ public class ActionSceneController extends GuiController{
                 });
 
                 if(guiManager.getData().getNumPlayers()==3){
+                    clouds2Pane.toFront();
                     clouds2Pane.setOnMouseEntered(event -> {
                         clouds2Pane.getScene().setCursor(Cursor.HAND);
                     });
@@ -209,15 +205,14 @@ public class ActionSceneController extends GuiController{
                     ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+color.toString().toLowerCase()+".png").toString());
                     imageView.setPreserveRatio(true);
                     imageView.setFitWidth(20);
-                    //draggable students if in ACTION_MOVESTUD
-                    if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)) {
+                    //students draggable if I'm currPlayer
+                    if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD) &&  guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername())) {
                         imageView.setOnMouseEntered(event -> {
                             imageView.getScene().setCursor(Cursor.HAND);
                         });
                         imageView.setOnMouseExited(event -> {
                             imageView.getScene().setCursor(Cursor.HAND);
                         });
-
                         imageView.setOnDragDetected(mouseEvent -> {
                             Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
                             ClipboardContent content = new ClipboardContent();

@@ -98,12 +98,6 @@ public class GuiController {
                     islandNode.setFitWidth(sizeW);
                     islandNode.setFitHeight(sizeH);
                     //set mouseClickable if in MOVE_MN
-                    if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVEMN)){
-                        int finalIdCounter = idCounter;
-                        islandNode.setOnMouseClicked(event -> {
-                            this.guiManager.getClient().getClientEvs().add(new MoveMotherEvent(this, finalIdCounter));
-                        });
-                    }
                     islandsPane.add(islandNode, j, i);
                     islandNode.setId(Integer.toString(idCounter));
                     fillElementsOnIsland(islandsPane, islands.get(idCounter), i, j, idCounter);
@@ -113,7 +107,6 @@ public class GuiController {
                         else GridPane.setValignment(islandNode, VPos.TOP);
                     } else GridPane.setValignment(islandNode, VPos.CENTER);
                     GridPane.setHalignment(islandNode, HPos.CENTER);
-                    islandsPane.toFront();
                 }
 
             }
@@ -157,8 +150,8 @@ public class GuiController {
             imageViewN.toFront();
         }
 
-        if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)) {
-            //island able to receive dragOver
+        if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD) && guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername())) {
+            //island able to receive dragOver if I'm currPlayer
             elemPane.setOnDragOver(event -> {
                 elemPane.getScene().setCursor(Cursor.NONE);
                 if (event.getGestureSource() != elemPane) {
@@ -195,6 +188,18 @@ public class GuiController {
             elemPane.setOnDragDone(event -> {
                 event.consume();
             });
+
+        }
+        else if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVEMN) && guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername())){
+            elemPane.setOnMouseEntered(event -> {
+                elemPane.getScene().setCursor(Cursor.HAND);
+            });
+            elemPane.setOnMouseExited(event -> {
+                elemPane.getScene().setCursor(Cursor.HAND);
+            });
+            elemPane.setOnMouseClicked(event -> {
+                    this.guiManager.getClient().getClientEvs().add(new MoveMotherEvent(this, idCounter));
+                });
         }
 
         elemPane.alignmentProperty().setValue(Pos.CENTER);

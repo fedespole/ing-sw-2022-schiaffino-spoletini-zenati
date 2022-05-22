@@ -392,7 +392,7 @@ public class PlanningController extends GuiController{
     private void islandPopup(int c){
         Stage newStage = new Stage();
         newStage.setTitle("Character "+c+" Island Selection");
-       GridPane islands= new GridPane();
+        GridPane islands= new GridPane();
         fillIslands(islands,150.0, 90.0, guiManager.getData().getIslands());
         islands.setId(Integer.toString(c));
         for(Node island: islands.getChildren()){
