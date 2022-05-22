@@ -643,7 +643,7 @@ public class CliView extends View {
                 result ="You may exchange up to 2 Students between your Entrance and your Dining Room.";
                 break;
             case 11:
-                result ="Take 1 Student from this card and place it in your Dining Roam. Then, draw a new student from the Bag and place it on this card.";
+                result ="Take 1 Student from this card and place it in your Dining Room. Then, draw a new student from the Bag and place it on this card.";
                 break;
             case 12:
                 result="Choose a type of Student: every player (including yourself) must return 3 Students of that type from their Dining Room to the bag. If any player has fewer than 3 Students of that type, return as many Students as they have.";

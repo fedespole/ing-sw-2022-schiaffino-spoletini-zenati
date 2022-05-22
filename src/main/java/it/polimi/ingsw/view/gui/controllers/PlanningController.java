@@ -16,8 +16,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Cell;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -56,6 +58,7 @@ public class PlanningController extends GuiController{
     public AnchorPane CharactersAnchorPane;
     public FlowPane cloudsPane;
 
+    private int colorPressed;
 
     @FXML
     @Override
@@ -99,11 +102,11 @@ public class PlanningController extends GuiController{
     }
 
     public void mouseOnGeneric(MouseEvent mouseEvent){
-        ((ImageView) mouseEvent.getSource()).getScene().setCursor(Cursor.HAND);
+        ((Node) mouseEvent.getSource()).getScene().setCursor(Cursor.HAND);
     }
 
     public void mouseOffGeneric(MouseEvent mouseEvent){
-        ((ImageView) mouseEvent.getSource()).getScene().setCursor(Cursor.DEFAULT);
+        ((Node) mouseEvent.getSource()).getScene().setCursor(Cursor.DEFAULT);
     }
     public void mouseClickedBackCharacter(MouseEvent mouseEvent){
         Characters.setVisible(true);
@@ -115,7 +118,7 @@ public class PlanningController extends GuiController{
         int valueChar=Integer.parseInt(((ImageView) mouseEvent.getSource()).getId());
         switch(valueChar){
             case 1:{
-               // studentsPopup(1);
+                studentsPopup(1);
                 break;
             }
             case 2:{
@@ -124,10 +127,12 @@ public class PlanningController extends GuiController{
                 break;
             }
             case 3:{
-                //TODO Character3
+                islandPopup(3);
+                break;
             }
             case 4:{
                 // exception pop up -> in planning non la puoi selezionare
+                break;
             }
             case 5:{
                 noEntriesPopup();
@@ -140,6 +145,7 @@ public class PlanningController extends GuiController{
             }
             case 7:{
                 //todo character7
+                break;
             }
             case 8:{
                 if(guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername()))
@@ -153,6 +159,7 @@ public class PlanningController extends GuiController{
             }
             case 10:{
                 //todo character10
+                break;
             }
             case 11:{
                 studentsPopup(11);
@@ -198,7 +205,8 @@ public class PlanningController extends GuiController{
         int color =Integer.parseInt(String.valueOf(((ImageView) mouseEvent.getSource()).getId().charAt(2)));
         switch(character){
             case 1:{
-                //TODO SCEGLI ISOLA
+                this.colorPressed=color;
+                islandPopup(1);
                 break;
             }
             case 7:{
@@ -213,9 +221,28 @@ public class PlanningController extends GuiController{
         ((Stage)((ImageView) mouseEvent.getSource()).getScene().getWindow()).close();
     }
 
+    public void mouseClickedCharacterIsland(MouseEvent mouseEvent){
+        int islandIndex= Integer.parseInt(((Node)mouseEvent.getSource()).getId());
+        int character = Integer.parseInt(((Node)mouseEvent.getSource()).getParent().getId());
+        switch(character){
+            case 1:{
+                this.guiManager.getClient().getClientEvs().add(new UseCharacter1Event(this, colorPressed,islandIndex));
+                colorPressed=-1;
+                break;
+            }
+            case 3:{
+                this.guiManager.getClient().getClientEvs().add(new UseCharacter3Event(this,islandIndex));
+                break;
+            }
+            case 5:{
+                this.guiManager.getClient().getClientEvs().add(new UseCharacter5Event(this,islandIndex));
+                break;
+            }
+        }
+        ((Stage)((Node) mouseEvent.getSource()).getScene().getWindow()).close();
+    }
     public void mouseClickedNoEntriesPopup(MouseEvent mouseEvent){
-        //TODO SCEGLIERE ISOLA
-        //this.guiManager.getClient().getClientEvs().add(new UseCharacter5Event(this,isola));
+        islandPopup(5);
         ((Stage)((ImageView) mouseEvent.getSource()).getScene().getWindow()).close();
     }
     private void addAvailableAssistantCards() {
@@ -362,6 +389,22 @@ public class PlanningController extends GuiController{
         newStage.show();
     }
 
+    private void islandPopup(int c){
+        Stage newStage = new Stage();
+        newStage.setTitle("Character "+c+" Island Selection");
+       GridPane islands= new GridPane();
+        fillIslands(islands,150.0, 90.0, guiManager.getData().getIslands());
+        islands.setId(Integer.toString(c));
+        for(Node island: islands.getChildren()){
+            island.setOnMouseEntered(this::mouseOnGeneric);
+            island.setOnMouseExited(this::mouseOffGeneric);
+            island.setOnMouseClicked(this::mouseClickedCharacterIsland);
+        }
+        islands.setStyle("-fx-background-color:WHITE");
+        newStage.setResizable(false);
+        newStage.setScene(new Scene(islands));
+        newStage.show();
+    }
     private void studentsPopup(int c){//we send 0 if the character is 11
         Stage newStage = new Stage();
         newStage.setTitle("Character"+c+" Selection");
@@ -462,6 +505,7 @@ public class PlanningController extends GuiController{
         newStage.setScene(new Scene(grid));
         newStage.show();
     }
+
     @Override
     public void update(UpdatedDataEvent event) {
         if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.PLANNING))

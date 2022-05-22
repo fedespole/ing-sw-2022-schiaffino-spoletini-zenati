@@ -115,7 +115,7 @@ public class GuiController {
 
         FlowPane elemPane = new FlowPane();
         islandsPane.add(elemPane, j, i);
-
+        elemPane.setId(Integer.toString(idCounter));
         for(int x=0;x<island.get(0).getStudents().size();x++){
             COLOR color = island.get(0).getStudents().get(x).getColor();
             ImageView imageViewS = new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+color.toString().toLowerCase()+".png").toString());

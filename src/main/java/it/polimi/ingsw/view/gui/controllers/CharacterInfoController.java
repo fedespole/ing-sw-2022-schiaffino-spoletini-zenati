@@ -83,7 +83,7 @@ public class CharacterInfoController extends GuiController{
     }
 
     public void c11On(MouseEvent mouseEvent) {
-        characterEffectText.setText("Take 1 Student from this card and place it in your Dining Roam. Then, draw a new student from the Bag and place it on this card.");
+        characterEffectText.setText("Take 1 Student from this card and place it in your Dining Room. Then, draw a new student from the Bag and place it on this card.");
     }
 
     public void c12On(MouseEvent mouseEvent) {
