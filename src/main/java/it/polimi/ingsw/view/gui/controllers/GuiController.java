@@ -81,7 +81,7 @@ public class GuiController {
     // Based on islands array dimension, manually displays a different gridpane layout
     public void fillIslands(GridPane islandsPane, double sizeW, double sizeH, ArrayList<ArrayList<Island>> islands){
         // ID are progressive, counting from left to right and from top to bottom
-        int idCounter = 0;
+        int idCounter = -1;
 
         for (int i = 0; i < 4 && idCounter < islands.size(); i++) {
             for (int j = 0; j < 6 && idCounter < islands.size(); j++) {
@@ -221,7 +221,7 @@ public class GuiController {
                     this.guiManager.getClient().getClientEvs().add(new MoveMotherEvent(this, idCounter));
                 });
         }
-
+        elemPane.toFront();
         elemPane.alignmentProperty().setValue(Pos.CENTER);
     }
 
