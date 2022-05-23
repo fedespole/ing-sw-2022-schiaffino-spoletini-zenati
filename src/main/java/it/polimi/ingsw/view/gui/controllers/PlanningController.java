@@ -104,13 +104,6 @@ public class PlanningController extends GuiController{
         Characters.getScene().setCursor(Cursor.DEFAULT);
     }
 
-    public void mouseOnGeneric(MouseEvent mouseEvent){
-        ((Node) mouseEvent.getSource()).getScene().setCursor(Cursor.HAND);
-    }
-
-    public void mouseOffGeneric(MouseEvent mouseEvent){
-        ((Node) mouseEvent.getSource()).getScene().setCursor(Cursor.DEFAULT);
-    }
     public void mouseClickedBackCharacter(MouseEvent mouseEvent){
         Characters.setVisible(true);
         CharacterBack.setVisible(false);

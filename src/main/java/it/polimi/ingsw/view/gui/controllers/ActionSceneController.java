@@ -147,10 +147,10 @@ public class ActionSceneController extends GuiController{
                 clouds1Pane.toFront();
                 //cloud0 onMouse
                 clouds0Pane.setOnMouseEntered(event -> {
-                    clouds0Pane.getScene().setCursor(Cursor.HAND);
+                    guiManager.getStage().getScene().setCursor(Cursor.HAND);
                 });
                 clouds0Pane.setOnMouseExited(event -> {
-                    clouds0Pane.getScene().setCursor(Cursor.HAND);
+                    guiManager.getStage().getScene().setCursor(Cursor.DEFAULT);
                 });
                 clouds0Pane.setOnMouseClicked(event -> {
                     this.guiManager.getClient().getClientEvs().add(new ChooseCloudEvent(this, 0));
@@ -158,10 +158,10 @@ public class ActionSceneController extends GuiController{
 
                 //cloud1 onMouse
                 clouds1Pane.setOnMouseEntered(event -> {
-                    clouds1Pane.getScene().setCursor(Cursor.HAND);
+                    guiManager.getStage().getScene().setCursor(Cursor.HAND);
                 });
                 clouds1Pane.setOnMouseExited(event -> {
-                    clouds1Pane.getScene().setCursor(Cursor.HAND);
+                    guiManager.getStage().getScene().setCursor(Cursor.DEFAULT);
                 });
                 clouds1Pane.setOnMouseClicked(event -> {
                     this.guiManager.getClient().getClientEvs().add(new ChooseCloudEvent(this, 1));
@@ -170,10 +170,10 @@ public class ActionSceneController extends GuiController{
                 if(guiManager.getData().getNumPlayers()==3){
                     clouds2Pane.toFront();
                     clouds2Pane.setOnMouseEntered(event -> {
-                        clouds2Pane.getScene().setCursor(Cursor.HAND);
+                        guiManager.getStage().getScene().setCursor(Cursor.HAND);
                     });
                     clouds2Pane.setOnMouseExited(event -> {
-                        clouds2Pane.getScene().setCursor(Cursor.HAND);
+                        guiManager.getStage().getScene().setCursor(Cursor.DEFAULT);
                     });
                     clouds2Pane.setOnMouseClicked(event -> {
                         this.guiManager.getClient().getClientEvs().add(new ChooseCloudEvent(this, 2));
@@ -422,14 +422,6 @@ public class ActionSceneController extends GuiController{
             }
         }
         ((Stage)((ImageView) mouseEvent.getSource()).getScene().getWindow()).close();
-    }
-
-    public void mouseOnGeneric(MouseEvent mouseEvent){
-        ((ImageView) mouseEvent.getSource()).getScene().setCursor(Cursor.HAND);
-    }
-
-    public void mouseOffGeneric(MouseEvent mouseEvent){
-        ((ImageView) mouseEvent.getSource()).getScene().setCursor(Cursor.DEFAULT);
     }
 
     private void infoButtonClicked(MouseEvent mouseEvent){

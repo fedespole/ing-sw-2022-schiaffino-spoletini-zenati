@@ -1,7 +1,7 @@
 package it.polimi.ingsw.view.gui.controllers;
 
+import it.polimi.ingsw.common.events.fromClientEvents.DrawAssistantCardEvent;
 import it.polimi.ingsw.common.events.fromClientEvents.MoveMotherEvent;
-import it.polimi.ingsw.common.events.fromClientEvents.MoveStudentToDiningEvent;
 import it.polimi.ingsw.common.events.fromClientEvents.MoveStudentToIslandEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.TieEvent;
@@ -9,23 +9,21 @@ import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.VictoryEvent;
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
-import it.polimi.ingsw.view.gui.Constants;
 import it.polimi.ingsw.view.gui.GuiManager;
-import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -168,7 +166,7 @@ public class GuiController {
     }
 
     public void fillElementsOnIsland(GridPane islandsPane, ArrayList<Island> island, int i, int j, int idCounter){
-
+        System.out.println(idCounter + "stampata");
         FlowPane elemPane = new FlowPane();
         islandsPane.add(elemPane, j, i);
         elemPane.setId(Integer.toString(idCounter));
@@ -245,20 +243,23 @@ public class GuiController {
 
         }
         else if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVEMN) && guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername())){
-
-            elemPane.setOnMouseEntered(event -> {
+            elemPane.setOnMouseClicked(event->{
+                int steps = (idCounter + guiManager.getData().getIslands().size() - guiManager.getData().getMotherNature())%guiManager.getData().getIslands().size();
+                this.guiManager.getClient().getClientEvs().add(new MoveMotherEvent(this, steps));
+            });
+            elemPane.setOnMouseEntered(event->{
                 guiManager.getStage().getScene().setCursor(Cursor.HAND);
             });
-            elemPane.setOnMouseExited(event -> {
+            elemPane.setOnMouseExited(event->{
                 guiManager.getStage().getScene().setCursor(Cursor.DEFAULT);
             });
-
-            elemPane.setOnMouseClicked(event -> {
-                    this.guiManager.getClient().getClientEvs().add(new MoveMotherEvent(this, idCounter));
-                });
         }
         elemPane.toFront();
         elemPane.alignmentProperty().setValue(Pos.CENTER);
+    }
+
+    public void mouseMN(MouseEvent mouseEvent){
+        this.guiManager.getClient().getClientEvs().add(new MoveMotherEvent(this, Integer.parseInt(((Node)(mouseEvent.getSource())).getId())));
     }
 
     public void fillCloud(TilePane cloudPane, int i){
@@ -280,6 +281,14 @@ public class GuiController {
 
     }
 
+    public void mouseOnGeneric(MouseEvent mouseEvent){
+        guiManager.getStage().getScene().setCursor(Cursor.HAND);
+    }
+
+    public void mouseOffGeneric(MouseEvent mouseEvent){
+        guiManager.getStage().getScene().setCursor(Cursor.DEFAULT);
+    }
+
     public void update(RequestNumPlayersEvent event) {
     }
     public void update(UpdatedDataEvent event){
@@ -288,4 +297,5 @@ public class GuiController {
     }
     public void update(TieEvent event){
     }
+
 }
