@@ -80,11 +80,11 @@ public class GuiController {
 
     // Based on islands array dimension, manually displays a different gridpane layout
     public void fillIslands(GridPane islandsPane, double sizeW, double sizeH, ArrayList<ArrayList<Island>> islands){
-        // ID are progressive, counting from left to right and from top to bottom
+
         int idCounter = -1;
 
-        for (int i = 0; i < 4 && idCounter < islands.size(); i++) {
-            for (int j = 0; j < 6 && idCounter < islands.size(); j++) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 6; j++) {
 
                 if (!(((j == 1 || j == 2 || j == 3 || j == 4) && (i == 1 || i == 2))) && !((i == 0 || i == 3) && (j == 0 || j == 5))) {
                     ImageView islandNode;
@@ -97,36 +97,72 @@ public class GuiController {
                     islandNode.setPreserveRatio(true);
                     islandNode.setFitWidth(sizeW);
                     islandNode.setFitHeight(sizeH);
-                    //set mouseClickable if in MOVE_MN
-                    islandsPane.add(islandNode, j, i);
 
                     // Setting island count clockwise
                     if(i==0){
                         idCounter++;
+                        islandNode.setId(Integer.toString(idCounter));
+                        islandsPane.add(islandNode, j, i);
+                        fillElementsOnIsland(islandsPane, islands.get(idCounter), i, j, idCounter);
+                        // Layout
+                        GridPane.setValignment(islandNode, VPos.CENTER);
+                        GridPane.setHalignment(islandNode, HPos.CENTER);
                     }
                     else if(i==1){
-                       if(j==0) idCounter = 11;
-                       else idCounter = 4;
+                       if(j==0){
+                           if(islands.size() == 12) {
+                               idCounter = 11;
+                               islandNode.setId(Integer.toString(idCounter));
+                               islandsPane.add(islandNode, j, i);
+                               fillElementsOnIsland(islandsPane, islands.get(idCounter), i, j, idCounter);
+                               GridPane.setValignment(islandNode, VPos.BOTTOM);
+                               GridPane.setHalignment(islandNode, HPos.CENTER);
+                           }
+                       }
+                       else{
+                           if(islands.size() > 4) {
+                               idCounter = 4;
+                               islandNode.setId(Integer.toString(idCounter));
+                               islandsPane.add(islandNode, j, i);
+                               fillElementsOnIsland(islandsPane, islands.get(idCounter), i, j, idCounter);
+                               GridPane.setValignment(islandNode, VPos.BOTTOM);
+                               GridPane.setHalignment(islandNode, HPos.CENTER);
+                           }
+                       }
                     }
                     else if(i==2){
-                        if(j==0) idCounter = 10;
-                        else idCounter = 5;
+                        if(j==0){
+                            if(islands.size() > 10){
+                                idCounter = 10;
+                                islandNode.setId(Integer.toString(idCounter));
+                                islandsPane.add(islandNode, j, i);
+                                fillElementsOnIsland(islandsPane, islands.get(idCounter), i, j, idCounter);
+                                GridPane.setValignment(islandNode, VPos.TOP);
+                                GridPane.setHalignment(islandNode, HPos.CENTER);
+                            }
+                        }
+                        else{
+                            if(islands.size() > 5){
+                                idCounter = 5;
+                                islandNode.setId(Integer.toString(idCounter));
+                                islandsPane.add(islandNode, j, i);
+                                fillElementsOnIsland(islandsPane, islands.get(idCounter), i, j, idCounter);
+                                GridPane.setValignment(islandNode, VPos.TOP);
+                                GridPane.setHalignment(islandNode, HPos.CENTER);
+                            }
+                        }
                     }
                     else{
-                        idCounter = 10 - j;
+                        if(islands.size() > (10-j)) {
+                            idCounter = 10 - j;
+                            islandNode.setId(Integer.toString(idCounter));
+                            islandsPane.add(islandNode, j, i);
+                            fillElementsOnIsland(islandsPane, islands.get(idCounter), i, j, idCounter);
+                            GridPane.setValignment(islandNode, VPos.CENTER);
+                            GridPane.setHalignment(islandNode, HPos.CENTER);
+                        }
                     }
-
-                    islandNode.setId(Integer.toString(idCounter));
-                    fillElementsOnIsland(islandsPane, islands.get(idCounter), i, j, idCounter);
-
-                    // Layout
-                    if (j == 0 || j == 5) {
-                        if (i == 1) GridPane.setValignment(islandNode, VPos.BOTTOM);
-                        else GridPane.setValignment(islandNode, VPos.TOP);
-                    } else GridPane.setValignment(islandNode, VPos.CENTER);
-                    GridPane.setHalignment(islandNode, HPos.CENTER);
                 }
-
             }
         }
     }
