@@ -5,6 +5,7 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 public class CharacterInfoController extends GuiController{
 
@@ -34,6 +35,7 @@ public class CharacterInfoController extends GuiController{
     public ImageView c12;
     @FXML
     public Label characterEffectText;
+    public ImageView closeButton;
 
     public void textOff(MouseEvent mouseEvent) {
         characterEffectText.setText("");
@@ -88,5 +90,18 @@ public class CharacterInfoController extends GuiController{
 
     public void c12On(MouseEvent mouseEvent) {
         characterEffectText.setText("Choose a type of Student: every player (including yourself) must return 3 Students of that type from their Dining Room to the bag. If any player has fewer than 3 Students of that type, return as many Students as they have.");
+    }
+
+    public void closeButtonClicked(MouseEvent mouseEvent) {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
+    }
+
+    public void closeButtonOn(MouseEvent mouseEvent) {
+        closeButton.getScene().setCursor(Cursor.HAND);
+    }
+
+    public void closeButtonOff(MouseEvent mouseEvent) {
+        closeButton.getScene().setCursor(Cursor.DEFAULT);
     }
 }

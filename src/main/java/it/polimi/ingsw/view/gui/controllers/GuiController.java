@@ -209,12 +209,14 @@ public class GuiController {
 
         }
         else if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVEMN) && guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername())){
+
             elemPane.setOnMouseEntered(event -> {
-                elemPane.getScene().setCursor(Cursor.HAND);
+                guiManager.getStage().getScene().setCursor(Cursor.HAND);
             });
             elemPane.setOnMouseExited(event -> {
-                elemPane.getScene().setCursor(Cursor.HAND);
+                guiManager.getStage().getScene().setCursor(Cursor.DEFAULT);
             });
+
             elemPane.setOnMouseClicked(event -> {
                     this.guiManager.getClient().getClientEvs().add(new MoveMotherEvent(this, idCounter));
                 });

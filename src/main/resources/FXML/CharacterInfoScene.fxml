@@ -143,5 +143,10 @@
             <Font name="Bell MT" size="15.0" />
          </font>
       </Label>
+      <ImageView fx:id="closeButton" fitHeight="56.0" fitWidth="51.0" layoutX="1285.0" layoutY="30.0" onMouseClicked="#closeButtonClicked" onMouseEntered="#closeButtonOn" onMouseExited="#closeButtonOff" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/671509_button_512x512.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>
