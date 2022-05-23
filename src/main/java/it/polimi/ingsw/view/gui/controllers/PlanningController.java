@@ -19,12 +19,15 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Cell;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -131,7 +134,21 @@ public class PlanningController extends GuiController{
                 break;
             }
             case 4:{
-                // exception pop up -> in planning non la puoi selezionare
+                Stage dialogStage = new Stage();
+                dialogStage.initModality(Modality.WINDOW_MODAL);
+                Button okButton = new Button("Ok!");
+                okButton.setOnMouseClicked(event -> {
+                    dialogStage.close();
+                });
+                VBox vbox = new VBox(new Text("You can't use this character during the planning phase"), okButton);
+                vbox.setAlignment(Pos.CENTER);
+                vbox.setPadding(new Insets(30));
+                vbox.setSpacing(15);
+                dialogStage.setScene(new Scene(vbox));
+                dialogStage.setTitle("Invalid Move!");
+                dialogStage.setResizable(false);
+                dialogStage.getIcons().add(new Image(GuiManager.class.getResource("/graphics/EriantysIntro.jpg").toString()));
+                dialogStage.show();
                 break;
             }
             case 5:{
@@ -394,12 +411,15 @@ public class PlanningController extends GuiController{
         newStage.setTitle("Character "+c+" Island Selection");
         GridPane islands= new GridPane();
         fillIslands(islands,150.0, 90.0, guiManager.getData().getIslands());
+        islands.setPrefWidth(1400);
+        islands.setPrefHeight(500);
         islands.setId(Integer.toString(c));
         for(Node island: islands.getChildren()){
             island.setOnMouseEntered(this::mouseOnGeneric);
             island.setOnMouseExited(this::mouseOffGeneric);
             island.setOnMouseClicked(this::mouseClickedCharacterIsland);
         }
+        //todo:aggiungere background
         islands.setStyle("-fx-background-color:WHITE");
         newStage.setResizable(false);
         newStage.setScene(new Scene(islands));
