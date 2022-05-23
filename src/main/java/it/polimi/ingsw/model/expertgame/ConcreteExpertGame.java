@@ -84,8 +84,6 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
 
             }
         }
-        characters.remove(0);
-        characters.add(new Character4());
     }
 
     @Override
