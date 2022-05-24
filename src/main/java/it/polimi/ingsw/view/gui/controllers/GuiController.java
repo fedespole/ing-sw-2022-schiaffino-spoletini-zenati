@@ -99,10 +99,6 @@ public class GuiController {
     // Based on islands array dimension, manually displays a different gridpane layout
     public void fillIslands(GridPane islandsPane, double sizeW, double sizeH, ArrayList<ArrayList<Island>> islands){
 
-        // TODO: controllare nel model se dopo una merge mother nature viene riposizionata correttamente: deve tornare indietro
-        // di una posizione se l'isola che ha attivato la merge deve mergiarsi con la prior
-        // L'ho fatto ma controllate che sia giusto perchè ho sonno e sto a sfaciola
-
         int idCounter = -1;
 
         for (int i = 0; i < 4; i++) {
@@ -172,16 +168,41 @@ public class GuiController {
         ImageView islandNode;
         if(islands.get(idCounter).size()==1) {
             islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/island" + ((j % 3) + 1) + ".png").toString());
+            islandNode.setFitWidth(sizeW);
+            islandNode.setFitHeight(sizeH);
         }
         else if(islands.get(idCounter).size()==2){
             islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/merge2.png").toString());
+            islandNode.setFitWidth(sizeW+9);
+            islandNode.setFitHeight(sizeH+3);
+        }
+        else if(islands.get(idCounter).size()==3){
+            islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/merge3.png").toString());
+            islandNode.setFitWidth(sizeW+12);
+            islandNode.setFitHeight(sizeH+4);
+        }
+        else if(islands.get(idCounter).size()==4){
+            islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/merge4.png").toString());
+            islandNode.setFitWidth(sizeW+15);
+            islandNode.setFitHeight(sizeH+10);
+        }
+        else if(islands.get(idCounter).size()==5){
+            islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/merge5.png").toString());
+            islandNode.setFitWidth(sizeW+18);
+            islandNode.setFitHeight(sizeH+12);
+        }
+        else if(islands.get(idCounter).size()==6){
+            islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/merge6.png").toString());
+            islandNode.setFitWidth(sizeW+22);
+            islandNode.setFitHeight(sizeH+15);
         }
         else{
-            islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/island" + ((j % 3) + 1) + ".png").toString());
+            islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/merge7.png").toString());
+            islandNode.setFitWidth(sizeW+26);
+            islandNode.setFitHeight(sizeH+18);
         }
+
         islandNode.setPreserveRatio(true);
-        islandNode.setFitWidth(sizeW);
-        islandNode.setFitHeight(sizeH);
         islandNode.setId(Integer.toString(idCounter));
         islandsPane.add(islandNode, j, i);
         fillElementsOnIsland(islandsPane, islands.get(idCounter), i, j, idCounter);
@@ -191,7 +212,8 @@ public class GuiController {
 
     public void fillElementsOnIsland(GridPane islandsPane, ArrayList<Island> island, int i, int j, int idCounter){
 
-        FlowPane elemPane = new FlowPane();
+        TilePane elemPane = new TilePane();
+        int countElem = 0;                          // Counts the elements placed on island to size the TilePane correctly
         islandsPane.add(elemPane, j, i);
         elemPane.setId(Integer.toString(idCounter));
         for (Island subIsland : island) {
@@ -201,6 +223,7 @@ public class GuiController {
                 imageViewS.setPreserveRatio(true);
                 imageViewS.setFitWidth(20);
                 elemPane.getChildren().add(imageViewS);
+                countElem++;
             }
         }
         for (Island subIsland : island) {
@@ -208,8 +231,9 @@ public class GuiController {
                 TEAM team = subIsland.getTower().getColor();
                 ImageView imageViewT = new ImageView(GuiManager.class.getResource("/graphics/pieces/" + team.toString().toLowerCase() + "_tower.png").toString());
                 imageViewT.setPreserveRatio(true);
-                imageViewT.setFitWidth(60);
+                imageViewT.setFitWidth(40);
                 elemPane.getChildren().add(imageViewT);
+                countElem++;
             }
         }
         for (Island subIsland : island) {
@@ -219,15 +243,17 @@ public class GuiController {
                 imageViewN.setFitWidth(60);
                 elemPane.getChildren().add(imageViewN);
                 imageViewN.toFront();
+                countElem++;
             }
         }
 
         if(guiManager.getData().getMotherNature()==idCounter){
             ImageView imageViewM = new ImageView(GuiManager.class.getResource("/graphics/pieces/mother_nature.png").toString());
             imageViewM.setPreserveRatio(true);
-            imageViewM.setFitWidth(60);
+            imageViewM.setFitWidth(40);
             elemPane.getChildren().add(imageViewM);
             imageViewM.toFront();
+            countElem++;
         }
 
         if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD) && guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername())) {
@@ -280,6 +306,10 @@ public class GuiController {
             });
         }
         elemPane.toFront();
+        elemPane.setHgap(10);
+        elemPane.setVgap(10);
+        elemPane.setPrefColumns(countElem);
+        elemPane.setPrefRows(countElem);
         elemPane.alignmentProperty().setValue(Pos.CENTER);
     }
 

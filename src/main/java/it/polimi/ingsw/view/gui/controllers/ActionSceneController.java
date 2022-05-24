@@ -80,7 +80,7 @@ public class ActionSceneController extends GuiController{
 
         this.fillMyDiningRoomAction();
         this.fillOtherPlayersAction();
-        super.fillIslands(islandsPane, 190.0, 140.0, guiManager.getData().getIslands());
+        super.fillIslands(islandsPane, 210.0, 160.0, guiManager.getData().getIslands());
         super.fillCloud(clouds0Pane, 0);
         super.fillCloud(clouds1Pane, 1);
         if(guiManager.getData().getNumPlayers()==3){
