@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -8,6 +9,8 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="765.0" prefWidth="1360.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.Character7Controller">
    <children>
@@ -16,39 +19,27 @@
             <Image url="@../graphics/provasfondo.png" />
          </image>
       </ImageView>
-      <FlowPane alignment="CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1360.0">
+      <FlowPane alignment="CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="595.0" prefWidth="1360.0">
          <children>
-            <AnchorPane prefHeight="700.0" prefWidth="418.0">
+            <AnchorPane prefHeight="672.0" prefWidth="421.0">
                <FlowPane.margin>
                   <Insets right="40.0" />
                </FlowPane.margin>
                <children>
+                  <Label contentDisplay="CENTER" layoutX="40.0" layoutY="657.0" prefHeight="25.0" prefWidth="374.0" text="Drag students from character here" textAlignment="CENTER">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
                   <ImageView fitHeight="762.0" fitWidth="374.0" layoutX="40.0" layoutY="55.0" opacity="0.9" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../graphics/characters/Character7.jpg" />
                      </image>
                   </ImageView>
-                  <GridPane fx:id="CharacterGrid" alignment="CENTER" layoutX="41.0" layoutY="428.0" prefHeight="190.0" prefWidth="376.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                           <image>
-                              <Image url="@../graphics/pieces/student_blue.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </GridPane>
+                  <TilePane fx:id="CharacterGrid" layoutX="39.0" layoutY="485.0" prefHeight="137.0" prefWidth="374.0" />
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="665.0" prefWidth="864.0">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="696.0" prefWidth="874.0">
                <children>
                   <ImageView fitHeight="378.0" fitWidth="881.0" layoutX="-3.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -67,18 +58,6 @@
                       <RowConstraints minHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
-                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                           <image>
-                              <Image url="@../graphics/pieces/student_blue.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="150.0" fitWidth="50.0" layoutX="20.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-                           <image>
-                              <Image url="@../graphics/pieces/student_blue.png" />
-                           </image>
-                        </ImageView>
-                     </children>
                   </GridPane>
                   <GridPane fx:id="DiningRoomGrid" layoutX="153.0" layoutY="184.0" prefHeight="307.0" prefWidth="413.0">
                     <columnConstraints>
@@ -100,28 +79,6 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
-                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../graphics/pieces/student_blue.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="150.0" fitWidth="50.0" layoutX="10.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="9" GridPane.rowIndex="4">
-                           <image>
-                              <Image url="@../graphics/pieces/student_blue.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="150.0" fitWidth="50.0" layoutX="10.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
-                           <image>
-                              <Image url="@../graphics/pieces/student_blue.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="150.0" fitWidth="50.0" layoutX="92.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-                           <image>
-                              <Image url="@../graphics/pieces/student_blue.png" />
-                           </image>
-                        </ImageView>
-                     </children>
                   </GridPane>
                   <GridPane fx:id="ProfessorGrid" layoutX="602.0" layoutY="184.0" prefHeight="308.0" prefWidth="62.0">
                     <columnConstraints>
@@ -134,20 +91,8 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
-                     <children>
-                        <ImageView fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                           <image>
-                              <Image url="@../graphics/pieces/teacher_pink.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitWidth="50.0" layoutX="18.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                           <image>
-                              <Image url="@../graphics/pieces/teacher_pink.png" />
-                           </image>
-                        </ImageView>
-                     </children>
                   </GridPane>
-                  <GridPane fx:id="TowersGrid" layoutX="694.0" layoutY="187.0" prefHeight="245.0" prefWidth="133.0">
+                  <GridPane fx:id="TowersGrid" layoutX="667.0" layoutY="189.0" prefHeight="250.0" prefWidth="139.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -158,22 +103,27 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
-                     <children>
-                        <ImageView fitWidth="120.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                           <image>
-                              <Image url="@../graphics/pieces/grey_tower.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitWidth="120.0" layoutX="-5.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                           <image>
-                              <Image url="@../graphics/pieces/grey_tower.png" />
-                           </image>
-                        </ImageView>
-                     </children>
                   </GridPane>
+                  <Label layoutX="266.0" layoutY="657.0" text="Drag students from entrance here">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="closeButton" fitHeight="59.0" fitWidth="71.0" layoutX="806.0" layoutY="68.0" onMouseClicked="#closeButtonClicked" onMouseEntered="#mouseOnGeneric" onMouseExited="#mouseOffGeneric" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../graphics/671509_button_512x512.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
          </children>
       </FlowPane>
+      <TilePane fx:id="BufferCharacter" layoutX="25.0" layoutY="642.0" prefHeight="100.0" prefWidth="413.0" />
+      <TilePane fx:id="BufferEntrance" layoutX="628.0" layoutY="642.0" prefHeight="100.0" prefWidth="531.0" />
+      <ImageView fx:id="checkButton" fitHeight="59.0" fitWidth="70.0" layoutX="497.0" layoutY="642.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/checkButton.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

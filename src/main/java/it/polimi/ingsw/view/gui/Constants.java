@@ -9,6 +9,8 @@ public class Constants {
     public static final String ACTION_SCENE = "/FXML/ActionScene.fxml";
     public static final String END_SCENE = "/FXML/EndScene.fxml";
     public static final String CHARACTER_INFO_SCENE = "/FXML/CharacterInfoScene.fxml";
+
+    public static final String CHARACTER7_SCENE = "/FXML/Character7Popup.fxml";
     //EXCEPTIONS
     public static final String ALREADY_USED_CARD_EXC = "Card already drawn";
     public static final String STUDENT_NOT_PRESENT_EXC = "Student not present in Entrance";

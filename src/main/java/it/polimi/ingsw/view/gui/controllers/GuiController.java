@@ -387,7 +387,20 @@ public class GuiController {
                 break;
             }
             case 7:{
-                //todo character7
+                Stage s = new Stage();
+                Parent parent = null;
+                try {
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(GuiManager.class.getResource(Constants.CHARACTER7_SCENE));
+                    parent = loader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Scene scene = new Scene(parent);
+                s.setTitle("Character 7");
+                s.setScene(scene);
+                s.setResizable(false);
+                s.show();
                 break;
             }
             case 8:{
