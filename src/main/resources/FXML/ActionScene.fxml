@@ -256,8 +256,8 @@
       </AnchorPane>
       <AnchorPane fx:id="CharactersAnchorPane" layoutX="905.0" layoutY="588.0" minHeight="0.0" minWidth="0.0" prefHeight="175.0" prefWidth="454.0">
          <children>
-            <FlowPane fx:id="Characters" alignment="CENTER" layoutX="-88.0" layoutY="20.0" prefHeight="143.0" prefWidth="540.0" />
-            <ImageView fx:id="CharacterBack" fitHeight="91.0" fitWidth="62.0" layoutX="385.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" />
+            <FlowPane fx:id="Characters" alignment="CENTER" layoutX="-86.0" layoutY="33.0" prefHeight="143.0" prefWidth="540.0" />
+            <ImageView fx:id="CharacterBack" fitHeight="91.0" fitWidth="62.0" layoutX="392.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="383.0" layoutY="208.0" prefHeight="200.0" prefWidth="616.0">
