@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1360.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.PlanningController">
@@ -17,7 +18,7 @@
             <Image url="@../graphics/provasfondo.png" />
          </image>
       </ImageView>
-      <Label fx:id="Title" layoutX="244.0" prefHeight="68.0" prefWidth="873.0" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="Title" alignment="CENTER" contentDisplay="CENTER" layoutX="244.0" prefHeight="68.0" prefWidth="873.0" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Algerian" size="56.0" />
          </font>
@@ -261,5 +262,23 @@
          </children>
       </AnchorPane>
       <FlowPane fx:id="cloudsPane" layoutX="816.0" layoutY="187.0" prefHeight="200.0" prefWidth="200.0" />
+      <AnchorPane layoutX="619.0" layoutY="174.0" prefHeight="192.0" prefWidth="400.0">
+         <children>
+            <ImageView fx:id="cloud2" fitHeight="135.0" fitWidth="135.0" layoutX="222.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" />
+            <TilePane fx:id="clouds2Pane" cache="true" layoutX="253.0" layoutY="53.0" prefColumns="2" prefHeight="91.0" prefRows="2" prefWidth="74.0" />
+            <ImageView fx:id="cloud0" fitHeight="135.0" fitWidth="135.0" layoutX="55.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/pieces/cloud_card.png" />
+               </image>
+            </ImageView>
+            <TilePane fx:id="clouds0Pane" layoutX="83.0" layoutY="57.0" prefColumns="2" prefHeight="91.0" prefRows="2" prefWidth="74.0" />
+            <ImageView fx:id="cloud1" fitHeight="140.0" fitWidth="135.0" layoutX="402.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/pieces/cloud_card.png" />
+               </image>
+            </ImageView>
+            <TilePane fx:id="clouds1Pane" layoutX="430.0" layoutY="54.0" prefColumns="2" prefHeight="91.0" prefRows="2" prefWidth="74.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

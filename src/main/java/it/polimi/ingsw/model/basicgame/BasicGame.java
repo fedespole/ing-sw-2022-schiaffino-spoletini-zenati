@@ -294,6 +294,7 @@ public class BasicGame implements Game{
         if(this.islands.get(motherNature).get(0).getTower()==null)
             return;
         int prior,next;
+        boolean flag = false;
         ArrayList<Island> removePrior = null;
         if(motherNature==0)
             prior=this.islands.size()-1;
@@ -308,6 +309,7 @@ public class BasicGame implements Game{
                 this.islands.get(motherNature).add(this.islands.get(prior).remove(0));
             }
             removePrior = this.islands.get(prior);
+            flag = true;
         }
         if(this.islands.get(next).get(0).getTower()!=null && this.islands.get(next).get(0).getTower().getColor().equals(this.islands.get(motherNature).get(0).getTower().getColor())){
             while(this.islands.get(next).size()!=0){
@@ -317,6 +319,10 @@ public class BasicGame implements Game{
         }
 
         if(removePrior!=null) this.islands.remove(removePrior);
+
+        // Goes back because of the merge with the island before
+        if(flag) motherNature--;
+
     }
 
     public void checkWinner(){
