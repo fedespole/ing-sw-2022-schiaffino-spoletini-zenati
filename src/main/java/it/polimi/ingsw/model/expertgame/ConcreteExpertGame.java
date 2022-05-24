@@ -84,6 +84,13 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
 
             }
         }
+        characters.remove(0);
+        characters.add(new Character10());
+        for(Player player:game.getPlayers()){
+            player.setCoins(100);
+            player.getMySchoolBoard().addStudentToDining(new Student(COLOR.BLUE));
+            player.getMySchoolBoard().addStudentToDining(new Student(COLOR.GREEN));
+        }
     }
 
     @Override

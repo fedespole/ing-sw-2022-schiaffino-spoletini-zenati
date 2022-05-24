@@ -107,7 +107,7 @@ public class GuiManager extends View {
     public void update(NotifyExceptionEvent event) {
         String message = null;
         if (event.getException() instanceof InvalidUserNameException
-                && ((InvalidUserNameException) event.getException()).getClientThatCausedEx().equals(this.client.getSocket().toString())) {
+                && ((InvalidUserNameException) event.getException()).getClientThatCausedEx().equals(this.client.getSocket().toString())) {//todo:da errore a caso
             message = Constants.INVALID_USERNAME_EXC;
             displayException(message);
             Platform.runLater(() -> this.setFXML(Constants.NICKNAME_SCENE));
