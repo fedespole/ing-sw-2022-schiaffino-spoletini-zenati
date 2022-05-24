@@ -15,9 +15,9 @@ import it.polimi.ingsw.model.basicgame.Game;
 import it.polimi.ingsw.model.basicgame.STATUS;
 
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -39,7 +39,28 @@ public class Server implements Runnable {
         Server server = new Server();
         Thread serverThread = new Thread(server);
         serverThread.start();
+        System.out.println("Printing all the interfaces");
+        String ip;
+        try {
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+            while (interfaces.hasMoreElements()) {
+                NetworkInterface iface = interfaces.nextElement();
+                // filters out 127.0.0.1 and inactive interfaces
+                if (iface.isLoopback() || !iface.isUp())
+                    continue;
+                Enumeration<InetAddress> addresses = iface.getInetAddresses();
+                while(addresses.hasMoreElements()) {
+                    InetAddress addr = addresses.nextElement();
+                    ip = addr.getHostAddress();
+                    System.out.println(iface.getDisplayName() + " " + ip);
+                }
+            }
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        }
+
         System.out.println("Waiting for clients to connect...");
+        System.out.println("PORT: " +server.getServerSocket().getLocalPort() );
     }
 
     public void run() {
@@ -47,7 +68,7 @@ public class Server implements Runnable {
             try {
                 Socket newSocket = serverSocket.accept();
                 this.newClientConnection(newSocket);
-                System.out.println("Connection ok!");
+                System.out.println("Client connected at :"+ newSocket.getInetAddress().getHostAddress());
 
             } catch (IOException | InterruptedException e) {
                 System.out.println("Connection Error!");
@@ -91,7 +112,6 @@ public class Server implements Runnable {
         if (controller.getDisconnectedPlayers().containsKey(username)) {
             for(RemoteView oldView: this.playingConnection) {
                 if (oldView.getOwner().equals(username)) {
-                    System.out.println("USERNAME: "+username +"CURRENT PLAYER "+game.getCurrPlayer().getUsername());
                     remoteView.update(new NewPlayerCreatedEvent(this, username));
                     Thread.sleep(100);
                     remoteView.update(new UpdatedDataEvent(this, game.getData()));
@@ -99,7 +119,7 @@ public class Server implements Runnable {
                     playingConnection.add(remoteView);
                     executor.execute(remoteView);
                     controller.getDisconnectedPlayers().replace(username,true);
-                    System.out.println("RECONNECTED:"+username);
+                    System.out.println("RECONNECTED: "+username);
                     break;
                 }
             }

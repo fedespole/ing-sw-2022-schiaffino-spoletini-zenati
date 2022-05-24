@@ -372,7 +372,7 @@ public class Controller implements EventListener {
 
     public void update(ClientDisconnectedEvent event){
         this.disconnectedPlayers.put(event.getUsername(),false);
-        System.out.println("DISCONNECTED:"+event.getUsername()+" "+this.disconnectedPlayers.get(event.getUsername()));
+        System.out.println("DISCONNECTED: "+event.getUsername());
         this.checkDisconnection();
     }
 
@@ -441,7 +441,7 @@ public class Controller implements EventListener {
             if (game.getStatusGame().getStatus().equals(STATUS.PLANNING)) {
                 if (this.disconnectedPlayers.get(game.getCurrPlayer().getUsername())) {
                     this.disconnectedPlayers.remove(game.getCurrPlayer().getUsername());
-                    System.out.println("PLAYER BACK IN THE GAME:"+game.getCurrPlayer().getUsername());
+                    System.out.println("PLAYER BACK IN THE GAME: "+game.getCurrPlayer().getUsername());
                     return;
                 }
                 Random random = new Random();
