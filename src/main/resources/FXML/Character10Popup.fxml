@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="765.0" maxWidth="1360.0" minHeight="765.0" minWidth="1360.0" prefHeight="765.0" prefWidth="1360.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.Character10Controller">
+   <children>
+      <ImageView fitHeight="765.0" fitWidth="1360.0" opacity="0.7" pickOnBounds="true">
+         <image>
+            <Image url="@../graphics/provasfondo.png" />
+         </image>
+      </ImageView>
+      <AnchorPane prefHeight="498.0" prefWidth="1360.0">
+         <children>
+            <ImageView fitHeight="495.0" fitWidth="1018.0" layoutX="183.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/playerItems/schoolBoard/Plancia_DEF3.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" layoutX="-1.0" layoutY="17.0" prefHeight="128.0" prefWidth="1353.0" text="Click on the students you want to swap from Entrance, then the ones from Dining Room">
+               <font>
+                  <Font name="Algerian" size="27.0" />
+               </font>
+            </Label>
+            <GridPane fx:id="EntranceGrid" layoutX="205.0" layoutY="175.0" prefHeight="351.0" prefWidth="123.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.5333251953125" minWidth="10.0" prefWidth="71.26666259765625" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="62.73333740234375" minWidth="10.0" prefWidth="62.73333740234375" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+            <GridPane layoutX="370.0" layoutY="163.0" prefHeight="362.0" prefWidth="484.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.60000610351562" minWidth="10.0" prefWidth="49.33333740234375" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.33334350585938" minWidth="10.0" prefWidth="48.066644287109376" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="218.86664428710938" minWidth="10.0" prefWidth="49.066735839843744" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.6000061035156" minWidth="10.0" prefWidth="48.866735839843756" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="331.53338623046875" minWidth="10.0" prefWidth="51.79999999999998" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="384.86669921875" minWidth="10.0" prefWidth="48.33330078125002" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="478.66667480468755" minWidth="0.0" prefWidth="46.99996337890627" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="478.200048828125" minWidth="0.0" prefWidth="44.60003662109375" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="540.7999755859375" minWidth="8.533319091796898" prefWidth="49.33338623046876" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="540.7999755859375" minWidth="10.0" prefWidth="52.26661376953126" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="55.73332824707031" minHeight="10.0" prefHeight="55.73332824707031" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="76.26668090820311" minHeight="10.0" prefHeight="76.26668090820311" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="72.00001831054686" minHeight="10.0" prefHeight="72.00001831054686" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="70.13336791992185" minHeight="5.733312988281256" prefHeight="70.13336791992185" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="102.9999755859375" minHeight="10.0" prefHeight="65.66663208007816" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

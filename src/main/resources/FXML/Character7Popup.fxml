@@ -28,7 +28,7 @@
                <children>
                   <Label contentDisplay="CENTER" layoutX="40.0" layoutY="657.0" prefHeight="25.0" prefWidth="374.0" text="Drag students from character here" textAlignment="CENTER">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="Algerian" size="20.0" />
                      </font>
                   </Label>
                   <ImageView fitHeight="762.0" fitWidth="374.0" layoutX="40.0" layoutY="55.0" opacity="0.9" pickOnBounds="true" preserveRatio="true">
