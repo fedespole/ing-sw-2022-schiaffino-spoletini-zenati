@@ -26,7 +26,7 @@
                   <Insets right="40.0" />
                </FlowPane.margin>
                <children>
-                  <Label contentDisplay="CENTER" layoutX="40.0" layoutY="657.0" prefHeight="25.0" prefWidth="374.0" text="Drag students from character here" textAlignment="CENTER">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-2.0" layoutY="657.0" prefHeight="26.0" prefWidth="436.0" text="Click on the students you want to swap" textAlignment="CENTER">
                      <font>
                         <Font name="Algerian" size="20.0" />
                      </font>
@@ -104,9 +104,9 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                   </GridPane>
-                  <Label layoutX="266.0" layoutY="657.0" text="Drag students from entrance here">
+                  <Label alignment="CENTER" layoutY="657.0" prefHeight="24.0" prefWidth="880.0" text="CLINK ON THE STUDENTS YOU WANT TO SWAP FORM ENTRANCE">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="Algerian" size="20.0" />
                      </font>
                   </Label>
                   <ImageView fx:id="closeButton" fitHeight="59.0" fitWidth="71.0" layoutX="806.0" layoutY="68.0" onMouseClicked="#closeButtonClicked" onMouseEntered="#mouseOnGeneric" onMouseExited="#mouseOffGeneric" pickOnBounds="true" preserveRatio="true">
@@ -120,7 +120,7 @@
       </FlowPane>
       <TilePane fx:id="BufferCharacter" layoutX="25.0" layoutY="642.0" prefHeight="100.0" prefWidth="413.0" />
       <TilePane fx:id="BufferEntrance" layoutX="628.0" layoutY="642.0" prefHeight="100.0" prefWidth="531.0" />
-      <ImageView fx:id="checkButton" fitHeight="59.0" fitWidth="70.0" layoutX="497.0" layoutY="642.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="checkButton" fitHeight="77.0" fitWidth="80.0" layoutX="489.0" layoutY="635.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/checkButton.png" />
          </image>
