@@ -64,9 +64,6 @@ public class ActionSceneController extends GuiController{
     public GridPane Player2Professors;
     public ImageView CharacterBack;
     public FlowPane Characters;
-    public Label Player1Coins;
-    public Label Player2Coins;
-    public Label MyCoins;
     public AnchorPane CharactersAnchorPane;
 
     @FXML
@@ -245,9 +242,12 @@ public class ActionSceneController extends GuiController{
                     else
                         MyTowers.add(imageView,1,i/2);
                 }
-                if(guiManager.getData().isExpert() && MyCoins!=null)
-                    MyCoins.setText("COINS: "+player.getCoins());
-
+                if(guiManager.getData().isExpert() && coinsPlayer0!=null) {
+                    ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/Moneta_base.png").toString());
+                    imageView.setPreserveRatio(true);
+                    imageView.setFitWidth(40);
+                    coinsPlayer0.getChildren().add(imageView);
+                }
                 MyDiningRoom.toFront();
                 MyEntrance.toFront();
                 MyProfessors.toFront();
@@ -259,7 +259,7 @@ public class ActionSceneController extends GuiController{
     private void fillOtherPlayersAction(){
         int flag=0;
         GridPane entrance=Player1Entrance,diningroom=Player1DiningRoom,professors=Player1Professors,towers=Player1Towers;
-        Label coins=Player1Coins;
+        FlowPane coins=coinsPlayer1;
         for(Player player:guiManager.getData().getPlayers()){
             if(!player.getUsername().equals(guiManager.getOwner())){
                 if(flag!=0){
@@ -267,19 +267,17 @@ public class ActionSceneController extends GuiController{
                     diningroom=Player2DiningRoom;
                     professors=Player2Professors;
                     towers=Player2Towers;
-                    coins=Player2Coins;
+                    coins=coinsPlayer2;
                     Player2DiningRoom.toFront();
                     Player2Entrance.toFront();
                     Player2Professors.toFront();
                     Player2Towers.toFront();
-                    Player2Coins.toFront();
                 }
-                super.fillPlayerItems(entrance, diningroom, professors, towers, player,coins);
+                super.fillPlayerItems(entrance, diningroom, professors, towers, player, coins);
                 Player1DiningRoom.toFront();
                 Player1Entrance.toFront();
                 Player1Professors.toFront();
                 Player1Towers.toFront();
-                Player1Coins.toFront();;
                 flag++;
             }
         }
@@ -293,16 +291,6 @@ public class ActionSceneController extends GuiController{
         else
             Platform.runLater(() -> guiManager.setFXML(Constants.ACTION_SCENE));
 
-    }
-
-    @Override
-    public void update(VictoryEvent event){
-        Platform.runLater(() -> guiManager.setFXML(Constants.END_SCENE));
-    }
-
-    @Override
-    public void update(TieEvent event){
-        Platform.runLater(() -> guiManager.setFXML(Constants.END_SCENE));
     }
 
 }

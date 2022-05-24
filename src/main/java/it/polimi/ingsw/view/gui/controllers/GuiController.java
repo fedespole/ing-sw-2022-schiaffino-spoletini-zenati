@@ -14,6 +14,7 @@ import it.polimi.ingsw.model.expertgame.characters.*;
 import it.polimi.ingsw.model.expertgame.characters.Character;
 import it.polimi.ingsw.view.gui.Constants;
 import it.polimi.ingsw.view.gui.GuiManager;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -48,6 +49,9 @@ public class GuiController {
     private int colorPressed;
     public ImageView CharacterBack;
     public FlowPane Characters;
+    public FlowPane coinsPlayer0;
+    public FlowPane coinsPlayer1;
+    public FlowPane coinsPlayer2;
     public ImageView background;
 
     @FXML
@@ -55,7 +59,7 @@ public class GuiController {
         guiManager = GuiManager.getInstance();
     }
 
-    public void fillPlayerItems(GridPane entrance, GridPane diningroom, GridPane professors, GridPane towers, Player player, Label coins) {
+    public void fillPlayerItems(GridPane entrance, GridPane diningroom, GridPane professors, GridPane towers, Player player, FlowPane coins) {
         for (int i=0;i<5;i++){
             for(int j=0;j<player.getMySchoolBoard().getDiningRoom()[i].size();j++){
                 ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+ COLOR.values()[i].toString().toLowerCase()+".png").toString());
@@ -92,8 +96,13 @@ public class GuiController {
             else
                 towers.add(imageView,1,i/2);
         }
-        if(guiManager.getData().isExpert() && coins!=null)
-            coins.setText("COINS: "+player.getCoins());
+        if(guiManager.getData().isExpert() && coins!=null) {
+            ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/Moneta_base.png").toString());
+            imageView.setPreserveRatio(true);
+            imageView.setFitWidth(40);
+            imageView.setOpacity(1);
+            coins.getChildren().add(imageView);
+        }
     }
 
     // Based on islands array dimension, manually displays a different gridpane layout
@@ -213,7 +222,6 @@ public class GuiController {
     public void fillElementsOnIsland(GridPane islandsPane, ArrayList<Island> island, int i, int j, int idCounter){
 
         TilePane elemPane = new TilePane();
-        int countElem = 0;                          // Counts the elements placed on island to size the TilePane correctly
         islandsPane.add(elemPane, j, i);
         elemPane.setId(Integer.toString(idCounter));
         for (Island subIsland : island) {
@@ -223,7 +231,6 @@ public class GuiController {
                 imageViewS.setPreserveRatio(true);
                 imageViewS.setFitWidth(20);
                 elemPane.getChildren().add(imageViewS);
-                countElem++;
             }
         }
         for (Island subIsland : island) {
@@ -233,7 +240,6 @@ public class GuiController {
                 imageViewT.setPreserveRatio(true);
                 imageViewT.setFitWidth(40);
                 elemPane.getChildren().add(imageViewT);
-                countElem++;
             }
         }
         for (Island subIsland : island) {
@@ -243,7 +249,6 @@ public class GuiController {
                 imageViewN.setFitWidth(60);
                 elemPane.getChildren().add(imageViewN);
                 imageViewN.toFront();
-                countElem++;
             }
         }
 
@@ -253,7 +258,6 @@ public class GuiController {
             imageViewM.setFitWidth(40);
             elemPane.getChildren().add(imageViewM);
             imageViewM.toFront();
-            countElem++;
         }
 
         if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD) && guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername())) {
@@ -305,12 +309,13 @@ public class GuiController {
                 guiManager.getStage().getScene().setCursor(Cursor.DEFAULT);
             });
         }
-        elemPane.toFront();
-        elemPane.setHgap(10);
-        elemPane.setVgap(10);
-        elemPane.setPrefColumns(countElem);
-        elemPane.setPrefRows(countElem);
+        // TODO : il tilePane scala solo in base alla grandezza del gridPane dietro, GridPane setFillWidth(Node child, Boolean value) fa scegliere le colonne del tilePane ma sposta la posizione
+        elemPane.setPrefSize(5, 5);
+        elemPane.setHgap(1);
+        elemPane.setVgap(1);
+        elemPane.setPrefColumns(3);
         elemPane.alignmentProperty().setValue(Pos.CENTER);
+        elemPane.toFront();
     }
 
     public void fillCloud(TilePane cloudPane, int i){
@@ -326,7 +331,6 @@ public class GuiController {
 
         cloudPane.setHgap(10);
         cloudPane.setVgap(10);
-        cloudPane.setPrefColumns(2);
         cloudPane.setPrefRows(2);
         cloudPane.alignmentProperty().setValue(Pos.CENTER);
 
@@ -735,9 +739,13 @@ public class GuiController {
     }
     public void update(UpdatedDataEvent event){
     }
+
     public void update(VictoryEvent event){
+        Platform.runLater(() -> guiManager.setFXML(Constants.END_SCENE));
     }
+
     public void update(TieEvent event){
+        Platform.runLater(() -> guiManager.setFXML(Constants.END_SCENE));
     }
 
 }

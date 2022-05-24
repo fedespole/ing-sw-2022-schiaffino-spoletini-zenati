@@ -53,9 +53,6 @@ public class PlanningController extends GuiController{
     public Label Title;
     public ImageView ChosenCard;
     public GridPane islandsPane;
-    public Label Player1Coins;
-    public Label Player2Coins;
-    public Label MyCoins;
     public TilePane clouds0Pane;
     public TilePane clouds1Pane;
     public TilePane clouds2Pane;
@@ -128,7 +125,7 @@ public class PlanningController extends GuiController{
 
         for (Player player : guiManager.getData().getPlayers()) {
             if (player.getUsername().equals(guiManager.getOwner())) {
-                super.fillPlayerItems(MyEntrance, MyDiningRoom, MyProfessors, MyTowers, player, MyCoins);
+                super.fillPlayerItems(MyEntrance, MyDiningRoom, MyProfessors, MyTowers, player, coinsPlayer0);
                 if(player.getChosenCard()!=null) {
                     Image image = new Image(GuiManager.class.getResource("/graphics/playerItems/deck/assistantCards/Assistente (" + player.getChosenCard().getValue() + ").png").toString());
                     ChosenCard.setImage(image);
@@ -141,7 +138,7 @@ public class PlanningController extends GuiController{
         int flag=0;
         GridPane entrance=Player1Entrance,diningroom=Player1DiningRoom,professors=Player1Professors,towers=Player1Towers;
         ImageView assistantCard=Player1AssistantCard;
-        Label coins=Player1Coins;
+        FlowPane coins = coinsPlayer1;
         for(Player player:guiManager.getData().getPlayers()){
             if(!player.getUsername().equals(guiManager.getOwner())){
                 if(flag!=0){
@@ -150,7 +147,7 @@ public class PlanningController extends GuiController{
                     professors=Player2Professors;
                     towers=Player2Towers;
                     assistantCard=Player2AssistantCard;
-                    coins=Player2Coins;
+                    coins=coinsPlayer2;
                 }
                 super.fillPlayerItems(entrance, diningroom, professors, towers, player,coins);
                 if(player.getChosenCard()!=null){

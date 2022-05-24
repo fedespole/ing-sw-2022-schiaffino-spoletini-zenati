@@ -1,9 +1,7 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.common.ANSIcolors.ANSI;
-import it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent;
-import it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent;
-import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
+import it.polimi.ingsw.common.events.fromServerEvents.*;
 import it.polimi.ingsw.common.exceptions.*;
 import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.view.View;
@@ -182,6 +180,16 @@ public class GuiManager extends View {
                 dialogStage.show();
             }
         });
+    }
+
+    public void update(VictoryEvent event){
+        super.update(event);
+        Platform.runLater(() -> currentController.update(event));
+    }
+
+    public void update(TieEvent event){
+        super.update(event);
+        Platform.runLater(() -> currentController.update(event));
     }
 
     public Stage getStage() {

@@ -45,11 +45,6 @@
        </AnchorPane>
       <AnchorPane layoutY="508.0" minHeight="0.0" minWidth="0.0" prefHeight="378.0" prefWidth="1360.0">
          <children>
-            <Label fx:id="MyCoins" layoutX="926.0" layoutY="150.0">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Label>
             <ImageView fitHeight="254.0" fitWidth="400.0" layoutX="476.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../graphics/playerItems/schoolBoard/Plancia_DEF3.png" />
@@ -114,7 +109,8 @@
               </rowConstraints>
             </GridPane>
             <FlowPane fx:id="AssistantCards" alignment="TOP_CENTER" columnHalignment="CENTER" layoutX="64.0" layoutY="113.0" prefHeight="260.0" prefWidth="1195.0" />
-            <ImageView fx:id="ChosenCard" fitWidth="100.0" layoutX="926.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="ChosenCard" fitHeight="150.0" fitWidth="100.0" layoutX="881.0" pickOnBounds="true" preserveRatio="true" />
+            <FlowPane fx:id="coinsPlayer0" layoutX="443.0" layoutY="4.0" orientation="VERTICAL" prefHeight="167.0" prefWidth="28.0" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="CharactersAnchorPane" layoutX="1095.0" layoutY="254.0" minHeight="0.0" minWidth="0.0" prefHeight="513.0" prefWidth="264.0">
@@ -125,15 +121,14 @@
       </AnchorPane>
       <AnchorPane layoutX="-1.0" minHeight="0.0" minWidth="0.0" prefHeight="507.0" prefWidth="807.0">
          <children>
-            <ImageView fx:id="Player2Board" fitHeight="281.0" fitWidth="400.0" layoutX="30.0" layoutY="85.0" opacity="0.9" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="Player2AssistantCard" fitWidth="100.0" layoutX="457.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="Player1AssistantCard" fitWidth="100.0" layoutX="457.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fitHeight="281.0" fitWidth="400.0" layoutX="30.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="Player2Board" fitHeight="281.0" fitWidth="400.0" layoutX="35.0" layoutY="85.0" opacity="0.9" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="Player1AssistantCard" fitHeight="150.0" fitWidth="100.0" layoutX="439.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="281.0" fitWidth="400.0" layoutX="35.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../graphics/playerItems/schoolBoard/Plancia_DEF3.png" />
                </image>
             </ImageView>
-            <GridPane fx:id="Player1DiningRoom" alignment="CENTER" layoutX="103.0" layoutY="326.0" prefHeight="142.0" prefWidth="192.0">
+            <GridPane fx:id="Player1DiningRoom" alignment="CENTER" layoutX="108.0" layoutY="326.0" prefHeight="142.0" prefWidth="192.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -154,7 +149,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane fx:id="Player1Entrance" layoutX="43.0" layoutY="327.0" prefHeight="142.0" prefWidth="46.0">
+            <GridPane fx:id="Player1Entrance" layoutX="48.0" layoutY="327.0" prefHeight="142.0" prefWidth="46.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -167,7 +162,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane fx:id="Player1Professors" layoutX="312.0" layoutY="327.0" prefHeight="142.0" prefWidth="28.0">
+            <GridPane fx:id="Player1Professors" layoutX="317.0" layoutY="327.0" prefHeight="142.0" prefWidth="28.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
@@ -179,7 +174,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane fx:id="Player1Towers" layoutX="333.0" layoutY="329.0" prefHeight="113.0" prefWidth="65.0">
+            <GridPane fx:id="Player1Towers" layoutX="338.0" layoutY="329.0" prefHeight="113.0" prefWidth="65.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -191,7 +186,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane fx:id="Player2DiningRoom" alignment="CENTER" layoutX="103.0" layoutY="101.0" prefHeight="140.0" prefWidth="192.0">
+            <GridPane fx:id="Player2DiningRoom" alignment="CENTER" layoutX="108.0" layoutY="101.0" prefHeight="140.0" prefWidth="192.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -212,7 +207,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane fx:id="Player2Entrance" layoutX="45.0" layoutY="102.0" prefHeight="141.0" prefWidth="40.0">
+            <GridPane fx:id="Player2Entrance" layoutX="50.0" layoutY="102.0" prefHeight="141.0" prefWidth="40.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -225,7 +220,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane fx:id="Player2Professors" layoutX="312.0" layoutY="101.0" prefHeight="141.0" prefWidth="28.0">
+            <GridPane fx:id="Player2Professors" layoutX="319.0" layoutY="101.0" prefHeight="141.0" prefWidth="28.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
@@ -237,7 +232,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane fx:id="Player2Towers" layoutX="337.0" layoutY="100.0" prefHeight="112.0" prefWidth="56.0">
+            <GridPane fx:id="Player2Towers" layoutX="342.0" layoutY="100.0" prefHeight="112.0" prefWidth="56.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -249,23 +244,16 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <Label fx:id="Player1Coins" layoutX="457.0" layoutY="468.0">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="Player2Coins" layoutX="457.0" layoutY="241.0">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Label>
+            <FlowPane fx:id="coinsPlayer1" layoutX="1.0" layoutY="307.0" orientation="VERTICAL" prefHeight="174.0" prefWidth="28.0" />
+            <FlowPane fx:id="coinsPlayer2" layoutX="2.0" layoutY="87.0" orientation="VERTICAL" prefHeight="174.0" prefWidth="28.0" />
+            <ImageView fx:id="Player2AssistantCard" fitHeight="150.0" fitWidth="100.0" layoutX="440.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
       <FlowPane fx:id="cloudsPane" layoutX="816.0" layoutY="187.0" prefHeight="200.0" prefWidth="200.0" />
       <AnchorPane layoutX="619.0" layoutY="174.0" prefHeight="192.0" prefWidth="400.0">
          <children>
-            <ImageView fx:id="cloud2" fitHeight="135.0" fitWidth="135.0" layoutX="222.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" />
-            <TilePane fx:id="clouds2Pane" cache="true" layoutX="253.0" layoutY="53.0" prefColumns="2" prefHeight="91.0" prefRows="2" prefWidth="74.0" />
+            <ImageView fx:id="cloud2" fitHeight="135.0" fitWidth="135.0" layoutX="220.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" />
+            <TilePane fx:id="clouds2Pane" cache="true" layoutX="249.0" layoutY="53.0" prefColumns="2" prefHeight="91.0" prefRows="2" prefWidth="74.0" />
             <ImageView fx:id="cloud0" fitHeight="135.0" fitWidth="135.0" layoutX="55.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../graphics/pieces/cloud_card.png" />
