@@ -52,6 +52,13 @@ public class GuiController {
     public FlowPane coinsPlayer0;
     public FlowPane coinsPlayer1;
     public FlowPane coinsPlayer2;
+
+    public ImageView Coin1;
+
+    public ImageView Coin2;
+
+    public ImageView Coin0;
+
     public ImageView background;
 
     @FXML
@@ -337,6 +344,9 @@ public class GuiController {
     }
 
     public void setCharacters(){
+        this.Coin0.setImage(new Image(GuiManager.class.getResource("/graphics/pieces/Moneta_base.png").toString()));
+        this.Coin1.setImage(new Image(GuiManager.class.getResource("/graphics/pieces/Moneta_base.png").toString()));
+        this.Coin2.setImage(new Image(GuiManager.class.getResource("/graphics/pieces/Moneta_base.png").toString()));
         this.CharacterBack.setImage(new Image(GuiManager.class.getResource("/graphics/characters/Personaggi_retro.jpg").toString()));
         this.CharacterBack.setOnMouseClicked(this::mouseClickedBackCharacter);
         this.CharacterBack.setOnMouseEntered(this::mouseOnGeneric);
@@ -357,17 +367,26 @@ public class GuiController {
         infoButton.setId("infoButton");
         infoButton.setOnMousePressed(this::infoButtonClicked);
         Characters.getChildren().add( 0,infoButton);
+        Coin2.setVisible(false);
+        Coin1.setVisible(false);
+        Coin0.setVisible(false);
     }
 
     public void mouseOffCharacters(MouseEvent mouseEvent){
         Characters.setVisible(false);
         CharacterBack.setVisible(true);
+        Coin2.setVisible(false);
+        Coin1.setVisible(false);
+        Coin0.setVisible(false);
         Characters.getScene().setCursor(Cursor.DEFAULT);
     }
 
     public void mouseClickedBackCharacter(MouseEvent mouseEvent){
         Characters.setVisible(true);
         CharacterBack.setVisible(false);
+        Coin2.setVisible(guiManager.getData().getCharacters().get(0).isHasBeenUsed());
+        Coin2.setVisible(guiManager.getData().getCharacters().get(1).isHasBeenUsed());
+        Coin2.setVisible(guiManager.getData().getCharacters().get(2).isHasBeenUsed());
         Characters.getScene().setCursor(Cursor.HAND);
     }
 
@@ -476,6 +495,9 @@ public class GuiController {
         }
         Characters.setVisible(false);
         CharacterBack.setVisible(true);
+        Coin2.setVisible(false);
+        Coin1.setVisible(false);
+        Coin0.setVisible(false);
         Characters.getScene().setCursor(Cursor.DEFAULT);
     }
 
@@ -510,10 +532,6 @@ public class GuiController {
             case 1:{
                 this.colorPressed=color;
                 islandPopup(1);
-                break;
-            }
-            case 7:{
-                //TODO SCEGLI STUDENTI
                 break;
             }
             case 0:{
@@ -611,8 +629,8 @@ public class GuiController {
         newStage.setTitle("Character "+c+" Island Selection");
         GridPane islands= new GridPane();
         fillIslands(islands,150.0, 90.0, guiManager.getData().getIslands());
-        islands.setPrefWidth(1400);
-        islands.setPrefHeight(500);
+        islands.setPrefWidth(600);
+        islands.setPrefHeight(400);
         islands.setId(Integer.toString(c));
         for(Node island: islands.getChildren()){
             island.setOnMouseEntered(this::mouseOnGeneric);
@@ -620,7 +638,6 @@ public class GuiController {
             island.setOnMouseClicked(this::mouseClickedCharacterIsland);
         }
         //todo:aggiungere background
-        islands.setStyle("-fx-background-color:WHITE");
         newStage.setResizable(false);
         newStage.setScene(new Scene(islands));
         newStage.show();
