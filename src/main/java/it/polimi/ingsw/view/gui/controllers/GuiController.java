@@ -32,10 +32,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -606,8 +603,12 @@ public class GuiController {
                 String id = character + " " + index;
                 imageView.setOnMouseClicked(this::mouseClickedColorPopup);
                 imageView.setId(id);
-                imageView.setOnMouseEntered(this::mouseOnGeneric);
-                imageView.setOnMouseExited(this::mouseOffGeneric);
+                imageView.setOnMouseEntered(event->{
+                    ((Node)event.getSource()).getScene().setCursor(Cursor.HAND);
+                });
+                imageView.setOnMouseExited(event->{
+                    ((Node)event.getSource()).getScene().setCursor(Cursor.DEFAULT);
+                });
                 colors.add(imageView,j,i);
                 index++;
             }
@@ -628,16 +629,33 @@ public class GuiController {
         Stage newStage = new Stage();
         newStage.setTitle("Character "+c+" Island Selection");
         GridPane islands= new GridPane();
-        fillIslands(islands,150.0, 90.0, guiManager.getData().getIslands());
+        fillIslands(islands,140.0, 90.0, guiManager.getData().getIslands());
         islands.setPrefWidth(600);
         islands.setPrefHeight(400);
         islands.setId(Integer.toString(c));
+        islands.setAlignment(Pos.CENTER);
         for(Node island: islands.getChildren()){
-            island.setOnMouseEntered(this::mouseOnGeneric);
-            island.setOnMouseExited(this::mouseOffGeneric);
+            island.setOnMouseEntered(event->{
+                ((Node)event.getSource()).getScene().setCursor(Cursor.HAND);
+            });
+            island.setOnMouseExited(event->{
+                ((Node)event.getSource()).getScene().setCursor(Cursor.DEFAULT);
+            });
             island.setOnMouseClicked(this::mouseClickedCharacterIsland);
         }
-        //todo:aggiungere background
+        BackgroundSize backgroundSize = new BackgroundSize(800,
+                400,
+                true,
+                true,
+                true,
+                false);
+        BackgroundImage image = new BackgroundImage(new Image(GuiManager.class.getResource("/graphics/provasfondo.png").toString()),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                backgroundSize);
+        islands.setBackground(new Background(image));
+        //todo:STRETCHARE BACKGROUND E DIMINUIRE OPACITÀ
         newStage.setResizable(false);
         newStage.setScene(new Scene(islands));
         newStage.show();
@@ -685,8 +703,12 @@ public class GuiController {
                 String id = c + " " + student.getColor().ordinal() + " " + index;
                 imageView.setId(id);
                 if (guiManager.getData().getCurrPlayer().getUsername().equals(guiManager.getOwner())) {
-                    imageView.setOnMouseEntered(this::mouseOnGeneric);
-                    imageView.setOnMouseExited(this::mouseOffGeneric);
+                    imageView.setOnMouseEntered(event->{
+                        ((Node)event.getSource()).getScene().setCursor(Cursor.HAND);
+                    });
+                    imageView.setOnMouseExited(event->{
+                        ((Node)event.getSource()).getScene().setCursor(Cursor.DEFAULT);
+                    });
                     imageView.setOnMouseClicked(this::mouseClickedStudentPopup);
                 }
                 colors.add(imageView, j, i);
@@ -728,8 +750,12 @@ public class GuiController {
             for(int j=0;j<character5.getNoEntries()/2;j++){
                 ImageView imageView = new ImageView(GuiManager.class.getResource("/graphics/pieces/deny_island_icon.png").toString());
                 if (guiManager.getData().getCurrPlayer().getUsername().equals(guiManager.getOwner())) {
-                    imageView.setOnMouseEntered(this::mouseOnGeneric);
-                    imageView.setOnMouseExited(this::mouseOffGeneric);
+                    imageView.setOnMouseEntered(event->{
+                        ((Node)event.getSource()).getScene().setCursor(Cursor.HAND);
+                    });
+                    imageView.setOnMouseExited(event->{
+                        ((Node)event.getSource()).getScene().setCursor(Cursor.DEFAULT);
+                    });
                     imageView.setOnMouseClicked(this::mouseClickedNoEntriesPopup);
                 }
                 imageView.setPreserveRatio(true);
