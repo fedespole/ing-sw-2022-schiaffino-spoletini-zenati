@@ -81,9 +81,10 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
                 case 12:
                     this.characters.add(new Character12());
                     break;
-
             }
         }
+        characters.remove(0);
+        characters.add(new Character1(this.game));
     }
 
     @Override

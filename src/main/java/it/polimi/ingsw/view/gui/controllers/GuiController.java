@@ -56,7 +56,6 @@ public class GuiController {
 
     public ImageView Coin0;
 
-    public ImageView background;
 
     @FXML
     public void initialize(){
@@ -629,9 +628,9 @@ public class GuiController {
         Stage newStage = new Stage();
         newStage.setTitle("Character "+c+" Island Selection");
         GridPane islands= new GridPane();
-        fillIslands(islands,140.0, 90.0, guiManager.getData().getIslands());
-        islands.setPrefWidth(600);
-        islands.setPrefHeight(400);
+        fillIslands(islands,210.0, 160.0, guiManager.getData().getIslands());
+        islands.setPrefWidth(1200);
+        islands.setPrefHeight(700);
         islands.setId(Integer.toString(c));
         islands.setAlignment(Pos.CENTER);
         for(Node island: islands.getChildren()){
@@ -643,21 +642,21 @@ public class GuiController {
             });
             island.setOnMouseClicked(this::mouseClickedCharacterIsland);
         }
-        BackgroundSize backgroundSize = new BackgroundSize(800,
-                400,
-                true,
-                true,
-                true,
-                false);
-        BackgroundImage image = new BackgroundImage(new Image(GuiManager.class.getResource("/graphics/provasfondo.png").toString()),
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER,
-                backgroundSize);
-        islands.setBackground(new Background(image));
-        //todo:STRETCHARE BACKGROUND E DIMINUIRE OPACITÀ
+        AnchorPane background =new AnchorPane();
+        background.setPrefWidth(1200);
+        background.setPrefHeight(700);
+        ImageView image =new ImageView(GuiManager.class.getResource("/graphics/provasfondo.png").toString());
+        image.setX(0);
+        image.setY(0);
+        image.setPreserveRatio(false);
+        image.setFitWidth(1200);
+        image.setFitHeight(700);
+        image.setOpacity(0.9);
+        background.getChildren().add(image);
+        background.getChildren().add(islands);
+        islands.setAlignment(Pos.CENTER);
         newStage.setResizable(false);
-        newStage.setScene(new Scene(islands));
+        newStage.setScene(new Scene(background));
         newStage.show();
     }
     private void studentsPopup(int c){//we send 0 if the character is 11
