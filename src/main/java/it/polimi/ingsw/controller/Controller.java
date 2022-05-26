@@ -73,6 +73,7 @@ public class Controller implements EventListener {
     }
 
     public void update(DrawAssistantCardEvent event) {
+        hasCardBeenUsed = false;
         int chosenValue = event.getValue();
 
         checkPlanningPhase();

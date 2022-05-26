@@ -99,12 +99,14 @@ public class GuiController {
             else
                 towers.add(imageView,1,i/2);
         }
-        if(guiManager.getData().isExpert() && coins!=null) {
-            ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/Moneta_base.png").toString());
-            imageView.setPreserveRatio(true);
-            imageView.setFitWidth(40);
-            imageView.setOpacity(1);
-            coins.getChildren().add(imageView);
+        for(int i = 0; i < player.getCoins() ; i++) {
+            if (guiManager.getData().isExpert() && coins != null) {
+                ImageView imageView = new ImageView(GuiManager.class.getResource("/graphics/pieces/Moneta_base.png").toString());
+                imageView.setPreserveRatio(true);
+                imageView.setFitWidth(40);
+                imageView.setOpacity(1);
+                coins.getChildren().add(imageView);
+            }
         }
     }
 
