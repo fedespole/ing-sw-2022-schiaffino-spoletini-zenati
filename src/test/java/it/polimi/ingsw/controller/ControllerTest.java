@@ -27,7 +27,7 @@ public class ControllerTest {
     @BeforeEach
     public void setUp() {
         Game game = new BasicGame();
-        this.controller = new Controller(game);
+        this.controller = new Controller(game,null);
     }
 
     @Test
