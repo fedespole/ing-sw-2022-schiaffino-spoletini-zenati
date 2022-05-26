@@ -25,7 +25,7 @@
       <AnchorPane layoutX="934.0" layoutY="543.0" prefHeight="214.0" prefWidth="420.0">
          <children>
             <FlowPane fx:id="coinsPlayer2" layoutY="-21.0" prefHeight="37.0" prefWidth="420.0" />
-            <ImageView fx:id="Player2Board" fitHeight="182.0" fitWidth="500.0" layoutX="-4.0" layoutY="17.0" opacity="0.7" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="Player2Board" fitHeight="182.0" fitWidth="500.0" layoutX="-4.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="Player2Coins" layoutY="-13.0">
                <font>
                   <Font name="System Bold" size="20.0" />
