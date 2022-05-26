@@ -61,9 +61,11 @@ public class Controller implements EventListener {
                 GameHandler.calls(new NewPlayerCreatedEvent(this, newPlayer.getUsername()));
             else
                 GameHandler.calls(new RequestNumPlayersEvent(this, newPlayer.getUsername()));
+            System.out.println("Welcome "+newPlayer.getUsername()+" to the game");
             game.getPlayers().add(newPlayer);
             if (getGame().getPlayers().size() == getGame().getNumPlayers()) {
                 game.setUp();
+                checkDisconnection();
                 GameHandler.calls(new UpdatedDataEvent(this, game.getData()));//return updated version of a ViewData object
             }
         }else if(this.getDisconnectedPlayers().containsKey(event.getUsername())){
@@ -82,7 +84,6 @@ public class Controller implements EventListener {
 
     public void update(SelectedGameSetUpEvent event){
         checkSetUpPhase();
-
         getGame().setNumPlayers(event.getNumPlayers());
         if (event.isExpert()) {
             game = new ConcreteExpertGame(game);
@@ -457,7 +458,7 @@ public class Controller implements EventListener {
                         if(winner!=null)
                             GameHandler.calls(new VictoryEvent(this, winner));
                         else {
-                            System.out.println("GAME ENDED WITHOUT WINNERS");
+                            System.out.println("Game ended without winners");
                         }
                     }
                 }
@@ -467,20 +468,21 @@ public class Controller implements EventListener {
             if (game.getStatusGame().getStatus().equals(STATUS.PLANNING)) {
                 if (this.disconnectedPlayers.get(game.getCurrPlayer().getUsername())) {
                     this.disconnectedPlayers.remove(game.getCurrPlayer().getUsername());
-                    System.out.println("PLAYER BACK IN THE GAME: "+game.getCurrPlayer().getUsername());
+                    System.out.println("Player "+game.getCurrPlayer().getUsername()+" back in the game");
                     return;
                 }
                 Random random = new Random();
                 int int_random = random.nextInt(game.getCurrPlayer().getMyDeck().getCards().size());
-                System.out.println("COMPUTER CHOSE "+game.getCurrPlayer().getMyDeck().getCards().get(int_random).getValue() +" FOR "+game.getCurrPlayer().getUsername());
+                System.out.println("Computer chose "+game.getCurrPlayer().getMyDeck().getCards().get(int_random).getValue() +" for "+game.getCurrPlayer().getUsername());
                 this.update(new DrawAssistantCardEvent(this, game.getCurrPlayer().getMyDeck().getCards().get(int_random).getValue()));
             } else if (game.getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)) {
-                System.out.println(game.getCurrPlayer().getUsername() + " TURN SKIPPED");
+                System.out.println(game.getCurrPlayer().getUsername() + "'s turn skipped");
                 if (game.getStatusGame().getOrder().indexOf(game.getCurrPlayer()) != game.getStatusGame().getOrder().size() - 1) {
                     game.setCurrPlayer(game.getStatusGame().getOrder().get(game.getStatusGame().getOrder().indexOf(game.getCurrPlayer()) + 1));
                 } else {
                     game.fillClouds();
                 }
+                GameHandler.calls(new UpdatedDataEvent(this,game.getData()));
             }
             checkDisconnection();
         }

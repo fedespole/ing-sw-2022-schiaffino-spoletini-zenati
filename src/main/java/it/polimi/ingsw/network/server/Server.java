@@ -82,7 +82,6 @@ public class Server implements Runnable {
         else {
             System.out.println("New client in the lobby: ("+ newSocket.getInetAddress().getHostAddress()+")");
             playingConnection.add(remoteView);
-            System.out.println("Number of remoteView in the lobby: "+getPlayingConnection().size());
             if(controller.getGame().getPlayers().size()==0){
                 while(true){
                     GameEvent currEvent = remoteView.getClientEvs().take();
