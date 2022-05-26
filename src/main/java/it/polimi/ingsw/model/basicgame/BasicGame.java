@@ -267,7 +267,9 @@ public class BasicGame implements Game{
 
         if(this.getIslands().size()==3) checkWinner();
 
-        if(currPlayer.getMySchoolBoard().getTowers().size()==0) new VictoryEvent(this, getCurrPlayer().getUsername());
+        if(currPlayer.getMySchoolBoard().getTowers().size()==0){
+            new VictoryEvent(this, getCurrPlayer().getUsername());
+        }
     }
 
     @Override
@@ -352,10 +354,11 @@ public class BasicGame implements Game{
                 }
             }
         }
-        if(tiePlayers.size()==0)
+        if(tiePlayers.size()==0) {
             GameHandler.calls(new VictoryEvent(this, winner.getUsername()));
-        else
+        }else {
             GameHandler.calls(new TieEvent(this, tiePlayers));
+        }
     }
 
     @Override
