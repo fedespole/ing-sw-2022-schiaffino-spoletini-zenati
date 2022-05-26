@@ -237,14 +237,14 @@ public class ActionSceneController extends GuiController{
                         ImageView imageView = new ImageView(GuiManager.class.getResource("/graphics/pieces/Moneta_base.png").toString());
                         imageView.setPreserveRatio(true);
                         imageView.setFitWidth(40);
-                        FlowPane.setMargin(imageView, new Insets(0.0,20.0, 80.0, 0.0));
+                        FlowPane.setMargin(imageView, new Insets(0.0,5.0, 80.0, 0.0));
                         coinsPlayer0.getChildren().add(imageView);
                     }
                 }
                 //add assistant
                 ImageView imageView = new ImageView(GuiManager.class.getResource("/graphics/playerItems/deck/assistantCards/Assistente ("+player.getChosenCard().getValue()+").png").toString());
                 imageView.setPreserveRatio(true);
-                imageView.setFitWidth(60);
+                imageView.setFitWidth(70);
                 coinsPlayer0.getChildren().add(imageView);
 
                 MyDiningRoom.toFront();

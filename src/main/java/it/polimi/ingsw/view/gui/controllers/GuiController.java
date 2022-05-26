@@ -105,7 +105,7 @@ public class GuiController {
                 imageView.setPreserveRatio(true);
                 imageView.setFitWidth(40);
                 imageView.setOpacity(1);
-                FlowPane.setMargin(imageView, new Insets(0.0,20.0, 80.0, 0.0));
+                FlowPane.setMargin(imageView, new Insets(0.0,5.0, 80.0, 0.0));
                 coins.getChildren().add(imageView);
             }
         }
@@ -113,7 +113,7 @@ public class GuiController {
             if(!guiManager.getData().getStatusGame().getStatus().equals(STATUS.PLANNING)) {
                 ImageView imageView = new ImageView(GuiManager.class.getResource("/graphics/playerItems/deck/assistantCards/Assistente (" + player.getChosenCard().getValue() + ").png").toString());
                 imageView.setPreserveRatio(true);
-                imageView.setFitWidth(60);
+                imageView.setFitWidth(70);
                 coins.getChildren().add(imageView);
             }
         }

@@ -12,12 +12,14 @@ public class Player implements Serializable {
     private final SchoolBoard mySchoolBoard;
     private TEAM team;
     private AssistantCard chosenCard;
+    private boolean hasCharacterCardBeenUsed;
 
     public Player(java.lang.String username) {
         this.username = username;
         this.myDeck = new Deck();
         this.mySchoolBoard = new SchoolBoard();
         this.coins = -1;
+        this.hasCharacterCardBeenUsed = false;
     }
 
     public void setCoins(int coins) {
@@ -67,6 +69,14 @@ public class Player implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(username);
+    }
+
+    public boolean isHasCharacterCardBeenUsed() {
+        return hasCharacterCardBeenUsed;
+    }
+
+    public void setHasCharacterCardBeenUsed(boolean hasCharacterCardBeenUsed) {
+        this.hasCharacterCardBeenUsed = hasCharacterCardBeenUsed;
     }
 }
 

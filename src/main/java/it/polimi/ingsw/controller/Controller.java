@@ -27,7 +27,6 @@ import java.util.*;
 
 public class Controller implements EventListener {
     private Game game;
-    private boolean hasCardBeenUsed;   //true if a CharacterCard has been used in this turn
     private int numOfMoveStudent;      //counts how many student the currPlayer has moved
 
     private Server server;
@@ -35,7 +34,6 @@ public class Controller implements EventListener {
 
     public Controller(Game game, Server server) {
         this.game = game;
-        this.hasCardBeenUsed = false;
         GameHandler.addEventListener(this);
         this.numOfMoveStudent = 0;
         disconnectedPlayers = new HashMap<>();
@@ -91,7 +89,6 @@ public class Controller implements EventListener {
     }
 
     public void update(DrawAssistantCardEvent event) {
-        hasCardBeenUsed = false;
         int chosenValue = event.getValue();
 
         checkPlanningPhase();
@@ -182,6 +179,8 @@ public class Controller implements EventListener {
             GameHandler.calls(new NotifyExceptionEvent(this, new CloudAlreadyChosenException()));
             return;
         }
+        //reset hasCharacterBeenUsed
+        game.getCurrPlayer().setHasCharacterCardBeenUsed(false);
         game.chooseCloud(event.getIndex());
         GameHandler.calls(new UpdatedDataEvent(this,game.getData()));//return updated version of a ViewData object
         if ((game instanceof GameMode2) || (game instanceof GameMode6) || (game instanceof GameMode8) || (game instanceof GameMode9)) {
@@ -403,7 +402,7 @@ public class Controller implements EventListener {
 
     private boolean checkAbility(Character c) {
         //checks if a card has been used in this turn
-        if (hasCardBeenUsed) {
+        if (game.getCurrPlayer().isHasCharacterCardBeenUsed()) {
             GameHandler.calls(new NotifyExceptionEvent(this, new AbilityAlreadyUsedException()));
             return true;
         }
@@ -412,7 +411,7 @@ public class Controller implements EventListener {
             GameHandler.calls(new NotifyExceptionEvent(this, new TooPoorException()));
             return true;
         }
-        this.hasCardBeenUsed = true;
+        getGame().getCurrPlayer().setHasCharacterCardBeenUsed(true);
         return false;
     }
 
