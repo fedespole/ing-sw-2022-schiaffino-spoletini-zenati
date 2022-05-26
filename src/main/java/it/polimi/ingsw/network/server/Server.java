@@ -58,9 +58,8 @@ public class Server implements Runnable {
         } catch (SocketException e) {
             throw new RuntimeException(e);
         }
-
-        System.out.println("Waiting for clients to connect...");
         System.out.println("PORT: " +server.getServerSocket().getLocalPort() );
+        System.out.println("Waiting for clients to connect...");
     }
 
     public void run() {
@@ -68,7 +67,6 @@ public class Server implements Runnable {
             try {
                 Socket newSocket = serverSocket.accept();
                 this.newClientConnection(newSocket);
-                System.out.println("Client connected at :"+ newSocket.getInetAddress().getHostAddress());
 
             } catch (IOException | InterruptedException e) {
                 System.out.println("Connection Error!");
@@ -82,6 +80,7 @@ public class Server implements Runnable {
             newMidGameClientConnection(remoteView);
         }
         else {
+            System.out.println("New client in the lobby: ("+ newSocket.getInetAddress().getHostAddress()+")");
             playingConnection.add(remoteView);
             if(controller.getGame().getPlayers().size()==0){
                 while(true){
@@ -100,7 +99,8 @@ public class Server implements Runnable {
         }
     }
 
-    private void newMidGameClientConnection(RemoteView remoteView) throws InterruptedException, IOException {//resilience
+    private void newMidGameClientConnection(RemoteView remoteView) throws InterruptedException {//resilience
+        System.out.println("New client is trying to come back to the game : ("+ remoteView.getClientSocket().getInetAddress().getHostAddress()+")");
         GameEvent gameEvent;
         while (true) {
             gameEvent = remoteView.getClientEvs().take();
@@ -119,7 +119,7 @@ public class Server implements Runnable {
                     playingConnection.add(remoteView);
                     executor.execute(remoteView);
                     controller.getDisconnectedPlayers().replace(username,true);
-                    System.out.println("RECONNECTED: "+username);
+                    System.out.println(username +" has been reconnected to the game");
                     break;
                 }
             }
