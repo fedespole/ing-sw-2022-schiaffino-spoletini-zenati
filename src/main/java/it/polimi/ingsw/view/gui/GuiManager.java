@@ -104,10 +104,15 @@ public class GuiManager extends View {
 
     public void update(NotifyExceptionEvent event) {
         String message = null;
-        if (event.getException() instanceof InvalidUserNameException
-                && ((InvalidUserNameException) event.getException()).getClientThatCausedEx().equals(this.client.getSocket().toString())) {
-            message = Constants.INVALID_USERNAME_EXC;
-            displayException(message);
+        if (event.getException() instanceof InvalidUserNameException) {
+            if(((InvalidUserNameException) event.getException()).getClientThatCausedEx().equals(this.client.getSocket().toString())) {
+                message = Constants.INVALID_USERNAME_EXC;
+                displayException(message);
+            }
+            else if(((InvalidUserNameException) event.getException()).getClientThatCausedEx().equals("notMatched")){
+                message = Constants.USERNAME_NOTMATCHED_EXC;
+                displayException(message);
+            }
             Platform.runLater(() -> this.setFXML(Constants.NICKNAME_SCENE));
         } else {
             if (getData().getCurrPlayer() != null) {
@@ -117,7 +122,7 @@ public class GuiManager extends View {
                         update(new UpdatedDataEvent(this, this.getData()));
                     } else if (event.getException() instanceof StudentNotPresentException) {
                         message = Constants.STUDENT_NOT_PRESENT_EXC;
-                        //moveStudent();
+                        update(new UpdatedDataEvent(this, this.getData()));
                     } else if (event.getException() instanceof NoMoreSpaceException) {
                         message = Constants.NO_MORE_SPACE_EXC;
                         update(new UpdatedDataEvent(this, this.getData()));

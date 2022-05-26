@@ -52,14 +52,11 @@ public class CliView extends View {
     public void update(NotifyExceptionEvent event) {
 
         // Checks the client that caused the invalidUserName using only the socket, as owner is set only with NewPlayerCreated
-        if (event.getException() instanceof InvalidUserNameException
-                && ((InvalidUserNameException)event.getException()).getClientThatCausedEx().equals(this.client.getSocket().toString())){
-            out.println(ANSI.RED + Constants.INVALID_USERNAME_EXC + ANSI.RESET);
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        if (event.getException() instanceof InvalidUserNameException){
+            if(((InvalidUserNameException)event.getException()).getClientThatCausedEx().equals(this.client.getSocket().toString()))
+                out.println(ANSI.RED + Constants.INVALID_USERNAME_EXC + ANSI.RESET);
+            else if(((InvalidUserNameException) event.getException()).getClientThatCausedEx().equals("notMatched"))
+                out.println(ANSI.RED + Constants.USERNAME_NOTMATCHED_EXC + ANSI.RESET);
             setup();
         }
         // Notifies only player that caused exception

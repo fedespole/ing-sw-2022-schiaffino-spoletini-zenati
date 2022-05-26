@@ -10,7 +10,6 @@ public class Constants {
     public static final String END_SCENE = "/FXML/EndScene.fxml";
     public static final String CHARACTER_INFO_SCENE = "/FXML/CharacterInfoScene.fxml";
     public static final String CHARACTER7_SCENE = "/FXML/Character7Popup.fxml";
-
     public static final String CHARACTER10_SCENE = "/FXML/Character10Popup.fxml";
     //EXCEPTIONS
     public static final String ALREADY_USED_CARD_EXC = "Card already drawn";
@@ -27,4 +26,5 @@ public class Constants {
     public static final String CLOUD_ALREADY_CHOSEN_EXCEPTION = "This cloud is already chosen by another player";
     public static final String INVALID_PHASE_EXC = "Anomaly";
     public static final String INVALID_USERNAME_EXC = "Username already chosen, please take another one";
+    public static final String USERNAME_NOTMATCHED_EXC = "Insert the username you had before to rejoin";
 }
