@@ -32,7 +32,7 @@ public class Server implements Runnable {
     public Server() throws IOException {
         serverSocket = new ServerSocket(PORT);
         game = new BasicGame();
-        controller = new Controller(game);
+        controller = new Controller(game,this);
     }
 
     public static void main(String[] args) throws IOException {

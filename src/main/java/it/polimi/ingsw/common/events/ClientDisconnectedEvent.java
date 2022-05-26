@@ -14,4 +14,8 @@ public class ClientDisconnectedEvent extends GameEvent{
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public void setSource(Object source){
+        this.source=source;
+    }
 }

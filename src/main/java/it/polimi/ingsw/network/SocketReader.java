@@ -39,4 +39,8 @@ public class SocketReader<T> implements Runnable{
             }
         }
     }
+
+    public Socket getSocket() {
+        return socket;
+    }
 }

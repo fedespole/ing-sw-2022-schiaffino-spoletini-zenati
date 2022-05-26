@@ -18,6 +18,9 @@ import it.polimi.ingsw.model.expertgame.gamemodes.GameMode2;
 import it.polimi.ingsw.model.expertgame.gamemodes.GameMode6;
 import it.polimi.ingsw.model.expertgame.gamemodes.GameMode8;
 import it.polimi.ingsw.model.expertgame.gamemodes.GameMode9;
+import it.polimi.ingsw.network.SocketReader;
+import it.polimi.ingsw.network.server.RemoteView;
+import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.view.ViewData;
 
 import java.util.*;
@@ -27,14 +30,17 @@ public class Controller implements EventListener {
     private boolean hasCardBeenUsed;   //true if a CharacterCard has been used in this turn
     private int numOfMoveStudent;      //counts how many student the currPlayer has moved
 
+    private Server server;
     private HashMap<java.lang.String,Boolean> disconnectedPlayers;
 
-    public Controller(Game game) {
+    public Controller(Game game, Server server) {
         this.game = game;
         this.hasCardBeenUsed = false;
         GameHandler.addEventListener(this);
         this.numOfMoveStudent = 0;
         disconnectedPlayers = new HashMap<>();
+        this.server=server;
+
     }
 
     public Game getGame() {
@@ -42,7 +48,7 @@ public class Controller implements EventListener {
     }
 
     public void update(PlayerAccessEvent event) {
-        if (game.getStatusGame().getStatus().equals(STATUS.SETUP)) {
+        if (game.getStatusGame().getStatus().equals(STATUS.SETUP) && !this.getDisconnectedPlayers().containsKey(event.getUsername())) {
             checkSetUpPhase();
             for (Player player : game.getPlayers()) {
                 if (player.getUsername().equals(event.getUsername())) {
@@ -55,17 +61,29 @@ public class Controller implements EventListener {
                 GameHandler.calls(new NewPlayerCreatedEvent(this, newPlayer.getUsername()));
             else
                 GameHandler.calls(new RequestNumPlayersEvent(this, newPlayer.getUsername()));
+            System.out.println("Welcome "+newPlayer.getUsername()+" to the game");
             game.getPlayers().add(newPlayer);
             if (getGame().getPlayers().size() == getGame().getNumPlayers()) {
                 game.setUp();
+                checkDisconnection();
                 GameHandler.calls(new UpdatedDataEvent(this, game.getData()));//return updated version of a ViewData object
             }
+        }else if(this.getDisconnectedPlayers().containsKey(event.getUsername())){
+            System.out.println(event.getUsername()+" reconnected");
+            RemoteView old=null;
+            for(RemoteView remoteView:server.getPlayingConnection()){
+                if(remoteView.getOwner().equals(event.getUsername())){
+                    old=remoteView;
+                    break;
+                }
+            }
+            server.getPlayingConnection().remove(old);
+            this.getDisconnectedPlayers().remove(event.getUsername());
         }
     }
 
     public void update(SelectedGameSetUpEvent event){
         checkSetUpPhase();
-
         getGame().setNumPlayers(event.getNumPlayers());
         if (event.isExpert()) {
             game = new ConcreteExpertGame(game);
@@ -372,9 +390,15 @@ public class Controller implements EventListener {
     }
 
     public void update(ClientDisconnectedEvent event){
-        this.disconnectedPlayers.put(event.getUsername(),false);
-        System.out.println("DISCONNECTED: "+event.getUsername());
-        this.checkDisconnection();
+        if(event.getUsername()!=null) {
+            this.disconnectedPlayers.put(event.getUsername(), false);
+            System.out.println(event.getUsername() + " disconnected");
+            this.checkDisconnection();
+        }else{
+            server.getPlayingConnection().remove(((RemoteView)event.getSource()));
+            System.out.println("New Remote View disconnected before entering the username");
+        }
+
     }
 
     private boolean checkAbility(Character c) {
@@ -416,6 +440,8 @@ public class Controller implements EventListener {
     }
 
     private void checkDisconnection() {
+        if(game.getStatusGame().getStatus().equals(STATUS.SETUP))
+            return;
         if (this.disconnectedPlayers.size() >= this.game.getNumPlayers() - 1 && !this.disconnectedPlayers.containsValue(true)) {
             //fare exception x unico client rimasto
             new Timer().schedule(new TimerTask() {
@@ -432,7 +458,7 @@ public class Controller implements EventListener {
                         if(winner!=null)
                             GameHandler.calls(new VictoryEvent(this, winner));
                         else {
-                            System.out.println("GAME ENDED WITHOUT WINNERS");
+                            System.out.println("Game ended without winners");
                         }
                     }
                 }
@@ -442,20 +468,21 @@ public class Controller implements EventListener {
             if (game.getStatusGame().getStatus().equals(STATUS.PLANNING)) {
                 if (this.disconnectedPlayers.get(game.getCurrPlayer().getUsername())) {
                     this.disconnectedPlayers.remove(game.getCurrPlayer().getUsername());
-                    System.out.println("PLAYER BACK IN THE GAME: "+game.getCurrPlayer().getUsername());
+                    System.out.println("Player "+game.getCurrPlayer().getUsername()+" back in the game");
                     return;
                 }
                 Random random = new Random();
                 int int_random = random.nextInt(game.getCurrPlayer().getMyDeck().getCards().size());
-                System.out.println("COMPUTER CHOSE "+game.getCurrPlayer().getMyDeck().getCards().get(int_random).getValue() +" FOR "+game.getCurrPlayer().getUsername());
+                System.out.println("Computer chose "+game.getCurrPlayer().getMyDeck().getCards().get(int_random).getValue() +" for "+game.getCurrPlayer().getUsername());
                 this.update(new DrawAssistantCardEvent(this, game.getCurrPlayer().getMyDeck().getCards().get(int_random).getValue()));
             } else if (game.getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)) {
-                System.out.println(game.getCurrPlayer().getUsername() + " TURN SKIPPED");
+                System.out.println(game.getCurrPlayer().getUsername() + "'s turn skipped");
                 if (game.getStatusGame().getOrder().indexOf(game.getCurrPlayer()) != game.getStatusGame().getOrder().size() - 1) {
                     game.setCurrPlayer(game.getStatusGame().getOrder().get(game.getStatusGame().getOrder().indexOf(game.getCurrPlayer()) + 1));
                 } else {
                     game.fillClouds();
                 }
+                GameHandler.calls(new UpdatedDataEvent(this,game.getData()));
             }
             checkDisconnection();
         }
