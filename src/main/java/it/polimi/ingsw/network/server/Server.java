@@ -26,12 +26,11 @@ public class Server implements Runnable {
     private ServerSocket serverSocket;
     private ExecutorService executor = Executors.newFixedThreadPool(128);
     private ArrayList<RemoteView> playingConnection = new ArrayList<>();
-    Game game;
     private Controller controller;
 
     public Server() throws IOException {
         serverSocket = new ServerSocket(PORT);
-        game = new BasicGame();
+        Game game = new BasicGame();
         controller = new Controller(game,this);
     }
 
@@ -114,7 +113,7 @@ public class Server implements Runnable {
                 if (oldView.getOwner().equals(username)) {
                     remoteView.update(new NewPlayerCreatedEvent(this, username));
                     Thread.sleep(100);
-                    remoteView.update(new UpdatedDataEvent(this, game.getData()));
+                    remoteView.update(new UpdatedDataEvent(this, controller.getGame().getData()));
                     playingConnection.remove(oldView);
                     playingConnection.add(remoteView);
                     executor.execute(remoteView);
@@ -149,8 +148,10 @@ public class Server implements Runnable {
         return serverSocket;
     }
 
-    public void kills(){
+    public void kills() throws InterruptedException {
+        Thread.sleep(15000);
         executor.shutdown();
+        System.exit(0);
     }
 
 }

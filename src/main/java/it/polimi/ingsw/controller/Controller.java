@@ -40,6 +40,12 @@ public class Controller implements EventListener {
         this.numOfMoveStudent = 0;
         disconnectedPlayers = new HashMap<>();
         this.server=server;
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                GameHandler.calls(new VictoryEvent(this,"non tu"));
+            }
+        }, 45*1000);
 
     }
 
@@ -401,6 +407,19 @@ public class Controller implements EventListener {
 
     }
 
+    public void update(VictoryEvent event) throws InterruptedException {
+        System.out.println("Winner is "+event.getWinningPlayer());
+        server.kills();
+    }
+
+    public void update(TieEvent event) throws InterruptedException {
+        System.out.print("Winners are ");
+        for(String username: event.getTiePlayers()){
+            System.out.print(username+" ");
+        }
+        System.out.println();
+        server.kills();
+    }
     private boolean checkAbility(Character c) {
         //checks if a card has been used in this turn
         if (hasCardBeenUsed) {
@@ -443,7 +462,7 @@ public class Controller implements EventListener {
         if(game.getStatusGame().getStatus().equals(STATUS.SETUP))
             return;
         if (this.disconnectedPlayers.size() >= this.game.getNumPlayers() - 1 && !this.disconnectedPlayers.containsValue(true)) {
-            //fare exception x unico client rimasto
+            System.out.println("Players have 45 seconds to reconnect");
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -455,9 +474,10 @@ public class Controller implements EventListener {
                                 break;
                             }
                         }
-                        if(winner!=null)
+                        if(winner!=null) {
                             GameHandler.calls(new VictoryEvent(this, winner));
-                        else {
+                            System.out.println("Winner is "+winner);
+                        }else {
                             System.out.println("Game ended without winners");
                         }
                     }

@@ -206,6 +206,7 @@ public class CliView extends View {
         else{
             out.println(ANSI.PURPLE+"Player "+ event.getWinningPlayer() +" won"+ANSI.RESET);
         }
+        System.exit(0);
     }
 
     public void update(TieEvent event){
@@ -214,6 +215,7 @@ public class CliView extends View {
         else{
             out.println(ANSI.PURPLE+"Players "+ event.getTiePlayers().get(0) + " and " + event.getTiePlayers().get(1) +" won"+ANSI.RESET);
         }
+        System.exit(0);
     }
 
     private void drawAssistantCard() {
