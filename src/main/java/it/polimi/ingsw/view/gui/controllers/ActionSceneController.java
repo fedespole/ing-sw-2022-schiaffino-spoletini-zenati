@@ -1,43 +1,32 @@
 package it.polimi.ingsw.view.gui.controllers;
 
-import it.polimi.ingsw.common.events.fromClientEvents.*;
-import it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.*;
-import it.polimi.ingsw.common.events.fromServerEvents.TieEvent;
+import it.polimi.ingsw.common.events.fromClientEvents.ChooseCloudEvent;
+import it.polimi.ingsw.common.events.fromClientEvents.MoveStudentToDiningEvent;
 import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
-import it.polimi.ingsw.common.events.fromServerEvents.VictoryEvent;
-import it.polimi.ingsw.model.basicgame.*;
+import it.polimi.ingsw.model.basicgame.COLOR;
+import it.polimi.ingsw.model.basicgame.Professor;
+import it.polimi.ingsw.model.basicgame.STATUS;
+import it.polimi.ingsw.model.basicgame.TEAM;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
-import it.polimi.ingsw.model.expertgame.characters.*;
-import it.polimi.ingsw.model.expertgame.characters.Character;
 import it.polimi.ingsw.view.gui.Constants;
 import it.polimi.ingsw.view.gui.GuiManager;
 import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.*;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.TilePane;
 
 public class ActionSceneController extends GuiController{
+    //TODO mettere la assistantCard scelta da qualche parte
 
     @FXML
     private Label phaseLabel;
@@ -124,9 +113,7 @@ public class ActionSceneController extends GuiController{
                     event.consume();
                 });
 
-                MyDiningRoom.setOnDragDone(event -> {
-                    event.consume();
-                });
+                MyDiningRoom.setOnDragDone(Event::consume);
             }
 
             else if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVEMN)){
