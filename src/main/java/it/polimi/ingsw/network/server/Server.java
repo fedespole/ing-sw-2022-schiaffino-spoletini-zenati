@@ -127,7 +127,7 @@ public class Server implements Runnable {
             return;
         }
         // If username is not matched
-        remoteView.update(new NotifyExceptionEvent(this, new InvalidUserNameException(null)));
+        remoteView.update(new NotifyExceptionEvent(this, new InvalidUserNameException("notMatched")));
     }
 
     public int getPort(){
