@@ -39,9 +39,9 @@ public class EndSceneController extends GuiController{
                 endMessage.setText("Players "+ guiManager.getData().getTiePlayers().get(0) + " and " + guiManager.getData().getTiePlayers().get(1) +" won!");
             else
                 endMessage.setText("Player " + guiManager.getData().getWinner() + " won!");
-            Media media = new Media(GuiManager.class.getResource("/graphics/LosingAudio.mp3").toString());
+            /*Media media = new Media(GuiManager.class.getResource("/graphics/LosingAudio.mp3").toString());
             MediaPlayer mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setAutoPlay(true);
+            mediaPlayer.setAutoPlay(true);*/
         }
     }
 }

@@ -1,37 +1,22 @@
 package it.polimi.ingsw.view.gui.controllers;
 
-import it.polimi.ingsw.common.events.fromClientEvents.DrawAssistantCardEvent;
-import it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.*;
+
 import it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent;
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.basicgame.playeritems.AssistantCard;
 import it.polimi.ingsw.model.basicgame.playeritems.Player;
-import it.polimi.ingsw.model.expertgame.characters.*;
-import it.polimi.ingsw.model.expertgame.characters.Character;
 import it.polimi.ingsw.view.gui.Constants;
 import it.polimi.ingsw.view.gui.GuiManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Cell;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class PlanningController extends GuiController{
     public FlowPane AssistantCards;

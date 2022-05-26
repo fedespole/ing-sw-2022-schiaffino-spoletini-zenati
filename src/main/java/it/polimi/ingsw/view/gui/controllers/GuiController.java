@@ -105,7 +105,9 @@ public class GuiController {
                 imageView.setPreserveRatio(true);
                 imageView.setFitWidth(40);
                 imageView.setOpacity(1);
+                if(!guiManager.getData().getStatusGame().getStatus().equals(STATUS.PLANNING)){
                 FlowPane.setMargin(imageView, new Insets(0.0,5.0, 80.0, 0.0));
+                }
                 coins.getChildren().add(imageView);
             }
         }

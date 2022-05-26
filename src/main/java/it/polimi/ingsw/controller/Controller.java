@@ -38,13 +38,13 @@ public class Controller implements EventListener {
         this.numOfMoveStudent = 0;
         disconnectedPlayers = new HashMap<>();
         this.server=server;
-        new Timer().schedule(new TimerTask() {
+        /*new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 GameHandler.calls(new VictoryEvent(this,"non tu"));
             }
         }, 45*1000);
-
+*/
     }
 
     public Game getGame() {
