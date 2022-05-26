@@ -24,6 +24,7 @@
          </font></Label>
       <AnchorPane layoutX="934.0" layoutY="543.0" prefHeight="214.0" prefWidth="420.0">
          <children>
+            <FlowPane fx:id="coinsPlayer2" layoutY="-21.0" prefHeight="37.0" prefWidth="420.0" />
             <ImageView fx:id="Player2Board" fitHeight="182.0" fitWidth="500.0" layoutX="-4.0" layoutY="17.0" opacity="0.7" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="Player2Coins" layoutY="-13.0">
                <font>
@@ -88,12 +89,12 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <FlowPane fx:id="coinsPlayer2" layoutY="-21.0" prefHeight="37.0" prefWidth="420.0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="7.0" layoutY="554.0" prefHeight="198.0" prefWidth="435.0">
          <children>
-            <ImageView fx:id="Player1Board" fitHeight="182.0" fitWidth="500.0" layoutX="11.0" layoutY="5.0" opacity="0.7" pickOnBounds="true" preserveRatio="true">
+            <FlowPane fx:id="coinsPlayer1" layoutX="12.0" layoutY="-34.0" prefHeight="37.0" prefWidth="420.0" />
+            <ImageView fx:id="Player1Board" fitHeight="182.0" fitWidth="500.0" layoutX="11.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../graphics/playerItems/schoolBoard/Plancia_DEF3.png" />
                </image>
@@ -156,11 +157,11 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <FlowPane fx:id="coinsPlayer1" layoutX="10.0" layoutY="-34.0" prefHeight="37.0" prefWidth="420.0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="429.0" layoutY="529.0" prefHeight="243.0" prefWidth="498.0">
          <children>
+            <FlowPane fx:id="coinsPlayer0" layoutX="21.0" layoutY="-19.0" prefHeight="37.0" prefWidth="420.0" />
             <ImageView fx:id="MyBoard" fitHeight="249.0" fitWidth="478.0" layoutX="16.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../graphics/playerItems/schoolBoard/Plancia_DEF3.png" />
@@ -224,7 +225,6 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <FlowPane fx:id="coinsPlayer0" layoutX="21.0" layoutY="-19.0" prefHeight="37.0" prefWidth="420.0" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="CharactersAnchorPane" layoutX="905.0" layoutY="588.0" minHeight="0.0" minWidth="0.0" prefHeight="175.0" prefWidth="454.0">

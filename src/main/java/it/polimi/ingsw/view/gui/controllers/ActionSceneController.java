@@ -13,6 +13,8 @@ import it.polimi.ingsw.view.gui.GuiManager;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -235,9 +237,16 @@ public class ActionSceneController extends GuiController{
                         ImageView imageView = new ImageView(GuiManager.class.getResource("/graphics/pieces/Moneta_base.png").toString());
                         imageView.setPreserveRatio(true);
                         imageView.setFitWidth(40);
+                        FlowPane.setMargin(imageView, new Insets(0.0,20.0, 80.0, 0.0));
                         coinsPlayer0.getChildren().add(imageView);
                     }
                 }
+                //add assistant
+                ImageView imageView = new ImageView(GuiManager.class.getResource("/graphics/playerItems/deck/assistantCards/Assistente ("+player.getChosenCard().getValue()+").png").toString());
+                imageView.setPreserveRatio(true);
+                imageView.setFitWidth(60);
+                coinsPlayer0.getChildren().add(imageView);
+
                 MyDiningRoom.toFront();
                 MyEntrance.toFront();
                 MyProfessors.toFront();
@@ -264,6 +273,7 @@ public class ActionSceneController extends GuiController{
                     Player2Towers.toFront();
                 }
                 super.fillPlayerItems(entrance, diningroom, professors, towers, player, coins);
+
                 Player1DiningRoom.toFront();
                 Player1Entrance.toFront();
                 Player1Professors.toFront();
