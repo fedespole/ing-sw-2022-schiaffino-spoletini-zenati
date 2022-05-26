@@ -15,7 +15,7 @@
             <Image url="@../graphics/EriantysIntro.jpg" />
          </image>
       </ImageView>
-      <TextField fx:id="nicknameTextField" alignment="CENTER" layoutX="201.0" layoutY="679.0" prefHeight="59.0" prefWidth="985.0" promptText="Insert your nickname">
+      <TextField fx:id="nicknameTextField" alignment="CENTER" layoutX="201.0" layoutY="673.0" prefHeight="59.0" prefWidth="985.0" promptText="Insert your nickname">
          <font>
             <Font size="28.0" />
          </font></TextField>
@@ -24,9 +24,9 @@
             <Font name="Comic Sans MS" size="20.0" />
          </font>
       </Button>
-      <Label fx:id="errorMessage" alignment="CENTER" layoutX="642.0" layoutY="741.0" prefHeight="20.0" prefWidth="127.0" textAlignment="CENTER" textFill="#dc0c0c">
+      <Label fx:id="errorMessage" alignment="CENTER" layoutX="516.0" layoutY="742.0" prefHeight="20.0" prefWidth="356.0" text="Insert your nickname above and press Play!" textAlignment="CENTER">
          <font>
-            <Font name="Algerian" size="12.0" />
+            <Font name="Algerian" size="14.0" />
          </font></Label>
    </children>
 </AnchorPane>
