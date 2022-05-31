@@ -268,7 +268,7 @@ public class BasicGame implements Game{
         if(this.getIslands().size()==3) checkWinner();
 
         if(currPlayer.getMySchoolBoard().getTowers().size()==0){
-            new VictoryEvent(this, getCurrPlayer().getUsername());
+            GameHandler.calls(new VictoryEvent(this, getCurrPlayer().getUsername()));
         }
     }
 
@@ -329,7 +329,7 @@ public class BasicGame implements Game{
 
     public void checkWinner(){
 
-        int minTowers=9; // in 3 player maxTower is 8, so 9 is a ceiling for the minSort
+        int minTowers=9; // in 2 player maxTower is 8, so 9 is a ceiling for the minSort
         Player winner = null;
         ArrayList<String> tiePlayers = new ArrayList<>();
 

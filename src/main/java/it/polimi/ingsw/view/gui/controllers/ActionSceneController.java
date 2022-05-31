@@ -28,7 +28,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 
 public class ActionSceneController extends GuiController{
-    //TODO mettere la assistantCard scelta da qualche parte
 
     @FXML
     private Label phaseLabel;

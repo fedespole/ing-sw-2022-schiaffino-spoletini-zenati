@@ -198,33 +198,33 @@ public class GuiController {
         }
         else if(islands.get(idCounter).size()==2){
             islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/merge2.png").toString());
-            islandNode.setFitWidth(sizeW+9);
-            islandNode.setFitHeight(sizeH+3);
+            islandNode.setFitWidth(sizeW+5);
+            islandNode.setFitHeight(sizeH+2);
         }
         else if(islands.get(idCounter).size()==3){
             islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/merge3.png").toString());
-            islandNode.setFitWidth(sizeW+12);
-            islandNode.setFitHeight(sizeH+4);
+            islandNode.setFitWidth(sizeW+5);
+            islandNode.setFitHeight(sizeH+2);
         }
         else if(islands.get(idCounter).size()==4){
             islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/merge4.png").toString());
-            islandNode.setFitWidth(sizeW+15);
-            islandNode.setFitHeight(sizeH+10);
+            islandNode.setFitWidth(sizeW+5);
+            islandNode.setFitHeight(sizeH+2);
         }
         else if(islands.get(idCounter).size()==5){
             islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/merge5.png").toString());
-            islandNode.setFitWidth(sizeW+18);
-            islandNode.setFitHeight(sizeH+12);
+            islandNode.setFitWidth(sizeW+5);
+            islandNode.setFitHeight(sizeH+2);
         }
         else if(islands.get(idCounter).size()==6){
             islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/merge6.png").toString());
-            islandNode.setFitWidth(sizeW+22);
-            islandNode.setFitHeight(sizeH+15);
+            islandNode.setFitWidth(sizeW+5);
+            islandNode.setFitHeight(sizeH+2);
         }
         else{
             islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/merge7.png").toString());
-            islandNode.setFitWidth(sizeW+26);
-            islandNode.setFitHeight(sizeH+18);
+            islandNode.setFitWidth(sizeW+5);
+            islandNode.setFitHeight(sizeH+2);
         }
 
         islandNode.setPreserveRatio(true);
