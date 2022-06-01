@@ -111,7 +111,7 @@
                   </Label>
                   <ImageView fx:id="closeButton" fitHeight="59.0" fitWidth="71.0" layoutX="806.0" layoutY="68.0" onMouseClicked="#closeButtonClicked" onMouseEntered="#mouseOnGeneric" onMouseExited="#mouseOffGeneric" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../graphics/671509_button_512x512.png" />
+                        <Image url="@../graphics/XButton.png" />
                      </image>
                   </ImageView>
                </children>

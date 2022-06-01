@@ -89,7 +89,7 @@
             </GridPane>
             <ImageView fx:id="closeButton" fitHeight="59.0" fitWidth="71.0" layoutX="1287.0" layoutY="17.0" onMouseClicked="#closeButtonClicked" onMouseEntered="#mouseOnGeneric" onMouseExited="#mouseOffGeneric" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../graphics/671509_button_512x512.png" />
+                  <Image url="@../graphics/XButton.png" />
                </image>
             </ImageView>
          </children>
