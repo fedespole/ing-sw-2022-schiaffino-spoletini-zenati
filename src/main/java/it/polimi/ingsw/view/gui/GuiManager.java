@@ -108,12 +108,13 @@ public class GuiManager extends View {
             if(((InvalidUserNameException) event.getException()).getClientThatCausedEx().equals(this.client.getSocket().toString())) {
                 message = Constants.INVALID_USERNAME_EXC;
                 displayException(message);
+                Platform.runLater(() -> this.setFXML(Constants.NICKNAME_SCENE));
             }
             else if(((InvalidUserNameException) event.getException()).getClientThatCausedEx().equals("notMatched")){
                 message = Constants.USERNAME_NOTMATCHED_EXC;
                 displayException(message);
+                Platform.runLater(() -> this.setFXML(Constants.NICKNAME_SCENE));
             }
-            Platform.runLater(() -> this.setFXML(Constants.NICKNAME_SCENE));
         } else {
             if (getData().getCurrPlayer() != null) {
                 if (getOwner() != null && getOwner().equals(getData().getCurrPlayer().getUsername())) {
