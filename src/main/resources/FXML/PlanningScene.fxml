@@ -250,6 +250,8 @@
                </image>
             </ImageView>
             <ImageView fx:id="Player2Board" fitHeight="281.0" fitWidth="400.0" layoutX="35.0" layoutY="85.0" opacity="0.9" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="player1Name" layoutX="34.0" layoutY="485.0" />
+            <Label fx:id="player2Name" layoutX="36.0" layoutY="263.0" />
          </children>
       </AnchorPane>
       <FlowPane fx:id="cloudsPane" layoutX="816.0" layoutY="187.0" prefHeight="200.0" prefWidth="200.0" />

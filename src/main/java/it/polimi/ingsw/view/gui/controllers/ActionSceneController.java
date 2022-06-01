@@ -29,6 +29,8 @@ import javafx.scene.layout.TilePane;
 
 public class ActionSceneController extends GuiController{
 
+    public Label player1Name;
+    public Label player2Name;
     @FXML
     private Label phaseLabel;
     public TilePane clouds0Pane;
@@ -258,6 +260,7 @@ public class ActionSceneController extends GuiController{
         int flag=0;
         GridPane entrance=Player1Entrance,diningroom=Player1DiningRoom,professors=Player1Professors,towers=Player1Towers;
         FlowPane coins=coinsPlayer1;
+        Label username = player1Name;
         for(Player player:guiManager.getData().getPlayers()){
             if(!player.getUsername().equals(guiManager.getOwner())){
                 if(flag!=0){
@@ -266,12 +269,14 @@ public class ActionSceneController extends GuiController{
                     professors=Player2Professors;
                     towers=Player2Towers;
                     coins=coinsPlayer2;
+                    username=player2Name;
                     Player2DiningRoom.toFront();
                     Player2Entrance.toFront();
                     Player2Professors.toFront();
                     Player2Towers.toFront();
                 }
                 super.fillPlayerItems(entrance, diningroom, professors, towers, player, coins);
+                username.setText(player.getUsername()+"'s board");
 
                 Player1DiningRoom.toFront();
                 Player1Entrance.toFront();

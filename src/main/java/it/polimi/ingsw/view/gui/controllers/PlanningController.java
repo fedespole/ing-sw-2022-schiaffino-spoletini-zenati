@@ -44,6 +44,8 @@ public class PlanningController extends GuiController{
     public ImageView cloud2;
     public ImageView cloud0;
     public ImageView cloud1;
+    public Label player1Name;
+    public Label player2Name;
 
     @FXML
     @Override
@@ -124,6 +126,7 @@ public class PlanningController extends GuiController{
         GridPane entrance=Player1Entrance,diningroom=Player1DiningRoom,professors=Player1Professors,towers=Player1Towers;
         ImageView assistantCard=Player1AssistantCard;
         FlowPane coins = coinsPlayer1;
+        Label username = player1Name;
         for(Player player:guiManager.getData().getPlayers()){
             if(!player.getUsername().equals(guiManager.getOwner())){
                 if(flag!=0){
@@ -133,8 +136,10 @@ public class PlanningController extends GuiController{
                     towers=Player2Towers;
                     assistantCard=Player2AssistantCard;
                     coins=coinsPlayer2;
+                    username=player2Name;
                 }
                 super.fillPlayerItems(entrance, diningroom, professors, towers, player,coins);
+                username.setText(player.getUsername()+"'s board");
                 if(player.getChosenCard()!=null){
                     Image image= new Image(GuiManager.class.getResource("/graphics/playerItems/deck/assistantCards/Assistente ("+player.getChosenCard().getValue()+").png").toString());
                     assistantCard.setImage(image);
