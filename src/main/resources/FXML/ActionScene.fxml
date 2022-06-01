@@ -88,7 +88,10 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <Label fx:id="player1Name" layoutX="14.0" layoutY="190.0" prefHeight="18.0" prefWidth="110.0" />
+            <Label fx:id="player1Name" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="187.0" prefHeight="18.0" prefWidth="420.0">
+               <font>
+                  <Font name="Algerian" size="12.0" />
+               </font></Label>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="429.0" layoutY="529.0" prefHeight="243.0" prefWidth="498.0">
@@ -207,7 +210,6 @@
       <AnchorPane layoutX="934.0" layoutY="543.0" prefHeight="214.0" prefWidth="420.0">
          <children>
             <FlowPane fx:id="coinsPlayer2" layoutY="-21.0" prefHeight="37.0" prefWidth="420.0" />
-            <ImageView fx:id="Player2Board" fitHeight="182.0" fitWidth="500.0" layoutX="-4.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="Player2Coins" layoutY="-13.0">
                <font>
                   <Font name="System Bold" size="20.0" />
@@ -271,7 +273,11 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <Label fx:id="player2Name" layoutX="-1.0" layoutY="202.0" prefHeight="18.0" prefWidth="62.0" />
+            <Label fx:id="player2Name" alignment="CENTER" contentDisplay="CENTER" layoutX="-3.0" layoutY="197.0" prefHeight="18.0" prefWidth="420.0">
+               <font>
+                  <Font name="Algerian" size="12.0" />
+               </font></Label>
+            <ImageView fx:id="Player2Board" fitHeight="182.0" fitWidth="500.0" layoutX="-4.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
    </children>

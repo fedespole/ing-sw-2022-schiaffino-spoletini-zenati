@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="765.0" maxWidth="1360.0" prefHeight="761.0" prefWidth="1353.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controllers.NickNameRequestController">
+<AnchorPane maxHeight="765.0" maxWidth="1360.0" prefHeight="761.0" prefWidth="1353.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="it.polimi.ingsw.view.gui.controllers.NickNameRequestController">
    <children>
       <ImageView fitHeight="765.0" fitWidth="1360.0" layoutX="-1.0" opacity="0.9" pickOnBounds="true">
          <image>
