@@ -180,7 +180,7 @@ public class ActionSceneController extends GuiController{
                     for(int j=0;j<player.getMySchoolBoard().getDiningRoom()[i].size();j++){
                         ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+ COLOR.values()[i].toString().toLowerCase()+".png").toString());
                         imageView.setPreserveRatio(true);
-                        imageView.setFitWidth(20);
+                        imageView.setFitWidth(22);
                         MyDiningRoom.add(imageView,j,i);
                     }
                 }
@@ -188,7 +188,7 @@ public class ActionSceneController extends GuiController{
                     COLOR color=player.getMySchoolBoard().getEntrance().get(i).getColor();
                     ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/student_"+color.toString().toLowerCase()+".png").toString());
                     imageView.setPreserveRatio(true);
-                    imageView.setFitWidth(20);
+                    imageView.setFitWidth(26);
                     //students draggable if I'm currPlayer
                     if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD) &&  guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername())) {
                         imageView.setOnMouseEntered(event -> {
@@ -218,7 +218,7 @@ public class ActionSceneController extends GuiController{
                     COLOR color=professor.getColor();
                     ImageView imageView= new ImageView(GuiManager.class.getResource("/graphics/pieces/teacher_"+color.toString().toLowerCase()+".png").toString());
                     imageView.setPreserveRatio(true);
-                    imageView.setFitWidth(20);
+                    imageView.setFitWidth(22);
                     imageView.setRotate(29.7);
                     MyProfessors.add(imageView,0,color.ordinal());
                 }
