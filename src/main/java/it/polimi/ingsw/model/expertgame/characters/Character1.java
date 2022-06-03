@@ -28,11 +28,11 @@ public class Character1 extends Character {
         for(int i=0;i<students.size();i++) {
             if(students.get(i).getColor().equals(color)) {
                 playerPayment(currGame.getCurrPlayer());
-                changeCost();
                 Student student = students.get(i);
                 students.remove(student);
                 island.get(0).addStudent(student);
                 students.add(currGame.getBag().removeStudent());
+                changeCost();
                 return;
             }
         }

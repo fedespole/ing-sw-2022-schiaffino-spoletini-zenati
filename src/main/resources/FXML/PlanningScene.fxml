@@ -45,6 +45,11 @@
        </AnchorPane>
       <AnchorPane layoutY="508.0" minHeight="0.0" minWidth="0.0" prefHeight="378.0" prefWidth="1360.0">
          <children>
+            <ImageView fitHeight="254.0" fitWidth="400.0" layoutX="476.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/playerItems/schoolBoard/Plancia_DEF3.png" />
+               </image>
+            </ImageView>
             <GridPane fx:id="MyDiningRoom" alignment="CENTER" layoutX="547.0" layoutY="16.0" prefHeight="141.0" prefWidth="190.0">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -105,11 +110,6 @@
             </GridPane>
             <FlowPane fx:id="AssistantCards" alignment="TOP_CENTER" columnHalignment="CENTER" layoutX="64.0" layoutY="113.0" prefHeight="260.0" prefWidth="1195.0" />
             <ImageView fx:id="ChosenCard" fitHeight="150.0" fitWidth="100.0" layoutX="881.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fitHeight="254.0" fitWidth="400.0" layoutX="476.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../graphics/playerItems/schoolBoard/Plancia_DEF3.png" />
-               </image>
-            </ImageView>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="CharactersAnchorPane" layoutX="1095.0" layoutY="254.0" minHeight="0.0" minWidth="0.0" prefHeight="513.0" prefWidth="264.0">
@@ -123,6 +123,11 @@
       </AnchorPane>
       <AnchorPane layoutX="-1.0" minHeight="0.0" minWidth="0.0" prefHeight="507.0" prefWidth="807.0">
          <children>
+            <ImageView fitHeight="281.0" fitWidth="400.0" layoutX="35.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/playerItems/schoolBoard/Plancia_DEF3.png" />
+               </image>
+            </ImageView>
             <FlowPane fx:id="coinsPlayer2" layoutX="35.0" layoutY="46.0" orientation="VERTICAL" prefHeight="35.0" prefWidth="400.0" />
             <FlowPane fx:id="coinsPlayer1" layoutX="35.0" layoutY="271.0" orientation="VERTICAL" prefHeight="35.0" prefWidth="400.0" />
             <FlowPane fx:id="coinsPlayer0" layoutX="476.0" layoutY="470.0" orientation="VERTICAL" prefHeight="35.0" prefWidth="400.0" />
@@ -244,11 +249,6 @@
                </rowConstraints>
             </GridPane>
             <ImageView fx:id="Player2AssistantCard" fitHeight="150.0" fitWidth="100.0" layoutX="440.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fitHeight="281.0" fitWidth="400.0" layoutX="35.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../graphics/playerItems/schoolBoard/Plancia_DEF3.png" />
-               </image>
-            </ImageView>
             <ImageView fx:id="Player2Board" fitHeight="281.0" fitWidth="400.0" layoutX="35.0" layoutY="85.0" opacity="0.9" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="player1Name" alignment="CENTER" contentDisplay="CENTER" layoutX="36.0" layoutY="486.0" prefHeight="14.0" prefWidth="400.0">
                <font>

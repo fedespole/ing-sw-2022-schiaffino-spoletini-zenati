@@ -126,19 +126,20 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
 
     @Override
     public void computeInfluence() {
-
-        Character5 character5 = null;
-        for (Character character : characters) {
-            if (character instanceof Character5) {
-                character5 = (Character5) character;
+        int chr5 = -1;
+        for(int i = 0;  i < 3; i++){
+            if(this.getCharacters().get(i) instanceof Character5){
+                chr5 = i;
                 break;
             }
         }
-        if (character5 != null) {
-            if (!this.getIslands().get(this.getMotherNature()).get(0).isNoEntry()) {
+
+        if (chr5 != -1) {
+            System.out.println("Sono nel magico if");
+            if (!((this.getIslands().get(this.getMotherNature())).get(0).isNoEntry())) {
                 game.computeInfluence();
             } else {
-                character5.restoreNoEntry(this.getIslands().get(this.getMotherNature()));
+                ((Character5)this.getCharacters().get(chr5)).restoreNoEntry(this.getIslands().get(this.getMotherNature()));
             }
         } else game.computeInfluence();
     }

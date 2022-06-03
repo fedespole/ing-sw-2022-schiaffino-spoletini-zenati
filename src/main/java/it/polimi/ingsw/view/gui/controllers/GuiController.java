@@ -392,8 +392,8 @@ public class GuiController {
     public void mouseClickedBackCharacter(MouseEvent mouseEvent){
         Characters.setVisible(true);
         CharacterBack.setVisible(false);
-        Coin2.setVisible(guiManager.getData().getCharacters().get(0).isHasBeenUsed());
-        Coin2.setVisible(guiManager.getData().getCharacters().get(1).isHasBeenUsed());
+        Coin0.setVisible(guiManager.getData().getCharacters().get(0).isHasBeenUsed());
+        Coin1.setVisible(guiManager.getData().getCharacters().get(1).isHasBeenUsed());
         Coin2.setVisible(guiManager.getData().getCharacters().get(2).isHasBeenUsed());
         Characters.getScene().setCursor(Cursor.HAND);
     }

@@ -164,7 +164,7 @@ public class Controller implements EventListener {
     public void update(MoveMotherEvent event) {
         checkActionMoveMotherPhase();
 
-        if (event.getIndex() < 0 || event.getIndex() > game.getCurrPlayer().getChosenCard().getSteps()) {
+        if (event.getIndex() < 1 || event.getIndex() > game.getCurrPlayer().getChosenCard().getSteps()) {
             GameHandler.calls(new NotifyExceptionEvent(this, new InvalidStepsException()));
             return;
         }
