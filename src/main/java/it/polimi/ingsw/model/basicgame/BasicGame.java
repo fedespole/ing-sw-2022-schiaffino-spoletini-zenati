@@ -415,4 +415,8 @@ public class BasicGame implements Game{
     public void setNumPlayers(int numPlayers) {
         this.numPlayers = numPlayers;
     }
+
+    public boolean getLastRound() {
+        return lastRound;
+    }
 }

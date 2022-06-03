@@ -55,4 +55,6 @@ public interface Game {
     void setNumPlayers(int numPlayers);
 
     ViewData getData();
+
+    boolean getLastRound();
 }

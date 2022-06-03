@@ -83,7 +83,8 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
                     break;
             }
         }
-
+        this.characters.remove(0);
+        this.characters.add(new Character5());
     }
 
     @Override
@@ -111,7 +112,13 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
 
     @Override
     public void moveMother(int steps) {
-        game.moveMother(steps);
+        setMotherNature((game.getMotherNature()+steps) % this.getIslands().size());
+
+        this.computeInfluence();
+        if(getStatusGame().getOrder().get(getStatusGame().getOrder().size()-1)==getCurrPlayer()){
+            if(game.getLastRound()) checkWinner();
+        }
+        this.getStatusGame().setStatus(STATUS.ACTION_CHOOSECLOUD);
     }
 
     @Override
@@ -126,19 +133,22 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
 
     @Override
     public void computeInfluence() {
+        System.out.println("Sono nel conbcreteExpert computeinfluence");
         int chr5 = -1;
         for(int i = 0;  i < 3; i++){
             if(this.getCharacters().get(i) instanceof Character5){
+                System.out.println("C'è il 5");
                 chr5 = i;
                 break;
             }
         }
 
         if (chr5 != -1) {
-            System.out.println("Sono nel magico if");
             if (!((this.getIslands().get(this.getMotherNature())).get(0).isNoEntry())) {
                 game.computeInfluence();
+                System.out.println("Non c'è il divieto");
             } else {
+                System.out.println("C'è il divieto");
                 ((Character5)this.getCharacters().get(chr5)).restoreNoEntry(this.getIslands().get(this.getMotherNature()));
             }
         } else game.computeInfluence();
@@ -165,6 +175,11 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
         viewData.setCharacters((ArrayList<Character>) characters.clone());
         viewData.setExpert(true);
         return viewData;
+    }
+
+    @Override
+    public boolean getLastRound() {
+        return game.getLastRound();
     }
 
     @Override
