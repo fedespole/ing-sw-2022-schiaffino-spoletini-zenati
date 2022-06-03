@@ -103,7 +103,7 @@ public class Server implements Runnable {
         GameEvent gameEvent;
         while (true) {
             gameEvent = remoteView.getClientEvs().take();
-            if (gameEvent instanceof PlayerAccessEvent)//TODO: FEDE IL PROBLEMA della schermata di waiting È QUI
+            if (gameEvent instanceof PlayerAccessEvent)
                 break;
         }
         String username = ((PlayerAccessEvent)gameEvent).getUsername();

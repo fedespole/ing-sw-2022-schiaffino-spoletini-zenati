@@ -325,7 +325,6 @@ public class GuiController {
                 guiManager.getStage().getScene().setCursor(Cursor.DEFAULT);
             });
         }
-        // TODO : il tilePane scala solo in base alla grandezza del gridPane dietro, GridPane setFillWidth(Node child, Boolean value) fa scegliere le colonne del tilePane ma sposta la posizione
         elemPane.setPrefSize(5, 5);
         elemPane.setHgap(1);
         elemPane.setVgap(1);
