@@ -76,6 +76,7 @@ public class Server implements Runnable {
     public synchronized void newClientConnection(Socket newSocket) throws IOException, InterruptedException {
         RemoteView remoteView = new RemoteView(newSocket);
         if(controller.getGame().getStatusGame().getStatus() != STATUS.SETUP) {
+            System.out.println("New client is trying to come back to the game : ("+ remoteView.getClientSocket().getInetAddress().getHostAddress()+")");
             newMidGameClientConnection(remoteView);
         }
         else {
@@ -99,16 +100,15 @@ public class Server implements Runnable {
     }
 
     private void newMidGameClientConnection(RemoteView remoteView) throws InterruptedException {//resilience
-        System.out.println("New client is trying to come back to the game : ("+ remoteView.getClientSocket().getInetAddress().getHostAddress()+")");
         GameEvent gameEvent;
         while (true) {
             gameEvent = remoteView.getClientEvs().take();
-            if (gameEvent instanceof PlayerAccessEvent)
+            if (gameEvent instanceof PlayerAccessEvent)//TODO: FEDE IL PROBLEMA della schermata di waiting È QUI
                 break;
         }
         String username = ((PlayerAccessEvent)gameEvent).getUsername();
         // Checks if username given in PlayerAccessEvent matches with one of the usernames in the game, and it is actually disconnected
-        if (controller.getDisconnectedPlayers().containsKey(username)) {
+        if (controller.getDisconnectedPlayers().contains(username)) {
             for(RemoteView oldView: this.playingConnection) {
                 if (oldView.getOwner().equals(username)) {
                     remoteView.update(new NewPlayerCreatedEvent(this, username));
@@ -117,7 +117,8 @@ public class Server implements Runnable {
                     playingConnection.remove(oldView);
                     playingConnection.add(remoteView);
                     executor.execute(remoteView);
-                    controller.getDisconnectedPlayers().replace(username,true);
+                    controller.getDisconnectedPlayers().remove(username);
+                    controller.checkDisconnection();
                     System.out.println(username +" has been reconnected to the game");
                     break;
                 }
@@ -126,6 +127,7 @@ public class Server implements Runnable {
         }
         // If username is not matched
         remoteView.update(new NotifyExceptionEvent(this, new InvalidUserNameException("notMatched")));
+        newMidGameClientConnection(remoteView);
     }
 
     public int getPort(){

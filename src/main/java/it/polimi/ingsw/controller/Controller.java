@@ -30,21 +30,14 @@ public class Controller implements EventListener {
     private int numOfMoveStudent;      //counts how many student the currPlayer has moved
 
     private Server server;
-    private HashMap<java.lang.String,Boolean> disconnectedPlayers;
+    private ArrayList<String> disconnectedPlayers;
 
     public Controller(Game game, Server server) {
         this.game = game;
         GameHandler.addEventListener(this);
         this.numOfMoveStudent = 0;
-        disconnectedPlayers = new HashMap<>();
+        disconnectedPlayers = new ArrayList<>();
         this.server=server;
-        /*new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                GameHandler.calls(new VictoryEvent(this,"non tu"));
-            }
-        }, 45*1000);
-*/
     }
 
     public Game getGame() {
@@ -52,7 +45,7 @@ public class Controller implements EventListener {
     }
 
     public void update(PlayerAccessEvent event) {
-        if (game.getStatusGame().getStatus().equals(STATUS.SETUP) && !this.getDisconnectedPlayers().containsKey(event.getUsername())) {
+        if (game.getStatusGame().getStatus().equals(STATUS.SETUP) && !this.getDisconnectedPlayers().contains(event.getUsername())) {
             checkSetUpPhase();
             for (Player player : game.getPlayers()) {
                 if (player.getUsername().equals(event.getUsername())) {
@@ -72,7 +65,7 @@ public class Controller implements EventListener {
                 checkDisconnection();
                 GameHandler.calls(new UpdatedDataEvent(this, game.getData()));//return updated version of a ViewData object
             }
-        }else if(this.getDisconnectedPlayers().containsKey(event.getUsername())){
+        }else if(this.getDisconnectedPlayers().contains(event.getUsername())){
             System.out.println(event.getUsername()+" reconnected");
             RemoteView old=null;
             for(RemoteView remoteView:server.getPlayingConnection()){
@@ -396,14 +389,40 @@ public class Controller implements EventListener {
 
     public void update(ClientDisconnectedEvent event){
         if(event.getUsername()!=null) {
-            this.disconnectedPlayers.put(event.getUsername(), false);
+            this.disconnectedPlayers.add(event.getUsername());
             System.out.println(event.getUsername() + " disconnected");
-            this.checkDisconnection();
-        }else{
-            server.getPlayingConnection().remove(((RemoteView)event.getSource()));
+            if (isStandby()) {
+                System.out.print("45 seconds for ");
+                for(String username:disconnectedPlayers)
+                    System.out.print(username+" ");
+                System.out.println("to reconnect");
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (isStandby() && disconnectedPlayers.contains(event.getUsername())) {
+                            String winner = null;
+                            for (Player player : game.getPlayers()) {
+                                if (!disconnectedPlayers.contains(player.getUsername())) {
+                                    winner = player.getUsername();
+                                    break;
+                                }
+                            }
+                            if (winner != null) {
+                                GameHandler.calls(new VictoryEvent(this, winner));
+                                System.out.println("Winner is " + winner);
+                            } else {
+                                System.out.println("Game ended without winners");
+                            }
+                        }
+                    }
+                }, 45 * 1000);
+            }
+        checkDisconnection();
+        }
+        else {
+            server.getPlayingConnection().remove(((RemoteView) event.getSource()));
             System.out.println("New Remote View disconnected before entering the username");
         }
-
     }
 
     public void update(VictoryEvent event) throws InterruptedException {
@@ -457,56 +476,33 @@ public class Controller implements EventListener {
             GameHandler.calls(new NotifyExceptionEvent(this, new InvalidPhaseException()));
     }
 
-    private void checkDisconnection() {
-        if(game.getStatusGame().getStatus().equals(STATUS.SETUP))
-            return;
-        if (this.disconnectedPlayers.size() >= this.game.getNumPlayers() - 1 && !this.disconnectedPlayers.containsValue(true)) {
-            System.out.println("Players have 45 seconds to reconnect");
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    if(disconnectedPlayers.size() >= game.getNumPlayers() - 1 && !disconnectedPlayers.containsValue(true)) {
-                        String winner = null;
-                        for (Player player : game.getPlayers()) {
-                            if (!disconnectedPlayers.containsKey(player.getUsername())) {
-                                winner = player.getUsername();
-                                break;
-                            }
-                        }
-                        if(winner!=null) {
-                            GameHandler.calls(new VictoryEvent(this, winner));
-                            System.out.println("Winner is "+winner);
-                        }else {
-                            System.out.println("Game ended without winners");
-                        }
-                    }
-                }
-            }, 45*1000);
-
-        }else if (this.disconnectedPlayers.containsKey(game.getCurrPlayer().getUsername())) {
-            if (game.getStatusGame().getStatus().equals(STATUS.PLANNING)) {
-                if (this.disconnectedPlayers.get(game.getCurrPlayer().getUsername())) {
-                    this.disconnectedPlayers.remove(game.getCurrPlayer().getUsername());
-                    System.out.println("Player "+game.getCurrPlayer().getUsername()+" back in the game");
-                    return;
-                }
+    public void checkDisconnection() {
+        String usernameCurr = game.getCurrPlayer().getUsername();
+        if (!isStandby() && disconnectedPlayers.contains(usernameCurr)) {
+            if (game.getStatusGame().getStatus().equals(STATUS.PLANNING)){
                 Random random = new Random();
                 int int_random = random.nextInt(game.getCurrPlayer().getMyDeck().getCards().size());
-                System.out.println("Computer chose "+game.getCurrPlayer().getMyDeck().getCards().get(int_random).getValue() +" for "+game.getCurrPlayer().getUsername());
+                System.out.println("Computer chose " + game.getCurrPlayer().getMyDeck().getCards().get(int_random).getValue() + " for " + game.getCurrPlayer().getUsername());
                 this.update(new DrawAssistantCardEvent(this, game.getCurrPlayer().getMyDeck().getCards().get(int_random).getValue()));
             } else if (game.getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)) {
-                System.out.println(game.getCurrPlayer().getUsername() + "'s turn skipped");
+                System.out.println(usernameCurr + "'s turn skipped");
                 if (game.getStatusGame().getOrder().indexOf(game.getCurrPlayer()) != game.getStatusGame().getOrder().size() - 1) {
                     game.setCurrPlayer(game.getStatusGame().getOrder().get(game.getStatusGame().getOrder().indexOf(game.getCurrPlayer()) + 1));
                 } else {
                     game.fillClouds();
                 }
                 GameHandler.calls(new UpdatedDataEvent(this,game.getData()));
+                checkDisconnection();
             }
-            checkDisconnection();
         }
     }
-    public HashMap<java.lang.String, Boolean> getDisconnectedPlayers() {
+
+
+    public boolean isStandby(){
+        return disconnectedPlayers.size() == 2 || disconnectedPlayers.size() == 3 || game.getNumPlayers() == 2;
+    }
+
+    public ArrayList<String> getDisconnectedPlayers() {
         return disconnectedPlayers;
     }
 }
