@@ -200,7 +200,7 @@ public class GuiController {
             islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/merge2.png").toString());
             islandNode.setFitWidth(sizeW+5);
             islandNode.setFitHeight(sizeH+2);
-        }
+        }//TODO enlarge islands or reduce gap between nodes
         else if(islands.get(idCounter).size()==3){
             islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/merge3.png").toString());
             islandNode.setFitWidth(sizeW+5);
@@ -741,7 +741,7 @@ public class GuiController {
     private void noEntriesPopup(){
         Stage newStage = new Stage();
         newStage.setTitle("Entries");
-        GridPane grid=new GridPane();
+        /*GridPane grid=new GridPane();
         grid.addRow(0);
         grid.addRow(1);
         grid.addColumn(0);
@@ -751,12 +751,19 @@ public class GuiController {
         grid.setPadding(new Insets(25));
         grid.setAlignment(Pos.CENTER);
         grid.setStyle("-fx-background-color:WHITE");
-        grid.setAlignment(Pos.CENTER);
-        Character5 character5=null;
+        grid.setAlignment(Pos.CENTER);*/
+        TilePane tp = new TilePane();
+        tp.setHgap(10);
+        tp.setVgap(10);
+        tp.setPadding(new Insets(25));
+        tp.setStyle("-fx-background-color:WHITE");
+        tp.setAlignment(Pos.CENTER);
+        /*Character5 character5=null;
         for(Character character:guiManager.getData().getCharacters()){
             if(character instanceof Character5)
                 character5=(Character5) character;
         }
+
         for(int i=0;i<character5.getNoEntries()/2;i++){
             for(int j=0;j<character5.getNoEntries()/2;j++){
                 ImageView imageView = new ImageView(GuiManager.class.getResource("/graphics/pieces/deny_island_icon.png").toString());
@@ -773,10 +780,34 @@ public class GuiController {
                 imageView.setFitWidth(40);
                 grid.add(imageView,j,i);
             }
+        }*/
+        int chr5 = -1;
+        for(int i = 0;  i < 3; i++){
+            if(guiManager.getData().getCharacters().get(i) instanceof Character5){
+                System.out.println("C'è il 5");
+                chr5 = i;
+                break;
+            }
         }
+        for(int i = 0; i < ((Character5)guiManager.getData().getCharacters().get(chr5)).getNoEntries(); i++){
+            ImageView imageView = new ImageView(GuiManager.class.getResource("/graphics/pieces/deny_island_icon.png").toString());
+            if (guiManager.getData().getCurrPlayer().getUsername().equals(guiManager.getOwner())) {
+                imageView.setOnMouseEntered(event->{
+                    ((Node)event.getSource()).getScene().setCursor(Cursor.HAND);
+                });
+                imageView.setOnMouseExited(event->{
+                    ((Node)event.getSource()).getScene().setCursor(Cursor.DEFAULT);
+                });
+                imageView.setOnMouseClicked(this::mouseClickedNoEntriesPopup);
+            }
+            imageView.setPreserveRatio(true);
+            imageView.setFitWidth(40);
+            tp.getChildren().add(imageView);
+        }
+
         //set scene
         newStage.setResizable(false);
-        newStage.setScene(new Scene(grid));
+        newStage.setScene(new Scene(tp));
         newStage.show();
     }
 
