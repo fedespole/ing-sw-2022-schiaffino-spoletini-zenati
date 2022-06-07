@@ -784,7 +784,6 @@ public class GuiController {
         int chr5 = -1;
         for(int i = 0;  i < 3; i++){
             if(guiManager.getData().getCharacters().get(i) instanceof Character5){
-                System.out.println("C'è il 5");
                 chr5 = i;
                 break;
             }

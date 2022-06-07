@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.expertgame.characters;
 
 import it.polimi.ingsw.model.basicgame.Game;
+import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 import it.polimi.ingsw.model.expertgame.gamemodes.GameMode8;
 
 public class Character8 extends Character{
@@ -15,6 +16,6 @@ public class Character8 extends Character{
 
         playerPayment(currGame.getCurrPlayer());
         changeCost();
-        return new GameMode8(currGame);
+        return new GameMode8( (ConcreteExpertGame) currGame);
     }
 }

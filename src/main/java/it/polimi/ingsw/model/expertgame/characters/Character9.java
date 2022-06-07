@@ -17,6 +17,6 @@ public class Character9 extends Character{
 
         playerPayment(currGame.getCurrPlayer());
         changeCost();
-        return new GameMode9(currGame, color);
+        return new GameMode9( (ConcreteExpertGame) currGame, color);
     }
 }

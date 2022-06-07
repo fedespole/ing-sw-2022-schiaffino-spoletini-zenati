@@ -132,7 +132,7 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
     @Override
     public void computeInfluence() {
         int chr5 = -1;
-        for(int i = 0;  i < 3; i++){
+        for(int i = 0;  i < this.getCharacters().size(); i++){
             if(this.getCharacters().get(i) instanceof Character5){
                 chr5 = i;
                 break;

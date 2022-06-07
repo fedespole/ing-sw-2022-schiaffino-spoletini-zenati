@@ -28,14 +28,12 @@ public class Character5 extends Character {
         changeCost();
         island.get(0).setNoEntry(true);//change the flag only of first island of the group
         noEntries = noEntries -1;
-        System.out.println("No entries ora : " + noEntries);
     }
 
     public void restoreNoEntry(ArrayList<Island> island) {
 
         island.get(0).setNoEntry(false);
         noEntries++;
-        System.out.println("No entries ora : " + noEntries);
     }
 
     public int getNoEntries() {
