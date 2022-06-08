@@ -108,17 +108,17 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <FlowPane fx:id="AssistantCards" alignment="TOP_CENTER" columnHalignment="CENTER" layoutX="64.0" layoutY="113.0" prefHeight="260.0" prefWidth="1195.0" />
+            <FlowPane fx:id="AssistantCards" alignment="BOTTOM_CENTER" columnHalignment="CENTER" layoutX="64.0" layoutY="113.0" prefHeight="260.0" prefWidth="1195.0" />
             <ImageView fx:id="ChosenCard" fitHeight="150.0" fitWidth="100.0" layoutX="881.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="CharactersAnchorPane" layoutX="1095.0" layoutY="254.0" minHeight="0.0" minWidth="0.0" prefHeight="513.0" prefWidth="264.0">
+      <AnchorPane fx:id="CharactersAnchorPane" layoutX="1151.0" layoutY="254.0" minHeight="0.0" minWidth="0.0" prefHeight="513.0" prefWidth="208.0">
          <children>
-            <FlowPane fx:id="Characters" alignment="BOTTOM_CENTER" layoutX="165.0" layoutY="-1.0" prefHeight="513.0" prefWidth="100.0" />
-            <ImageView fx:id="Coin0" fitHeight="48.0" fitWidth="46.0" layoutX="225.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="Coin1" fitHeight="48.0" fitWidth="46.0" layoutX="225.0" layoutY="315.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="Coin2" fitHeight="48.0" fitWidth="46.0" layoutX="225.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="CharacterBack" fitHeight="150.0" fitWidth="100.0" layoutX="165.0" layoutY="363.0" pickOnBounds="true" preserveRatio="true" />
+            <FlowPane fx:id="Characters" alignment="BOTTOM_CENTER" layoutX="104.0" prefHeight="513.0" prefWidth="100.0" />
+            <ImageView fx:id="Coin0" fitHeight="48.0" fitWidth="46.0" layoutX="120.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="Coin1" fitHeight="48.0" fitWidth="46.0" layoutX="120.0" layoutY="315.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="Coin2" fitHeight="48.0" fitWidth="46.0" layoutX="120.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="CharacterBack" fitHeight="150.0" fitWidth="100.0" layoutX="110.0" layoutY="363.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="-1.0" minHeight="0.0" minWidth="0.0" prefHeight="507.0" prefWidth="807.0">

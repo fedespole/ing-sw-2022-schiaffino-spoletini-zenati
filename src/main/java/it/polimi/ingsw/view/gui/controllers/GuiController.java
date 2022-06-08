@@ -384,8 +384,11 @@ public class GuiController {
         Characters.setVisible(false);
         CharacterBack.setVisible(true);
         Coin2.setVisible(false);
+        Coin2.setOnMouseEntered(null);
         Coin1.setVisible(false);
+        Coin1.setOnMouseEntered(null);
         Coin0.setVisible(false);
+        Coin0.setOnMouseEntered(null);
         Characters.getScene().setCursor(Cursor.DEFAULT);
     }
 
@@ -393,8 +396,14 @@ public class GuiController {
         Characters.setVisible(true);
         CharacterBack.setVisible(false);
         Coin0.setVisible(guiManager.getData().getCharacters().get(0).isHasBeenUsed());
+        Coin0.setOnMouseEntered(event->{this.mouseClickedBackCharacter(event);});
+        Coin0.setOnMouseExited(event->{this.mouseClickedBackCharacter(event);});
         Coin1.setVisible(guiManager.getData().getCharacters().get(1).isHasBeenUsed());
+        Coin2.setOnMouseExited(event->{this.mouseClickedBackCharacter(event);});
+        Coin1.setOnMouseExited(event->{this.mouseClickedBackCharacter(event);});
         Coin2.setVisible(guiManager.getData().getCharacters().get(2).isHasBeenUsed());
+        Coin2.setOnMouseExited(event->{this.mouseClickedBackCharacter(event);});
+        Coin2.setOnMouseExited(event->{this.mouseClickedBackCharacter(event);});
         Characters.getScene().setCursor(Cursor.HAND);
     }
 

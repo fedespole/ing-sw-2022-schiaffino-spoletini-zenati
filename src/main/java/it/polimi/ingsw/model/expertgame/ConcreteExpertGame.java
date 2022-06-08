@@ -83,6 +83,8 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
                     break;
             }
         }
+        for(Player player:game.getPlayers())
+            player.setCoins(5);
     }
 
     @Override

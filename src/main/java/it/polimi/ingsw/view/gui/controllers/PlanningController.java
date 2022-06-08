@@ -60,7 +60,7 @@ public class PlanningController extends GuiController{
         else
             Title.setText(guiManager.getData().getCurrPlayer().getUsername() + "'s turn");
 
-        this.fillMyDiningRoomPlanning();
+        this.fillMyBoardPlanning();
         this.fillOtherPlayersPlanning();
         this.addAvailableAssistantCards();
         super.fillIslands(islandsPane, 150.0, 90.0, guiManager.getData().getIslands());
@@ -108,7 +108,7 @@ public class PlanningController extends GuiController{
         }
     }
 
-    private void fillMyDiningRoomPlanning(){
+    private void fillMyBoardPlanning(){
 
         for (Player player : guiManager.getData().getPlayers()) {
             if (player.getUsername().equals(guiManager.getOwner())) {

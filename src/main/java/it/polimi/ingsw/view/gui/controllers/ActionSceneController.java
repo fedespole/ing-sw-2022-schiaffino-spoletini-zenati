@@ -14,7 +14,6 @@ import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -67,7 +66,7 @@ public class ActionSceneController extends GuiController{
             Player2Board.setImage(image);
         }
 
-        this.fillMyDiningRoomAction();
+        this.fillMyBoardAction();
         this.fillOtherPlayersAction();
         super.fillIslands(islandsPane, 210.0, 160.0, guiManager.getData().getIslands());
         super.fillCloud(clouds0Pane, 0);
@@ -173,7 +172,7 @@ public class ActionSceneController extends GuiController{
 
     }
 
-    private void fillMyDiningRoomAction(){
+    private void fillMyBoardAction(){
         for (Player player : guiManager.getData().getPlayers()) {
             if (player.getUsername().equals(guiManager.getOwner())) {
                 for (int i=0;i<5;i++){
@@ -195,7 +194,7 @@ public class ActionSceneController extends GuiController{
                             imageView.getScene().setCursor(Cursor.HAND);
                         });
                         imageView.setOnMouseExited(event -> {
-                            imageView.getScene().setCursor(Cursor.HAND);
+                            imageView.getScene().setCursor(Cursor.DEFAULT);
                         });
                         imageView.setOnDragDetected(mouseEvent -> {
                             Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
