@@ -73,6 +73,9 @@ public class Server implements Runnable {
         }
     }
 
+    /**
+     * Method called when a new client is trying to connect to the server during the setup phase
+     */
     public synchronized void newClientConnection(Socket newSocket) throws IOException, InterruptedException {
         RemoteView remoteView = new RemoteView(newSocket);
         if(controller.getGame().getStatusGame().getStatus() != STATUS.SETUP) {
@@ -99,6 +102,9 @@ public class Server implements Runnable {
         }
     }
 
+    /**
+     * Method that handles mid-game connections. Checks if there is a disconnected player,and links the new remote view with the right player
+     */
     private void newMidGameClientConnection(RemoteView remoteView) throws InterruptedException {//resilience
         GameEvent gameEvent;
         while (true) {
