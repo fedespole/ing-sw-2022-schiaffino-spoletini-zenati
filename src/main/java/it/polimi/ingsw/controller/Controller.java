@@ -412,11 +412,11 @@ public class Controller implements EventListener {
                                 System.out.println("Winner is " + winner);
                             } else {
                                 System.out.println("Game ended without winners");
-                                try {
-                                    server.kills();
-                                } catch (InterruptedException e) {
-                                    throw new RuntimeException(e);
-                                }
+                            }
+                            try {
+                                server.kills();
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
                             }
                         }
                     }

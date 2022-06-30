@@ -151,7 +151,7 @@ public class Server implements Runnable {
     }
 
     public void kills() throws InterruptedException {
-      //  Thread.sleep(15000);
+        Thread.sleep(2000);
         executor.shutdown();
         System.exit(0);
     }
