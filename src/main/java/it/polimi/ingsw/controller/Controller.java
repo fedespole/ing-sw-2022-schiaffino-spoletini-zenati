@@ -30,7 +30,7 @@ public class Controller implements EventListener {
     private int numOfMoveStudent;      //counts how many student the currPlayer has moved
 
     private Server server;
-    private ArrayList<String> disconnectedPlayers;
+    private ArrayList<String> disconnectedPlayers; //list of disconnected players
 
     public Controller(Game game, Server server) {
         this.game = game;
@@ -65,11 +65,11 @@ public class Controller implements EventListener {
                 checkDisconnection();
                 GameHandler.calls(new UpdatedDataEvent(this, game.getData()));//return updated version of a ViewData object
             }
-        }else if(this.getDisconnectedPlayers().contains(event.getUsername())){
+        }else if(this.getDisconnectedPlayers().contains(event.getUsername())){// a disconnected player is trying to come back to the game
             System.out.println(event.getUsername()+" reconnected");
             RemoteView old=null;
             for(RemoteView remoteView:server.getPlayingConnection()){
-                if(remoteView.getOwner().equals(event.getUsername())){
+                if(remoteView.getOwner().equals(event.getUsername())){//finds the old remote view of the disconnected player, and it deletes it
                     old=remoteView;
                     break;
                 }
@@ -387,8 +387,8 @@ public class Controller implements EventListener {
         GameHandler.calls(new NotifyExceptionEvent(this, new InvalidCharacterException()));
     }
 
-    public void update(ClientDisconnectedEvent event){
-        if(event.getUsername()!=null) {
+    public void update(ClientDisconnectedEvent event){//event raised by the remote view of the disconnected client
+        if(event.getUsername()!=null) {//client disconnected during the game
             this.disconnectedPlayers.add(event.getUsername());
             System.out.println(event.getUsername() + " disconnected");
             if (isStandby()) {
@@ -399,7 +399,7 @@ public class Controller implements EventListener {
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        if (isStandby() && disconnectedPlayers.contains(event.getUsername())) {
+                        if (isStandby() && disconnectedPlayers.contains(event.getUsername())) { //if the game is still in standby after 45 seconds and the player who raised the event hasn't reconnected yet
                             String winner = null;
                             for (Player player : game.getPlayers()) {
                                 if (!disconnectedPlayers.contains(player.getUsername())) {
@@ -407,11 +407,16 @@ public class Controller implements EventListener {
                                     break;
                                 }
                             }
-                            if (winner != null) {
+                            if (winner != null) {//there is at least one player still in the game
                                 GameHandler.calls(new VictoryEvent(this, winner));
                                 System.out.println("Winner is " + winner);
                             } else {
                                 System.out.println("Game ended without winners");
+                                try {
+                                    server.kills();
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
                         }
                     }
@@ -419,9 +424,9 @@ public class Controller implements EventListener {
             }
         checkDisconnection();
         }
-        else {
+        else {//client disconnected in the lobby
             server.getPlayingConnection().remove(((RemoteView) event.getSource()));
-            System.out.println("New Remote View disconnected before entering the username");
+            System.out.println("Remote View disconnected before entering the username");
         }
     }
 
@@ -478,14 +483,15 @@ public class Controller implements EventListener {
 
     public void checkDisconnection() {
         String usernameCurr = game.getCurrPlayer().getUsername();
-        if (!isStandby() && disconnectedPlayers.contains(usernameCurr)) {
-            if (game.getStatusGame().getStatus().equals(STATUS.PLANNING)){
+        if (!isStandby() && disconnectedPlayers.contains(usernameCurr)) {//if the game is moving on and a player is disconnected
+            if (game.getStatusGame().getStatus().equals(STATUS.PLANNING)){//picks a random card for the disconnected player during the planning phase, in order to keep the number of assistant cards equal.
                 Random random = new Random();
                 int int_random = random.nextInt(game.getCurrPlayer().getMyDeck().getCards().size());
                 System.out.println("Computer chose " + game.getCurrPlayer().getMyDeck().getCards().get(int_random).getValue() + " for " + game.getCurrPlayer().getUsername());
                 this.update(new DrawAssistantCardEvent(this, game.getCurrPlayer().getMyDeck().getCards().get(int_random).getValue()));
-            } else if (game.getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)) {
+            } else if (game.getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)) {//skips the turn of the disconnected player
                 System.out.println(usernameCurr + "'s turn skipped");
+                // the game goes on
                 if (game.getStatusGame().getOrder().indexOf(game.getCurrPlayer()) != game.getStatusGame().getOrder().size() - 1) {
                     game.setCurrPlayer(game.getStatusGame().getOrder().get(game.getStatusGame().getOrder().indexOf(game.getCurrPlayer()) + 1));
                 } else {
@@ -498,7 +504,7 @@ public class Controller implements EventListener {
     }
 
 
-    public boolean isStandby(){
+    public boolean isStandby(){//the game is in standby when there are at least two player disconnected
         return disconnectedPlayers.size() == 2 || disconnectedPlayers.size() == 3 || game.getNumPlayers() == 2;
     }
 

@@ -40,7 +40,6 @@ public class RemoteView extends View implements Runnable{
                     ((ClientDisconnectedEvent) currEvent).setSource(this);
                 }
                 GameHandler.calls(currEvent);
-          //      System.out.println("arriva evento" + currEvent);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }

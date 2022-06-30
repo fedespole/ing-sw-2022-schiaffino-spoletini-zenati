@@ -57,7 +57,7 @@ public class Server implements Runnable {
         } catch (SocketException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("PORT: " +server.getServerSocket().getLocalPort() );
+        System.out.println("Static port number: " +server.getServerSocket().getLocalPort() );
         System.out.println("Waiting for clients to connect...");
     }
 
@@ -151,9 +151,10 @@ public class Server implements Runnable {
     }
 
     public void kills() throws InterruptedException {
-        Thread.sleep(15000);
+      //  Thread.sleep(15000);
         executor.shutdown();
         System.exit(0);
     }
+
 
 }
