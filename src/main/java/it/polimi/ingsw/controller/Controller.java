@@ -553,6 +553,5 @@ public class Controller implements EventListener {
         }
         GameHandler.calls(new NotifyExceptionEvent(this, new InvalidCharacterException()));
     }
-
 }
 

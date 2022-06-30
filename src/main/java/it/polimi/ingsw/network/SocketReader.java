@@ -9,6 +9,10 @@ import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 
 public class SocketReader<T> implements Runnable{
+    /**
+     * This class has the function of creating an input queue for the events received by the socket.
+     * If it catches an exception, it closes the socket and it raises an event that notifies the server of this action.
+     */
     private final Socket socket;
     private  ObjectInputStream in;
     private final BlockingQueue<T> objectsToBeRead;

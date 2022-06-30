@@ -10,6 +10,10 @@ import it.polimi.ingsw.view.ViewData;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * This class represents the current state of a Basic Mode game, and handles players' move
+ */
+
 public class BasicGame implements Game{
     private final ArrayList<Player> players;
     private int numPlayers;
@@ -151,17 +155,29 @@ public class BasicGame implements Game{
         throw new NotAvailableCardException();  //if the card has already been drawn
     }
 
+    /**
+     * Moves a student from the current player's Board entrance to its dining room
+     * @param color the color of the student to be moved
+     */
     @Override
     public void moveStudentFromEntranceToDining(COLOR color) {
         currPlayer.getMySchoolBoard().addStudentToDining(currPlayer.getMySchoolBoard().removeStudentFromEntrance(color));
         assignProfessor(color);
     }
-
+    /**
+     * Moves a student from the current player's Board entrance to a chosen island
+     * @param color the color of the student to be moved
+     * @param chosenIsland the island on which the student must be placed
+     */
     @Override
     public void moveStudentFromEntranceToIsland(COLOR color, Island chosenIsland){
         chosenIsland.addStudent(currPlayer.getMySchoolBoard().removeStudentFromEntrance(color));
     }
 
+    /**
+     * Moves Mother Nature in action phase
+     * @param steps the number of steps chosen by the current player
+     */
     @Override
     public void moveMother(int steps) {
         motherNature = (motherNature+steps) % this.islands.size();
@@ -176,6 +192,11 @@ public class BasicGame implements Game{
         }
         this.getStatusGame().setStatus(STATUS.ACTION_CHOOSECLOUD);
     }
+
+    /**
+     * Fills the current player's entrance with students, removing them from a cloud
+     * @param cloud the cloud that contains the students to be removed
+     */
 
     @Override//from the index of the cloud,returns the cloud chosen by the player
     public void chooseCloud(int cloud) {
@@ -208,6 +229,9 @@ public class BasicGame implements Game{
             }
     }
 
+    /**
+     * Computes the influence points for every player on the island on which Mother Nature has been dropped, placing a tower if a players dominates the island
+     */
     @Override
     public void computeInfluence() {
         int[] p = {0, 0, 0}; //if the players are 2, p3 remains 0
@@ -272,6 +296,10 @@ public class BasicGame implements Game{
         }
     }
 
+    /**
+     * Called after moving a student to the dining room, checks if the current player now owns a professor
+     * @param color the color of the student that has been moved to the entrance, hence the professor color
+     */
     @Override
     public void assignProfessor(COLOR color){
 
@@ -290,6 +318,10 @@ public class BasicGame implements Game{
             }
         }
     }
+
+    /**
+     * Called in computeInfluence(), checks if the island on which Mother Nature landed can be merged with its contiguous
+     */
 
     @Override
     public void mergeIslands(){
@@ -326,6 +358,10 @@ public class BasicGame implements Game{
         if(flag) motherNature--;
 
     }
+
+    /**
+     * Called after moving Mother Nature, checks if there is a winner according to the game's rules
+     */
 
     public void checkWinner(){
 

@@ -39,6 +39,10 @@ public class CliView extends View {
         setup();
     }
 
+    /**
+     * Asks player's nickname and sends it a PlayerAccessEvent to the server
+     */
+
     public void setup() {
         java.lang.String username;
         out.println("> Insert your nickname: ");
@@ -47,6 +51,10 @@ public class CliView extends View {
         this.client.getClientEvs().add(new PlayerAccessEvent(this, username, this.client.getSocket().toString()));
     }
 
+    /**
+     * Writes out the move the caused the Exception
+     * @param event NotifyExceptionEvent that contains a specific RuntimeException that underlines the irregular move
+     */
 
     @Override
     public void update(NotifyExceptionEvent event) {

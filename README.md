@@ -19,17 +19,20 @@ Copertura dei Test
 
 Setup
 -----
+Se il sistema operativo è Windows, eseguire il seguente comando nel Prompt per colorare la CLI:
 
+`REG ADD HKCU\CONSOLE /f /v VirtualTerminalLevel /t REG_DWORD /d 1`
+
+Successivamente copiare il progetto:
 ```bash
 git clone https://github.com/fedespole/ing-sw-2022-schiaffino-spoletini-zenati.git
 cd ing-sw-2022-schiaffino-spoletini-zenati/deliverables
 ```
 
 ### Esecuzione
-#### Server
-`java -jar server.jar`
+#### Windows
+`java -jar windowsExec.jar`
+#### Linux
+`java -jar linuxExec.jar`
 
-#### Client
-`java -jar client.jar`
-
-Dopo aver eseguito il jar del client bisogna inserire da riga di comando IP e porta del server, e successivamente scegliere fra CLI e GUI.
+Il numero di porta del Socket del Server è impostata staticamente a 12345, qualora il server lanciasse un'eccezione del tipo "Address already in use", eliminare il processo correntemente in esecuzione su questa porta.

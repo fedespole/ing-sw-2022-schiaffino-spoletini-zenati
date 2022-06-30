@@ -12,10 +12,14 @@ import java.net.Socket;
 import java.util.concurrent.*;
 
 public class RemoteView extends View implements Runnable{
+    /**
+     * Represents the client in the server side of the architecture. It exchanges events with the client, using two different queues.
+     */
     private final LinkedBlockingQueue<GameEvent> clientEvs;
     private final LinkedBlockingQueue<GameEvent> serverEvs;
     private ExecutorService executor;
     private Socket clientSocket;
+
 
     public RemoteView(Socket clientSocket) throws IOException {
         super();
@@ -26,10 +30,7 @@ public class RemoteView extends View implements Runnable{
         executor.execute(new SocketWriter<>(clientSocket,serverEvs));
         executor.execute(new SocketReader<>(clientSocket,clientEvs,GameEvent.class));
     }
-    public RemoteView(){
-        clientEvs = new LinkedBlockingQueue<>();
-        serverEvs = new LinkedBlockingQueue<>();
-    }
+
     @Override
     public void run(){
         while(!Thread.currentThread().isInterrupted()){
