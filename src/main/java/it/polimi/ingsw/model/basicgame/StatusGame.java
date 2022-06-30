@@ -5,6 +5,9 @@ import it.polimi.ingsw.model.basicgame.playeritems.Player;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Defines the order of the game
+ */
 public class StatusGame implements Serializable {
     private STATUS status;    //Saves the next correct move to be made by currPlayer
     private ArrayList<Player> order;        // action phase order

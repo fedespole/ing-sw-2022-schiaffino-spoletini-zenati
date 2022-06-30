@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * This class decorates BasicGame with the functionalities of the expert mode (including characters and coins)
+ */
 public class ConcreteExpertGame extends ExpertGameDecorator {
     private Game game;
     private ArrayList<Character> characters;
@@ -34,7 +37,9 @@ public class ConcreteExpertGame extends ExpertGameDecorator {
         return characters;
     }
 
-
+    /**
+     * Creates randomly three characters
+     */
     @Override
     public void setUp() {
         ArrayList<Integer> randomNumbers= new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12));

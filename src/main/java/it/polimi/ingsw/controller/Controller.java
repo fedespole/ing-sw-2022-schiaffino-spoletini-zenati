@@ -25,6 +25,9 @@ import it.polimi.ingsw.view.ViewData;
 
 import java.util.*;
 
+/**
+ * This class handles the requests from the client and modifies the model.
+ */
 public class Controller implements EventListener {
     private Game game;
     private int numOfMoveStudent;      //counts how many student the currPlayer has moved
@@ -44,6 +47,10 @@ public class Controller implements EventListener {
         return game;
     }
 
+    /**
+     * Creates a new player when a client connects.
+     * @param event contains username chosen by the client
+     */
     public void update(PlayerAccessEvent event) {
         if (game.getStatusGame().getStatus().equals(STATUS.SETUP) && !this.getDisconnectedPlayers().contains(event.getUsername())) {
             checkSetUpPhase();
@@ -79,6 +86,10 @@ public class Controller implements EventListener {
         }
     }
 
+    /**
+     * Sets up a new game after the first player decides the parameters.
+     * @param event contains number of players and game mode chosen by the first player
+     */
     public void update(SelectedGameSetUpEvent event){
         checkSetUpPhase();
         getGame().setNumPlayers(event.getNumPlayers());
@@ -117,6 +128,162 @@ public class Controller implements EventListener {
         }
         checkDisconnection();
     }
+
+
+    /**
+     * Handles resilience.
+     * @param event contains the username of the player that disconnected from the game
+     */
+    public void update(ClientDisconnectedEvent event){//event raised by the remote view of the disconnected client
+        if(event.getUsername()!=null) {//client disconnected during the game
+            this.disconnectedPlayers.add(event.getUsername());
+            System.out.println(event.getUsername() + " disconnected");
+            if (isStandby()) {
+                System.out.print("45 seconds for ");
+                for(String username:disconnectedPlayers)
+                    System.out.print(username+" ");
+                System.out.println("to reconnect");
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (isStandby() && disconnectedPlayers.contains(event.getUsername())) { //if the game is still in standby after 45 seconds and the player who raised the event hasn't reconnected yet
+                            String winner = null;
+                            for (Player player : game.getPlayers()) {
+                                if (!disconnectedPlayers.contains(player.getUsername())) {
+                                    winner = player.getUsername();
+                                    break;
+                                }
+                            }
+                            if (winner != null) {//there is at least one player still in the game
+                                GameHandler.calls(new VictoryEvent(this, winner));
+                                System.out.println("Winner is " + winner);
+                            } else {
+                                System.out.println("Game ended without winners");
+                                try {
+                                    server.kills();
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        }
+                    }
+                }, 45 * 1000);
+            }
+            checkDisconnection();
+        }
+        else {//client disconnected in the lobby
+            server.getPlayingConnection().remove(((RemoteView) event.getSource()));
+            System.out.println("Remote View disconnected before entering the username");
+        }
+    }
+
+    /**
+     * Shuts down the server when the final event occurs.
+     * @param event contains winning player
+     * @throws InterruptedException
+     */
+    public void update(VictoryEvent event) throws InterruptedException {
+        System.out.println("Winner is "+event.getWinningPlayer());
+        server.kills();
+    }
+
+    /**
+     * Shuts down the server when the final event occurs.
+     * @param event contains winning players
+     * @throws InterruptedException
+     */
+    public void update(TieEvent event) throws InterruptedException {
+        System.out.print("Winners are ");
+        for(String username: event.getTiePlayers()){
+            System.out.print(username+" ");
+        }
+        System.out.println();
+        server.kills();
+    }
+
+    /**
+     * Checks if a player can use an ability.
+     * @param c is the character
+     * @return false if ability is not used, true otherwise
+     */
+    private boolean checkAbility(Character c) {
+        //checks if a card has been used in this turn
+        if (game.getCurrPlayer().isHasCharacterCardBeenUsed()) {
+            GameHandler.calls(new NotifyExceptionEvent(this, new AbilityAlreadyUsedException()));
+            return true;
+        }
+        //check if the player can pay the character
+        if (game.getCurrPlayer().getCoins() < c.getCost()){
+            GameHandler.calls(new NotifyExceptionEvent(this, new TooPoorException()));
+            return true;
+        }
+        getGame().getCurrPlayer().setHasCharacterCardBeenUsed(true);
+        return false;
+    }
+
+    private void checkSetUpPhase() {
+        if (!game.getStatusGame().getStatus().equals(STATUS.SETUP))
+            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidPhaseException()));
+    }
+
+    private void checkPlanningPhase() {
+        if (!game.getStatusGame().getStatus().equals(STATUS.PLANNING))
+            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidPhaseException()));
+    }
+
+    private void checkActionMoveStudentPhase() {
+        if (!game.getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD))
+            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidPhaseException()));
+    }
+    private void checkActionMoveMotherPhase() {
+        if (!game.getStatusGame().getStatus().equals(STATUS.ACTION_MOVEMN))
+            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidPhaseException()));
+    }
+    private void checkActionChooseCloudPhase(){
+        if (!game.getStatusGame().getStatus().equals(STATUS.ACTION_CHOOSECLOUD))
+            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidPhaseException()));
+    }
+
+    /**
+     * Handles resilience and disconnection of players.
+     */
+    public void checkDisconnection() {
+        String usernameCurr = game.getCurrPlayer().getUsername();
+        if (!isStandby() && disconnectedPlayers.contains(usernameCurr)) {//if the game is moving on and a player is disconnected
+            if (game.getStatusGame().getStatus().equals(STATUS.PLANNING)){//picks a random card for the disconnected player during the planning phase, in order to keep the number of assistant cards equal.
+                Random random = new Random();
+                int int_random = random.nextInt(game.getCurrPlayer().getMyDeck().getCards().size());
+                System.out.println("Computer chose " + game.getCurrPlayer().getMyDeck().getCards().get(int_random).getValue() + " for " + game.getCurrPlayer().getUsername());
+                this.update(new DrawAssistantCardEvent(this, game.getCurrPlayer().getMyDeck().getCards().get(int_random).getValue()));
+            } else if (game.getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)) {//skips the turn of the disconnected player
+                System.out.println(usernameCurr + "'s turn skipped");
+                // the game goes on
+                if (game.getStatusGame().getOrder().indexOf(game.getCurrPlayer()) != game.getStatusGame().getOrder().size() - 1) {
+                    game.setCurrPlayer(game.getStatusGame().getOrder().get(game.getStatusGame().getOrder().indexOf(game.getCurrPlayer()) + 1));
+                } else {
+                    game.fillClouds();
+                }
+                GameHandler.calls(new UpdatedDataEvent(this,game.getData()));
+                checkDisconnection();
+            }
+        }
+    }
+
+    /**
+     * Checks if the game has at least two player disconnected.
+     * @return boolean
+     */
+    public boolean isStandby(){//the game is in standby when there are at least two player disconnected
+        return disconnectedPlayers.size() == 2 || disconnectedPlayers.size() == 3 || game.getNumPlayers() == 2;
+    }
+
+    public ArrayList<String> getDisconnectedPlayers() {
+        return disconnectedPlayers;
+    }
+
+    /*
+        All the methods from now on use functions already described in the model if possible, otherwise raise exceptions.
+     */
 
     public void update(MoveStudentToDiningEvent event) {
         checkActionMoveStudentPhase();
@@ -387,129 +554,5 @@ public class Controller implements EventListener {
         GameHandler.calls(new NotifyExceptionEvent(this, new InvalidCharacterException()));
     }
 
-    public void update(ClientDisconnectedEvent event){//event raised by the remote view of the disconnected client
-        if(event.getUsername()!=null) {//client disconnected during the game
-            this.disconnectedPlayers.add(event.getUsername());
-            System.out.println(event.getUsername() + " disconnected");
-            if (isStandby()) {
-                System.out.print("45 seconds for ");
-                for(String username:disconnectedPlayers)
-                    System.out.print(username+" ");
-                System.out.println("to reconnect");
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        if (isStandby() && disconnectedPlayers.contains(event.getUsername())) { //if the game is still in standby after 45 seconds and the player who raised the event hasn't reconnected yet
-                            String winner = null;
-                            for (Player player : game.getPlayers()) {
-                                if (!disconnectedPlayers.contains(player.getUsername())) {
-                                    winner = player.getUsername();
-                                    break;
-                                }
-                            }
-                            if (winner != null) {//there is at least one player still in the game
-                                GameHandler.calls(new VictoryEvent(this, winner));
-                                System.out.println("Winner is " + winner);
-                            } else {
-                                System.out.println("Game ended without winners");
-                                try {
-                                    server.kills();
-                                } catch (InterruptedException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-                        }
-                    }
-                }, 45 * 1000);
-            }
-        checkDisconnection();
-        }
-        else {//client disconnected in the lobby
-            server.getPlayingConnection().remove(((RemoteView) event.getSource()));
-            System.out.println("Remote View disconnected before entering the username");
-        }
-    }
-
-    public void update(VictoryEvent event) throws InterruptedException {
-        System.out.println("Winner is "+event.getWinningPlayer());
-        server.kills();
-    }
-
-    public void update(TieEvent event) throws InterruptedException {
-        System.out.print("Winners are ");
-        for(String username: event.getTiePlayers()){
-            System.out.print(username+" ");
-        }
-        System.out.println();
-        server.kills();
-    }
-    private boolean checkAbility(Character c) {
-        //checks if a card has been used in this turn
-        if (game.getCurrPlayer().isHasCharacterCardBeenUsed()) {
-            GameHandler.calls(new NotifyExceptionEvent(this, new AbilityAlreadyUsedException()));
-            return true;
-        }
-        //check if the player can pay the character
-        if (game.getCurrPlayer().getCoins() < c.getCost()){
-            GameHandler.calls(new NotifyExceptionEvent(this, new TooPoorException()));
-            return true;
-        }
-        getGame().getCurrPlayer().setHasCharacterCardBeenUsed(true);
-        return false;
-    }
-
-    private void checkSetUpPhase() {
-        if (!game.getStatusGame().getStatus().equals(STATUS.SETUP))
-            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidPhaseException()));
-    }
-
-    private void checkPlanningPhase() {
-        if (!game.getStatusGame().getStatus().equals(STATUS.PLANNING))
-            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidPhaseException()));
-    }
-
-    private void checkActionMoveStudentPhase() {
-        if (!game.getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD))
-            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidPhaseException()));
-    }
-    private void checkActionMoveMotherPhase() {
-        if (!game.getStatusGame().getStatus().equals(STATUS.ACTION_MOVEMN))
-            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidPhaseException()));
-    }
-    private void checkActionChooseCloudPhase(){
-        if (!game.getStatusGame().getStatus().equals(STATUS.ACTION_CHOOSECLOUD))
-            GameHandler.calls(new NotifyExceptionEvent(this, new InvalidPhaseException()));
-    }
-
-    public void checkDisconnection() {
-        String usernameCurr = game.getCurrPlayer().getUsername();
-        if (!isStandby() && disconnectedPlayers.contains(usernameCurr)) {//if the game is moving on and a player is disconnected
-            if (game.getStatusGame().getStatus().equals(STATUS.PLANNING)){//picks a random card for the disconnected player during the planning phase, in order to keep the number of assistant cards equal.
-                Random random = new Random();
-                int int_random = random.nextInt(game.getCurrPlayer().getMyDeck().getCards().size());
-                System.out.println("Computer chose " + game.getCurrPlayer().getMyDeck().getCards().get(int_random).getValue() + " for " + game.getCurrPlayer().getUsername());
-                this.update(new DrawAssistantCardEvent(this, game.getCurrPlayer().getMyDeck().getCards().get(int_random).getValue()));
-            } else if (game.getStatusGame().getStatus().equals(STATUS.ACTION_MOVESTUD)) {//skips the turn of the disconnected player
-                System.out.println(usernameCurr + "'s turn skipped");
-                // the game goes on
-                if (game.getStatusGame().getOrder().indexOf(game.getCurrPlayer()) != game.getStatusGame().getOrder().size() - 1) {
-                    game.setCurrPlayer(game.getStatusGame().getOrder().get(game.getStatusGame().getOrder().indexOf(game.getCurrPlayer()) + 1));
-                } else {
-                    game.fillClouds();
-                }
-                GameHandler.calls(new UpdatedDataEvent(this,game.getData()));
-                checkDisconnection();
-            }
-        }
-    }
-
-
-    public boolean isStandby(){//the game is in standby when there are at least two player disconnected
-        return disconnectedPlayers.size() == 2 || disconnectedPlayers.size() == 3 || game.getNumPlayers() == 2;
-    }
-
-    public ArrayList<String> getDisconnectedPlayers() {
-        return disconnectedPlayers;
-    }
 }
 
