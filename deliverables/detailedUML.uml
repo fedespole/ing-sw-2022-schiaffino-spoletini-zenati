@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>C:/Users/feder/IdeaProjects/ing-sw-2022-schiaffino-spoletini-zenati/src/main/java/it/polimi/ingsw</OriginalElement>
+  <nodes>
+    <node x="0.0" y="2930.0">it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent</node>
+    <node x="1486.0" y="2291.0">it.polimi.ingsw.model.expertgame.characters.Character</node>
+    <node x="5349.0" y="2930.0">it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter10Event</node>
+    <node x="0.0" y="2631.0">it.polimi.ingsw.model.expertgame.characters.Character9</node>
+    <node x="4859.0" y="3103.0">it.polimi.ingsw.common.exceptions.StudentNotPresentInCharacterException</node>
+    <node x="2348.0" y="2631.0">it.polimi.ingsw.model.expertgame.characters.Character8</node>
+    <node x="0.0" y="3390.0">it.polimi.ingsw.common.exceptions.InvalidIslandIndexException</node>
+    <node x="1014.0" y="2583.0">it.polimi.ingsw.model.expertgame.characters.Character7</node>
+    <node x="1113.0" y="768.0">it.polimi.ingsw.view.gui.controllers.Character7Controller</node>
+    <node x="2061.0" y="3390.0">it.polimi.ingsw.common.exceptions.TooPoorException</node>
+    <node x="2876.0" y="2930.0">it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter9Event</node>
+    <node x="2908.0" y="3103.0">it.polimi.ingsw.model.basicgame.Student</node>
+    <node x="3116.0" y="2930.0">it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent</node>
+    <node x="1884.0" y="823.0">it.polimi.ingsw.view.gui.controllers.WaitingRoomController</node>
+    <node x="3447.0" y="2930.0">it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter11Event</node>
+    <node x="1089.0" y="3103.0">it.polimi.ingsw.model.basicgame.Bag</node>
+    <node x="6601.0" y="2956.0">it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter8Event</node>
+    <node x="483.25" y="0.0">it.polimi.ingsw.model.basicgame.Game</node>
+    <node x="3591.0" y="424.0">it.polimi.ingsw.network.server.RemoteView</node>
+    <node x="1052.0" y="2930.0">it.polimi.ingsw.common.events.fromServerEvents.TieEvent</node>
+    <node x="2115.0" y="2631.0">it.polimi.ingsw.model.expertgame.characters.Character2</node>
+    <node x="709.0" y="2605.0">it.polimi.ingsw.model.expertgame.characters.Character1</node>
+    <node x="2581.0" y="2631.0">it.polimi.ingsw.model.expertgame.characters.Character6</node>
+    <node x="1306.0" y="2594.0">it.polimi.ingsw.model.expertgame.characters.Character5</node>
+    <node x="2814.0" y="2631.0">it.polimi.ingsw.model.expertgame.characters.Character4</node>
+    <node x="502.0" y="2631.0">it.polimi.ingsw.model.expertgame.characters.Character3</node>
+    <node x="2354.0" y="3103.0">it.polimi.ingsw.model.basicgame.playeritems.Deck</node>
+    <node x="4794.0" y="0.0">it.polimi.ingsw.view.ViewData</node>
+    <node x="0.0" y="3103.0">it.polimi.ingsw.network.client.Client</node>
+    <node x="3673.0" y="2291.0">it.polimi.ingsw.network.server.Server</node>
+    <node x="2377.0" y="2908.0">it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter1Event</node>
+    <node x="5902.0" y="2930.0">it.polimi.ingsw.common.events.fromClientEvents.MoveMotherEvent</node>
+    <node x="2159.0" y="2930.0">it.polimi.ingsw.common.events.fromServerEvents.VictoryEvent</node>
+    <node x="2274.0" y="3390.0">it.polimi.ingsw.view.gui.Constants</node>
+    <node x="813.0" y="3390.0">it.polimi.ingsw.common.exceptions.AlreadyUsedCardException</node>
+    <node x="3337.75" y="2804.0">it.polimi.ingsw.common.events.GameEvent</node>
+    <node x="3902.0" y="380.0">it.polimi.ingsw.view.gui.GuiManager</node>
+    <node x="1340.0" y="3390.0">it.polimi.ingsw.common.exceptions.NoMoreSpaceException</node>
+    <node x="3958.0" y="3103.0">it.polimi.ingsw.model.basicgame.TEAM</node>
+    <node x="1998.5" y="0.0">it.polimi.ingsw.view.gui.controllers.GuiController</node>
+    <node x="580.0" y="3103.0">it.polimi.ingsw.model.basicgame.StatusGame</node>
+    <node x="628.0" y="592.0">it.polimi.ingsw.model.basicgame.BasicGame</node>
+    <node x="800.0" y="3103.0">it.polimi.ingsw.common.events.GameHandler</node>
+    <node x="3746.0" y="3103.0">it.polimi.ingsw.model.basicgame.COLOR</node>
+    <node x="273.0" y="2908.0">it.polimi.ingsw.common.events.fromClientEvents.MoveStudentToIslandEvent</node>
+    <node x="3261.0" y="3103.0">it.polimi.ingsw.common.ANSIcolors.ANSI</node>
+    <node x="1551.0" y="2930.0">it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter7Event</node>
+    <node x="2629.0" y="3103.0">it.polimi.ingsw.common.exceptions.InvalidUserNameException</node>
+    <node x="1589.0" y="3390.0">it.polimi.ingsw.common.exceptions.InvalidPhaseException</node>
+    <node x="3693.0" y="2908.0">it.polimi.ingsw.common.events.fromClientEvents.PlayerAccessEvent</node>
+    <node x="3386.0" y="2291.0">it.polimi.ingsw.model.basicgame.playeritems.Player</node>
+    <node x="272.0" y="3390.0">it.polimi.ingsw.common.exceptions.InvalidPlayerIndexException</node>
+    <node x="5681.0" y="2956.0">it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter4Event</node>
+    <node x="805.0" y="2919.0">it.polimi.ingsw.common.events.ClientDisconnectedEvent</node>
+    <node x="3025.0" y="680.0">it.polimi.ingsw.view.gui.controllers.CharacterInfoController</node>
+    <node x="1876.0" y="2930.0">it.polimi.ingsw.common.events.fromClientEvents.MoveStudentToDiningEvent</node>
+    <node x="3294.0" y="779.0">it.polimi.ingsw.view.gui.controllers.PlanningController</node>
+    <node x="0.0" y="2166.0">it.polimi.ingsw.model.expertgame.gamemodes.GameMode8</node>
+    <node x="1333.0" y="3103.0">it.polimi.ingsw.model.basicgame.Cloud</node>
+    <node x="783.0" y="2166.0">it.polimi.ingsw.model.expertgame.gamemodes.GameMode9</node>
+    <node x="4664.0" y="3103.0">it.polimi.ingsw.App</node>
+    <node x="4300.0" y="2930.0">it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent</node>
+    <node x="338.5" y="1434.0">it.polimi.ingsw.model.expertgame.ConcreteExpertGame</node>
+    <node x="5208.0" y="3103.0">it.polimi.ingsw.common.exceptions.InvalidCharIslandIndexException</node>
+    <node x="4586.0" y="2930.0">it.polimi.ingsw.common.events.fromClientEvents.DrawAssistantCardEvent</node>
+    <node x="416.0" y="961.0">it.polimi.ingsw.model.expertgame.ExpertGameDecorator</node>
+    <node x="261.0" y="2166.0">it.polimi.ingsw.model.expertgame.gamemodes.GameMode6</node>
+    <node x="522.0" y="2166.0">it.polimi.ingsw.model.expertgame.gamemodes.GameMode2</node>
+    <node x="3027.0" y="2291.0">it.polimi.ingsw.model.basicgame.playeritems.SchoolBoard</node>
+    <node x="2636.0" y="2930.0">it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter3Event</node>
+    <node x="1577.0" y="3103.0">it.polimi.ingsw.model.basicgame.playeritems.AssistantCard</node>
+    <node x="2743.0" y="790.0">it.polimi.ingsw.view.gui.controllers.GameSettingsController</node>
+    <node x="4849.0" y="2956.0">it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter6Event</node>
+    <node x="6355.0" y="2930.0">it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter12Event</node>
+    <node x="4178.0" y="395.0">it.polimi.ingsw.view.cli.CliView</node>
+    <node x="336.0" y="3103.0">it.polimi.ingsw.model.basicgame.Island</node>
+    <node x="1081.0" y="3390.0">it.polimi.ingsw.common.exceptions.InvalidCharacterException</node>
+    <node x="1826.0" y="3390.0">it.polimi.ingsw.common.exceptions.InvalidStepsException</node>
+    <node x="6087.0" y="3103.0">it.polimi.ingsw.common.exceptions.AbilityAlreadyUsedException</node>
+    <node x="3530.0" y="3103.0">it.polimi.ingsw.model.basicgame.STATUS</node>
+    <node x="3092.0" y="3103.0">it.polimi.ingsw.model.basicgame.Tower</node>
+    <node x="5070.0" y="2930.0">it.polimi.ingsw.common.events.fromServerEvents.NewPlayerCreatedEvent</node>
+    <node x="4164.0" y="3103.0">it.polimi.ingsw.view.gui.GuiView</node>
+    <node x="1311.0" y="2930.0">it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter5Event</node>
+    <node x="3978.0" y="2908.0">it.polimi.ingsw.common.events.fromClientEvents.SelectedGameSetUpEvent</node>
+    <node x="6134.0" y="2956.0">it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter2Event</node>
+    <node x="1884.0" y="2631.0">it.polimi.ingsw.model.expertgame.characters.Character12</node>
+    <node x="1978.0" y="3103.0">it.polimi.ingsw.network.SocketReader</node>
+    <node x="1633.0" y="834.0">it.polimi.ingsw.view.gui.controllers.NickNameRequestController</node>
+    <node x="2160.0" y="812.0">it.polimi.ingsw.view.gui.controllers.ActionSceneController</node>
+    <node x="5800.0" y="3103.0">it.polimi.ingsw.common.exceptions.InvalidNumStudentsException</node>
+    <node x="571.0" y="2930.0">it.polimi.ingsw.common.events.fromClientEvents.ChooseCloudEvent</node>
+    <node x="1786.0" y="3103.0">it.polimi.ingsw.model.basicgame.Professor</node>
+    <node x="2403.0" y="768.0">it.polimi.ingsw.view.gui.controllers.Character10Controller</node>
+    <node x="3902.0" y="0.0">it.polimi.ingsw.view.View</node>
+    <node x="1437.0" y="845.0">it.polimi.ingsw.view.gui.controllers.EndSceneController</node>
+    <node x="276.0" y="2583.0">it.polimi.ingsw.model.expertgame.characters.Character11</node>
+    <node x="544.0" y="3390.0">it.polimi.ingsw.common.exceptions.NotAvailableCardException</node>
+    <node x="1592.0" y="2631.0">it.polimi.ingsw.model.expertgame.characters.Character10</node>
+    <node x="4347.0" y="3103.0">it.polimi.ingsw.network.SocketWriter</node>
+    <node x="5509.0" y="3103.0">it.polimi.ingsw.common.exceptions.CloudAlreadyChosenException</node>
+    <node x="4479.0" y="0.0">it.polimi.ingsw.controller.Controller</node>
+    <node x="6365.0" y="3103.0">it.polimi.ingsw.common.exceptions.StudentNotPresentException</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="it.polimi.ingsw.common.events.fromServerEvents.NotifyExceptionEvent" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-53.0" />
+      <point x="3271.5" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter10Event" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-53.0" />
+      <point x="5505.0" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromServerEvents.UpdatedDataEvent" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-53.0" />
+      <point x="126.5" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.ClientDisconnectedEvent" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-64.0" />
+      <point x="918.5" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.controllers.WaitingRoomController" target="it.polimi.ingsw.view.gui.controllers.GuiController" relationship="GENERALIZATION">
+      <point x="0.0" y="-62.0" />
+      <point x="2012.0" y="655.0" />
+      <point x="2271.5" y="655.0" />
+      <point x="0.0" y="315.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter4Event" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-27.0" />
+      <point x="5781.5" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.controllers.Character7Controller" target="it.polimi.ingsw.view.gui.controllers.GuiController" relationship="GENERALIZATION">
+      <point x="0.0" y="-117.0" />
+      <point x="1265.0" y="655.0" />
+      <point x="2271.5" y="655.0" />
+      <point x="0.0" y="315.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromClientEvents.MoveStudentToDiningEvent" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-53.0" />
+      <point x="2007.5" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.controllers.NickNameRequestController" target="it.polimi.ingsw.view.gui.controllers.GuiController" relationship="GENERALIZATION">
+      <point x="0.0" y="-51.0" />
+      <point x="1748.5" y="655.0" />
+      <point x="2271.5" y="655.0" />
+      <point x="0.0" y="315.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter3Event" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-53.0" />
+      <point x="2746.0" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.controllers.EndSceneController" target="it.polimi.ingsw.view.gui.controllers.GuiController" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="1525.0" y="655.0" />
+      <point x="2271.5" y="655.0" />
+      <point x="0.0" y="315.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.cli.CliView" target="it.polimi.ingsw.view.View" relationship="GENERALIZATION">
+      <point x="0.0" y="-205.0" />
+      <point x="4306.0" y="355.0" />
+      <point x="4030.0" y="355.0" />
+      <point x="0.0" y="165.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter9Event" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-53.0" />
+      <point x="2986.0" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromClientEvents.MoveStudentToIslandEvent" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-75.0" />
+      <point x="412.0" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromClientEvents.SelectedGameSetUpEvent" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-75.0" />
+      <point x="4129.0" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromServerEvents.TieEvent" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-53.0" />
+      <point x="1171.5" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.controllers.CharacterInfoController" target="it.polimi.ingsw.view.gui.controllers.GuiController" relationship="GENERALIZATION">
+      <point x="0.0" y="-205.0" />
+      <point x="3149.5" y="655.0" />
+      <point x="2271.5" y="655.0" />
+      <point x="0.0" y="315.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.basicgame.BasicGame" target="it.polimi.ingsw.model.basicgame.Game" relationship="REALIZATION">
+      <point x="0.0" y="-396.0" />
+      <point x="801.5" y="567.0" />
+      <point x="656.75" y="567.0" />
+      <point x="0.0" y="271.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromServerEvents.RequestNumPlayersEvent" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-53.0" />
+      <point x="4433.0" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromClientEvents.DrawAssistantCardEvent" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-53.0" />
+      <point x="4707.5" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.expertgame.characters.Character10" target="it.polimi.ingsw.model.expertgame.characters.Character" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="1728.0" y="2558.0" />
+      <point x="1583.5" y="2558.0" />
+      <point x="0.0" y="121.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.expertgame.characters.Character11" target="it.polimi.ingsw.model.expertgame.characters.Character" relationship="GENERALIZATION">
+      <point x="0.0" y="-88.0" />
+      <point x="379.0" y="2558.0" />
+      <point x="1583.5" y="2558.0" />
+      <point x="0.0" y="121.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.expertgame.characters.Character12" target="it.polimi.ingsw.model.expertgame.characters.Character" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="1989.5" y="2558.0" />
+      <point x="1583.5" y="2558.0" />
+      <point x="0.0" y="121.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.expertgame.ConcreteExpertGame" target="it.polimi.ingsw.model.expertgame.ExpertGameDecorator" relationship="GENERALIZATION">
+      <point x="0.0" y="-341.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromServerEvents.VictoryEvent" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-53.0" />
+      <point x="2258.0" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromServerEvents.NewPlayerCreatedEvent" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-53.0" />
+      <point x="5199.5" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter1Event" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-75.0" />
+      <point x="2496.5" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.expertgame.gamemodes.GameMode9" target="it.polimi.ingsw.model.expertgame.ConcreteExpertGame" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="925.5" y="2141.0" />
+      <point x="512.0" y="2141.0" />
+      <point x="0.0" y="341.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.expertgame.gamemodes.GameMode8" target="it.polimi.ingsw.model.expertgame.ConcreteExpertGame" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="120.5" y="2141.0" />
+      <point x="512.0" y="2141.0" />
+      <point x="0.0" y="341.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromClientEvents.MoveMotherEvent" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-53.0" />
+      <point x="6008.0" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.controllers.Character10Controller" target="it.polimi.ingsw.view.gui.controllers.GuiController" relationship="GENERALIZATION">
+      <point x="0.0" y="-117.0" />
+      <point x="2563.0" y="655.0" />
+      <point x="2271.5" y="655.0" />
+      <point x="0.0" y="315.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter7Event" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-53.0" />
+      <point x="1703.5" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.network.server.RemoteView" target="it.polimi.ingsw.view.View" relationship="GENERALIZATION">
+      <point x="0.0" y="-176.0" />
+      <point x="3736.5" y="355.0" />
+      <point x="4030.0" y="355.0" />
+      <point x="0.0" y="165.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter6Event" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-27.0" />
+      <point x="4949.5" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromClientEvents.PlayerAccessEvent" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-75.0" />
+      <point x="3825.5" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter12Event" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-53.0" />
+      <point x="6468.0" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.expertgame.gamemodes.GameMode6" target="it.polimi.ingsw.model.expertgame.ConcreteExpertGame" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="381.5" y="2141.0" />
+      <point x="512.0" y="2141.0" />
+      <point x="0.0" y="341.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromClientEvents.ChooseCloudEvent" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-53.0" />
+      <point x="678.0" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.expertgame.gamemodes.GameMode2" target="it.polimi.ingsw.model.expertgame.ConcreteExpertGame" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="642.5" y="2141.0" />
+      <point x="512.0" y="2141.0" />
+      <point x="0.0" y="341.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.controllers.GameSettingsController" target="it.polimi.ingsw.view.gui.controllers.GuiController" relationship="GENERALIZATION">
+      <point x="0.0" y="-95.0" />
+      <point x="2874.0" y="655.0" />
+      <point x="2271.5" y="655.0" />
+      <point x="0.0" y="315.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.controllers.PlanningController" target="it.polimi.ingsw.view.gui.controllers.GuiController" relationship="GENERALIZATION">
+      <point x="0.0" y="-106.0" />
+      <point x="3420.0" y="655.0" />
+      <point x="2271.5" y="655.0" />
+      <point x="0.0" y="315.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter8Event" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-27.0" />
+      <point x="6701.5" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.expertgame.characters.Character2" target="it.polimi.ingsw.model.expertgame.characters.Character" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="2221.5" y="2558.0" />
+      <point x="1583.5" y="2558.0" />
+      <point x="0.0" y="121.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.expertgame.characters.Character3" target="it.polimi.ingsw.model.expertgame.characters.Character" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="595.5" y="2558.0" />
+      <point x="1583.5" y="2558.0" />
+      <point x="0.0" y="121.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter5Event" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-53.0" />
+      <point x="1421.0" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.expertgame.characters.Character1" target="it.polimi.ingsw.model.expertgame.characters.Character" relationship="GENERALIZATION">
+      <point x="0.0" y="-66.0" />
+      <point x="851.5" y="2558.0" />
+      <point x="1583.5" y="2558.0" />
+      <point x="0.0" y="121.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter2Event" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-27.0" />
+      <point x="6234.5" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.GuiManager" target="it.polimi.ingsw.view.View" relationship="GENERALIZATION">
+      <point x="0.0" y="-220.0" />
+      <point x="0.0" y="165.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.view.gui.controllers.ActionSceneController" target="it.polimi.ingsw.view.gui.controllers.GuiController" relationship="GENERALIZATION">
+      <point x="0.0" y="-73.0" />
+      <point x="0.0" y="315.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.expertgame.ExpertGameDecorator" target="it.polimi.ingsw.model.basicgame.Game" relationship="REALIZATION">
+      <point x="0.0" y="-27.0" />
+      <point x="512.0" y="567.0" />
+      <point x="656.75" y="567.0" />
+      <point x="0.0" y="271.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.expertgame.characters.Character6" target="it.polimi.ingsw.model.expertgame.characters.Character" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="2687.5" y="2558.0" />
+      <point x="1583.5" y="2558.0" />
+      <point x="0.0" y="121.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.common.events.fromClientEvents.charactersEvents.UseCharacter11Event" target="it.polimi.ingsw.common.events.GameEvent" relationship="GENERALIZATION">
+      <point x="0.0" y="-53.0" />
+      <point x="3560.0" y="2883.0" />
+      <point x="3415.75" y="2883.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.expertgame.characters.Character7" target="it.polimi.ingsw.model.expertgame.characters.Character" relationship="GENERALIZATION">
+      <point x="0.0" y="-88.0" />
+      <point x="1150.0" y="2558.0" />
+      <point x="1583.5" y="2558.0" />
+      <point x="0.0" y="121.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.expertgame.characters.Character4" target="it.polimi.ingsw.model.expertgame.characters.Character" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="2898.0" y="2558.0" />
+      <point x="1583.5" y="2558.0" />
+      <point x="0.0" y="121.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.expertgame.characters.Character5" target="it.polimi.ingsw.model.expertgame.characters.Character" relationship="GENERALIZATION">
+      <point x="0.0" y="-77.0" />
+      <point x="1439.0" y="2558.0" />
+      <point x="1583.5" y="2558.0" />
+      <point x="0.0" y="121.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.expertgame.characters.Character8" target="it.polimi.ingsw.model.expertgame.characters.Character" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="2454.5" y="2558.0" />
+      <point x="1583.5" y="2558.0" />
+      <point x="0.0" y="121.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.model.expertgame.characters.Character9" target="it.polimi.ingsw.model.expertgame.characters.Character" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="128.0" y="2558.0" />
+      <point x="1583.5" y="2558.0" />
+      <point x="0.0" y="121.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.16608032834945763" showDependencies="false" x="3400.999999999999" y="1722.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
