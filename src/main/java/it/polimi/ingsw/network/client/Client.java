@@ -29,6 +29,13 @@ public class Client implements Runnable {
     private Socket socket;
     View view;
 
+    /**
+     * Establish a connection between the selected server using Java Socket
+     * @param ip the server IP
+     * @param port the server port
+     * @param chosenView is 0 if the user selected CLI, 1 if he selected GUI
+     * @throws IOException if the connection failed
+     */
     public Client(String ip, int port, int chosenView) throws IOException {
         try{
             socket = new Socket(ip, port);
@@ -50,6 +57,11 @@ public class Client implements Runnable {
             ((GuiManager) view).gameSetUp();
         }
     }
+
+    /**
+     * This method continuously takes the incoming server events from the queue and raises them
+     * through the GameHandler
+     */
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
@@ -74,6 +86,12 @@ public class Client implements Runnable {
         return socket;
     }
 
+    /**
+     * Asks the user the server IP and port, the chosen interface,
+     * then, it calls the constructor and the run() method
+     * @param args is null
+     * @throws IOException if the connection  failed
+     */
     public static void main(String[] args) throws IOException {
         Scanner in = new Scanner(System.in);
         System.out.println("> Insert the server IP address");
