@@ -7,6 +7,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+/**
+ * Displays the detailed description of the characters' abilities.
+ */
 public class CharacterInfoController extends GuiController{
 
     @FXML

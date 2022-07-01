@@ -40,6 +40,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * This class contains various common methods to allocate images and make actions.
+ */
 public class GuiController {
 
     public GuiManager guiManager;
@@ -49,11 +52,8 @@ public class GuiController {
     public FlowPane coinsPlayer0;
     public FlowPane coinsPlayer1;
     public FlowPane coinsPlayer2;
-
     public ImageView Coin1;
-
     public ImageView Coin2;
-
     public ImageView Coin0;
 
 
@@ -121,7 +121,13 @@ public class GuiController {
         }
     }
 
-    // Based on islands array dimension, manually displays a different gridpane layout
+    /**
+     * Based on islands array dimension, manually displays a different gridpane layout.
+     * @param islandsPane
+     * @param sizeW
+     * @param sizeH
+     * @param islands
+     */
     public void fillIslands(GridPane islandsPane, double sizeW, double sizeH, ArrayList<ArrayList<Island>> islands){
 
         int idCounter = -1;
@@ -188,6 +194,17 @@ public class GuiController {
         }
     }
 
+    /**
+     * Checks if more islands are merged together, and displays them according to their size.
+     * @param islandsPane
+     * @param idCounter
+     * @param sizeW
+     * @param sizeH
+     * @param i
+     * @param j
+     * @param islands
+     * @return islandnode
+     */
     private ImageView allocateIsland(GridPane islandsPane, int idCounter, double sizeW, double sizeH, int i, int j, ArrayList<ArrayList<Island>> islands){
 
         ImageView islandNode;
@@ -200,7 +217,7 @@ public class GuiController {
             islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/merge2.png").toString());
             islandNode.setFitWidth(sizeW+5);
             islandNode.setFitHeight(sizeH+2);
-        }//TODO enlarge islands or reduce gap between nodes
+        }
         else if(islands.get(idCounter).size()==3){
             islandNode = new ImageView(GuiManager.class.getResource("/graphics/pieces/merge3.png").toString());
             islandNode.setFitWidth(sizeW+5);
@@ -234,7 +251,14 @@ public class GuiController {
         return islandNode;
     }
 
-
+    /**
+     * Displays students, towers, mother nature and no entry cards on the single island.
+     * @param islandsPane
+     * @param island
+     * @param i
+     * @param j
+     * @param idCounter
+     */
     public void fillElementsOnIsland(GridPane islandsPane, ArrayList<Island> island, int i, int j, int idCounter){
 
         TilePane elemPane = new TilePane();
@@ -333,6 +357,11 @@ public class GuiController {
         elemPane.toFront();
     }
 
+    /**
+     * Places students on clouds.
+     * @param cloudPane
+     * @param i
+     */
     public void fillCloud(TilePane cloudPane, int i){
 
         Cloud c = guiManager.getData().getClouds().get(i);
@@ -351,6 +380,9 @@ public class GuiController {
 
     }
 
+    /**
+     * Allocates elements of expert game.
+     */
     public void setCharacters(){
         this.Coin0.setImage(new Image(GuiManager.class.getResource("/graphics/pieces/Moneta_base.png").toString()));
         this.Coin1.setImage(new Image(GuiManager.class.getResource("/graphics/pieces/Moneta_base.png").toString()));
@@ -380,6 +412,10 @@ public class GuiController {
         Coin0.setVisible(false);
     }
 
+    /**
+     * Changes the style of the mouse when above character cards.
+     * @param mouseEvent
+     */
     public void mouseOffCharacters(MouseEvent mouseEvent){
         Characters.setVisible(false);
         CharacterBack.setVisible(true);
@@ -392,6 +428,10 @@ public class GuiController {
         Characters.getScene().setCursor(Cursor.DEFAULT);
     }
 
+    /**
+     * Changes the style of the mouse when above the back of the character card.
+     * @param mouseEvent
+     */
     public void mouseClickedBackCharacter(MouseEvent mouseEvent){
         Characters.setVisible(true);
         CharacterBack.setVisible(false);
@@ -407,6 +447,11 @@ public class GuiController {
         Characters.getScene().setCursor(Cursor.HAND);
     }
 
+    /**
+     * Opens a popup when a character is clicked and sends the event to the server
+     * when the player activates the ability.
+     * @param mouseEvent
+     */
     public void mouseClickedCharacter(MouseEvent mouseEvent){
         int valueChar=Integer.parseInt(((ImageView) mouseEvent.getSource()).getId());
         switch(valueChar){
@@ -518,6 +563,10 @@ public class GuiController {
         Characters.getScene().setCursor(Cursor.DEFAULT);
     }
 
+    /**
+     * When a player selects an assistant card, sends the event to the server.
+     * @param mouseEvent
+     */
     public void mouseClickedAssistant(MouseEvent mouseEvent){
         if(guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername())) {
             ((ImageView) mouseEvent.getSource()).setOpacity(0);
@@ -526,6 +575,10 @@ public class GuiController {
         }
     }
 
+    /**
+     * Inside the popup, when a player selects the ability this method sends the event to the server.
+     * @param mouseEvent
+     */
     public void mouseClickedColorPopup(MouseEvent mouseEvent){//0 for character 9,1 for character 12
         int character =Integer.parseInt(String.valueOf(((ImageView) mouseEvent.getSource()).getId().charAt(0)));
         int color =Integer.parseInt(String.valueOf(((ImageView) mouseEvent.getSource()).getId().charAt(2)));
@@ -542,6 +595,10 @@ public class GuiController {
         ((Stage)((ImageView) mouseEvent.getSource()).getScene().getWindow()).close();
     }
 
+    /**
+     * Inside the popup, when a player selects the ability this method sends the event to the server.
+     * @param mouseEvent
+     */
     public void mouseClickedStudentPopup(MouseEvent mouseEvent) {//0 for character 11
         int character =Integer.parseInt(String.valueOf(((ImageView) mouseEvent.getSource()).getId().charAt(0)));
         int color =Integer.parseInt(String.valueOf(((ImageView) mouseEvent.getSource()).getId().charAt(2)));
@@ -559,6 +616,10 @@ public class GuiController {
         ((Stage)((ImageView) mouseEvent.getSource()).getScene().getWindow()).close();
     }
 
+    /**
+     * Inside the popup, when a player selects the ability this method sends the event to the server.
+     * @param mouseEvent
+     */
     public void mouseClickedCharacterIsland(MouseEvent mouseEvent){
         int islandIndex= Integer.parseInt(((Node)mouseEvent.getSource()).getId());
         int character = Integer.parseInt(((Node)mouseEvent.getSource()).getParent().getId());
@@ -579,11 +640,20 @@ public class GuiController {
         }
         ((Stage)((Node) mouseEvent.getSource()).getScene().getWindow()).close();
     }
+
+    /**
+     * Opens the no entry popup.
+     * @param mouseEvent
+     */
     public void mouseClickedNoEntriesPopup(MouseEvent mouseEvent){
         islandPopup(5);
         ((Stage)((ImageView) mouseEvent.getSource()).getScene().getWindow()).close();
     }
 
+    /**
+     * Displays all the descriptions of the characters' abilities.
+     * @param mouseEvent
+     */
     private void infoButtonClicked(MouseEvent mouseEvent){
         //create new stage and load it with CharacterInfoScene
         Stage s = new Stage();
@@ -602,6 +672,10 @@ public class GuiController {
         s.show();
     }
 
+    /**
+     * Displays a popup to use the characters 9 and 12.
+     * @param character index of the character.
+     */
     private void colorPopup(int character){//we send 0 if the character is 9,1 if the character is 12
         Stage newStage = new Stage();
         newStage.setTitle("Character"+character+" Selection");
@@ -645,6 +719,10 @@ public class GuiController {
         newStage.show();
     }
 
+    /**
+     * Displays all the islands for the character 1, 3 and 5.
+     * @param c index of the island.
+     */
     private void islandPopup(int c){
         Stage newStage = new Stage();
         newStage.setTitle("Character "+c+" Island Selection");
@@ -680,6 +758,11 @@ public class GuiController {
         newStage.setScene(new Scene(background));
         newStage.show();
     }
+
+    /**
+     * Displays the student selection for the character 1, 7 and 11.
+     * @param c index of the island.
+     */
     private void studentsPopup(int c){//we send 0 if the character is 11
         Stage newStage = new Stage();
         newStage.setTitle("Character"+c+" Selection");
@@ -747,49 +830,18 @@ public class GuiController {
         newStage.show();
     }
 
+    /**
+     * Displays the no entry popup.
+     */
     private void noEntriesPopup(){
         Stage newStage = new Stage();
         newStage.setTitle("Entries");
-        /*GridPane grid=new GridPane();
-        grid.addRow(0);
-        grid.addRow(1);
-        grid.addColumn(0);
-        grid.addColumn(1);
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(25));
-        grid.setAlignment(Pos.CENTER);
-        grid.setStyle("-fx-background-color:WHITE");
-        grid.setAlignment(Pos.CENTER);*/
         TilePane tp = new TilePane();
         tp.setHgap(10);
         tp.setVgap(10);
         tp.setPadding(new Insets(25));
         tp.setStyle("-fx-background-color:WHITE");
         tp.setAlignment(Pos.CENTER);
-        /*Character5 character5=null;
-        for(Character character:guiManager.getData().getCharacters()){
-            if(character instanceof Character5)
-                character5=(Character5) character;
-        }
-
-        for(int i=0;i<character5.getNoEntries()/2;i++){
-            for(int j=0;j<character5.getNoEntries()/2;j++){
-                ImageView imageView = new ImageView(GuiManager.class.getResource("/graphics/pieces/deny_island_icon.png").toString());
-                if (guiManager.getData().getCurrPlayer().getUsername().equals(guiManager.getOwner())) {
-                    imageView.setOnMouseEntered(event->{
-                        ((Node)event.getSource()).getScene().setCursor(Cursor.HAND);
-                    });
-                    imageView.setOnMouseExited(event->{
-                        ((Node)event.getSource()).getScene().setCursor(Cursor.DEFAULT);
-                    });
-                    imageView.setOnMouseClicked(this::mouseClickedNoEntriesPopup);
-                }
-                imageView.setPreserveRatio(true);
-                imageView.setFitWidth(40);
-                grid.add(imageView,j,i);
-            }
-        }*/
         int chr5 = -1;
         for(int i = 0;  i < 3; i++){
             if(guiManager.getData().getCharacters().get(i) instanceof Character5){
@@ -833,10 +885,18 @@ public class GuiController {
     public void update(UpdatedDataEvent event){
     }
 
+    /**
+     * Changes the scene to end when the victory event arrives from the server.
+     * @param event
+     */
     public void update(VictoryEvent event){
         Platform.runLater(() -> guiManager.setFXML(Constants.END_SCENE));
     }
 
+    /**
+     * Changes the scene to end when the tie event arrives from the server.
+     * @param event
+     */
     public void update(TieEvent event){
         Platform.runLater(() -> guiManager.setFXML(Constants.END_SCENE));
     }

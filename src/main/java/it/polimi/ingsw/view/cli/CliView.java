@@ -26,6 +26,9 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
 
+/**
+ * Displays the command line interface and sends to the server the events raised by the players.
+ */
 public class CliView extends View {
 
     private final Scanner in;
@@ -40,7 +43,7 @@ public class CliView extends View {
     }
 
     /**
-     * Asks player's nickname and sends a PlayerAccessEvent with it to the server
+     * Asks player's nickname and sends a PlayerAccessEvent with it to the server.
      */
 
     public void setup() {

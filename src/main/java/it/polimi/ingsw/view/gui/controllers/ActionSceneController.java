@@ -26,6 +26,9 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 
+/**
+ * This class controls the FXML file of the action scene.
+ */
 public class ActionSceneController extends GuiController{
 
     public Label player1Name;
@@ -172,6 +175,9 @@ public class ActionSceneController extends GuiController{
 
     }
 
+    /**
+     * Displays the owner's board.
+     */
     private void fillMyBoardAction(){
         for (Player player : guiManager.getData().getPlayers()) {
             if (player.getUsername().equals(guiManager.getOwner())) {
@@ -255,6 +261,9 @@ public class ActionSceneController extends GuiController{
         }
     }
 
+    /**
+     * Displays other players board.
+     */
     private void fillOtherPlayersAction(){
         int flag=0;
         GridPane entrance=Player1Entrance,diningroom=Player1DiningRoom,professors=Player1Professors,towers=Player1Towers;
@@ -286,6 +295,10 @@ public class ActionSceneController extends GuiController{
         }
     }
 
+    /**
+     * Updates the scene when an event arrives.
+     * @param event contains an updated ViewData
+     */
     @Override
     public void update(UpdatedDataEvent event) {
 

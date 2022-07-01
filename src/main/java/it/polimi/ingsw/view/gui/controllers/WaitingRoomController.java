@@ -7,6 +7,9 @@ import it.polimi.ingsw.view.gui.Constants;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 
+/**
+ * Lobby of the game, displayed when a player needs to wait for other players to connect.
+ */
 public class WaitingRoomController extends GuiController{
 
     @FXML

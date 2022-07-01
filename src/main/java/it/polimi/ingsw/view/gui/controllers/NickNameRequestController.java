@@ -15,6 +15,9 @@ import javafx.scene.control.TextField;
 import javax.swing.text.html.ImageView;
 import java.util.Objects;
 
+/**
+ * Every client nis required to insert a nickname to enter a game.
+ */
 public class NickNameRequestController extends GuiController{
 
     @FXML

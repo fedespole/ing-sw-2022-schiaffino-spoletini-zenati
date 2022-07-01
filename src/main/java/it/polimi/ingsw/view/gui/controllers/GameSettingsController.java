@@ -10,6 +10,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.image.ImageView;
 
+/**
+ * Only for the first player, that has to decide the game mode and the number of players.
+ */
 public class GameSettingsController extends GuiController{
     @FXML
     public RadioButton button2;

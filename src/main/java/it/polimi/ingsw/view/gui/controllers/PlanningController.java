@@ -17,7 +17,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
-
+/**
+ * This class controls the FXML file where the players select the assistant cards (planning phase).
+ */
 public class PlanningController extends GuiController{
     public FlowPane AssistantCards;
     public GridPane MyDiningRoom;
@@ -76,19 +78,29 @@ public class PlanningController extends GuiController{
             super.setCharacters();
     }
 
+    /**
+     * Changes the style of the mouse when above assistant cards.
+     * @param mouseEvent
+     */
     public void mouseOnAssistants(MouseEvent mouseEvent) {
         if(guiManager.getOwner().equals(guiManager.getData().getCurrPlayer().getUsername()))
             AssistantCards.getScene().setCursor(Cursor.HAND);
         AssistantCards.alignmentProperty().setValue(Pos.TOP_CENTER);
     }
 
-
+    /**
+     * Changes the style of the mouse when above assistant cards.
+     * @param mouseEvent
+     */
     public void mouseOffAssistants(MouseEvent mouseEvent) {
         AssistantCards.alignmentProperty().setValue(Pos.BOTTOM_CENTER);
         if(AssistantCards.getScene()!=null)
             AssistantCards.getScene().setCursor(Cursor.DEFAULT);
     }
 
+    /**
+     * Dynamically allocates on screen the available cards.
+     */
     private void addAvailableAssistantCards() {
         for (Player player : guiManager.getData().getPlayers()) {
             if(player.getUsername().equals(guiManager.getOwner())) {
@@ -108,6 +120,9 @@ public class PlanningController extends GuiController{
         }
     }
 
+    /**
+     * Displays the owner's board.
+     */
     private void fillMyBoardPlanning(){
 
         for (Player player : guiManager.getData().getPlayers()) {
@@ -121,6 +136,9 @@ public class PlanningController extends GuiController{
         }
     }
 
+    /**
+     * Displays other players board.
+     */
     private void fillOtherPlayersPlanning(){
         int flag=0;
         GridPane entrance=Player1Entrance,diningroom=Player1DiningRoom,professors=Player1Professors,towers=Player1Towers;
@@ -149,6 +167,10 @@ public class PlanningController extends GuiController{
         }
     }
 
+    /**
+     * Updates the scene when an event arrives.
+     * @param event contains an updated ViewData
+     */
     @Override
     public void update(UpdatedDataEvent event) {
         if(guiManager.getData().getStatusGame().getStatus().equals(STATUS.PLANNING))

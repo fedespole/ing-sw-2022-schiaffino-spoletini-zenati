@@ -12,6 +12,9 @@ import java.lang.reflect.Method;
 
 import static java.lang.Thread.sleep;
 
+/**
+ * Last scene, won or lost.
+ */
 public class EndSceneController extends GuiController{
 
     @FXML

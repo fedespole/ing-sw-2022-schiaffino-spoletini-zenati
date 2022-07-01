@@ -6,10 +6,11 @@ import javax.swing.event.EventListenerList;
 import java.util.EventListener;
 import java.lang.reflect.*;
 
+/**
+ * This class is a singleton that handles the raise of events
+ */
 public class GameHandler {
-    /**
-     * This class is a singleton that handles the raise of events
-     */
+
     private static GameHandler instance;
     private static final EventListenerList listeners = new EventListenerList();
 
