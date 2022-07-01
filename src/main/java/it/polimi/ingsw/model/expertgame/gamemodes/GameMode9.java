@@ -3,7 +3,9 @@ import it.polimi.ingsw.common.events.GameHandler;
 import it.polimi.ingsw.common.events.fromServerEvents.VictoryEvent;
 import it.polimi.ingsw.model.basicgame.*;
 import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
-
+/**
+ * This class extends the ConcreteExpertGame and changes the rules of the turn when the character 9 is called.
+ */
 public class GameMode9 extends ConcreteExpertGame {
     COLOR color;
 

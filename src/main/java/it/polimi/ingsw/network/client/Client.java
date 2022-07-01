@@ -66,7 +66,6 @@ public class Client implements Runnable {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 GameEvent currEvent = serverEvs.take();
-                System.out.println(ANSI.PURPLE + "Arriva evento: " + currEvent + ANSI.RESET);
                 GameHandler.calls(currEvent);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();

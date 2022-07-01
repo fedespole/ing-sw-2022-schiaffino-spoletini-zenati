@@ -10,6 +10,11 @@ import javafx.fxml.FXML;
 import java.util.EventListener;
 
 public abstract class View implements EventListener {
+
+    /**
+     * This abstract class is the parent of all the view of the game: RemoteView(Server),CliView(Client) and GuiManager(Client).
+     * Its methods update the game's data of the instance.
+     */
     private String owner;
     private ViewData data;
     private Client client;

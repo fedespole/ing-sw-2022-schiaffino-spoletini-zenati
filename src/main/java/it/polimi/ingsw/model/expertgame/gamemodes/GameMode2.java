@@ -2,7 +2,11 @@ package it.polimi.ingsw.model.expertgame.gamemodes;
 import it.polimi.ingsw.model.basicgame.COLOR;
 import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 
+/**
+ * This class extends the ConcreteExpertGame and changes the rules of the turn when the character 2 is called.
+ */
 public class GameMode2 extends ConcreteExpertGame {
+
     public GameMode2(ConcreteExpertGame concreteExpertGame) {
         super(concreteExpertGame);
 

@@ -7,7 +7,9 @@ import it.polimi.ingsw.model.basicgame.Professor;
 import it.polimi.ingsw.model.basicgame.Student;
 import it.polimi.ingsw.model.expertgame.ConcreteExpertGame;
 
-
+/**
+ * This class extends the ConcreteExpertGame and changes the rules of the turn when the character 8 is called.
+ */
 public class GameMode8 extends ConcreteExpertGame {
 
     public GameMode8(ConcreteExpertGame concreteExpertGame) {

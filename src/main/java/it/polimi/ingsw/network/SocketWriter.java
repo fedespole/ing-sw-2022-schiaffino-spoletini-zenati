@@ -6,12 +6,12 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
-
+/**
+ * This class has the function of creating an output queue for the events about to be sent by the socket.
+ * If it catches an exception, it closes the socket.
+ */
 public class SocketWriter<T> implements Runnable {
-    /**
-     * This class has the function of creating an output queue for the events about to be sent by the socket.
-     * If it catches an exception, it closes the socket.
-     */
+
     private final Socket socket;
     private ObjectOutputStream out;
     private final BlockingQueue<T> objectsToBeWritten;

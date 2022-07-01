@@ -7,6 +7,9 @@ import java.util.EventListener;
 import java.lang.reflect.*;
 
 public class GameHandler {
+    /**
+     * This class is a singleton that handles the raise of events
+     */
     private static GameHandler instance;
     private static final EventListenerList listeners = new EventListenerList();
 
@@ -21,6 +24,11 @@ public class GameHandler {
         listeners.add(EventListener.class, listener);
     }
 
+    /**
+     * This method handles the raise of an event using reflection. It looks through the first parameter of the "update" methods of the listener,
+     * and verifies that the class of the event called  matches with one of them. If it matches the method is called.
+     * @param event event raised.
+     */
     public static synchronized void calls(GameEvent event) {
         for (EventListener listener : listeners.getListeners(EventListener.class)) {
             for (Method method : listener.getClass().getMethods()) {//we have used reflection to call the right update method

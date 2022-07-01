@@ -11,10 +11,11 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.concurrent.*;
 
+/**
+ * Represents the client in the server side of the architecture. It exchanges events with the client, using two different queues.
+ */
 public class RemoteView extends View implements Runnable{
-    /**
-     * Represents the client in the server side of the architecture. It exchanges events with the client, using two different queues.
-     */
+
     private final LinkedBlockingQueue<GameEvent> clientEvs;
     private final LinkedBlockingQueue<GameEvent> serverEvs;
     private ExecutorService executor;
