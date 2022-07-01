@@ -27,7 +27,9 @@ import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-
+/**
+ * This class manages the transitions of GUI scenes
+ */
 public class GuiManager extends View {
 
     private static GuiManager instance = null;//singleton
@@ -67,9 +69,12 @@ public class GuiManager extends View {
         };
 
         thread.start();
-        //javafx.application.Application.launch(GuiView.class);
     }
 
+    /**
+     * This method sets a scene to the main stage
+     * @param path The path of the FXML file that contains the scene to set
+     */
     public void setFXML(String path) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(GuiManager.class.getResource(path));

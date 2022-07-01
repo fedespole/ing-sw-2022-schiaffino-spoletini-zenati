@@ -11,6 +11,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * This is a JavaFX Application class that creates a new stage with the first scene
+ */
 public class GuiView extends Application {
 
 

@@ -44,6 +44,9 @@ public class BasicGame implements Game{
         lastRound=false;
     }
 
+    /**
+     * This method initializes the game after that all players have entered it
+     */
     @Override
     public void setUp() {
 
@@ -98,7 +101,9 @@ public class BasicGame implements Game{
             fillClouds();
     }
 
-
+    /**
+     * This method adds the students to the empty clouds
+     */
     @Override// fills all the clouds
     public void fillClouds() {
         if (numPlayers==2 && (this.getBag().getStudents().size() < 6)) lastRound = true;
@@ -131,6 +136,10 @@ public class BasicGame implements Game{
         this.statusGame.setStatus(STATUS.PLANNING);
     }
 
+    /**
+     * This method retrieves from the current player's deck the Assistant Card with the chosen value
+     * @param value the value of the card to retrieve
+     */
     @Override
     public void chooseCard(int value){
 
@@ -214,7 +223,11 @@ public class BasicGame implements Game{
         }
     }
 
-    @Override//moves all the students from the chosen cloud to the entrance of the school board
+    /**
+     * This method moves all the students from the chosen cloud to the entrance of the school board
+     * @param chosenCloud Is the cloud chosen by the player
+     */
+    @Override
     public void moveStudentsFromCloud(Cloud chosenCloud) {
         if(numPlayers==2){//3 students in chosenCloud
             for(int i=0;i<3;i++) {
