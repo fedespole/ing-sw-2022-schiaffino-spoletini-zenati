@@ -31,7 +31,7 @@ cd ing-sw-2022-schiaffino-spoletini-zenati/deliverables
 
 ### Esecuzione
 #### Windows
-`java -jar windowsExec.jar`
+`java -jar winExec.jar`
 #### Linux
 `java -jar linuxExec.jar`
 
