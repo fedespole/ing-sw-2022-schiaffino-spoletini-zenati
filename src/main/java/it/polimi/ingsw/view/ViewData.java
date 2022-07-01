@@ -7,6 +7,10 @@ import it.polimi.ingsw.model.expertgame.characters.Character;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * This class contains the current state of the game in the client-side, it is sent from the server to the client
+ * in an UpdatedDataEvent
+ */
 public class ViewData implements Serializable {
     private  ArrayList<Player> players;
     private int numPlayers;

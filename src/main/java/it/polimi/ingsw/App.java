@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import it.polimi.ingsw.common.ANSIcolors.ANSI;
 /**
- * Hello world!
- *
+ *This class is the main application, it asks the user whether he wants to join as a client or to run a server,
+ * then it runs the correspondent main class
  */
 public class App {
 

@@ -40,7 +40,7 @@ public class CliView extends View {
     }
 
     /**
-     * Asks player's nickname and sends it a PlayerAccessEvent to the server
+     * Asks player's nickname and sends a PlayerAccessEvent with it to the server
      */
 
     public void setup() {
@@ -128,6 +128,10 @@ public class CliView extends View {
 
     }
 
+    /**
+     * Notifies the current player that another player has joined the game
+     * @param event contains the names of the players
+     */
     @Override
     public void update(NewPlayerCreatedEvent event) {
         super.update(event);
@@ -137,6 +141,10 @@ public class CliView extends View {
             out.println("Player " + event.getUsername() + " has been accepted in the game");
     }
 
+    /**
+     * Asks the first player the number of players and the game mode
+     * @param event the event that the server sends to the first player only
+     */
     @Override
     public void update(RequestNumPlayersEvent event) {
         super.update(event);
@@ -185,6 +193,10 @@ public class CliView extends View {
         }
     }
 
+    /**
+     * According to the game phase contained in the parameter, asks for the correct current player's move
+     * @param event the updated game state that the server sends to all after a player's move
+     */
     @Override
     public void update(UpdatedDataEvent event) {
         super.update(event);
@@ -210,6 +222,10 @@ public class CliView extends View {
         }
     }
 
+    /**
+     * Writes out who won the game
+     * @param event contains the nickname of the winner
+     */
     @Override
     public void update(VictoryEvent event){
         if(event.getWinningPlayer().equals(this.getOwner()))
@@ -219,7 +235,10 @@ public class CliView extends View {
         }
         System.exit(0);
     }
-
+    /**
+     * Writes out the name of the players who tied
+     * @param event contains the nicknames of the players who tied
+     */
     public void update(TieEvent event){
         if(event.getTiePlayers().contains(this.getOwner()))
             out.println(ANSI.PURPLE+"You won!"+ANSI.RESET);
@@ -229,6 +248,9 @@ public class CliView extends View {
         System.exit(0);
     }
 
+    /**
+     * Asks the current player the value of the card to draw and sends a DrawAssistantCardEvent to the server
+     */
     private void drawAssistantCard() {
         java.lang.String input;
         int assistantCard;
@@ -257,6 +279,9 @@ public class CliView extends View {
         this.client.getClientEvs().add(new DrawAssistantCardEvent(this.getOwner(), assistantCard));
     }
 
+    /**
+     * Asks the current player the color of the student to move and where to move it; then it sends a MoveStudentTo**** event to the server
+     */
     private void moveStudent(){
         out.println("> Choose the color of the student to move from entrance:");
         out.print(ANSI.GREEN + "> " + ANSI.RESET);
@@ -308,7 +333,9 @@ public class CliView extends View {
             }
         }
     }
-
+    /**
+     * Asks the current player the value of the steps to take with mother nature and sends a MoveMotherEvent to the server
+     */
     private void moveMother(){
         int motherNature = 0;
         out.println("> Choose number of jumps of mother nature, from 1 to "+getData().getCurrPlayer().getChosenCard().getSteps());
@@ -330,7 +357,9 @@ public class CliView extends View {
         }
         this.client.getClientEvs().add(new MoveMotherEvent(this.getOwner(),motherNature));
     }
-
+    /**
+     * Asks the current player cloud from which he would like to take the students sends a ChoosecloudEvent to the server
+     */
     public void chooseCloud() {
         int cloud = 0;
         java.lang.String input;
@@ -359,6 +388,10 @@ public class CliView extends View {
         this.client.getClientEvs().add(new ChooseCloudEvent(this.getOwner(), cloud));
     }
 
+    /**
+     * Called when the current player writes 'character', asks the number of the character to play and, according to this, it
+     * asks for the correct input for that character and sends a CharacterEvent to the server
+     */
     private void useCharacter(){
             out.println("> Choose which character to activate");
             out.print(ANSI.BLUE + "> " + ANSI.RESET);
@@ -483,6 +516,9 @@ public class CliView extends View {
             }
     }
 
+    /**
+     * Writes out the player's board state (with colors)
+     */
     private void printOwnBoard(){
         Player playerOwner=null;
         for(Player player: getData().getPlayers()){
@@ -516,6 +552,9 @@ public class CliView extends View {
 
     }
 
+    /**
+     * Writes out the table status (with colors)
+     */
     private void printTable(){
         out.println("--------------------------------------------------------------------------------------------------------------");
         ANSI.writeTitle("ISLANDS");
